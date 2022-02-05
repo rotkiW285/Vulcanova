@@ -1,4 +1,4 @@
-### [English version of README](https://github.com/VulcanovaApp/Vulcanova/blob/main/README-en.md)
+### [English version of README](README-en.md)
 
 # Vulcanova
 Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzony w Xamarinie. Aktualnie w fazie intensywnego rozwoju.
