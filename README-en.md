@@ -1,4 +1,4 @@
-### [Polska wersja README](https://github.com/VulcanovaApp/Vulcanova/blob/main/README.md)
+### [Polska wersja README](README.md)
 
 # Vulcanova
 An unofficial Vulcan UONET+ mobile cross-platform register client made in Xamarin. Currently, in heavy development.
