@@ -2,16 +2,18 @@
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Vulcanova.Features.Attendance;assembly=Vulcanova"
              xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+             xmlns:converters="clr-namespace:Vulcanova.Features.Attendance.Converters;assembly=Vulcanova"
              x:Class="Vulcanova.Features.Attendance.LessonView"
              x:Name="View">
     <ContentView.Resources>
-        <local:AttendanceColorConverter x:Key="ColorConverter" />
-        <local:JustificationStatusConverter x:Key="JustificationStatusConverter" />
+        <converters:AttendanceColorConverter x:Key="ColorConverter" />
+        <converters:JustificationStatusConverter x:Key="JustificationStatusConverter" />
+        <converters:JustificationColorConverter x:Key="JustificationColorConverter" />
         <layout:NullToBooleanConverter x:Key="NullToBooleanConverter" />
         <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
+            <Setter Property="TextColor"
+                    Value="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
@@ -31,13 +33,14 @@
                 <StackLayout Orientation="Horizontal">
                     <Label
                         FontSize="Small"
-                        Text="{Binding Lesson.PresenceType.Name}" />
+                        Text="{Binding Lesson.PresenceType.Name}"
+                        TextColor="{Binding Lesson, Converter={StaticResource JustificationColorConverter}}" />
                     <layout:TintedCachedImage
                         IsVisible="{Binding Lesson.JustificationStatus, Converter={StaticResource NullToBooleanConverter}}"
                         HeightRequest="14"
                         WidthRequest="14"
                         Source="{Binding Lesson.JustificationStatus, Converter={StaticResource JustificationStatusConverter}}"
-                        TintColor="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}">
+                        TintColor="{Binding Lesson, Converter={StaticResource JustificationColorConverter}}">
                     </layout:TintedCachedImage>
                 </StackLayout>
             </StackLayout>

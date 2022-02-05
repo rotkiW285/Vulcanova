@@ -3,7 +3,7 @@ using System.Globalization;
 using Vulcanova.Uonet.Api.Lessons;
 using Xamarin.Forms;
 
-namespace Vulcanova.Features.Attendance
+namespace Vulcanova.Features.Attendance.Converters
 {
     public class JustificationStatusConverter : IValueConverter
     {

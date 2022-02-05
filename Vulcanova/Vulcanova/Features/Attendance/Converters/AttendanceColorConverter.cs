@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace Vulcanova.Features.Attendance
+namespace Vulcanova.Features.Attendance.Converters
 {
     public class AttendanceColorConverter : IValueConverter
     {
@@ -10,8 +10,14 @@ namespace Vulcanova.Features.Attendance
         {
             if (value is PresenceType type)
             {
+                if (type.AbsenceJustified)
+                {
+                    return Color.Default;
+                }
+
                 var baseColor = type switch
                 {
+                    {AbsenceJustified: true} => "PrimaryColor",
                     {Absence: true} => "ErrorColor",
                     {Late: true} => "WarningColor",
                     _ => null
