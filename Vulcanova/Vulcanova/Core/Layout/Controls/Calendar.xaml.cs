@@ -29,6 +29,15 @@ namespace Vulcanova.Core.Layout.Controls
             get => (Color) GetValue(SelectedColorProperty);
             set => SetValue(SelectedColorProperty, value);
         }
+        
+        public static readonly BindableProperty TextColorProperty =
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CalendarDateCell), Color.Default);
+
+        public Color TextColor
+        {
+            get => (Color) GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
+        }
 
         public static readonly BindableProperty SelectedTextColorProperty =
             BindableProperty.Create(nameof(SelectedTextColor), typeof(Color), typeof(CalendarDateCell), Color.White);
@@ -177,10 +186,18 @@ namespace Vulcanova.Core.Layout.Controls
             var textColorBinding = new Binding
             {
                 Source = this,
+                Path = nameof(TextColor)
+            };
+
+            cell.SetBinding(CalendarDateCell.TextColorProperty, textColorBinding);
+
+            var selectedTextColorBinding = new Binding
+            {
+                Source = this,
                 Path = nameof(SelectedTextColor)
             };
 
-            cell.SetBinding(CalendarDateCell.SelectedTextColorProperty, textColorBinding);
+            cell.SetBinding(CalendarDateCell.SelectedTextColorProperty, selectedTextColorBinding);
 
             var secondaryColorBinding = new Binding
             {

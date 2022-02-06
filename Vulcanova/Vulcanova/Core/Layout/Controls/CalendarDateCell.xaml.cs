@@ -45,6 +45,16 @@ namespace Vulcanova.Core.Layout.Controls
             set => SetValue(SelectedColorProperty, value);
         }
         
+        public static readonly BindableProperty TextColorProperty =
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CalendarDateCell), Color.Default,
+                propertyChanged: TextColorChanged);
+
+        public Color TextColor
+        {
+            get => (Color) GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
+        }
+
         public static readonly BindableProperty SelectedTextColorProperty =
             BindableProperty.Create(nameof(SelectedTextColor), typeof(Color), typeof(CalendarDateCell), Color.White,
                 propertyChanged: SelectedTextColorChanged);
@@ -82,34 +92,51 @@ namespace Vulcanova.Core.Layout.Controls
         private static void SelectedPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var cell = (CalendarDateCell) bindable;
-            var isSelected = (bool) newValue;
-            cell.Container.BackgroundColor = isSelected ? cell.SelectedColor : Color.Transparent;
-            cell.Label.TextColor = isSelected ? cell.SelectedTextColor : Color.Default;
+            UpdateCellAppearance(cell);
         }
 
         private static void SecondaryPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var cell = (CalendarDateCell) bindable;
-            var isSecondary = (bool) newValue;
-            cell.Label.TextColor = isSecondary ? cell.SecondaryTextColor : Color.Default;
+            UpdateCellAppearance(cell);
         }
 
         private static void SelectedColorPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var cell = (CalendarDateCell) bindable;
-            cell.Container.BackgroundColor = cell.Selected ? (Color) newValue : Color.Transparent;
+            UpdateCellAppearance(cell);
+        }
+        
+        private static void TextColorChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            var cell = (CalendarDateCell) bindable;
+            UpdateCellAppearance(cell);
         }
 
         private static void SelectedTextColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var cell = (CalendarDateCell) bindable;
-            cell.Label.TextColor = cell.Selected ? (Color) newValue : Color.Default;
+            UpdateCellAppearance(cell);
         }
 
         private static void SecondaryTextColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var cell = (CalendarDateCell) bindable;
-            cell.Label.TextColor = cell.Secondary ? (Color) newValue : Color.Default;
+            UpdateCellAppearance(cell);
+        }
+
+        private static void UpdateCellAppearance(CalendarDateCell cell)
+        {
+            cell.Container.BackgroundColor = cell.Selected ? cell.SelectedColor : Color.Transparent;
+
+            if (cell.Selected)
+            {
+                cell.Label.TextColor = cell.SelectedTextColor;
+            }
+            else
+            {
+                cell.Label.TextColor = cell.Secondary ? cell.SecondaryTextColor : cell.TextColor;
+            }
         }
     }
 }
