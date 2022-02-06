@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using Vulcanova.Core.Layout;
 using Xamarin.Forms;
 
 namespace Vulcanova.Features.Attendance.Converters
@@ -12,7 +13,7 @@ namespace Vulcanova.Features.Attendance.Converters
             {
                 if (type.AbsenceJustified)
                 {
-                    return Color.Default;
+                    return ThemeUtility.GetDefaultTextColor();
                 }
 
                 var baseColor = type switch
@@ -25,20 +26,13 @@ namespace Vulcanova.Features.Attendance.Converters
 
                 if (baseColor == null)
                 {
-                    return Color.Default;
+                    return ThemeUtility.GetDefaultTextColor();
                 }
 
-                var colorVariant = Application.Current.RequestedTheme == OSAppTheme.Dark
-                    ? "Dark"
-                    : "Light";
-
-                if (Application.Current.Resources.TryGetValue($"{colorVariant}{baseColor}", out var color))
-                {
-                    return color;
-                }
+                return ThemeUtility.GetThemedColorByResourceKey(baseColor);
             }
 
-            return Color.Default;
+            return ThemeUtility.GetDefaultTextColor();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

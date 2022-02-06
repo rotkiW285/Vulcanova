@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using Vulcanova.Core.Layout;
 using Vulcanova.Uonet.Api.Schedule;
 using Xamarin.Forms;
 
@@ -12,18 +13,11 @@ namespace Vulcanova.Features.Timetable
             if (value is ChangeType type)
             {
                 var baseColor = type == ChangeType.Exemption ? "ErrorColor" : "WarningColor";
-                
-                var colorVariant = Application.Current.RequestedTheme == OSAppTheme.Dark
-                    ? "Dark"
-                    : "Light";
 
-                if (Application.Current.Resources.TryGetValue($"{colorVariant}{baseColor}", out var color))
-                {
-                    return color;
-                }
+                return ThemeUtility.GetThemedColorByResourceKey(baseColor);
             }
 
-            return Color.Default;
+            return ThemeUtility.GetDefaultTextColor();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
