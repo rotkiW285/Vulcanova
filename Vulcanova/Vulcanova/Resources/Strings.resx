@@ -105,4 +105,7 @@
     <data name="LessonSubjectLabel" xml:space="preserve">
         <value>Subject</value>
     </data>
+    <data name="LessonTeacherLabel" xml:space="preserve">
+        <value>Teacher</value>
+    </data>
 </root>

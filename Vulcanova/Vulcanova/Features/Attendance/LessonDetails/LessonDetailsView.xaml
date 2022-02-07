@@ -29,6 +29,7 @@
                 <controls:FieldView Name="{x:Static resx:Strings.LessonDateLabel}"
                                     Value="{Binding Lesson.Date, StringFormat='{0:d}'}" />
                 <lessonDetails:LessonTimeView Lesson="{Binding Lesson}" />
+                <controls:FieldView Name="{x:Static resx:Strings.LessonTeacherLabel}" Value="{Binding Lesson.TeacherName}" />
                 <controls:FieldView Name="{x:Static resx:Strings.LessonSubjectLabel}" Value="{Binding Lesson.Topic}" />
             </StackLayout>
         </StackLayout>
