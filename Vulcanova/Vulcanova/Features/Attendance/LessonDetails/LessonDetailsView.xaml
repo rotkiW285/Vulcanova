@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<forms:ContentView xmlns:forms="http://xamarin.com/schemas/2014/forms" xmlns="http://xamarin.com/schemas/2014/forms"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                   xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+                   xmlns:converters="clr-namespace:Vulcanova.Features.Attendance.Converters;assembly=Vulcanova"
+                   xmlns:lessonDetails="clr-namespace:Vulcanova.Features.Attendance.LessonDetails;assembly=Vulcanova"
+                   x:Class="Vulcanova.Features.Attendance.LessonDetailsView"
+                   x:Name="View">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:AttendanceColorConverter x:Key="ColorConverter" />
+            <Style ApplyToDerivedTypes="true" TargetType="StackLayout">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentPage.Content>
+        <StackLayout BindingContext="{x:Reference View}">
+            <StackLayout Padding="16, 8">
+                <Label Style="{StaticResource MediumLabelStyle}" HorizontalOptions="FillAndExpand"
+                       Text="{Binding Lesson.Subject.Name}" />
+                <Label Text="{Binding Lesson.PresenceType.Name}"
+                       TextColor="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
+            </StackLayout>
+            <StackLayout Padding="16, 8" Spacing="16">
+                <controls:FieldView Name="{x:Static resx:Strings.LessonDateLabel}"
+                                    Value="{Binding Lesson.Date, StringFormat='{0:d}'}" />
+                <lessonDetails:LessonTimeView Lesson="{Binding Lesson}" />
+                <controls:FieldView Name="{x:Static resx:Strings.LessonSubjectLabel}" Value="{Binding Lesson.Topic}" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</forms:ContentView>

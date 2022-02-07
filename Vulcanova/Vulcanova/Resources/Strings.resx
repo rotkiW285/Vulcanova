@@ -93,4 +93,16 @@
     <data name="AttendanceTabTitle" xml:space="preserve">
         <value>Attendance</value>
     </data>
+    <data name="LessonTimeValueLabel" xml:space="preserve">
+        <value>{0:HH:mm} – {1:HH:mm}, Lesson {2}</value>
+    </data>
+    <data name="LessonTimeLabel" xml:space="preserve">
+        <value>Time</value>
+    </data>
+    <data name="LessonDateLabel" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="LessonSubjectLabel" xml:space="preserve">
+        <value>Subject</value>
+    </data>
 </root>

@@ -86,4 +86,16 @@
     <data name="AttendanceTabTitle" xml:space="preserve">
         <value>Frekwencja</value>
     </data>
+    <data name="LessonTimeValueLabel" xml:space="preserve">
+        <value>{0:HH:mm} – {1:HH:mm}, Lekcja {2}</value>
+    </data>
+    <data name="LessonTimeLabel" xml:space="preserve">
+        <value>Pora</value>
+    </data>
+    <data name="LessonDateLabel" xml:space="preserve">
+        <value>Data</value>
+    </data>
+    <data name="LessonSubjectLabel" xml:space="preserve">
+        <value>Temat</value>
+    </data>
 </root>

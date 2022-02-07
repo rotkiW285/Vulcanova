@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
@@ -15,10 +16,13 @@ namespace Vulcanova.Features.Attendance
     {
         public ReactiveCommand<DateTime, IReadOnlyDictionary<DateTime, List<Lesson>>> GetTimetableEntries { get; }
 
+        public ReactiveCommand<int, Unit> ShowLessonDetails { get; }
+
         [ObservableAsProperty] public IReadOnlyDictionary<DateTime, List<Lesson>> Entries { get; }
 
         [Reactive] public List<Lesson> CurrentDayEntries { get; private set; }
         [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
+        [Reactive] public Lesson SelectedLesson { get; set; }
 
         private readonly ILessonsService _lessonsService;
 
@@ -33,6 +37,13 @@ namespace Vulcanova.Features.Attendance
                 GetEntries(accountContext.AccountId, date, false));
 
             GetTimetableEntries.ToPropertyEx(this, vm => vm.Entries);
+            
+            ShowLessonDetails = ReactiveCommand.Create((int lessonId) =>
+            {
+                SelectedLesson = CurrentDayEntries?.First(g => g.Id == lessonId);
+
+                return Unit.Default;
+            });
 
             this.WhenAnyValue(vm => vm.SelectedDay)
                 .Subscribe((d) =>

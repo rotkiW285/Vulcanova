@@ -70,5 +70,9 @@
         <DependentUpon>SlidingUpPanel.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Features\Attendance\LessonDetails\LessonDetailsView.xaml.cs">
+        <DependentUpon>LessonDetailsView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

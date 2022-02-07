@@ -194,5 +194,29 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("AttendanceTabTitle", resourceCulture);
             }
         }
+        
+        internal static string LessonTimeValueLabel {
+            get {
+                return ResourceManager.GetString("LessonTimeValueLabel", resourceCulture);
+            }
+        }
+        
+        internal static string LessonTimeLabel {
+            get {
+                return ResourceManager.GetString("LessonTimeLabel", resourceCulture);
+            }
+        }
+        
+        internal static string LessonDateLabel {
+            get {
+                return ResourceManager.GetString("LessonDateLabel", resourceCulture);
+            }
+        }
+        
+        internal static string LessonSubjectLabel {
+            get {
+                return ResourceManager.GetString("LessonSubjectLabel", resourceCulture);
+            }
+        }
     }
 }
