@@ -86,13 +86,13 @@ namespace Vulcanova.Core.Layout.Controls
 
             if (open)
             {
-                Sheet.TranslateTo(0, Sheet.Padding.Bottom, 150);
-                Backdrop.FadeTo(0.2);
+                Sheet.TranslationY = Sheet.Padding.Bottom;
+                Backdrop.Opacity = 0.2;
             }
             else
             {
-                Sheet.TranslateTo(0, SlidingPanel.Height, 150);
-                Backdrop.FadeTo(0);
+                Sheet.TranslationY = SlidingPanel.Height;
+                Backdrop.Opacity = 0;
             }
         }
     }

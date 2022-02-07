@@ -4,6 +4,8 @@ using Android.Graphics;
 using Android.Runtime;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
+using OliveTree.Transitions;
+using OliveTree.Transitions.Droid;
 
 namespace Vulcanova.Android
 {
@@ -21,6 +23,8 @@ namespace Vulcanova.Android
             CachedImageRenderer.Init(true);
 
             XamEffects.Droid.Effects.Init();
+
+            TransitionsLibrary.Register<Provider>();
 
             GoogleVisionBarCodeScanner.Droid.RendererInitializer.Init();
             
