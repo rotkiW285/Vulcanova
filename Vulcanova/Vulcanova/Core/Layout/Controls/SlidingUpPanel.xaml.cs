@@ -87,12 +87,12 @@ namespace Vulcanova.Core.Layout.Controls
             if (open)
             {
                 Sheet.TranslationY = Sheet.Padding.Bottom;
-                Backdrop.Opacity = 0.2;
+                Backdrop.FadeTo(0.2);
             }
             else
             {
                 Sheet.TranslationY = SlidingPanel.Height;
-                Backdrop.Opacity = 0;
+                Backdrop.FadeTo(0);
             }
         }
     }

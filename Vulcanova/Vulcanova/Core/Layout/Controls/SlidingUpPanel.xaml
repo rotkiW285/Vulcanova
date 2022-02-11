@@ -15,11 +15,6 @@
                          RelativeLayout.YConstraint="-1000"
                          RelativeLayout.HeightConstraint="2000" RelativeLayout.WidthConstraint="5000"
                          BackgroundColor="Black">
-                    <trans:Interaction.Transitions>
-                        <trans:TransitionCollection>
-                            <trans:OpacityTransition />
-                        </trans:TransitionCollection>
-                    </trans:Interaction.Transitions>
                     <BoxView.GestureRecognizers>
                         <TapGestureRecognizer x:Name="TapGestureRecognizer" />
                     </BoxView.GestureRecognizers>
