@@ -10,6 +10,7 @@ namespace Vulcanova.Features.Timetable
         public TimetableMapperProfile()
         {
             CreateMap<ScheduleEntryPayload, TimetableEntry>()
+                .ForMember(dest => dest.No, cfg => cfg.MapFrom(src => src.TimeSlot.Position))
                 .ForMember(dest => dest.RoomName, cfg => cfg.MapFrom(src => src.Room.Code))
                 .ForMember(dest => dest.TeacherName, cfg => cfg.MapFrom(src => src.TeacherPrimary.DisplayName))
                 .ForMember(dest => dest.Start,

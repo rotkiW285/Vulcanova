@@ -86,16 +86,14 @@ namespace Vulcanova.Features.Timetable
             foreach (var group in groups)
             {
                 var entries = new List<TimetableListEntry>();
-                foreach (var (lesson, i) in group
-                             .OrderBy(e => e.Start)
-                             .Select((item, i) => (item, i)))
+                foreach (var lesson in group.OrderBy(e => e.Start))
                 {
                     var change = timetableChangeEntries
                         .FirstOrDefault(c => c.TimetableEntryId == lesson.Id);
 
                     var entry = new TimetableListEntry
                     {
-                        No = i + 1,
+                        No = lesson.No,
                         Start = lesson.Start,
                         End = lesson.End,
                         SubjectName = change?.Subject?.Name ?? lesson.Subject.Name,

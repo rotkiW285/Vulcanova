@@ -6,6 +6,7 @@ namespace Vulcanova.Features.Timetable
     public class TimetableEntry
     {
         public int Id { get; set; }
+        public int No { get; set; }
         public int PupilId { get; set; }
         public int AccountId { get; set; }
         public DateTime Start { get; set; }
