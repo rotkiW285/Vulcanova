@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
@@ -14,7 +15,9 @@ namespace Vulcanova.Features.Timetable
 {
     public class TimetableViewModel : ViewModelBase
     {
-        public ReactiveCommand<DateTime, IReadOnlyDictionary<DateTime, IEnumerable<TimetableListEntry>>> GetTimetableEntries { get; }
+        private ReactiveCommand<bool, IReadOnlyDictionary<DateTime, IEnumerable<TimetableListEntry>>> GetTimetableEntries { get; }
+
+        public ReactiveCommand<Unit, IReadOnlyDictionary<DateTime, IEnumerable<TimetableListEntry>>> ForceRefreshTimetableEntries { get; }
 
         [ObservableAsProperty] public IReadOnlyDictionary<DateTime, IEnumerable<TimetableListEntry>> Entries { get; }
 
@@ -33,8 +36,12 @@ namespace Vulcanova.Features.Timetable
             _timetableService = timetableService;
             _timetableChangesService = timetableChangesService;
 
-            GetTimetableEntries = ReactiveCommand.CreateFromObservable((DateTime date) =>
-                GetEntries(accountContext.AccountId, date, false));
+            GetTimetableEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
+                GetEntries(accountContext.AccountId, SelectedDay, forceSync)
+                    .SubscribeOn(RxApp.TaskpoolScheduler));
+
+            ForceRefreshTimetableEntries = ReactiveCommand.CreateFromObservable(() =>
+                GetTimetableEntries.Execute(true));
 
             GetTimetableEntries.ToPropertyEx(this, vm => vm.Entries);
 
@@ -43,7 +50,7 @@ namespace Vulcanova.Features.Timetable
                 {
                     if (Entries == null || !Entries.TryGetValue(SelectedDay.Date, out _))
                     {
-                        GetTimetableEntries.Execute(d).SubscribeAndIgnoreErrors();
+                        GetTimetableEntries.Execute(false).SubscribeAndIgnoreErrors();
                     }
                 });
 
@@ -79,7 +86,7 @@ namespace Vulcanova.Features.Timetable
             var result = new Dictionary<DateTime, IEnumerable<TimetableListEntry>>();
 
             var groups = lessons.Where(l => l.Visible).GroupBy(e => e.Date.Date);
-            
+
             // avoid multiple enumerations
             var timetableChangeEntries = changes as TimetableChangeEntry[] ?? changes.ToArray();
 
