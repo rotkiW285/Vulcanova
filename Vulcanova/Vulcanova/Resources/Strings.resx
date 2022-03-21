@@ -111,4 +111,7 @@
     <data name="NoAttendanceLabel" xml:space="preserve">
         <value>No Attendance</value>
     </data>
+    <data name="ExamsTabTitle" xml:space="preserve">
+        <value>Exams</value>
+    </data>
 </root>

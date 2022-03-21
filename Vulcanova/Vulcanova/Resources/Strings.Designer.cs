@@ -230,5 +230,11 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("NoAttendanceLabel", resourceCulture);
             }
         }
+        
+        internal static string ExamsTabTitle {
+            get {
+                return ResourceManager.GetString("ExamsTabTitle", resourceCulture);
+            }
+        }
     }
 }
