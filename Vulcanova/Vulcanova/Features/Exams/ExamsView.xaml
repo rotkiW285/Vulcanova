@@ -34,7 +34,7 @@
                         <CollectionView.GroupHeaderTemplate>
                             <DataTemplate x:DataType="local:ExamsGroup">
                                 <Label Text="{Binding Date, StringFormat='{0:dddd} {0:d}'}"
-                                       BackgroundColor="LightGray" Padding="8" />
+                                       Style="{DynamicResource HeaderStyle}" Padding="8" />
                             </DataTemplate>
                         </CollectionView.GroupHeaderTemplate>
                         <CollectionView.ItemTemplate>
