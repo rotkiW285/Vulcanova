@@ -9,15 +9,15 @@ Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzon
 - szczęśliwy numerek
 - oceny
 - plan lekcji
-- obecność/frekwencja
-- sprawdziany/kartkówki
+- frekwencja
+- sprawdziany
 
 ## Co jest planowane?
 - wiadomości
 - dashboard
-- prace domowe/zadania
-- punkty (za zachowanie)
-I wiele więcej!
+- zadania domowe
+- uwagi
+- …i wiele więcej :)
 
 ## Wykorzystane projekty
 * [kapi2289/vulcan-api](https://github.com/kapi2289/vulcan-api/)

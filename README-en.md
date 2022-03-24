@@ -17,7 +17,7 @@ An unofficial Vulcan UONET+ mobile cross-platform register client made in Xamari
 - dashboard
 - homework
 - notes (points)
-And more!
+- …and more :)
 
 ## Credits
 * [kapi2289/vulcan-api](https://github.com/kapi2289/vulcan-api/)
