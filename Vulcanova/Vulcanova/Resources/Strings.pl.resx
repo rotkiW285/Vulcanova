@@ -18,7 +18,7 @@
         <value>Skanuj kod QR</value>
     </data>
     <data name="NoExamsLabel" xml:space="preserve">
-        <value>Brak sprawdzianów w tym tygodniu</value>
+        <value>Brak sprawdzianów w wybranym tygodniu</value>
     </data>
     <data name="SignInManuallyButton" xml:space="preserve">
         <value>Wpisz dane ręcznie</value>
@@ -33,7 +33,7 @@
         <value>Wpisz poniżej dane z zakładki 'Dodaj konto' w przeglądarkowej wersji dziennika</value>
     </data>
     <data name="NoLessonsLabel" xml:space="preserve">
-        <value>Brak lekcji w tym dniu</value>
+        <value>Brak lekcji w wybranym dniu</value>
     </data>
     <data name="AddButton" xml:space="preserve">
         <value>Dodaj</value>

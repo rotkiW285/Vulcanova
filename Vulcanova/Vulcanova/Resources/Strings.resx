@@ -91,7 +91,7 @@
         <value>No lessons for the selected day</value>
     </data>
     <data name="NoExamsLabel" xml:space="preserve">
-        <value>No exams for this week</value>
+        <value>No exams for the selected week</value>
     </data>
     <data name="TimetableTabTitle" xml:space="preserve">
         <value>Timetable</value>
