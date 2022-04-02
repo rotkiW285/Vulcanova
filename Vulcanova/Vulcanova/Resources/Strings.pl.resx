@@ -113,4 +113,22 @@
     <data name="ExamsTabTitle" xml:space="preserve">
         <value>Sprawdziany</value>
     </data>
+    <data name="ExamsSubjectLabel" xml:space="preserve">
+        <value>Przedmiot</value>
+    </data>
+    <data name="ExamsCreatorLabel" xml:space="preserve">
+        <value>Zapowiedziany przez</value>
+    </data>
+    <data name="ExamsDeadlineLabel" xml:space="preserve">
+        <value>Termin</value>
+    </data>
+    <data name="ExamsTypeLabel" xml:space="preserve">
+        <value>Typ</value>
+    </data>
+    <data name="ExamsCommentLabel" xml:space="preserve">
+        <value>Opis</value>
+    </data>
+    <data name="ExamsCreatedOnLabel" xml:space="preserve">
+        <value>Dodano</value>
+    </data>
 </root>

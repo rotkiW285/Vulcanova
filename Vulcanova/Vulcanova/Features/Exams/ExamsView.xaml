@@ -8,6 +8,7 @@
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+                          xmlns:examDetails="clr-namespace:Vulcanova.Features.Exams.ExamDetails;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.ExamsTabTitle}"
                           IconImageSource="{OnPlatform iOS=calendar-number-outline@3x.png, Android=ic_calendar_number}"
                           x:Class="Vulcanova.Features.Exams.ExamsView">
@@ -69,6 +70,7 @@
                 </RefreshView>
             </StackLayout>
             <controls:SlidingUpPanel x:Name="Panel" Open="False">
+                <examDetails:ExamDetailsView x:Name="DetailsView" />
             </controls:SlidingUpPanel>
         </Grid>
     </ContentPage.Content>

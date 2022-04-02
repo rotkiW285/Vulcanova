@@ -177,15 +177,21 @@ namespace Vulcanova.Resources {
             }
         }
         
-        internal static string NoExamsLabel {
-            get {
-                return ResourceManager.GetString("NoExamsLabel", resourceCulture);
-            }
-        }
-        
         internal static string NoPredictedGradesLabel {
             get {
                 return ResourceManager.GetString("NoPredictedGradesLabel", resourceCulture);
+            }
+        }
+        
+        internal static string NoLessonsLabel {
+            get {
+                return ResourceManager.GetString("NoLessonsLabel", resourceCulture);
+            }
+        }
+        
+        internal static string NoExamsLabel {
+            get {
+                return ResourceManager.GetString("NoExamsLabel", resourceCulture);
             }
         }
         
@@ -210,12 +216,6 @@ namespace Vulcanova.Resources {
         internal static string LessonTimeLabel {
             get {
                 return ResourceManager.GetString("LessonTimeLabel", resourceCulture);
-            }
-        }
-        
-        internal static string NoLessonsLabel {
-            get {
-                return ResourceManager.GetString("NoLessonsLabel", resourceCulture);
             }
         }
         
@@ -246,6 +246,42 @@ namespace Vulcanova.Resources {
         internal static string ExamsTabTitle {
             get {
                 return ResourceManager.GetString("ExamsTabTitle", resourceCulture);
+            }
+        }
+        
+        internal static string ExamsSubjectLabel {
+            get {
+                return ResourceManager.GetString("ExamsSubjectLabel", resourceCulture);
+            }
+        }
+        
+        internal static string ExamsCreatorLabel {
+            get {
+                return ResourceManager.GetString("ExamsCreatorLabel", resourceCulture);
+            }
+        }
+        
+        internal static string ExamsDeadlineLabel {
+            get {
+                return ResourceManager.GetString("ExamsDeadlineLabel", resourceCulture);
+            }
+        }
+        
+        internal static string ExamsTypeLabel {
+            get {
+                return ResourceManager.GetString("ExamsTypeLabel", resourceCulture);
+            }
+        }
+        
+        internal static string ExamsCommentLabel {
+            get {
+                return ResourceManager.GetString("ExamsCommentLabel", resourceCulture);
+            }
+        }
+        
+        internal static string ExamsCreatedOnLabel {
+            get {
+                return ResourceManager.GetString("ExamsCreatedOnLabel", resourceCulture);
             }
         }
     }

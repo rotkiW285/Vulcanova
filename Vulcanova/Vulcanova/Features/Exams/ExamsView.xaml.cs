@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -30,6 +31,19 @@ namespace Vulcanova.Features.Exams
                     .DisposeWith(disposable);
 
                 this.BindCommand(ViewModel, vm => vm.ForceRefreshExams, v => v.RefreshView)
+                    .DisposeWith(disposable);
+
+                this.OneWayBind(ViewModel, vm => vm.SelectedExam, v => v.DetailsView.Exam)
+                    .DisposeWith(disposable);
+
+                this.WhenAnyValue(v => v.ViewModel.SelectedExam)
+                    .Skip(1)
+                    .Subscribe(sub => Panel.Open = sub != null)
+                    .DisposeWith(disposable);
+
+                this.WhenAnyValue(v => v.Panel.Open)
+                    .Where(val => val == false)
+                    .Subscribe(_ => ViewModel!.SelectedExam = null)
                     .DisposeWith(disposable);
             });
         }

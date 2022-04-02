@@ -120,4 +120,22 @@
     <data name="ExamsTabTitle" xml:space="preserve">
         <value>Exams</value>
     </data>
+    <data name="ExamsSubjectLabel" xml:space="preserve">
+        <value>Subject</value>
+    </data>
+    <data name="ExamsCreatorLabel" xml:space="preserve">
+        <value>Created by</value>
+    </data>
+    <data name="ExamsDeadlineLabel" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="ExamsTypeLabel" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="ExamsCommentLabel" xml:space="preserve">
+        <value>Comment</value>
+    </data>
+    <data name="ExamsCreatedOnLabel" xml:space="preserve">
+        <value>Created on</value>
+    </data>
 </root>
