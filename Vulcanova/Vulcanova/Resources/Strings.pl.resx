@@ -17,6 +17,9 @@
     <data name="ScanQrCodeButton" xml:space="preserve">
         <value>Skanuj kod QR</value>
     </data>
+    <data name="NoLuckyNumber" xml:space="preserve">
+        <value>Brak numerku na dzisiaj</value>
+    </data>
     <data name="NoExamsLabel" xml:space="preserve">
         <value>Brak sprawdzianów w wybranym tygodniu</value>
     </data>
