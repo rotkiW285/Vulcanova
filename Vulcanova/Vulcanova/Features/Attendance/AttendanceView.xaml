@@ -9,7 +9,6 @@
                           xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                           xmlns:lessonDetails="clr-namespace:Vulcanova.Features.Attendance.LessonDetails;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.AttendanceTabTitle}"
-                          IconImageSource="{OnPlatform iOS=checkmark-done-outline@3x.png, Android=ic_checkmark_done}"
                           x:Class="Vulcanova.Features.Attendance.AttendanceView">
     <ContentPage.Content>
         <Grid>

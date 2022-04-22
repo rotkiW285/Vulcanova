@@ -10,7 +10,6 @@
                           xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
                           xmlns:examDetails="clr-namespace:Vulcanova.Features.Exams.ExamDetails;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.ExamsTabTitle}"
-                          IconImageSource="{OnPlatform iOS=calendar-number-outline@3x.png, Android=ic_calendar_number}"
                           x:Class="Vulcanova.Features.Exams.ExamsView">
     <ContentPage.Content>
         <Grid>

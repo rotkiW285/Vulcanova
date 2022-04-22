@@ -7,7 +7,6 @@
                           xmlns:local="clr-namespace:Vulcanova.Features.Timetable;assembly=Vulcanova"
                           xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.TimetableTabTitle}"
-                          IconImageSource="{OnPlatform iOS=calendar-outline@3x.png, Android=ic_calendar}"
                           x:Class="Vulcanova.Features.Timetable.TimetableView">
     <ContentPage.Content>
         <StackLayout>
