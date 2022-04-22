@@ -11,6 +11,7 @@ using Vulcanova.Features.Auth;
 using Vulcanova.Features.Exams;
 using Vulcanova.Features.Grades;
 using Vulcanova.Features.LuckyNumber;
+using Vulcanova.Features.Settings;
 using Vulcanova.Features.Shared;
 using Vulcanova.Features.Timetable;
 using Xamarin.Forms.Xaml;
@@ -68,6 +69,8 @@ namespace Vulcanova
             containerRegistry.RegisterTimetable();
             containerRegistry.RegisterAttendance();
             containerRegistry.RegisterExams();
+
+            containerRegistry.RegisterSettings();
 
             containerRegistry.RegisterUonet();
         }

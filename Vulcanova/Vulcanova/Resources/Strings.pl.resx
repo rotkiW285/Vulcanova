@@ -134,4 +134,22 @@
     <data name="ExamsCreatedOnLabel" xml:space="preserve">
         <value>Dodano</value>
     </data>
+    <data name="SettingsTabTitle" xml:space="preserve">
+        <value>Ustawienia</value>
+    </data>
+    <data name="SettingsViewGradesSection" xml:space="preserve">
+        <value>Oceny</value>
+    </data>
+    <data name="GradesSettingsValueOfPlus" xml:space="preserve">
+        <value>Wartość plusa</value>
+    </data>
+    <data name="GradesSettingsValueOfMinus" xml:space="preserve">
+        <value>Wartość minusa</value>
+    </data>
+    <data name="SettingsCustomValueLabel" xml:space="preserve">
+        <value>Własna wartość</value>
+    </data>
+    <data name="SettingsCustomOptionText" xml:space="preserve">
+        <value>Własna</value>
+    </data>
 </root>

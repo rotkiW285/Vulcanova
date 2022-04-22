@@ -290,5 +290,41 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("ExamsCreatedOnLabel", resourceCulture);
             }
         }
+        
+        internal static string SettingsTabTitle {
+            get {
+                return ResourceManager.GetString("SettingsTabTitle", resourceCulture);
+            }
+        }
+        
+        internal static string SettingsViewGradesSection {
+            get {
+                return ResourceManager.GetString("SettingsViewGradesSection", resourceCulture);
+            }
+        }
+        
+        internal static string GradesSettingsValueOfPlus {
+            get {
+                return ResourceManager.GetString("GradesSettingsValueOfPlus", resourceCulture);
+            }
+        }
+        
+        internal static string GradesSettingsValueOfMinus {
+            get {
+                return ResourceManager.GetString("GradesSettingsValueOfMinus", resourceCulture);
+            }
+        }
+        
+        internal static string SettingsCustomValueLabel {
+            get {
+                return ResourceManager.GetString("SettingsCustomValueLabel", resourceCulture);
+            }
+        }
+        
+        internal static string SettingsCustomOptionText {
+            get {
+                return ResourceManager.GetString("SettingsCustomOptionText", resourceCulture);
+            }
+        }
     }
 }
