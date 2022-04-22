@@ -27,7 +27,7 @@ jobs:
       run: nuget restore
 
     - name: Build
-      run: msbuild Vulcanova/Vulcanova.Android/Vulcanova.Android.csproj /t:PackageForAndroid /t:SignAndroidPackage /p:Configuration=Debug
+      run: msbuild Vulcanova/Vulcanova.Android/Vulcanova.Android.csproj /t:PackageForAndroid /t:SignAndroidPackage /p:Configuration=Release
       
     - name: Upload artifact
       uses: actions/upload-artifact@v2
