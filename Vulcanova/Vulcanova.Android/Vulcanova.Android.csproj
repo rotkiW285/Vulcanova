@@ -48,7 +48,6 @@
         <PackageReference Include="BarcodeScanner.XF" Version="5.0.9" />
         <PackageReference Include="SkiaSharp" Version="2.80.3" />
         <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
-        <PackageReference Include="Xamarin.Google.Android.Material" Version="1.4.0.6" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="MainActivity.cs" />
@@ -67,10 +66,6 @@
         <AndroidResource Include="Resources\drawable\ic_medal_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_settings_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_star_outline.xml" />
-        <AndroidResource Include="Resources\layout\material_entry.xml">
-          <SubType>Designer</SubType>
-          <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-        </AndroidResource>
         <AndroidResource Include="Resources\layout\Tabbar.axml" />
         <AndroidResource Include="Resources\layout\Toolbar.axml" />
         <AndroidResource Include="Resources\values\styles.xml" />
