@@ -40,4 +40,4 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        path: Vulcanova/Vulcanova.Android/bin/Release/com.companyname.Vulcanova-Signed.apk
+        path: Vulcanova/Vulcanova.Android/bin/Release/io.github.vulcanova-Signed.apk
