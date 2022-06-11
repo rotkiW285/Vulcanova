@@ -19,7 +19,7 @@ namespace Vulcanova.Resources {
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
-
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Strings() {
         }
@@ -123,6 +123,12 @@ namespace Vulcanova.Resources {
             }
         }
         
+        internal static string NoLuckyNumber {
+            get {
+                return ResourceManager.GetString("NoLuckyNumber", resourceCulture);
+            }
+        }
+        
         internal static string GradeCreatedDateLabel {
             get {
                 return ResourceManager.GetString("GradeCreatedDateLabel", resourceCulture);
@@ -201,12 +207,6 @@ namespace Vulcanova.Resources {
             }
         }
         
-        internal static string NoLuckyNumber {
-            get {
-                return ResourceManager.GetString("NoLuckyNumber", resourceCulture);
-            }
-        }
-        
         internal static string AttendanceTabTitle {
             get {
                 return ResourceManager.GetString("AttendanceTabTitle", resourceCulture);
@@ -218,7 +218,7 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("LessonTimeValueLabel", resourceCulture);
             }
         }
-
+        
         internal static string LessonTimeLabel {
             get {
                 return ResourceManager.GetString("LessonTimeLabel", resourceCulture);
@@ -324,6 +324,12 @@ namespace Vulcanova.Resources {
         internal static string SettingsCustomOptionText {
             get {
                 return ResourceManager.GetString("SettingsCustomOptionText", resourceCulture);
+            }
+        }
+        
+        internal static string FinalGradesAverage {
+            get {
+                return ResourceManager.GetString("FinalGradesAverage", resourceCulture);
             }
         }
     }

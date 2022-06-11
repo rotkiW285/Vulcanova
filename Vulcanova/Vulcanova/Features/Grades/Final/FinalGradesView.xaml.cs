@@ -43,6 +43,13 @@ namespace Vulcanova.Features.Grades.Final
                 this.BindCommand(ViewModel, vm => vm.ForceRefreshGrades, v => v.RefreshView)
                     .DisposeWith(disposable);
 
+                this.OneWayBind(ViewModel, vm => vm.FinalAverage, v => v.FinalAverage.Text,
+                        value => value?.ToString("F2"))
+                    .DisposeWith(disposable);
+
+                this.OneWayBind(ViewModel, vm => vm.FinalAverage, v => v.FinalAverageContainer.IsVisible,
+                    value => value != null);
+
                 this.WhenAnyValue(v => v.PeriodId)
                     .WhereNotNull()
                     .Subscribe((val) => ViewModel!.PeriodId = val!.Value)

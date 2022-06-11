@@ -159,4 +159,7 @@
     <data name="SettingsCustomOptionText" xml:space="preserve">
         <value>Custom</value>
     </data>
+    <data name="FinalGradesAverage" xml:space="preserve">
+        <value>Final grades average</value>
+    </data>
 </root>
