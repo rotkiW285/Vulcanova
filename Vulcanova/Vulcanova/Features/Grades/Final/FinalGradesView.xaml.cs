@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System;
 using System.Linq;
+using Vulcanova.Core.Rx;
 
 namespace Vulcanova.Features.Grades.Final
 {
@@ -40,7 +41,7 @@ namespace Vulcanova.Features.Grades.Final
                     })
                     .DisposeWith(disposable);
 
-                this.BindCommand(ViewModel, vm => vm.ForceRefreshGrades, v => v.RefreshView)
+                this.BindForceRefresh(RefreshView, v => v.ViewModel.GetFinalGrades, true)
                     .DisposeWith(disposable);
 
                 this.OneWayBind(ViewModel, vm => vm.FinalAverage, v => v.FinalAverage.Text,
@@ -53,16 +54,6 @@ namespace Vulcanova.Features.Grades.Final
                 this.WhenAnyValue(v => v.PeriodId)
                     .WhereNotNull()
                     .Subscribe((val) => ViewModel!.PeriodId = val!.Value)
-                    .DisposeWith(disposable);
-
-                ViewModel?.GetFinalGrades.IsExecuting
-                    .Subscribe((value) =>
-                    {
-                        if (!value)
-                        {
-                            RefreshView.IsRefreshing = false;
-                        }
-                    })
                     .DisposeWith(disposable);
             });
         }

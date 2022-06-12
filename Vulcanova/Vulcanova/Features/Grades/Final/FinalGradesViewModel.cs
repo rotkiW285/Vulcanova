@@ -14,10 +14,9 @@ namespace Vulcanova.Features.Grades.Final
 {
     public class FinalGradesViewModel : ViewModelBase
     {
-        public ReactiveCommand<int, IEnumerable<FinalGradesEntry>> GetFinalGrades { get; }
-        public ReactiveCommand<Unit, IEnumerable<FinalGradesEntry>> ForceRefreshGrades { get; }
+        public ReactiveCommand<bool, IEnumerable<FinalGradesEntry>> GetFinalGrades { get; }
 
-        [ObservableAsProperty] public IEnumerable<FinalGradesEntry> FinalGrades { get; }
+        [ObservableAsProperty] public IEnumerable<FinalGradesEntry> FinalGrades { get; private set; }
 
         [Reactive] public int? PeriodId { get; set; }
         [Reactive] public decimal? FinalAverage { get; private set; }
@@ -28,20 +27,16 @@ namespace Vulcanova.Features.Grades.Final
             AccountContext accountContext,
             AppSettings settings) : base(navigationService)
         {
-            GetFinalGrades = ReactiveCommand.CreateFromObservable((int periodId) =>
+            GetFinalGrades = ReactiveCommand.CreateFromObservable((bool forceSync) =>
                 finalGradesService
-                    .GetPeriodGrades(accountContext.AccountId, periodId, false));
+                    .GetPeriodGrades(accountContext.AccountId, PeriodId!.Value, forceSync)
+                    .SubscribeOn(RxApp.TaskpoolScheduler));
 
-            ForceRefreshGrades = ReactiveCommand.CreateFromObservable(() =>
-                    finalGradesService
-                        .GetPeriodGrades(accountContext.AccountId, PeriodId!.Value, true),
-                this.WhenAnyValue(vm => vm.PeriodId).Select(value => value != null));
+            GetFinalGrades.ToPropertyEx(this, vm => vm.FinalGrades);
 
             this.WhenAnyValue(vm => vm.PeriodId)
                 .WhereNotNull()
-                .Subscribe(v => GetFinalGrades.Execute(v!.Value).SubscribeAndIgnoreErrors());
-
-            GetFinalGrades.ToPropertyEx(this, vm => vm.FinalGrades);
+                .Subscribe(v => GetFinalGrades.Execute().SubscribeAndIgnoreErrors());
 
             var modifiersObservable = settings
                 .WhenAnyValue(s => s.Modifiers.PlusSettings.SelectedValue, s => s.Modifiers.MinusSettings.SelectedValue)
