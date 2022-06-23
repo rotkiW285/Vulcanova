@@ -8,12 +8,13 @@
                           xmlns:local="clr-namespace:Vulcanova.Features.Attendance;assembly=Vulcanova"
                           xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                           xmlns:lessonDetails="clr-namespace:Vulcanova.Features.Attendance.LessonDetails;assembly=Vulcanova"
+                          xmlns:calendar="clr-namespace:Vulcanova.Core.Layout.Controls.Calendar;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.AttendanceTabTitle}"
                           x:Class="Vulcanova.Features.Attendance.AttendanceView">
     <ContentPage.Content>
         <Grid>
             <StackLayout>
-                <controls:Calendar
+                <calendar:Calendar
                     x:Name="Calendar"
                     Padding="0, 10"
                     SelectedColor="{AppThemeBinding Dark={StaticResource DarkTranslucentPrimaryColor}, Light={StaticResource LightTranslucentPrimaryColor}}"

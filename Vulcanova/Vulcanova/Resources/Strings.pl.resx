@@ -155,4 +155,16 @@
     <data name="FinalGradesAverage" xml:space="preserve">
         <value>Średnia ocen końcowych</value>
     </data>
+    <data name="ShowErrorDetails" xml:space="preserve">
+        <value>Szczegóły</value>
+    </data>
+    <data name="ErrorAlertTitle" xml:space="preserve">
+        <value>Błąd</value>
+    </data>
+    <data name="ReportErrorButton" xml:space="preserve">
+        <value>Zgłoś</value>
+    </data>
+    <data name="IgnoreErrorButton" xml:space="preserve">
+        <value>Zignoruj</value>
+    </data>
 </root>

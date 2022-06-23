@@ -12,6 +12,7 @@
         <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
         <AssemblyName>Vulcanova.iOS</AssemblyName>
         <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
         <DebugSymbols>true</DebugSymbols>
@@ -99,6 +100,7 @@
         <Compile Include="NativeOptionCell.cs" />
         <Compile Include="OptionCellRenderer.cs" />
         <Compile Include="SvgTabbedPageRenderer.cs" />
+        <Compile Include="UiHelper.cs" />
         <None Include="Entitlements.plist" />
         <None Include="Info.plist" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,6 +127,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="BarcodeScanner.XF" Version="5.0.9" />
+        <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
         <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
         <PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />
     </ItemGroup>

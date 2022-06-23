@@ -41,7 +41,7 @@ namespace Vulcanova.Features.Grades.Summary
 
             GetGrades.ToPropertyEx(this, vm => vm.RawGrades);
 
-            GetGrades.IsExecuting.ToPropertyEx(this, vm => vm.IsSyncing);   
+            GetGrades.IsExecuting.ToPropertyEx(this, vm => vm.IsSyncing);
 
             ShowSubjectGradesDetails = ReactiveCommand.Create((int subjectId) =>
             {

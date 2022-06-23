@@ -21,6 +21,8 @@ namespace Vulcanova.Android
 
             base.OnCreate(savedInstanceState);
 
+            Rg.Plugins.Popup.Popup.Init(this);
+
             CachedImageRenderer.Init(true);
 
             XamEffects.Droid.Effects.Init();

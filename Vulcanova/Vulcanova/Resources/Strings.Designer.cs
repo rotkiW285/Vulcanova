@@ -332,5 +332,29 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("FinalGradesAverage", resourceCulture);
             }
         }
+        
+        internal static string ShowErrorDetails {
+            get {
+                return ResourceManager.GetString("ShowErrorDetails", resourceCulture);
+            }
+        }
+        
+        internal static string ErrorAlertTitle {
+            get {
+                return ResourceManager.GetString("ErrorAlertTitle", resourceCulture);
+            }
+        }
+        
+        internal static string ReportErrorButton {
+            get {
+                return ResourceManager.GetString("ReportErrorButton", resourceCulture);
+            }
+        }
+        
+        internal static string IgnoreErrorButton {
+            get {
+                return ResourceManager.GetString("IgnoreErrorButton", resourceCulture);
+            }
+        }
     }
 }

@@ -23,6 +23,10 @@ namespace Vulcanova.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             
+            Xamarin.Essentials.Platform.Init(UiHelper.GetTopViewController);
+
+            Rg.Plugins.Popup.Popup.Init();
+
             CachedImageRenderer.Init();
             
             Sharpnado.Tabs.iOS.Preserver.Preserve();

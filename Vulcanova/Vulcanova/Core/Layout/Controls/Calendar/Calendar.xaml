@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vulcanova.Core.Layout.Controls.Calendar.Calendar"
+             x:Name="View">
+    <ContentView.GestureRecognizers>
+        <SwipeGestureRecognizer Direction="Left" Swiped="SwipeGestureRecognizer_OnSwiped" />
+        <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_OnSwiped" />
+    </ContentView.GestureRecognizers>
+    <ContentView.Content>
+        <StackLayout>
+            <Label Text="{Binding Source={x:Reference View}, Path=SelectedDate, StringFormat='{0:MMMM yyyy}'}"
+                   HorizontalTextAlignment="Center" />
+            <Grid x:Name="CalendarGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
