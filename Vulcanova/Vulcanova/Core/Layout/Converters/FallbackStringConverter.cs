@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace Vulcanova.Core.Layout
+namespace Vulcanova.Core.Layout.Converters
 {
     public class FallbackStringConverter : IValueConverter
     {

@@ -3,14 +3,14 @@
 <forms:ContentView xmlns:forms="http://xamarin.com/schemas/2014/forms" xmlns="http://xamarin.com/schemas/2014/forms"
                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                    xmlns:grades="clr-namespace:Vulcanova.Features.Grades;assembly=Vulcanova"
-                   xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
                    xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                   xmlns:converters="clr-namespace:Vulcanova.Core.Layout.Converters;assembly=Vulcanova"
                    x:Class="Vulcanova.Features.Grades.SubjectDetails.GradesSubjectDetailsView"
                    x:Name="View">
     <ContentView.Resources>
         <ResourceDictionary>
             <grades:GradeColorConverter x:Key="GradeColorConverter" />
-            <layout:FallbackStringConverter x:Key="FallbackStringConverter" />
+            <converters:FallbackStringConverter x:Key="FallbackStringConverter" />
             <Style ApplyToDerivedTypes="true" TargetType="StackLayout">
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
