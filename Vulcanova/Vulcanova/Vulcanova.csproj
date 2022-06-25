@@ -64,6 +64,7 @@
       <EmbeddedResource Include="Resources\Icons\checkmark-circle.svg" />
       <EmbeddedResource Include="Resources\Icons\close-circle.svg" />
       <EmbeddedResource Include="Resources\Icons\hourglass.svg" />
+      <EmbeddedResource Include="Resources\Icons\alert-circle-outline.svg" />
     </ItemGroup>
 
     <ItemGroup>
@@ -102,10 +103,6 @@
       </Compile>
       <Compile Update="Core\Layout\Controls\Calendar\CalendarDateCell.xaml.cs">
         <DependentUpon>CalendarDateCell.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Core\Layout\Controls\ErrorPopup\ErrorPopup.xaml.cs">
-        <DependentUpon>ErrorPopup.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

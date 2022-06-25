@@ -35,5 +35,10 @@ namespace Vulcanova.Features.Auth
         {
             await _db.GetCollection<Account>().UpdateAsync(account);
         }
+
+        public async Task DeleteByIdAsync(int id)
+        {
+            await _db.GetCollection<Account>().DeleteAsync(id);
+        }
     }
 }

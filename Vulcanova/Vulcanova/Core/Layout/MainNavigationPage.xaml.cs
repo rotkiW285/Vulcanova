@@ -1,7 +1,12 @@
+using System.Reactive;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using FFImageLoading.Svg.Forms;
 using Rg.Plugins.Popup.Contracts;
-using Vulcanova.Core.Layout.Controls.ErrorPopup;
+using Vulcanova.Core.Layout.Controls;
 using Vulcanova.Core.Rx;
+using Vulcanova.Resources;
+using Vulcanova.Uonet.Api;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Core.Layout
@@ -15,7 +20,26 @@ namespace Vulcanova.Core.Layout
 
             Interactions.Errors.RegisterHandler(async ctx =>
             {
-                var popup = new ErrorPopup(ctx.Input, ViewModel.ShowErrorDetails);
+                var (title, message, icon, action, command, parameter) = ctx.Input switch
+                {
+                    VulcanException {StatusCode: 108} => (
+                        Strings.SessionErrorPopupTitle,
+                        Strings.SessionErrorAlertMessage,
+                        SvgImageSource.FromResource("Vulcanova.Resources.Icons.alert-circle-outline.svg"),
+                        Strings.SessionErrorAlertAction,
+                        ViewModel.ShowSignInAlert,
+                        Unit.Default),
+
+                    _ => (
+                        Strings.ErrorAlertTitle,
+                        ctx.Input.Message,
+                        SvgImageSource.FromResource("Vulcanova.Resources.Icons.close-circle.svg"),
+                        Strings.ShowErrorDetails,
+                        (ICommand) ViewModel.ShowErrorDetails,
+                        (object) ctx.Input)
+                };
+
+                var popup = new SnackPopup(title, message, icon, action, command, parameter);
 
                 await navigationService.PushAsync(popup);
 

@@ -356,5 +356,23 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("IgnoreErrorButton", resourceCulture);
             }
         }
+        
+        internal static string SessionErrorPopupTitle {
+            get {
+                return ResourceManager.GetString("SessionErrorPopupTitle", resourceCulture);
+            }
+        }
+        
+        internal static string SessionErrorAlertMessage {
+            get {
+                return ResourceManager.GetString("SessionErrorAlertMessage", resourceCulture);
+            }
+        }
+        
+        internal static string SessionErrorAlertAction {
+            get {
+                return ResourceManager.GetString("SessionErrorAlertAction", resourceCulture);
+            }
+        }
     }
 }

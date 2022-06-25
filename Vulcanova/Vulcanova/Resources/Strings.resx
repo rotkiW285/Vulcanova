@@ -174,4 +174,13 @@
     <data name="IgnoreErrorButton" xml:space="preserve">
         <value>Ignore</value>
     </data>
+    <data name="SessionErrorPopupTitle" xml:space="preserve">
+        <value>Session error</value>
+    </data>
+    <data name="SessionErrorAlertMessage" xml:space="preserve">
+        <value>Sign in required</value>
+    </data>
+    <data name="SessionErrorAlertAction" xml:space="preserve">
+        <value>Sign in</value>
+    </data>
 </root>
