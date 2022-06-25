@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:element name="root" msdata:IsDataSet="true">
-            
-        </xsd:element>
-    </xsd:schema>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -153,11 +147,17 @@
     <data name="GradesSettingsValueOfMinus" xml:space="preserve">
         <value>Value of minus</value>
     </data>
+    <data name="HomeworkTabTitle" xml:space="preserve">
+      <value>Homework</value>
+    </data>
     <data name="SettingsCustomValueLabel" xml:space="preserve">
         <value>Custom value</value>
     </data>
     <data name="SettingsCustomOptionText" xml:space="preserve">
         <value>Custom</value>
+    </data>
+    <data name="NoHomeworkLabel" xml:space="preserve">
+      <value>No homework for the selected week</value>
     </data>
     <data name="FinalGradesAverage" xml:space="preserve">
         <value>Final grades average</value>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <root>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
@@ -89,6 +90,9 @@
     <data name="NoPredictedGradesLabel" xml:space="preserve">
         <value>Żadne oceny końcowe nie zostały wpisane lub dziennik nie umożliwia przeglądania tych danych</value>
     </data>
+    <data name="NoHomeworkLabel" xml:space="preserve">
+      <value>Brak prac domowych w wybranym tygodniu</value>
+    </data>
     <data name="TimetableTabTitle" xml:space="preserve">
         <value>Plan lekcji</value>
     </data>
@@ -145,6 +149,9 @@
     </data>
     <data name="GradesSettingsValueOfMinus" xml:space="preserve">
         <value>Wartość minusa</value>
+    </data>
+    <data name="HomeworkTabTitle" xml:space="preserve">
+      <value>Prace domowe</value>
     </data>
     <data name="SettingsCustomValueLabel" xml:space="preserve">
         <value>Własna wartość</value>
