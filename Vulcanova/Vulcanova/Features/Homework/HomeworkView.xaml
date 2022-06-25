@@ -2,19 +2,20 @@
 
 <rxui:ReactiveContentPage x:TypeArguments="local:HomeworkViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+                          xmlns:calendar="clr-namespace:Vulcanova.Core.Layout.Controls.Calendar;assembly=Vulcanova"
                           xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
                           xmlns:local="clr-namespace:Vulcanova.Features.Homework;assembly=Vulcanova"
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+                          xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.HomeworkTabTitle}"
                           IconImageSource="{OnPlatform iOS=reader-outline@3x.png, Android=ic_reader_outline}"
                           x:Class="Vulcanova.Features.Homework.HomeworkView">
     <ContentPage.Content>
         <Grid>
             <StackLayout>
-                <controls:Calendar
+                <calendar:Calendar
                     x:Name="Calendar"
                     SelectionMode="Week"
                     SelectedColor="{AppThemeBinding Dark={StaticResource DarkTranslucentPrimaryColor}, Light={StaticResource LightTranslucentPrimaryColor}}"
@@ -70,8 +71,7 @@
                     </CollectionView>
                 </RefreshView>
             </StackLayout>
-            <controls:SlidingUpPanel x:Name="Panel" Open="False">
-            </controls:SlidingUpPanel>
+            <controls:SlidingUpPanel x:Name="Panel" Open="False" />
         </Grid>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>
