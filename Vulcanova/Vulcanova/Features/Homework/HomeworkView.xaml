@@ -9,6 +9,8 @@
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
                           xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+                          xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                          ios:Page.UseSafeArea="True"
                           Title="{x:Static resx:Strings.HomeworkTabTitle}"
                           IconImageSource="{OnPlatform iOS=reader-outline@3x.png, Android=ic_reader_outline}"
                           x:Class="Vulcanova.Features.Homework.HomeworkView">

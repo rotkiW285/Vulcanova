@@ -1,3 +1,5 @@
+using Vulcanova.Features.Homework;
+using Vulcanova.Features.LuckyNumber;
 using Vulcanova.Features.Settings;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,22 +13,27 @@ namespace Vulcanova.Core.Layout
         {
             InitializeComponent();
 
-            Page page = new SettingsView();
+            // These pages are expected to be placed in "More" tab.
+            // On iOS this breaks Prism's NavigationService if a page is wrapped in a NavigationPage
+            Page[] pages = {new HomeworkView(), new LuckyNumberView(), new SettingsView()};
 
-            // Settings page is expected to be placed in "More" tab.
-            // On iOS this breaks Prism's NavigationService if wrapped in a NavigationPage
-            if (Device.RuntimePlatform != Device.iOS)
+            foreach (var page in pages)
             {
-                var navigationPage = new NavigationPage(page)
+                var toBeAdded = page;
+                
+                if (Device.RuntimePlatform != Device.iOS)
                 {
-                    Title = page.Title,
-                    IconImageSource = page.IconImageSource
-                };
+                    var navigationPage = new NavigationPage(toBeAdded)
+                    {
+                        Title = toBeAdded.Title,
+                        IconImageSource = toBeAdded.IconImageSource
+                    };
 
-                page = navigationPage;
+                    toBeAdded = navigationPage;
+                }
+
+                Children.Add(toBeAdded);
             }
-
-            Children.Add(page);
         }
     }
 }

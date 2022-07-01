@@ -42,16 +42,5 @@
             <exams:ExamsView />
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="{x:Static resx:Strings.HomeworkTabTitle}"
-                    IconImageSource="{OnPlatform iOS=reader-outline@3x.png, Android=ic_reader_outline}">
-        <x:Arguments>
-            <homework:HomeworkView />
-        </x:Arguments>
-    </NavigationPage>
-    <NavigationPage Title="{x:Static resx:Strings.LuckyNumberTabTitle}"
-                    IconImageSource="{OnPlatform iOS=star-outline@3x.png, Android=ic_star_outline}">
-        <x:Arguments>
-            <luckyNumber:LuckyNumberView />
-        </x:Arguments>
-    </NavigationPage>
+    <!-- For more pages and explanation why they aren't put here see the code-behind file -->
 </layout:SvgTabbedPage>
