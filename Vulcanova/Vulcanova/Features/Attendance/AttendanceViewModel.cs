@@ -14,7 +14,7 @@ namespace Vulcanova.Features.Attendance
 {
     public class AttendanceViewModel : ViewModelBase
     {
-        public ReactiveCommand<DateTime, IReadOnlyDictionary<DateTime, List<Lesson>>> GetTimetableEntries { get; }
+        public ReactiveCommand<bool, IReadOnlyDictionary<DateTime, List<Lesson>>> GetAttendanceEntries { get; }
 
         public ReactiveCommand<int, Unit> ShowLessonDetails { get; }
 
@@ -33,10 +33,10 @@ namespace Vulcanova.Features.Attendance
         {
             _lessonsService = lessonsService;
 
-            GetTimetableEntries = ReactiveCommand.CreateFromObservable((DateTime date) =>
-                GetEntries(accountContext.AccountId, date, false));
+            GetAttendanceEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
+                GetEntries(accountContext.AccountId, SelectedDay, forceSync));
 
-            GetTimetableEntries.ToPropertyEx(this, vm => vm.Entries);
+            GetAttendanceEntries.ToPropertyEx(this, vm => vm.Entries);
             
             ShowLessonDetails = ReactiveCommand.Create((int lessonId) =>
             {
@@ -50,7 +50,7 @@ namespace Vulcanova.Features.Attendance
                 {
                     if (Entries == null || !Entries.TryGetValue(SelectedDay.Date, out _))
                     {
-                        GetTimetableEntries.Execute(d).SubscribeAndIgnoreErrors();
+                        GetAttendanceEntries.Execute(false).SubscribeAndIgnoreErrors();
                     }
                 });
 

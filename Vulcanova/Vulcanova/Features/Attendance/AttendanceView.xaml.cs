@@ -2,6 +2,7 @@ using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
+using Vulcanova.Core.Rx;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Attendance
@@ -34,9 +35,12 @@ namespace Vulcanova.Features.Attendance
                     .Subscribe(_ => ViewModel!.SelectedLesson = null)
                     .DisposeWith(disposable);
                 
-                this.WhenAnyObservable(v => v.ViewModel.GetTimetableEntries.IsExecuting)
+                this.WhenAnyObservable(v => v.ViewModel.GetAttendanceEntries.IsExecuting)
                     .Select(v => !v)
                     .BindTo(NoElementsView, x => x.IsVisible)
+                    .DisposeWith(disposable);
+                
+                this.BindForceRefresh(RefreshView, v => v.ViewModel.GetAttendanceEntries)
                     .DisposeWith(disposable);
             });
         }
