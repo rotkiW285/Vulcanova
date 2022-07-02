@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
+using Vulcanova.Core.Rx;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Homework
@@ -23,7 +24,7 @@ namespace Vulcanova.Features.Homework
                             .Select(g => new HomeworkGroup(g.Key, g.ToList())))
                     .DisposeWith(disposable);
 
-                this.BindCommand(ViewModel, vm => vm.ForceRefreshHomeworks, v => v.RefreshView)
+                this.BindForceRefresh(RefreshView, v => v.ViewModel.GetHomeworks)
                     .DisposeWith(disposable);
             });
         }

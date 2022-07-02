@@ -17,7 +17,6 @@ namespace Vulcanova.Features.Homework
     public class HomeworkViewModel : ViewModelBase
     {
         public ReactiveCommand<bool, ImmutableArray<Homework>> GetHomeworks { get; }
-        public ReactiveCommand<Unit, ImmutableArray<Homework>> ForceRefreshHomeworks { get; }
         public ReactiveCommand<int, Unit> ShowHomeworkDetails { get; }
         
         [ObservableAsProperty] public ImmutableArray<Homework> Entries { get; }
@@ -29,7 +28,11 @@ namespace Vulcanova.Features.Homework
 
         private readonly IHomeworkService _homeworksService;
 
-        public HomeworkViewModel(IHomeworkService homeworksService, AccountContext accountContext, INavigationService navigationService, IPeriodService periodService) : base(navigationService)
+        public HomeworkViewModel(
+            IHomeworkService homeworksService,
+            AccountContext accountContext,
+            INavigationService navigationService,
+            IPeriodService periodService) : base(navigationService)
         {
             _homeworksService = homeworksService;
 
@@ -41,9 +44,6 @@ namespace Vulcanova.Features.Homework
 
             GetHomeworks = ReactiveCommand.CreateFromObservable((bool forceSync) =>
                 GetEntries(accountContext.AccountId, PeriodInfo.CurrentPeriod.Id, forceSync));
-            
-            ForceRefreshHomeworks = ReactiveCommand.CreateFromObservable(() =>
-                GetHomeworks.Execute(true));
 
             GetHomeworks.ToPropertyEx(this, vm => vm.Entries);
 
