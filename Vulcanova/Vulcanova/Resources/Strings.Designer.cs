@@ -453,46 +453,116 @@ namespace Vulcanova.Resources
                 return ResourceManager.GetString("FinalGradesAverage", resourceCulture);
             }
         }
-        
-        internal static string ShowErrorDetails {
-            get {
+
+        internal static string ShowErrorDetails
+        {
+            get
+            {
                 return ResourceManager.GetString("ShowErrorDetails", resourceCulture);
             }
         }
-        
-        internal static string ErrorAlertTitle {
-            get {
+
+        internal static string ErrorAlertTitle
+        {
+            get
+            {
                 return ResourceManager.GetString("ErrorAlertTitle", resourceCulture);
             }
         }
-        
-        internal static string ReportErrorButton {
-            get {
+
+        internal static string ReportErrorButton
+        {
+            get
+            {
                 return ResourceManager.GetString("ReportErrorButton", resourceCulture);
             }
         }
-        
-        internal static string IgnoreErrorButton {
-            get {
+
+        internal static string IgnoreErrorButton
+        {
+            get
+            {
                 return ResourceManager.GetString("IgnoreErrorButton", resourceCulture);
             }
         }
-        
-        internal static string SessionErrorPopupTitle {
-            get {
+
+        internal static string SessionErrorPopupTitle
+        {
+            get
+            {
                 return ResourceManager.GetString("SessionErrorPopupTitle", resourceCulture);
             }
         }
-        
-        internal static string SessionErrorAlertMessage {
-            get {
+
+        internal static string SessionErrorAlertMessage
+        {
+            get
+            {
                 return ResourceManager.GetString("SessionErrorAlertMessage", resourceCulture);
             }
         }
-        
-        internal static string SessionErrorAlertAction {
-            get {
+
+        internal static string SessionErrorAlertAction
+        {
+            get
+            {
                 return ResourceManager.GetString("SessionErrorAlertAction", resourceCulture);
+            }
+        }
+
+        internal static string HomeworkCreatorLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("HomeworkCreatorLabel", resourceCulture);
+            }
+        }
+
+        internal static string HomeworkCreatedOnLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("HomeworkCreatedOnLabel", resourceCulture);
+            }
+        }
+
+        internal static string HomeworkDueLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("HomeworkDueLabel", resourceCulture);
+            }
+        }
+
+        internal static string HomeworkContentLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("HomeworkContentLabel", resourceCulture);
+            }
+        }
+
+        internal static string HomeworkRequiresAnswerLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("HomeworkRequiresAnswerLabel", resourceCulture);
+            }
+        }
+
+        internal static string CommonYes
+        {
+            get
+            {
+                return ResourceManager.GetString("CommonYes", resourceCulture);
+            }
+        }
+
+        internal static string CommonNo
+        {
+            get
+            {
+                return ResourceManager.GetString("CommonNo", resourceCulture);
             }
         }
     }

@@ -9,7 +9,8 @@
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
                           xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
-                          xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+                          xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                          xmlns:homeworkDetails="clr-namespace:Vulcanova.Features.Homework.HomeworkDetails;assembly=Vulcanova"
                           ios:Page.UseSafeArea="True"
                           Title="{x:Static resx:Strings.HomeworkTabTitle}"
                           IconImageSource="{OnPlatform iOS=reader-outline@3x.png, Android=ic_reader_outline}"
@@ -48,6 +49,7 @@
                             <DataTemplate x:DataType="local:Homework">
                                 <StackLayout Padding="0, 1" Spacing="0"
                                              xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
+                                             xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type local:HomeworkViewModel}}, Path=ShowHomeworkDetails}"
                                              xe:Commands.TapParameter="{Binding Id}">
                                     <Grid Padding="16, 8">
                                         <Grid.ColumnDefinitions>
@@ -73,7 +75,9 @@
                     </CollectionView>
                 </RefreshView>
             </StackLayout>
-            <controls:SlidingUpPanel x:Name="Panel" Open="False" />
+            <controls:SlidingUpPanel x:Name="Panel" Open="False">
+                <homeworkDetails:HomeworkDetailsView x:Name="DetailsView" />
+            </controls:SlidingUpPanel>
         </Grid>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>

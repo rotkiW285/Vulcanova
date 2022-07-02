@@ -183,4 +183,25 @@
     <data name="SessionErrorAlertAction" xml:space="preserve">
         <value>Sign in</value>
     </data>
+    <data name="HomeworkCreatorLabel" xml:space="preserve">
+        <value>Created by</value>
+    </data>
+    <data name="HomeworkCreatedOnLabel" xml:space="preserve">
+        <value>Created on</value>
+    </data>
+    <data name="HomeworkDueLabel" xml:space="preserve">
+        <value>Deadline</value>
+    </data>
+    <data name="HomeworkContentLabel" xml:space="preserve">
+        <value>Content</value>
+    </data>
+    <data name="HomeworkRequiresAnswerLabel" xml:space="preserve">
+        <value>Answer required</value>
+    </data>
+    <data name="CommonYes" xml:space="preserve">
+        <value>Yes</value>
+    </data>
+    <data name="CommonNo" xml:space="preserve">
+        <value>No</value>
+    </data>
 </root>

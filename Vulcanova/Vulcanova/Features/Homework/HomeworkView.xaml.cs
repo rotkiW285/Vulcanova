@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
@@ -23,6 +24,19 @@ namespace Vulcanova.Features.Homework
                         ex => ex.GroupBy(x => x.AnswerDeadline)
                             .OrderBy(g => g.Key)
                             .Select(g => new HomeworkGroup(g.Key, g.ToList())))
+                    .DisposeWith(disposable);
+                
+                this.OneWayBind(ViewModel, vm => vm.SelectedHomework, v => v.DetailsView.Homework)
+                    .DisposeWith(disposable);
+
+                this.WhenAnyValue(v => v.ViewModel.SelectedHomework)
+                    .Skip(1)
+                    .Subscribe(sub => Panel.Open = sub != null)
+                    .DisposeWith(disposable);
+
+                this.WhenAnyValue(v => v.Panel.Open)
+                    .Where(val => val == false)
+                    .Subscribe(_ => ViewModel!.SelectedHomework = null)
                     .DisposeWith(disposable);
 
                 this.WhenAnyObservable(v => v.ViewModel.GetHomeworkEntries.IsExecuting)
