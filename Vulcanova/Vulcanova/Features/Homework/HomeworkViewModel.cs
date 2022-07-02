@@ -16,7 +16,7 @@ namespace Vulcanova.Features.Homework
 {
     public class HomeworkViewModel : ViewModelBase
     {
-        public ReactiveCommand<bool, ImmutableArray<Homework>> GetHomeworks { get; }
+        public ReactiveCommand<bool, ImmutableArray<Homework>> GetHomeworkEntries { get; }
         public ReactiveCommand<int, Unit> ShowHomeworkDetails { get; }
         
         [ObservableAsProperty] public ImmutableArray<Homework> Entries { get; }
@@ -42,10 +42,10 @@ namespace Vulcanova.Features.Homework
             accountContext.WhenAnyValue(ctx => ctx.AccountId)
                 .InvokeCommand(setCurrentPeriod);
 
-            GetHomeworks = ReactiveCommand.CreateFromObservable((bool forceSync) =>
+            GetHomeworkEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
                 GetEntries(accountContext.AccountId, PeriodInfo.CurrentPeriod.Id, forceSync));
 
-            GetHomeworks.ToPropertyEx(this, vm => vm.Entries);
+            GetHomeworkEntries.ToPropertyEx(this, vm => vm.Entries);
 
             ShowHomeworkDetails = ReactiveCommand.Create((int lessonId) =>
             {
@@ -62,7 +62,7 @@ namespace Vulcanova.Features.Homework
                 {
                     if (Entries == null || lastDate.Month != d.First.Month)
                     {
-                        GetHomeworks.Execute(false).SubscribeAndIgnoreErrors();
+                        GetHomeworkEntries.Execute(false).SubscribeAndIgnoreErrors();
                     }
                 });
 
