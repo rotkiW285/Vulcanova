@@ -51,6 +51,16 @@ namespace Vulcanova.Features.Grades.Summary
             {
                 CurrentSubject = Grades?.First(g => g.SubjectId == subjectId);
 
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    var view = new GradesSubjectDetailsView
+                    {
+                        Subject = CurrentSubject
+                    };
+
+                    sheetPopper!.PopSheet(view);
+                }
+
                 return Unit.Default;
             });
 
@@ -73,21 +83,6 @@ namespace Vulcanova.Features.Grades.Summary
                     var (grades, _) = values;
                     Grades = ToSubjectGrades(grades, settings.Modifiers);
                 });
-            
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                this.WhenAnyValue(vm => vm.CurrentSubject)
-                    .WhereNotNull()
-                    .Subscribe(subjectGrades =>
-                    {
-                        var view = new GradesSubjectDetailsView
-                        {
-                            Subject = subjectGrades
-                        };
-
-                        sheetPopper!.PopSheet(view);
-                    });
-            }
         }
 
         private static IEnumerable<SubjectGrades> ToSubjectGrades(IEnumerable<Grade> grades, ModifiersSettings modifiers)

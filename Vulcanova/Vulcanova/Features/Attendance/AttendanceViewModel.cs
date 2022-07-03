@@ -46,6 +46,16 @@ namespace Vulcanova.Features.Attendance
             {
                 SelectedLesson = CurrentDayEntries?.First(g => g.Id == lessonId);
 
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    var view = new LessonDetailsView
+                    {
+                        Lesson = SelectedLesson
+                    };
+
+                    popper!.PopSheet(view);
+                }
+
                 return Unit.Default;
             });
 
@@ -72,21 +82,6 @@ namespace Vulcanova.Features.Attendance
 
                     CurrentDayEntries = null;
                 });
-
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                this.WhenAnyValue(vm => vm.SelectedLesson)
-                    .WhereNotNull()
-                    .Subscribe(lesson =>
-                    {
-                        var view = new LessonDetailsView
-                        {
-                            Lesson = lesson
-                        };
-
-                        popper!.PopSheet(view);
-                    });
-            }
         }
 
         private IObservable<IReadOnlyDictionary<DateTime, List<Lesson>>> GetEntries(int accountId,

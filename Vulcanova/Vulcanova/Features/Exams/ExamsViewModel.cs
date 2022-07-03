@@ -47,6 +47,16 @@ namespace Vulcanova.Features.Exams
             {
                 SelectedExam = CurrentWeekEntries?.First(g => g.Id == lessonId);
 
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    var view = new ExamDetailsView
+                    {
+                        Exam = SelectedExam
+                    };
+
+                    popper!.PopSheet(view);
+                }
+
                 return Unit.Default;
             });
 
@@ -76,21 +86,6 @@ namespace Vulcanova.Features.Exams
                     CurrentWeekEntries = entries.Where(e => e.Deadline >= monday && e.Deadline < sunday)
                         .ToImmutableList();
                 });
-            
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                this.WhenAnyValue(vm => vm.SelectedExam)
-                    .WhereNotNull()
-                    .Subscribe(exam =>
-                    {
-                        var view = new ExamDetailsView
-                        {
-                            Exam = exam
-                        };
-
-                        popper!.PopSheet(view);
-                    });
-            }
         }
 
         private IObservable<ImmutableArray<Exam>> GetEntries(int accountId, DateTime date, bool forceSync = false)

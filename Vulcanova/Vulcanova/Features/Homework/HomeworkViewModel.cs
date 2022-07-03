@@ -55,6 +55,16 @@ namespace Vulcanova.Features.Homework
             ShowHomeworkDetails = ReactiveCommand.Create((int lessonId) =>
             {
                 SelectedHomework = CurrentWeekEntries?.First(g => g.Id == lessonId);
+                
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    var view = new HomeworkDetailsView
+                    {
+                        Homework = SelectedHomework
+                    };
+
+                    popper!.PopSheet(view);
+                }
 
                 return Unit.Default;
             });
@@ -84,21 +94,6 @@ namespace Vulcanova.Features.Homework
                     CurrentWeekEntries = entries.Where(e => e.Deadline >= monday && e.Deadline < sunday)
                         .ToImmutableList();
                 });
-            
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                this.WhenAnyValue(vm => vm.SelectedHomework)
-                    .WhereNotNull()
-                    .Subscribe(homework =>
-                    {
-                        var view = new HomeworkDetailsView
-                        {
-                            Homework = homework
-                        };
-
-                        popper!.PopSheet(view);
-                    });
-            }
         }
 
         private IObservable<ImmutableArray<Homework>> GetEntries(int accountId, int periodId,
