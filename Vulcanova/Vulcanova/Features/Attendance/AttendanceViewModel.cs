@@ -6,9 +6,12 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
+using Vulcanova.Features.Attendance.LessonDetails;
 using Vulcanova.Features.Shared;
+using Xamarin.Forms;
 
 namespace Vulcanova.Features.Attendance
 {
@@ -29,7 +32,8 @@ namespace Vulcanova.Features.Attendance
         public AttendanceViewModel(
             ILessonsService lessonsService,
             AccountContext accountContext,
-            INavigationService navigationService) : base(navigationService)
+            INavigationService navigationService,
+            ISheetPopper popper) : base(navigationService)
         {
             _lessonsService = lessonsService;
 
@@ -68,6 +72,21 @@ namespace Vulcanova.Features.Attendance
 
                     CurrentDayEntries = null;
                 });
+
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                this.WhenAnyValue(vm => vm.SelectedLesson)
+                    .WhereNotNull()
+                    .Subscribe(lesson =>
+                    {
+                        var view = new LessonDetailsView
+                        {
+                            Lesson = lesson
+                        };
+
+                        popper!.PopSheet(view);
+                    });
+            }
         }
 
         private IObservable<IReadOnlyDictionary<DateTime, List<Lesson>>> GetEntries(int accountId,

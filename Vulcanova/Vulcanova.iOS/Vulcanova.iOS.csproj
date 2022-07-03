@@ -99,6 +99,7 @@
         <Compile Include="AppDelegate.cs" />
         <Compile Include="NativeOptionCell.cs" />
         <Compile Include="OptionCellRenderer.cs" />
+        <Compile Include="SheetPopper.cs" />
         <Compile Include="SvgTabbedPageRenderer.cs" />
         <Compile Include="UiHelper.cs" />
         <None Include="Entitlements.plist" />

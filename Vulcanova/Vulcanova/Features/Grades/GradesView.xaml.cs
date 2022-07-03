@@ -1,7 +1,7 @@
-using System;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using ReactiveUI;
+using Vulcanova.Core.Layout;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Grades
@@ -59,13 +59,14 @@ namespace Vulcanova.Features.Grades
                         r => r?.CurrentPeriod?.Id)
                     .DisposeWith(disposable);
 
-                this.OneWayBind(ViewModel, vm => vm.GradesSummaryViewModel.CurrentSubject, v => v.DetailsView.Subject)
-                    .DisposeWith(disposable);
-
-                this.WhenAnyValue(v => v.ViewModel.GradesSummaryViewModel.CurrentSubject)
-                    .Skip(1)
-                    .Subscribe(sub => Panel.Open = sub != null)
-                    .DisposeWith(disposable);
+                if (Device.RuntimePlatform != Device.iOS)
+                {
+                    UiExtensions.WireUpNonNativeSheet(ViewModel,
+                        DetailsView,
+                        Panel,
+                        vm => vm.GradesSummaryViewModel.CurrentSubject,
+                        v => v.Subject).DisposeWith(disposable);
+                }
             });
         }
     }

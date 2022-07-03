@@ -6,10 +6,13 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Shared;
 using Vulcanova.Core.Rx;
+using Vulcanova.Features.Grades.SubjectDetails;
 using Vulcanova.Features.Settings;
+using Xamarin.Forms;
 
 namespace Vulcanova.Features.Grades.Summary
 {
@@ -33,7 +36,8 @@ namespace Vulcanova.Features.Grades.Summary
             INavigationService navigationService,
             AccountContext accountContext,
             IGradesService gradesService,
-            AppSettings settings) : base(navigationService)
+            AppSettings settings,
+            ISheetPopper sheetPopper = null) : base(navigationService)
         {
             GetGrades = ReactiveCommand.CreateFromObservable((bool forceSync) =>
                 gradesService
@@ -69,6 +73,21 @@ namespace Vulcanova.Features.Grades.Summary
                     var (grades, _) = values;
                     Grades = ToSubjectGrades(grades, settings.Modifiers);
                 });
+            
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                this.WhenAnyValue(vm => vm.CurrentSubject)
+                    .WhereNotNull()
+                    .Subscribe(subjectGrades =>
+                    {
+                        var view = new GradesSubjectDetailsView
+                        {
+                            Subject = subjectGrades
+                        };
+
+                        sheetPopper!.PopSheet(view);
+                    });
+            }
         }
 
         private static IEnumerable<SubjectGrades> ToSubjectGrades(IEnumerable<Grade> grades, ModifiersSettings modifiers)

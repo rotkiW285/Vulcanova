@@ -2,7 +2,9 @@ using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
+using Vulcanova.Core.Layout;
 using Vulcanova.Core.Rx;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Attendance
@@ -25,16 +27,14 @@ namespace Vulcanova.Features.Attendance
                 this.OneWayBind(ViewModel, vm => vm.SelectedLesson, v => v.DetailsView.Lesson)
                     .DisposeWith(disposable);
 
-                this.WhenAnyValue(v => v.ViewModel.SelectedLesson)
-                    .Skip(1)
-                    .Subscribe(sub => Panel.Open = sub != null)
-                    .DisposeWith(disposable);
+                if (Device.RuntimePlatform != Device.iOS)
+                {
+                    UiExtensions.WireUpNonNativeSheet(ViewModel, DetailsView, Panel,
+                            vm => vm.SelectedLesson,
+                            v => v.Lesson)
+                        .DisposeWith(disposable);
+                }
 
-                this.WhenAnyValue(v => v.Panel.Open)
-                    .Where(val => val == false)
-                    .Subscribe(_ => ViewModel!.SelectedLesson = null)
-                    .DisposeWith(disposable);
-                
                 this.WhenAnyObservable(v => v.ViewModel.GetAttendanceEntries.IsExecuting)
                     .Select(v => !v)
                     .BindTo(NoElementsView, x => x.IsVisible)

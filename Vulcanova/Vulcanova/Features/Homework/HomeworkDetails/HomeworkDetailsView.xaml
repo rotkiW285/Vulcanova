@@ -7,7 +7,8 @@
                    xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                    xmlns:homeworkDetails="clr-namespace:Vulcanova.Features.Homework.HomeworkDetails;assembly=Vulcanova"
                    x:Class="Vulcanova.Features.Homework.HomeworkDetails.HomeworkDetailsView"
-                   x:Name="View">
+                   x:Name="View"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
     <ContentView.Resources>
         <ResourceDictionary>
             <Style ApplyToDerivedTypes="true" TargetType="StackLayout">

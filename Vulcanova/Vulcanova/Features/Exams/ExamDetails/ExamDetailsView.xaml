@@ -5,7 +5,8 @@
                    xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                    xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                    x:Class="Vulcanova.Features.Exams.ExamDetails.ExamDetailsView"
-                   x:Name="View">
+                   x:Name="View"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
     <ContentView.Resources>
         <ResourceDictionary>
             <Style ApplyToDerivedTypes="true" TargetType="StackLayout">

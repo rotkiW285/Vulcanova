@@ -7,10 +7,13 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Extensions;
+using Vulcanova.Features.Exams.ExamDetails;
 using Vulcanova.Features.Shared;
+using Xamarin.Forms;
 
 namespace Vulcanova.Features.Exams
 {
@@ -30,7 +33,8 @@ namespace Vulcanova.Features.Exams
         public ExamsViewModel(
             IExamsService examsService,
             AccountContext accountContext,
-            INavigationService navigationService) : base(navigationService)
+            INavigationService navigationService,
+            ISheetPopper popper = null) : base(navigationService)
         {
             _examsService = examsService;
 
@@ -72,6 +76,21 @@ namespace Vulcanova.Features.Exams
                     CurrentWeekEntries = entries.Where(e => e.Deadline >= monday && e.Deadline < sunday)
                         .ToImmutableList();
                 });
+            
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                this.WhenAnyValue(vm => vm.SelectedExam)
+                    .WhereNotNull()
+                    .Subscribe(exam =>
+                    {
+                        var view = new ExamDetailsView
+                        {
+                            Exam = exam
+                        };
+
+                        popper!.PopSheet(view);
+                    });
+            }
         }
 
         private IObservable<ImmutableArray<Exam>> GetEntries(int accountId, DateTime date, bool forceSync = false)
