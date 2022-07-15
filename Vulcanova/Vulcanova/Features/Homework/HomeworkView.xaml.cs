@@ -22,7 +22,7 @@ namespace Vulcanova.Features.Homework
                     .DisposeWith(disposable);
 
                 this.OneWayBind(ViewModel, vm => vm.CurrentWeekEntries, v => v.EntriesList.ItemsSource,
-                        ex => ex.GroupBy(x => x.AnswerDeadline)
+                        ex => ex.GroupBy(x => x.Deadline)
                             .OrderBy(g => g.Key)
                             .Select(g => new HomeworkGroup(g.Key, g.ToList())))
                     .DisposeWith(disposable);

@@ -15,7 +15,7 @@ namespace Vulcanova.Features.Homework
         public DateTime DateCreated { get; set; }
         public DateTime Deadline { get; set; }
         public DateTime? AnswerDate { get; set; }
-        public DateTime AnswerDeadline { get; set; }
+        public DateTime? AnswerDeadline { get; set; }
         public string CreatorName { get; set; }
         public Subject Subject { get; set; }
     }
