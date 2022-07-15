@@ -22,7 +22,7 @@
     <ContentPage.Content>
         <StackLayout BindingContext="{x:Reference View}">
             <StackLayout Orientation="Horizontal" Padding="16, 8">
-                <Label FontAttributes="Bold" FontSize="Title" HorizontalOptions="FillAndExpand"
+                <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
                        Text="{Binding Subject.SubjectName}" />
                 <Label Text="{Binding Subject.Average, StringFormat='{0:F2}'}" />
             </StackLayout>

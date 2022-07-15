@@ -21,7 +21,7 @@
     <ContentView.Content>
         <StackLayout BindingContext="{x:Reference View}">
             <StackLayout Padding="16, 8">
-                <Label Style="{StaticResource MediumLabelStyle}" HorizontalOptions="FillAndExpand"
+                <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
                        Text="{Binding Homework.Subject.Name}" />
             </StackLayout>
             <StackLayout Padding="16, 8" Spacing="16">
