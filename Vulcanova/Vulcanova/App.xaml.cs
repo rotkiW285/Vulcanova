@@ -20,63 +20,62 @@ using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
-namespace Vulcanova
+namespace Vulcanova;
+
+public partial class App
 {
-    public partial class App
+    public App(IPlatformInitializer initializer) : base(initializer)
     {
-        public App(IPlatformInitializer initializer) : base(initializer)
+    }
+
+    protected override async void OnInitialized()
+    {
+        InitializeComponent();
+
+        RxApp.DefaultExceptionHandler = new ReactiveExceptionHandler();
+
+        Sharpnado.Tabs.Initializer.Initialize(false, false); 
+        Sharpnado.Shades.Initializer.Initialize(false);
+
+        Methods.SetSupportBarcodeFormat(BarcodeFormats.QRCode);
+
+        var accRepo = Container.Resolve<IAccountRepository>();
+
+        // breaks app startup when executed asynchronously
+        var activeAccount = accRepo.GetActiveAccountAsync().Result;
+
+        if (activeAccount != null)
         {
-        }
+            var ctx = Container.Resolve<AccountContext>();
+            ctx.AccountId = activeAccount.Id;
 
-        protected override async void OnInitialized()
+            await NavigationService.NavigateAsync(
+                "MainNavigationPage/HomeTabbedPage?selectedTab=GradesSummaryView");
+        }
+        else
         {
-            InitializeComponent();
-
-            RxApp.DefaultExceptionHandler = new ReactiveExceptionHandler();
-
-            Sharpnado.Tabs.Initializer.Initialize(false, false); 
-            Sharpnado.Shades.Initializer.Initialize(false);
-
-            Methods.SetSupportBarcodeFormat(BarcodeFormats.QRCode);
-
-            var accRepo = Container.Resolve<IAccountRepository>();
-
-            // breaks app startup when executed asynchronously
-            var activeAccount = accRepo.GetActiveAccountAsync().Result;
-
-            if (activeAccount != null)
-            {
-                var ctx = Container.Resolve<AccountContext>();
-                ctx.AccountId = activeAccount.Id;
-
-                await NavigationService.NavigateAsync(
-                    "MainNavigationPage/HomeTabbedPage?selectedTab=GradesSummaryView");
-            }
-            else
-            {
-                await NavigationService.NavigateAsync("MainNavigationPage/IntroView");
-            }
+            await NavigationService.NavigateAsync("MainNavigationPage/IntroView");
         }
+    }
 
-        protected override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.RegisterLiteDb();
+    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        containerRegistry.RegisterLiteDb();
 
-            containerRegistry.RegisterAutoMapper();
+        containerRegistry.RegisterAutoMapper();
 
-            containerRegistry.RegisterLayout();
+        containerRegistry.RegisterLayout();
 
-            containerRegistry.RegisterAuth();
-            containerRegistry.RegisterLuckyNumber();
-            containerRegistry.RegisterGrades();
-            containerRegistry.RegisterTimetable();
-            containerRegistry.RegisterAttendance();
-            containerRegistry.RegisterExams();
-            containerRegistry.RegisterHomework();
+        containerRegistry.RegisterAuth();
+        containerRegistry.RegisterLuckyNumber();
+        containerRegistry.RegisterGrades();
+        containerRegistry.RegisterTimetable();
+        containerRegistry.RegisterAttendance();
+        containerRegistry.RegisterExams();
+        containerRegistry.RegisterHomework();
 
-            containerRegistry.RegisterSettings();
+        containerRegistry.RegisterSettings();
 
-            containerRegistry.RegisterUonet();
-        }
+        containerRegistry.RegisterUonet();
     }
 }

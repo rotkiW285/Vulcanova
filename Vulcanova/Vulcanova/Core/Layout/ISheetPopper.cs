@@ -1,9 +1,8 @@
 using Xamarin.Forms;
 
-namespace Vulcanova.Core.Layout
+namespace Vulcanova.Core.Layout;
+
+public interface ISheetPopper
 {
-    public interface ISheetPopper
-    {
-        void PopSheet(ContentView content);
-    }
+    void PopSheet(ContentView content);
 }

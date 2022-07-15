@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Vulcanova.Features.Homework
+namespace Vulcanova.Features.Homework;
+
+public interface IHomeworkService
 {
-    public interface IHomeworkService
-    {
-        IObservable<IEnumerable<Homework>> GetHomework(int accountId,  int periodId, bool forceSync = false);
-    }
+    IObservable<IEnumerable<Homework>> GetHomework(int accountId,  int periodId, bool forceSync = false);
 }

@@ -14,89 +14,88 @@ using Vulcanova.Features.Grades.SubjectDetails;
 using Vulcanova.Features.Settings;
 using Xamarin.Forms;
 
-namespace Vulcanova.Features.Grades.Summary
+namespace Vulcanova.Features.Grades.Summary;
+
+public class GradesSummaryViewModel : ViewModelBase
 {
-    public class GradesSummaryViewModel : ViewModelBase
-    {
-        public ReactiveCommand<bool, IEnumerable<Grade>> GetGrades { get; }
+    public ReactiveCommand<bool, IEnumerable<Grade>> GetGrades { get; }
 
-        public ReactiveCommand<int, Unit> ShowSubjectGradesDetails { get; }
+    public ReactiveCommand<int, Unit> ShowSubjectGradesDetails { get; }
 
-        [Reactive] public IEnumerable<SubjectGrades> Grades { get; private set; }
+    [Reactive] public IEnumerable<SubjectGrades> Grades { get; private set; }
 
-        [ObservableAsProperty] public bool IsSyncing { get; }
+    [ObservableAsProperty] public bool IsSyncing { get; }
         
-        [Reactive] public int? PeriodId { get; set; }
+    [Reactive] public int? PeriodId { get; set; }
 
-        [Reactive] public SubjectGrades CurrentSubject { get; private set; }
+    [Reactive] public SubjectGrades CurrentSubject { get; private set; }
 
-        [ObservableAsProperty] private IEnumerable<Grade> RawGrades { get; }
+    [ObservableAsProperty] private IEnumerable<Grade> RawGrades { get; }
 
-        public GradesSummaryViewModel(
-            INavigationService navigationService,
-            AccountContext accountContext,
-            IGradesService gradesService,
-            AppSettings settings,
-            ISheetPopper sheetPopper = null) : base(navigationService)
+    public GradesSummaryViewModel(
+        INavigationService navigationService,
+        AccountContext accountContext,
+        IGradesService gradesService,
+        AppSettings settings,
+        ISheetPopper sheetPopper = null) : base(navigationService)
+    {
+        GetGrades = ReactiveCommand.CreateFromObservable((bool forceSync) =>
+            gradesService
+                .GetPeriodGrades(accountContext.AccountId, PeriodId!.Value, forceSync));
+
+        GetGrades.ToPropertyEx(this, vm => vm.RawGrades);
+
+        GetGrades.IsExecuting.ToPropertyEx(this, vm => vm.IsSyncing);
+
+        ShowSubjectGradesDetails = ReactiveCommand.Create((int subjectId) =>
         {
-            GetGrades = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-                gradesService
-                    .GetPeriodGrades(accountContext.AccountId, PeriodId!.Value, forceSync));
+            CurrentSubject = Grades?.First(g => g.SubjectId == subjectId);
 
-            GetGrades.ToPropertyEx(this, vm => vm.RawGrades);
-
-            GetGrades.IsExecuting.ToPropertyEx(this, vm => vm.IsSyncing);
-
-            ShowSubjectGradesDetails = ReactiveCommand.Create((int subjectId) =>
+            if (Device.RuntimePlatform == Device.iOS)
             {
-                CurrentSubject = Grades?.First(g => g.SubjectId == subjectId);
-
-                if (Device.RuntimePlatform == Device.iOS)
+                var view = new GradesSubjectDetailsView
                 {
-                    var view = new GradesSubjectDetailsView
-                    {
-                        Subject = CurrentSubject
-                    };
+                    Subject = CurrentSubject
+                };
 
-                    sheetPopper!.PopSheet(view);
-                }
+                sheetPopper!.PopSheet(view);
+            }
 
-                return Unit.Default;
+            return Unit.Default;
+        });
+
+        this.WhenAnyValue(vm => vm.PeriodId)
+            .WhereNotNull()
+            .Subscribe(v =>
+            {
+                GetGrades.Execute(false).SubscribeAndIgnoreErrors();
             });
 
-            this.WhenAnyValue(vm => vm.PeriodId)
-                .WhereNotNull()
-                .Subscribe(v =>
-                {
-                    GetGrades.Execute(false).SubscribeAndIgnoreErrors();
-                });
+        var modifiersObservable = settings
+            .WhenAnyValue(s => s.Modifiers.PlusSettings.SelectedValue, s => s.Modifiers.MinusSettings.SelectedValue)
+            .WhereNotNull();
 
-            var modifiersObservable = settings
-                .WhenAnyValue(s => s.Modifiers.PlusSettings.SelectedValue, s => s.Modifiers.MinusSettings.SelectedValue)
-                .WhereNotNull();
-
-            this.WhenAnyValue(vm => vm.RawGrades)
-                .WhereNotNull()
-                .CombineLatest(modifiersObservable)
-                .Subscribe(values =>
-                {
-                    var (grades, _) = values;
-                    Grades = ToSubjectGrades(grades, settings.Modifiers);
-                });
-        }
-
-        private static IEnumerable<SubjectGrades> ToSubjectGrades(IEnumerable<Grade> grades, ModifiersSettings modifiers)
-            => grades.GroupBy(g => new
-                {
-                    g.Column.Subject.Id,
-                    g.Column.Subject.Name
-                })
-                .Select(g => new SubjectGrades
-                {
-                    SubjectId = g.Key.Id,
-                    SubjectName = g.Key.Name,
-                    Average = g.Average(modifiers),
-                    Grades = g.ToArray()
-                });
+        this.WhenAnyValue(vm => vm.RawGrades)
+            .WhereNotNull()
+            .CombineLatest(modifiersObservable)
+            .Subscribe(values =>
+            {
+                var (grades, _) = values;
+                Grades = ToSubjectGrades(grades, settings.Modifiers);
+            });
     }
+
+    private static IEnumerable<SubjectGrades> ToSubjectGrades(IEnumerable<Grade> grades, ModifiersSettings modifiers)
+        => grades.GroupBy(g => new
+            {
+                g.Column.Subject.Id,
+                g.Column.Subject.Name
+            })
+            .Select(g => new SubjectGrades
+            {
+                SubjectId = g.Key.Id,
+                SubjectName = g.Key.Name,
+                Average = g.Average(modifiers),
+                Grades = g.ToArray()
+            });
 }
