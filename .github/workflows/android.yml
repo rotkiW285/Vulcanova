@@ -35,7 +35,7 @@ jobs:
       run: nuget restore
 
     - name: Build
-      run: msbuild Vulcanova/Vulcanova.Android/Vulcanova.Android.csproj /t:PackageForAndroid /t:SignAndroidPackage /p:Configuration=Release
+      run: /Library/Frameworks/Mono.framework/Versions/Current/Commands/mono '/Applications/Visual Studio.app/Contents/MonoBundle/MSBuild/Current/bin/MSBuild.dll' Vulcanova/Vulcanova.Android/Vulcanova.Android.csproj /t:PackageForAndroid /t:SignAndroidPackage /p:Configuration=Release
       
     - name: Upload artifact
       uses: actions/upload-artifact@v2
