@@ -565,5 +565,20 @@ namespace Vulcanova.Resources
                 return ResourceManager.GetString("CommonNo", resourceCulture);
             }
         }
+        
+        internal static string GradesAverageLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("GradesAverageLabel", resourceCulture);
+            }
+        }
+        
+        internal static string GradesCountLabel {
+            get
+            {
+                return ResourceManager.GetString("GradesCountLabel", resourceCulture);
+            }
+        }
     }
 }

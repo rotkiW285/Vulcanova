@@ -204,4 +204,10 @@
     <data name="CommonYes" xml:space="preserve">
         <value>Tak</value>
     </data>
+    <data name="GradesAverageLabel" xml:space="preserve">
+        <value>Średnia</value>
+    </data>
+    <data name="GradesCountLabel" xml:space="preserve">
+        <value>Liczba ocen</value>
+    </data>
 </root>

@@ -204,4 +204,10 @@
     <data name="CommonNo" xml:space="preserve">
         <value>No</value>
     </data>
+    <data name="GradesAverageLabel" xml:space="preserve">
+        <value>Average</value>
+    </data>
+    <data name="GradesCountLabel" xml:space="preserve">
+        <value>Grades count</value>
+    </data>
 </root>

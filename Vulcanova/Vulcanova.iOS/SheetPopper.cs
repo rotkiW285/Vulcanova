@@ -19,19 +19,25 @@ namespace Vulcanova.iOS
             };
 
             var cvc = page.CreateViewController();
+            
+            var navController = new UINavigationController(cvc);
 
-            cvc.SheetPresentationController.Detents =
+            navController.SheetPresentationController.Detents =
                 new[]
                 {
                     UISheetPresentationControllerDetent.CreateMediumDetent(),
                     UISheetPresentationControllerDetent.CreateLargeDetent()
                 };
 
-            cvc.SheetPresentationController.PrefersGrabberVisible = true;
-            cvc.SheetPresentationController.PrefersScrollingExpandsWhenScrolledToEdge = true;
+            navController.SheetPresentationController.PrefersGrabberVisible = true;
+            navController.SheetPresentationController.PrefersScrollingExpandsWhenScrolledToEdge = true;
+
+            cvc.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Close,
+                (sender, args) => navController.DismissViewController(true, null)), 
+                true);
 
             UIApplication.SharedApplication.KeyWindow?.RootViewController?
-                .PresentViewController(cvc, true, null);
+                .PresentViewController(navController, true, null);
         }
     }
 }

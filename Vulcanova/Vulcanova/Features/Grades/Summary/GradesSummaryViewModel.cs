@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -96,6 +97,6 @@ public class GradesSummaryViewModel : ViewModelBase
                 SubjectId = g.Key.Id,
                 SubjectName = g.Key.Name,
                 Average = g.Average(modifiers),
-                Grades = g.ToArray()
+                Grades = new ObservableCollection<Grade>(g.ToArray())
             });
 }
