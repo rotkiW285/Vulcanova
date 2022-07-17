@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ImTools;
 using Vulcanova.Features.Auth;
@@ -22,8 +24,10 @@ public class PeriodService : IPeriodService
 
         var hasNext = index < account.Periods.Count - 1;
         var hasPrevious = index > 0;
+        
+        var (startYear, endYear) = GetSchoolYearDuration(account.Periods, currentPeriod);
 
-        return new PeriodResult(currentPeriod, hasNext, hasPrevious);
+        return new PeriodResult(currentPeriod, hasNext, hasPrevious, startYear, endYear);
     }
 
     public async Task<PeriodResult> ChangePeriodAsync(int accountId, PeriodChangeDirection direction)
@@ -52,7 +56,18 @@ public class PeriodService : IPeriodService
 
         await _accountRepository.UpdateAccountAsync(account);
 
-        return new PeriodResult(nextPeriod, hasNext, hasPrevious);
+        var (startYear, endYear) = GetSchoolYearDuration(allPeriods, currentPeriod);
+
+        return new PeriodResult(nextPeriod, hasNext, hasPrevious, startYear, endYear);
+    }
+
+    private static (int StartYear, int EndYear) GetSchoolYearDuration(ICollection<Period> allPeriods,
+        Period currentPeriod)
+    {
+        var allPeriodsInYear = allPeriods.Where(p => p.Level == currentPeriod.Level)
+            .ToArray();
+
+        return (allPeriodsInYear.First().Start.Year, allPeriodsInYear.Last().End.Year);
     }
 }
     
@@ -62,4 +77,4 @@ public enum PeriodChangeDirection
     Next
 }
 
-public record PeriodResult(Period CurrentPeriod, bool HasNext, bool HasPrevious);
+public record PeriodResult(Period CurrentPeriod, bool HasNext, bool HasPrevious, int YearStart, int YearEnd);

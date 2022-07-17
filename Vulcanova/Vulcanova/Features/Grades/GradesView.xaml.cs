@@ -36,7 +36,7 @@ public partial class GradesView
             this.OneWayBind(ViewModel, vm => vm.PeriodInfo, v => v.PeriodNameLabel.Text,
                     p => p is null
                         ? string.Empty
-                        : $"{p.CurrentPeriod.Start.Year}/{p.CurrentPeriod.End.Year} – {p.CurrentPeriod.Number}")
+                        : $"{p.YearStart}/{p.YearEnd} – {p.CurrentPeriod.Number}")
                 .DisposeWith(disposable);
 
             this.BindCommand(ViewModel, vm => vm.PreviousSemester, v => v.PreviousSemesterTap)
