@@ -33,7 +33,7 @@ public class AttendanceViewModel : ViewModelBase
         ILessonsService lessonsService,
         AccountContext accountContext,
         INavigationService navigationService,
-        ISheetPopper popper) : base(navigationService)
+        ISheetPopper popper = null) : base(navigationService)
     {
         _lessonsService = lessonsService;
 
