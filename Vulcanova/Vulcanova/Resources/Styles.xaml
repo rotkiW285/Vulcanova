@@ -106,4 +106,9 @@
         <Setter Property="UnselectedTabColor"
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
     </Style>
+        
+    <Style ApplyToDerivedTypes="true" TargetType="ActivityIndicator">
+        <Setter Property="Color" 
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
+    </Style>
 </ResourceDictionary>

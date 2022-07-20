@@ -22,6 +22,10 @@ public partial class ManualSignInView
 
             this.BindCommand(ViewModel, vm => vm.AddDevice, v => v.AddButton)
                 .DisposeWith(disposable);
+            
+            this.WhenAnyObservable(v => v.ViewModel.AddDevice.IsExecuting)
+                .BindTo(LoadingIndicator, x => x.IsRunning)
+                .DisposeWith(disposable);
         });
     }
 }

@@ -18,6 +18,10 @@ public partial class EnterPinCodeView
 
             this.BindCommand(ViewModel, vm => vm.RegisterDevice, v => v.AddAccountButton)
                 .DisposeWith(disposable);
+
+            this.WhenAnyObservable(v => v.ViewModel.RegisterDevice.IsExecuting)
+                .BindTo(LoadingIndicator, x => x.IsRunning)
+                .DisposeWith(disposable);
         });
     }
 }
