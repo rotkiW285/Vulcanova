@@ -5,15 +5,25 @@
              x:Class="Vulcanova.Core.Layout.Controls.Calendar.CalendarDateCell"
              x:Name="View">
     <ContentView.Content>
-        <Frame Padding="0" HasShadow="False" BackgroundColor="{AppThemeBinding Dark={StaticResource DarkBackgroundColor}, Light={StaticResource LightBackgroundColor}}">
+        <Frame Padding="0" HasShadow="False"
+               BackgroundColor="{AppThemeBinding Dark={StaticResource DarkBackgroundColor}, Light={StaticResource LightBackgroundColor}}">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference View}}" />
             </Frame.GestureRecognizers>
-            <Frame x:Name="Container" HasShadow="False" HorizontalOptions="Center" VerticalOptions="Center"
-                   CornerRadius="16" Padding="0" IsClippedToBounds="True" WidthRequest="32" HeightRequest="32" BackgroundColor="{AppThemeBinding Dark={StaticResource DarkBackgroundColor}, Light={StaticResource LightBackgroundColor}}">
-                <Label x:Name="Label" Text="{Binding Day, Source={x:Reference View}}" VerticalOptions="Center"
-                       HorizontalOptions="Center" />
-            </Frame>
+            <StackLayout Spacing="1">
+                <Frame x:Name="Container" HasShadow="False" HorizontalOptions="Center" VerticalOptions="Center"
+                       CornerRadius="15" Padding="0" IsClippedToBounds="True" WidthRequest="30" HeightRequest="30"
+                       BackgroundColor="{AppThemeBinding Dark={StaticResource DarkBackgroundColor}, Light={StaticResource LightBackgroundColor}}">
+                    <Label x:Name="Label"
+                           Text="{Binding Day, Source={x:Reference View}}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+                </Frame>
+                <Ellipse
+                    Fill="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}"
+                    WidthRequest="5" HeightRequest="5" HorizontalOptions="Center"
+                    IsVisible="{Binding IsHighlight, Source={x:Reference View}}" />
+            </StackLayout>
         </Frame>
     </ContentView.Content>
 </ContentView>

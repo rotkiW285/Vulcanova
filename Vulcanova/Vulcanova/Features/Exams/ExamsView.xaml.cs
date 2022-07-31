@@ -38,6 +38,9 @@ public partial class ExamsView
             this.OneWayBind(ViewModel, vm => vm.SelectedExam, v => v.DetailsView.Exam)
                 .DisposeWith(disposable);
 
+            this.OneWayBind(ViewModel, vm => vm.Entries, v => v.Calendar.Highlights,
+                exams => exams.Select(e => e.Deadline));
+
             if (Device.RuntimePlatform != Device.iOS)
             {
                 UiExtensions.WireUpNonNativeSheet(ViewModel, DetailsView, Panel,

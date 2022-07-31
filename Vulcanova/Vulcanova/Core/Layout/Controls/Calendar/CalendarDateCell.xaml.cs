@@ -84,6 +84,15 @@ public partial class CalendarDateCell
         set => SetValue(SecondaryTextColorProperty, value);
     }
 
+    public static readonly BindableProperty IsHighlightProperty =
+        BindableProperty.Create(nameof(IsHighlight), typeof(bool), typeof(CalendarDateCell), false);
+
+    public bool IsHighlight
+    {
+        get => (bool) GetValue(IsHighlightProperty);
+        set => SetValue(IsHighlightProperty, value);
+    }
+
     public CalendarDateCell()
     {
         InitializeComponent();

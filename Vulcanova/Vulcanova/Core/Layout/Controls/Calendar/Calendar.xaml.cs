@@ -67,6 +67,17 @@ public partial class Calendar
         set => SetValue(SelectionModeProperty, value);
     }
 
+    public static readonly BindableProperty HighlightsProperty =
+        BindableProperty.Create(nameof(Highlights), typeof(IEnumerable<DateTime>), typeof(Calendar),
+            Array.Empty<DateTime>(),
+            propertyChanged: HighlightsChanged);
+
+    public IEnumerable<DateTime> Highlights
+    {
+        get => (IEnumerable<DateTime>) GetValue(HighlightsProperty);
+        set => SetValue(HighlightsProperty, value);
+    }
+
     private readonly Dictionary<DateTime, CalendarDateCell> _dateCells = new();
 
     public Calendar()
@@ -145,7 +156,7 @@ public partial class Calendar
             {
                 if (CalendarGrid.RowDefinitions.Count < weekRow + 1)
                 {
-                    CalendarGrid.RowDefinitions.Add(new RowDefinition {Height = 32});
+                    CalendarGrid.RowDefinitions.Add(new RowDefinition {Height = 42});
                 }
 
                 if (cell == null)
@@ -287,6 +298,18 @@ public partial class Calendar
                 SwipeDirection.Right => -1,
                 _ => 0
             });
+    }
+    
+    
+    private static void HighlightsChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var calendar = (Calendar) bindable;
+        var newHighlights = (newValue as IEnumerable<DateTime>)?.ToArray();
+
+        foreach (var (date, cell) in calendar._dateCells)
+        {
+            cell.IsHighlight = newHighlights?.Select(h => h.Date).Contains(date) ?? false;
+        }
     }
 }
 

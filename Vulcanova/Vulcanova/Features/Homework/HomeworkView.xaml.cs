@@ -26,7 +26,10 @@ public partial class HomeworkView
                         .OrderBy(g => g.Key)
                         .Select(g => new HomeworkGroup(g.Key, g.ToList())))
                 .DisposeWith(disposable);
-                
+
+            this.OneWayBind(ViewModel, vm => vm.Entries, v => v.Calendar.Highlights,
+                entries => entries.Select(e => e.Deadline));
+
             this.OneWayBind(ViewModel, vm => vm.SelectedHomework, v => v.DetailsView.Homework)
                 .DisposeWith(disposable);
 
