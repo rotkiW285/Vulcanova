@@ -32,7 +32,9 @@
                         PlaceholderColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}"
                         TextColor="{AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}" />
                 </StackLayout>
-                <Button Style="{StaticResource DefaultButtonStyle}" Text="{x:Static resx:Strings.AddButton}"
+                <Button IsEnabled="False"
+                        Style="{StaticResource DefaultButtonStyle}"
+                        Text="{x:Static resx:Strings.AddButton}"
                         x:Name="AddButton" />
                 <ActivityIndicator x:Name="LoadingIndicator" />
             </StackLayout>

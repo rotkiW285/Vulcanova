@@ -4,11 +4,14 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Abstractions;
+using ReactiveUI.Validation.Contexts;
+using ReactiveUI.Validation.Extensions;
 using Vulcanova.Core.Mvvm;
 
 namespace Vulcanova.Features.Auth.ScanningQrCode;
 
-public class EnterPinCodeViewModel : ViewModelBase, INavigatedAware
+public class EnterPinCodeViewModel : ViewModelBase, INavigatedAware, IValidatableViewModel
 {
     public ReactiveCommand<Unit, Unit> RegisterDevice { get; }
 
@@ -28,7 +31,12 @@ public class EnterPinCodeViewModel : ViewModelBase, INavigatedAware
         _authenticationService = authenticationService;
         _accountsManager = accountsManager;
 
-        RegisterDevice = ReactiveCommand.CreateFromTask(_ => RegisterDeviceAsync(_token, Pin, _instanceUrl));
+        this.ValidationRule(vm => vm.Pin,
+            pin => !string.IsNullOrEmpty(pin),
+            "PIN code cannot be empty");
+
+        RegisterDevice = ReactiveCommand.CreateFromTask(_ => RegisterDeviceAsync(_token, Pin, _instanceUrl),
+            ValidationContext.Valid);
     }
 
     public void OnNavigatedFrom(INavigationParameters parameters)
@@ -50,4 +58,6 @@ public class EnterPinCodeViewModel : ViewModelBase, INavigatedAware
 
         return Unit.Default;
     }
+
+    public ValidationContext ValidationContext { get; } = new();
 }

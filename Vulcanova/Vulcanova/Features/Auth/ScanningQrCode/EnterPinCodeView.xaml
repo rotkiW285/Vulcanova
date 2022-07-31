@@ -17,7 +17,9 @@
                 <StackLayout>
                     <Entry x:Name="Pin" Placeholder="PIN" />
                 </StackLayout>
-                <Button Style="{StaticResource DefaultButtonStyle}" Text="{x:Static resx:Strings.AddButton}"
+                <Button IsEnabled="False"
+                        Style="{StaticResource DefaultButtonStyle}"
+                        Text="{x:Static resx:Strings.AddButton}"
                         x:Name="AddAccountButton" />
                 <ActivityIndicator x:Name="LoadingIndicator" />
             </StackLayout>

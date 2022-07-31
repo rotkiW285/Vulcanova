@@ -28,6 +28,7 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="ReactiveUI.Fody" Version="18.1.8" />
+        <PackageReference Include="ReactiveUI.Validation" Version="3.0.1" />
         <PackageReference Include="ReactiveUI.XamForms" Version="18.1.8" />
         <PackageReference Include="RxUI.Plugins.Popup" Version="0.4.0" />
         <PackageReference Include="Sharpnado.Tabs" Version="2.2.0" />

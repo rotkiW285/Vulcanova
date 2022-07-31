@@ -10,11 +10,27 @@
 
     <Style x:Key="DefaultButtonStyle" TargetType="Button">
         <Setter Property="CornerRadius" Value="16" />
-        <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="TextTransform" Value="None" />
         <Setter Property="FontAttributes" Value="Bold"></Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor"
+                                    Value="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor"
+                                    Value="{AppThemeBinding Dark={StaticResource DarkTranslucentPrimaryColor}, Light={StaticResource LightTranslucentPrimaryColor}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style x:Key="PrimaryColorLabelStyle" TargetType="Label">
@@ -106,9 +122,9 @@
         <Setter Property="UnselectedTabColor"
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
     </Style>
-        
+
     <Style ApplyToDerivedTypes="true" TargetType="ActivityIndicator">
-        <Setter Property="Color" 
+        <Setter Property="Color"
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
     </Style>
 </ResourceDictionary>

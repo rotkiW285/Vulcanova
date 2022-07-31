@@ -7,11 +7,14 @@ using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Uonet.Api.Common;
 using System;
+using ReactiveUI.Validation.Abstractions;
+using ReactiveUI.Validation.Contexts;
+using ReactiveUI.Validation.Extensions;
 using Vulcanova.Resources;
 
 namespace Vulcanova.Features.Auth.ManualSigningIn;
 
-public class ManualSignInViewModel : ViewModelBase
+public class ManualSignInViewModel : ViewModelBase, IValidatableViewModel
 {
     public ReactiveCommand<Unit, Unit> AddDevice { get; }
 
@@ -35,8 +38,24 @@ public class ManualSignInViewModel : ViewModelBase
         _authenticationService = authenticationService;
         _accountsManager = accountsManager;
         _instanceUrlProvider = instanceUrlProvider;
+        
+        this.ValidationRule(
+            viewModel => viewModel.Token,
+            token => !string.IsNullOrWhiteSpace(token),
+            "Token cannot be empty");
+        
+        this.ValidationRule(
+            viewModel => viewModel.Symbol,
+            symbol => !string.IsNullOrWhiteSpace(symbol),
+            "Symbol cannot be empty");
+        
+        this.ValidationRule(
+            viewModel => viewModel.Pin,
+            pin => !string.IsNullOrWhiteSpace(pin),
+            "PIN cannot be empty");
 
-        AddDevice = ReactiveCommand.CreateFromTask(_ => AddDeviceAsync(Token, Symbol, Pin));
+        AddDevice = ReactiveCommand.CreateFromTask(_ => AddDeviceAsync(Token, Symbol, Pin),
+            ValidationContext.Valid);
     }
 
     private async Task<Unit> AddDeviceAsync(string token, string symbol, string pin)
@@ -55,4 +74,6 @@ public class ManualSignInViewModel : ViewModelBase
 
         return Unit.Default;
     }
+
+    public ValidationContext ValidationContext { get; } = new();
 }
