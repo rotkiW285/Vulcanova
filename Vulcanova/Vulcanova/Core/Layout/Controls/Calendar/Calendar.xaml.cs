@@ -151,6 +151,11 @@ public partial class Calendar
                 {
                     CalendarGrid.Children.Remove(cell);
                 }
+                
+                if (CalendarGrid.RowDefinitions.Count > weekRow)
+                {
+                    CalendarGrid.RowDefinitions.Remove(CalendarGrid.RowDefinitions.Last());
+                }
             }
             else
             {
