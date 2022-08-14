@@ -9,8 +9,12 @@
                           xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                           xmlns:lessonDetails="clr-namespace:Vulcanova.Features.Attendance.LessonDetails;assembly=Vulcanova"
                           xmlns:calendar="clr-namespace:Vulcanova.Core.Layout.Controls.Calendar;assembly=Vulcanova"
+                          xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.AttendanceTabTitle}"
                           x:Class="Vulcanova.Features.Attendance.AttendanceView">
+    <NavigationPage.TitleView>
+        <auth:AccountAwarePageTitleView x:Name="TitleView" />
+    </NavigationPage.TitleView>
     <ContentPage.Content>
         <Grid>
             <StackLayout>

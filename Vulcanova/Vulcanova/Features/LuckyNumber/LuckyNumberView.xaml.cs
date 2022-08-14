@@ -13,6 +13,9 @@ public partial class LuckyNumberView
 
         this.WhenActivated(disposable =>
         {
+            this.OneWayBind(ViewModel, vm => vm.AccountViewModel, v => v.TitleView.ViewModel)
+                .DisposeWith(disposable);
+
             this.OneWayBind(ViewModel, 
                     vm => vm.LuckyNumber, 
                     v => v.LuckyNumberLabel.Text,

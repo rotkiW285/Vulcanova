@@ -11,7 +11,7 @@ using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Extensions;
-using Vulcanova.Features.Attendance.LessonDetails;
+using Vulcanova.Features.Auth;
 using Vulcanova.Features.Homework.HomeworkDetails;
 using Vulcanova.Features.Shared;
 using Xamarin.Forms;
@@ -30,16 +30,21 @@ namespace Vulcanova.Features.Homework
         [Reactive] public PeriodResult PeriodInfo { get; private set; }
         [Reactive] public Homework SelectedHomework { get; set; }
 
+        [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
+
         private readonly IHomeworkService _homeworksService;
 
         public HomeworkViewModel(
             IHomeworkService homeworksService,
             AccountContext accountContext,
+            AccountAwarePageTitleViewModel accountViewModel,
             INavigationService navigationService,
             IPeriodService periodService,
             ISheetPopper popper = null) : base(navigationService)
         {
             _homeworksService = homeworksService;
+
+            AccountViewModel = accountViewModel;
 
             var setCurrentPeriod = ReactiveCommand.CreateFromTask(async (int accountId) =>
                 PeriodInfo = await periodService.GetCurrentPeriodAsync(accountId));

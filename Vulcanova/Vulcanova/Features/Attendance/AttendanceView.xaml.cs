@@ -1,4 +1,3 @@
-using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
@@ -18,6 +17,9 @@ public partial class AttendanceView
             
         this.WhenActivated(disposable =>
         {
+            this.OneWayBind(ViewModel, vm => vm.AccountViewModel, v => v.TitleView.ViewModel)
+                .DisposeWith(disposable);
+
             this.Bind(ViewModel, vm => vm.SelectedDay, v => v.Calendar.SelectedDate)
                 .DisposeWith(disposable);
 

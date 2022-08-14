@@ -11,10 +11,14 @@
                           xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                           xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
                           xmlns:homeworkDetails="clr-namespace:Vulcanova.Features.Homework.HomeworkDetails;assembly=Vulcanova"
+                          xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
                           ios:Page.UseSafeArea="True"
                           Title="{x:Static resx:Strings.HomeworkTabTitle}"
                           IconImageSource="{OnPlatform iOS=reader-outline@3x.png, Android=ic_reader_outline}"
                           x:Class="Vulcanova.Features.Homework.HomeworkView">
+    <NavigationPage.TitleView>
+        <auth:AccountAwarePageTitleView x:Name="TitleView" />
+    </NavigationPage.TitleView>
     <ContentPage.Content>
         <Grid>
             <StackLayout>

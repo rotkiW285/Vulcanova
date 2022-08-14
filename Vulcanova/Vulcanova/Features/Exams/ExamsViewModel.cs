@@ -11,6 +11,7 @@ using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Extensions;
+using Vulcanova.Features.Auth;
 using Vulcanova.Features.Exams.ExamDetails;
 using Vulcanova.Features.Shared;
 using Xamarin.Forms;
@@ -27,16 +28,21 @@ public class ExamsViewModel : ViewModelBase
     [Reactive] public IReadOnlyCollection<Exam> CurrentWeekEntries { get; private set; }
     [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
     [Reactive] public Exam SelectedExam { get; set; }
+    
+    [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
 
     private readonly IExamsService _examsService;
 
     public ExamsViewModel(
         IExamsService examsService,
         AccountContext accountContext,
+        AccountAwarePageTitleViewModel accountViewModel,
         INavigationService navigationService,
         ISheetPopper popper = null) : base(navigationService)
     {
         _examsService = examsService;
+
+        AccountViewModel = accountViewModel;
 
         GetExams = ReactiveCommand.CreateFromObservable((bool forceSync) =>
             GetEntries(accountContext.AccountId, SelectedDay, forceSync));

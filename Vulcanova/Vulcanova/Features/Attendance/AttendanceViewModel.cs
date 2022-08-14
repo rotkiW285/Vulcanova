@@ -10,6 +10,7 @@ using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Features.Attendance.LessonDetails;
+using Vulcanova.Features.Auth;
 using Vulcanova.Features.Shared;
 using Xamarin.Forms;
 
@@ -27,14 +28,18 @@ public class AttendanceViewModel : ViewModelBase
     [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
     [Reactive] public Lesson SelectedLesson { get; set; }
 
+    public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
+
     private readonly ILessonsService _lessonsService;
 
     public AttendanceViewModel(
         ILessonsService lessonsService,
         AccountContext accountContext,
+        AccountAwarePageTitleViewModel accountViewModel,
         INavigationService navigationService,
         ISheetPopper popper = null) : base(navigationService)
     {
+        AccountViewModel = accountViewModel;
         _lessonsService = lessonsService;
 
         GetAttendanceEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>

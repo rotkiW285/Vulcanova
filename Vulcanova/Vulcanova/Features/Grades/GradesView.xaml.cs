@@ -27,6 +27,9 @@ public partial class GradesView
             this.OneWayBind(ViewModel, vm => vm.FinalGradesViewModel, v => v.FinalGradesView.ViewModel)
                 .DisposeWith(disposable);
 
+            this.OneWayBind(ViewModel, vm => vm.AccountViewModel, v => v.TitleView.ViewModel)
+                .DisposeWith(disposable);
+
             this.BindCommand(ViewModel, vm => vm.PreviousSemester, v => v.PreviousSemesterTap)
                 .DisposeWith(disposable);
 

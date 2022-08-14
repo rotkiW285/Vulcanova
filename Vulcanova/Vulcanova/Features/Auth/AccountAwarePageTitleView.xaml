@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xamForms:ReactiveContentView x:TypeArguments="auth:AccountAwarePageTitleViewModel"
+                              xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                              xmlns:xamForms="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                              xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
+                              xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+                              x:Class="Vulcanova.Features.Auth.AccountAwarePageTitleView">
+    <ContentView.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label FontAttributes="Bold" VerticalOptions="Center" Grid.Column="1" x:Name="TitleLabel" />
+            <views:AvatarView Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Size="35" x:Name="AvatarView" />
+        </Grid>
+    </ContentView.Content>
+</xamForms:ReactiveContentView>

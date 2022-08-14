@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
+using Vulcanova.Features.Auth;
 using Vulcanova.Features.Shared;
 using Vulcanova.Features.Timetable.Changes;
 
@@ -22,6 +22,8 @@ public class TimetableViewModel : ViewModelBase
     [Reactive] public IEnumerable<TimetableListEntry> CurrentDayEntries { get; private set; }
     [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
 
+    [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
+
     private readonly ITimetableService _timetableService;
     private readonly ITimetableChangesService _timetableChangesService;
 
@@ -29,10 +31,13 @@ public class TimetableViewModel : ViewModelBase
         INavigationService navigationService,
         ITimetableService timetableService,
         AccountContext accountContext,
+        AccountAwarePageTitleViewModel accountViewModel,
         ITimetableChangesService timetableChangesService) : base(navigationService)
     {
         _timetableService = timetableService;
         _timetableChangesService = timetableChangesService;
+
+        AccountViewModel = accountViewModel;
 
         GetTimetableEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
             GetEntries(accountContext.AccountId, SelectedDay, forceSync)

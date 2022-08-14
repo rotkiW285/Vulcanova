@@ -3,6 +3,7 @@ using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
+using Vulcanova.Features.Auth;
 using Vulcanova.Features.Grades.Final;
 using Vulcanova.Features.Grades.Summary;
 using Vulcanova.Features.Shared;
@@ -14,8 +15,9 @@ public class GradesViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> NextSemester { get; }
     public ReactiveCommand<Unit, Unit> PreviousSemester { get; }
 
-    [Reactive] public GradesSummaryViewModel GradesSummaryViewModel { get; set; }
-    [Reactive] public FinalGradesViewModel FinalGradesViewModel { get; set; }
+    [Reactive] public GradesSummaryViewModel GradesSummaryViewModel { get; private set; }
+    [Reactive] public FinalGradesViewModel FinalGradesViewModel { get; private set; }
+    [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
 
         
     [Reactive] public int SelectedViewModelIndex { get; set; }
@@ -24,12 +26,14 @@ public class GradesViewModel : ViewModelBase
     public GradesViewModel(
         GradesSummaryViewModel gradesSummaryViewModel,
         FinalGradesViewModel finalGradesViewModel,
+        AccountAwarePageTitleViewModel accountViewModel,
         AccountContext accountContext,
         IPeriodService periodService,
         INavigationService navigationService) : base(navigationService)
     {
         GradesSummaryViewModel = gradesSummaryViewModel;
         FinalGradesViewModel = finalGradesViewModel;
+        AccountViewModel = accountViewModel;
 
         var setCurrentPeriod =
             ReactiveCommand.CreateFromTask(async (int accountId) =>

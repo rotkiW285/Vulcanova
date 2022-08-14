@@ -13,7 +13,11 @@
     xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
     xmlns:subjectDetails="clr-namespace:Vulcanova.Features.Grades.SubjectDetails;assembly=Vulcanova"
     xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+    xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
     Title="{x:Static resx:Strings.GradesTabTitle}">
+    <NavigationPage.TitleView>
+        <auth:AccountAwarePageTitleView x:Name="TitleView" />
+    </NavigationPage.TitleView>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="TabStyle" TargetType="tabs:UnderlinedTabItem">

@@ -16,7 +16,9 @@ public static class Config
         container.RegisterForNavigation<ManualSignInView>();
         container.RegisterForNavigation<QrScannerView>();
         container.RegisterForNavigation<EnterPinCodeView>();
-            
+
+        container.RegisterSingleton<AccountAwarePageTitleViewModel>();
+
         container.RegisterScoped<IAuthenticationService, AuthenticationService>();
     }
 }
