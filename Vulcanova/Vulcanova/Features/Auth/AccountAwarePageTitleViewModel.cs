@@ -1,32 +1,53 @@
-using System;
-using System.Reactive.Linq;
+using System.Collections.Generic;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Layout;
+using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Features.Shared;
+using Unit = System.Reactive.Unit;
 
 namespace Vulcanova.Features.Auth;
 
-public class AccountAwarePageTitleViewModel
+public class AccountAwarePageTitleViewModel : ReactiveObject
 {
+    [ObservableAsProperty]
+    public Account Account { get; private set; }
+
+    public ReactiveCommand<Unit, Unit> ShowAccountsDialog { get; }
+    
+    public ReactiveCommand<int, Account> LoadAccount { get; }
+    
     [Reactive]
-    public string Initials { get; private set; }
+    public IReadOnlyCollection<Account> AvailableAccounts { get; private set; }
 
     public AccountAwarePageTitleViewModel(
         AccountContext accountContext,
-        IAccountRepository accountRepository)
+        IAccountRepository accountRepository,
+        ISheetPopper popper = null)
     {
+        LoadAccount = ReactiveCommand.CreateFromTask(async (int accountId) 
+            => await accountRepository.GetByIdAsync(accountId));
+
+        LoadAccount.ToPropertyEx(this, vm => vm.Account);
+
         accountContext.WhenAnyValue(ctx => ctx.AccountId)
             .WhereNotNull()
-            .Select(id =>
-            {
-                return Observable.FromAsync(async () =>
-                {
-                    var account = await accountRepository.GetByIdAsync(id);
+            .InvokeCommand(this, vm => vm.LoadAccount);
 
-                    Initials = $"{account.Pupil.FirstName[0]}{account.Pupil.Surname[0]}";
-                });
-            })
-            .Concat()
-            .Subscribe();
+        ShowAccountsDialog = ReactiveCommand.CreateFromTask<Unit>(async _
+            =>
+        {
+            AvailableAccounts = await accountRepository.GetAccountsAsync();
+
+            if (popper != null)
+            {
+                var popup = new AccountPickerView
+                {
+                    AvailableAccounts = AvailableAccounts
+                };
+
+                popper.PopSheet(popup, hasCloseButton: false, useSafeArea: true);
+            }
+        });
     }
 }

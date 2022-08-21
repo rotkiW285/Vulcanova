@@ -31,9 +31,29 @@ public partial class AccountAwarePageTitleView
                     };
                 })
                 .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.Initials, v => v.AvatarView.Text)
+            
+            // ReactiveUI binding API seems not to be working here on iOS in Release mode for some reason:
+            // PropertyBinderImplementation: v.AvatarView.Text Binding received an Exception! - System.ArgumentException: Set Method not found for 'Text'
+            // Workaround with standard Subscribe(...) applied:
+            this.WhenAnyValue(v => v.ViewModel.Account)
+                .WhereNotNull()
+                .Subscribe(account =>
+                {
+                    AvatarView.IsVisible = true;
+                    AvatarView.Text = $"{account.Pupil.FirstName[0]}{account.Pupil.Surname[0]}";
+                })
                 .DisposeWith(disposable);
+
+            this.BindCommand(ViewModel, vm => vm.ShowAccountsDialog, v => v.AvatarTapRecognizer)
+                .DisposeWith(disposable);
+            
+            if (Device.RuntimePlatform != Device.iOS)
+            {
+                UiExtensions.WireUpNonNativeSheet(ViewModel, AccountPicker, Panel,
+                        vm => vm.AvailableAccounts,
+                        v => v.AvailableAccounts)
+                    .DisposeWith(disposable);
+            }
         });
     }
 }

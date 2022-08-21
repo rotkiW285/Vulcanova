@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LiteDB.Async;
 using Vulcanova.Features.Auth.Accounts;
@@ -23,6 +25,12 @@ public class AccountRepository : IAccountRepository
     {
         return await _db.GetCollection<Account>()
             .FindOneAsync(a => a.IsActive).ConfigureAwait(false);
+    }
+
+    public async Task<IReadOnlyCollection<Account>> GetAccountsAsync()
+    {
+        var items = (await _db.GetCollection<Account>().FindAllAsync()).ToArray();
+        return Array.AsReadOnly(items);
     }
 
     public async Task<Account> GetByIdAsync(int id)

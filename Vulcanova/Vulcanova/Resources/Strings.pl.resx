@@ -210,4 +210,7 @@
     <data name="GradesCountLabel" xml:space="preserve">
         <value>Liczba ocen</value>
     </data>
+    <data name="AddNewAccountButton" xml:space="preserve">
+        <value>Dodaj nowe konto</value>
+    </data>
 </root>

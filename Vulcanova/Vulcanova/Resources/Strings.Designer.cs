@@ -580,5 +580,12 @@ namespace Vulcanova.Resources
                 return ResourceManager.GetString("GradesCountLabel", resourceCulture);
             }
         }
+        
+        internal static string AddNewAccountButton
+        {
+            get {
+                return ResourceManager.GetString("AddNewAccountButton", resourceCulture);
+            }
+        }
     }
 }

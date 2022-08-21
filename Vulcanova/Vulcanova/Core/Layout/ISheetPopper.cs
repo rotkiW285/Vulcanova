@@ -4,5 +4,5 @@ namespace Vulcanova.Core.Layout;
 
 public interface ISheetPopper
 {
-    void PopSheet(ContentView content);
+    void PopSheet(ContentView content, bool hasCloseButton = true, bool useSafeArea = false);
 }

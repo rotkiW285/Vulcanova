@@ -8,6 +8,7 @@ namespace Vulcanova.Features.Auth
     {
         Task AddAccountsAsync(IEnumerable<Account> accounts);
         Task<Account> GetActiveAccountAsync();
+        Task<IReadOnlyCollection<Account>> GetAccountsAsync();
         Task<Account> GetByIdAsync(int id);
         Task UpdateAccountAsync(Account account);
         Task DeleteByIdAsync(int id);

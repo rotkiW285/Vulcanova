@@ -1,0 +1,44 @@
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:accounts="clr-namespace:Vulcanova.Features.Auth.Accounts;assembly=Vulcanova"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+    x:Class="Vulcanova.Features.Auth.AccountPickerView"
+    x:Name="View">
+    <ContentView.Resources>
+        <accounts:PupilToInitialsConverter x:Key="PupilToInitialsConverter" />
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout Padding="8">
+            <CollectionView BindingContext="{x:Reference View}" ItemsSource="{Binding AvailableAccounts}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="accounts:Account">
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <views:AvatarView
+                                VerticalOptions="Center"
+                                Text="{Binding Pupil, Converter={StaticResource PupilToInitialsConverter}}" />
+                            <StackLayout Grid.Column="1" Spacing="0">
+                                <Label>
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Pupil.FirstName" />
+                                            <Binding Path="Pupil.Surname" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Label Text="{Binding Unit.Name}"
+                                       TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}" />
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Style="{StaticResource DefaultButtonStyle}" Text="{x:Static resx:Strings.AddNewAccountButton}" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
