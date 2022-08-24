@@ -4,13 +4,14 @@
     xmlns:accounts="clr-namespace:Vulcanova.Features.Auth.Accounts;assembly=Vulcanova"
     xmlns:views="http://xamarin.com/schemas/2020/toolkit"
     xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+    xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
     x:Class="Vulcanova.Features.Auth.AccountPickerView"
     x:Name="View">
     <ContentView.Resources>
         <accounts:PupilToInitialsConverter x:Key="PupilToInitialsConverter" />
     </ContentView.Resources>
     <ContentView.Content>
-        <StackLayout Padding="8">
+        <StackLayout Padding="16, 8">
             <CollectionView BindingContext="{x:Reference View}" ItemsSource="{Binding AvailableAccounts}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="accounts:Account">
@@ -18,6 +19,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <views:AvatarView
                                 VerticalOptions="Center"
@@ -34,6 +36,13 @@
                                 <Label Text="{Binding Unit.Name}"
                                        TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}" />
                             </StackLayout>
+                            <layout:TintedCachedImage
+                                Grid.Column="2"
+                                IsVisible="{Binding IsActive}"
+                                HeightRequest="35"
+                                WidthRequest="35"
+                                Source="resource://Vulcanova.Resources.Icons.checkmark-circle.svg"
+                                TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
