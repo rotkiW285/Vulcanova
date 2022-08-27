@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Layout;
 using Vulcanova.Features.Auth.Accounts;
+using Vulcanova.Features.Auth.Intro;
 using Vulcanova.Features.Shared;
 using Unit = System.Reactive.Unit;
 
@@ -17,12 +19,15 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
     
     public ReactiveCommand<int, Account> LoadAccount { get; }
     
+    public ReactiveCommand<Unit, Unit> OpenAddAccountPage { get; }
+
     [Reactive]
     public IReadOnlyCollection<Account> AvailableAccounts { get; private set; }
 
     public AccountAwarePageTitleViewModel(
         AccountContext accountContext,
         IAccountRepository accountRepository,
+        INavigationService navigationService,
         ISheetPopper popper = null)
     {
         LoadAccount = ReactiveCommand.CreateFromTask(async (int accountId) 
@@ -43,11 +48,14 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
             {
                 var popup = new AccountPickerView
                 {
-                    AvailableAccounts = AvailableAccounts
+                    AvailableAccounts = AvailableAccounts,
+                    AddAccountCommand = OpenAddAccountPage
                 };
 
                 popper.PopSheet(popup, hasCloseButton: false, useSafeArea: true);
             }
         });
+
+        OpenAddAccountPage = ReactiveCommand.Create<Unit>(_ => navigationService.NavigateAsync(nameof(IntroView), useModalNavigation: true));
     }
 }

@@ -11,4 +11,5 @@ public class Account
     public ConstituentUnit ConstituentUnit { get; set; }
     public bool IsActive { get; set; }
     public List<Period> Periods { get; set; }
+    public string IdentityThumbprint { get; set; }
 }

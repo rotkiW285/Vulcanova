@@ -68,7 +68,7 @@ public class TimetableChangesService : UonetResourceProvider, ITimetableChangesS
 
         var query = new GetScheduleChangesEntriesByPupilQuery(account.Pupil.Id, from, to, DateTime.MinValue);
 
-        var client = _apiClientFactory.GetForApiInstanceUrl(account.Unit.RestUrl);
+        var client =  await _apiClientFactory.GetAuthenticatedAsync(account);
 
         var response = await client.GetAsync(GetScheduleChangesEntriesByPupilQuery.ApiEndpoint, query);
 

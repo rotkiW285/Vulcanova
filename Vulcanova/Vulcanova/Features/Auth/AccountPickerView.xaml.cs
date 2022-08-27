@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Windows.Input;
 using Vulcanova.Features.Auth.Accounts;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,6 +18,17 @@ public partial class AccountPickerView
     {
         get => (IEnumerable<Account>) GetValue(AvailableAccountsProperty);
         set => SetValue(AvailableAccountsProperty, value);
+    }
+    
+    public static readonly BindableProperty AddAccountCommandProperty = BindableProperty.Create(
+        nameof(AddAccountCommand),
+        typeof(ICommand),
+        typeof(AccountPickerView));
+
+    public ICommand AddAccountCommand
+    {
+        get => (ICommand) GetValue(AddAccountCommandProperty);
+        set => SetValue(AddAccountCommandProperty, value);
     }
 
     public AccountPickerView()

@@ -11,7 +11,6 @@ public static class Config
     public static void RegisterUonet(this IContainerRegistry container)
     {
         container.RegisterSingleton<IApiClientFactory, ApiClientFactory>();
-        container.RegisterSingleton<IRequestSigner, RequestSignerAdapter>();
         container.RegisterSingleton<IInstanceUrlProvider, InstanceUrlProvider>();
         container.RegisterSingleton<AccountContext>();
 

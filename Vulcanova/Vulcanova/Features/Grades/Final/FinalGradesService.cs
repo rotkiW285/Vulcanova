@@ -66,7 +66,7 @@ public class FinalGradesService : UonetResourceProvider, IFinalGradesService
     {
         var query = new GetGradesSummaryByPupilQuery(account.Unit.Id, account.Pupil.Id, periodId, 500);
 
-        var client = _apiClientFactory.GetForApiInstanceUrl(account.Unit.RestUrl);
+        var client =  await _apiClientFactory.GetAuthenticatedAsync(account);
 
         var response = await client.GetAsync(GetGradesSummaryByPupilQuery.ApiEndpoint, query);
 

@@ -66,7 +66,7 @@ public class TimetableService : UonetResourceProvider, ITimetableService
 
         var query = new GetScheduleEntriesByPupilQuery(account.Pupil.Id, from, to, DateTime.MinValue);
 
-        var client = _apiClientFactory.GetForApiInstanceUrl(account.Unit.RestUrl);
+        var client =  await _apiClientFactory.GetAuthenticatedAsync(account);
 
         var response = await client.GetAsync(GetScheduleEntriesByPupilQuery.ApiEndpoint, query);
 

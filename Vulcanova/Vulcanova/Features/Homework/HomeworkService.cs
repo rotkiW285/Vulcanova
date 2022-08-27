@@ -61,7 +61,7 @@ public class HomeworkService : UonetResourceProvider, IHomeworkService
     {        
         var query = new GetHomeworkByPupilQuery(account.Pupil.Id, periodId, DateTime.MinValue);
 
-        var client = _apiClientFactory.GetForApiInstanceUrl(account.Unit.RestUrl);
+        var client = await _apiClientFactory.GetAuthenticatedAsync(account);
 
         var response = client.GetAllAsync(GetHomeworkByPupilQuery.ApiEndpoint, query);
 

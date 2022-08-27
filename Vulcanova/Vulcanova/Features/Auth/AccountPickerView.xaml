@@ -47,7 +47,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Button Style="{StaticResource DefaultButtonStyle}" Text="{x:Static resx:Strings.AddNewAccountButton}" />
+            <Button Command="{Binding Source={x:Reference View}, Path=AddAccountCommand}"
+                    Style="{StaticResource DefaultButtonStyle}"
+                    Text="{x:Static resx:Strings.AddNewAccountButton}" />
         </StackLayout>
     </ContentView.Content>
 </ContentView>

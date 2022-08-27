@@ -66,7 +66,7 @@ public class GradesService : UonetResourceProvider, IGradesService
 
     private async Task<Grade[]> FetchPeriodGradesAsync(Account account, int periodId)
     {
-        var client = _apiClientFactory.GetForApiInstanceUrl(account.Unit.RestUrl);
+        var client = await _apiClientFactory.GetAuthenticatedAsync(account);
 
         var normalGradesLastSync = GetLastSync(GetGradesResourceKey(account, periodId));
 

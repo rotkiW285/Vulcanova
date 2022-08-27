@@ -61,7 +61,7 @@ public class ExamsService : UonetResourceProvider, IExamsService
     {
         var query = new GetExamsByPupilQuery(account.Unit.Id, account.Pupil.Id, DateTime.MinValue, 500);
 
-        var client = _apiClientFactory.GetForApiInstanceUrl(account.Unit.RestUrl);
+        var client =  await _apiClientFactory.GetAuthenticatedAsync(account);
 
         var response = await client.GetAsync(GetExamsByPupilQuery.ApiEndpoint, query);
 

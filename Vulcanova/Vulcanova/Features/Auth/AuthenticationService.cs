@@ -24,7 +24,9 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task<Account[]> AuthenticateAsync(string token, string pin, string instanceUrl)
     {
-        var (x509Certificate2, _, _) = await ClientIdentityProvider.GetOrCreateClientIdentityAsync();
+        var identity = await ClientIdentityProvider.CreateClientIdentityAsync();
+
+        var x509Certificate2 = identity.Certificate;
 
         var request = new RegisterClientRequest
         {
@@ -38,12 +40,21 @@ public class AuthenticationService : IAuthenticationService
             SelfIdentifier = Guid.NewGuid().ToString()
         };
 
-        var client = _apiClientFactory.GetForApiInstanceUrl(instanceUrl);
+        var client = _apiClientFactory.GetAuthenticated(identity, instanceUrl);
 
         await client.PostAsync(RegisterClientRequest.ApiEndpoint, request);
 
+        await ClientIdentityStore.SaveIdentityAsync(identity);
+
         var registerHebeResponse = await client.GetAsync(RegisterHebeClientQuery.ApiEndpoint, new RegisterHebeClientQuery());
 
-        return registerHebeResponse.Envelope.Select(_mapper.Map<Account>).ToArray();
+        var accounts = registerHebeResponse.Envelope.Select(_mapper.Map<Account>).ToArray();
+
+        foreach (var account in accounts)
+        {
+            account.IdentityThumbprint = identity.Certificate.Thumbprint;
+        }
+
+        return accounts;
     }
 }

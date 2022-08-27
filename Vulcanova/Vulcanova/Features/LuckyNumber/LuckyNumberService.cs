@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth;
+using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Uonet.Api.LuckyNumber;
 
 namespace Vulcanova.Features.LuckyNumber;
@@ -36,7 +37,7 @@ public class LuckyNumberService : ILuckyNumberService
             return luckyNumber;
         }
 
-        var result = await FetchLuckyNumberAsync(account.ConstituentUnit.Id, dateTime, account.Unit.RestUrl);
+        var result = await FetchLuckyNumberAsync(account, dateTime);
 
         luckyNumber = new LuckyNumber
         {
@@ -51,11 +52,11 @@ public class LuckyNumberService : ILuckyNumberService
         return luckyNumber;
     }
 
-    private async Task<LuckyNumberPayload> FetchLuckyNumberAsync(int constituentId, DateTime dateTime, string restUrl)
+    private async Task<LuckyNumberPayload> FetchLuckyNumberAsync(Account account, DateTime dateTime)
     {
-        var apiClient = _apiClientFactory.GetForApiInstanceUrl(restUrl);
+        var apiClient = await _apiClientFactory.GetAuthenticatedAsync(account);
 
-        var query = new GetLuckyNumberQuery(constituentId, dateTime);
+        var query = new GetLuckyNumberQuery(account.ConstituentUnit.Id, dateTime);
 
         var result = await apiClient.GetAsync(GetLuckyNumberQuery.ApiEndpoint, query);
 
