@@ -58,7 +58,7 @@ public class AttendanceViewModel : ViewModelBase
                     Lesson = SelectedLesson
                 };
 
-                popper!.PopSheet(view);
+                popper!.PushSheet(view);
             }
 
             return Unit.Default;

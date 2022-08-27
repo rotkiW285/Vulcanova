@@ -68,7 +68,7 @@ namespace Vulcanova.Features.Homework
                         Homework = SelectedHomework
                     };
 
-                    popper!.PopSheet(view);
+                    popper!.PushSheet(view);
                 }
 
                 return Unit.Default;

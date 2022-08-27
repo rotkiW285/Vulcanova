@@ -6,6 +6,7 @@ using Vulcanova.Core.Layout;
 using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Features.Auth.Intro;
 using Vulcanova.Features.Shared;
+using Xamarin.Forms;
 using Unit = System.Reactive.Unit;
 
 namespace Vulcanova.Features.Auth;
@@ -20,13 +21,19 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
     public ReactiveCommand<int, Account> LoadAccount { get; }
     
     public ReactiveCommand<Unit, Unit> OpenAddAccountPage { get; }
+    
+    public ReactiveCommand<int, Unit> OpenAccount { get; }
 
     [Reactive]
     public IReadOnlyCollection<Account> AvailableAccounts { get; private set; }
 
+    // iOS only
+    private ContentView _sheet;
+
     public AccountAwarePageTitleViewModel(
         AccountContext accountContext,
         IAccountRepository accountRepository,
+        AccountsManager accountsManager,
         INavigationService navigationService,
         ISheetPopper popper = null)
     {
@@ -46,16 +53,28 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
 
             if (popper != null)
             {
-                var popup = new AccountPickerView
+                _sheet = new AccountPickerView
                 {
                     AvailableAccounts = AvailableAccounts,
-                    AddAccountCommand = OpenAddAccountPage
+                    AddAccountCommand = OpenAddAccountPage,
+                    OpenAccountCommand = OpenAccount
                 };
 
-                popper.PopSheet(popup, hasCloseButton: false, useSafeArea: true);
+                popper.PushSheet(_sheet, hasCloseButton: false, useSafeArea: true);
             }
         });
 
-        OpenAddAccountPage = ReactiveCommand.Create<Unit>(_ => navigationService.NavigateAsync(nameof(IntroView), useModalNavigation: true));
+        OpenAddAccountPage = ReactiveCommand.CreateFromTask<Unit>(
+            async _ =>
+            {
+                await navigationService.NavigateAsync(nameof(IntroView), useModalNavigation: true);
+            });
+        
+        OpenAccount = ReactiveCommand.CreateFromTask<int>(
+            async accountId =>
+            {
+                popper?.PopSheet(_sheet);
+                await accountsManager.OpenAccountAndMarkAsCurrentAsync(accountId, false);
+            });
     }
 }

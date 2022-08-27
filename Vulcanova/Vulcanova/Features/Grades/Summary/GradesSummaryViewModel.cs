@@ -59,7 +59,7 @@ public class GradesSummaryViewModel : ViewModelBase
                     Subject = CurrentSubject
                 };
 
-                sheetPopper!.PopSheet(view);
+                sheetPopper!.PushSheet(view);
             }
 
             return Unit.Default;

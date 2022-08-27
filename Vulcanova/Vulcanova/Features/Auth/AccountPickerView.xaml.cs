@@ -30,6 +30,17 @@ public partial class AccountPickerView
         get => (ICommand) GetValue(AddAccountCommandProperty);
         set => SetValue(AddAccountCommandProperty, value);
     }
+    
+    public static readonly BindableProperty OpenAccountCommandProperty = BindableProperty.Create(
+        nameof(OpenAccountCommand),
+        typeof(ICommand),
+        typeof(AccountPickerView));
+
+    public ICommand OpenAccountCommand
+    {
+        get => (ICommand) GetValue(OpenAccountCommandProperty);
+        set => SetValue(OpenAccountCommandProperty, value);
+    }
 
     public AccountPickerView()
     {

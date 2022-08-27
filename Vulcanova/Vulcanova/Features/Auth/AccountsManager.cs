@@ -19,17 +19,23 @@ public class AccountsManager
         _accountContext = accountContext;
     }
 
-    public async Task OpenAccountAndMarkAsCurrentAsync(int accountId)
+    public async Task OpenAccountAndMarkAsCurrentAsync(int accountId, bool navigateToHomePage = true)
     {
-        var account = await _accountRepository.GetByIdAsync(accountId);
+        var accounts = await _accountRepository.GetAccountsAsync();
 
-        account.IsActive = true;
+        foreach (var account in accounts)
+        {
+            account.IsActive = account.Id == accountId;
+        }
 
-        await _accountRepository.UpdateAccountAsync(account);
+        await _accountRepository.UpdateAccountsAsync(accounts);
             
-        _accountContext.AccountId = account.Id;
-            
-        await _navigationService.NavigateAsync("/MainNavigationPage/HomeTabbedPage?selectedTab=GradesSummaryView");
+        _accountContext.AccountId = accountId;
+
+        if (navigateToHomePage)
+        {
+            await _navigationService.NavigateAsync("/MainNavigationPage/HomeTabbedPage?selectedTab=GradesSummaryView");
+        }
     }
 
     public async Task AddAccountsAsync(IEnumerable<Account> accounts)

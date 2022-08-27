@@ -60,7 +60,7 @@ public class ExamsViewModel : ViewModelBase
                     Exam = SelectedExam
                 };
 
-                popper!.PopSheet(view);
+                popper!.PushSheet(view);
             }
 
             return Unit.Default;

@@ -44,6 +44,11 @@ public class AccountRepository : IAccountRepository
         await _db.GetCollection<Account>().UpdateAsync(account);
     }
 
+    public async Task UpdateAccountsAsync(IEnumerable<Account> accounts)
+    {
+        await _db.GetCollection<Account>().UpsertAsync(accounts);
+    }
+
     public async Task DeleteByIdAsync(int id)
     {
         await _db.GetCollection<Account>().DeleteAsync(id);

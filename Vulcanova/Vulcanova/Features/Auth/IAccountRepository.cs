@@ -11,6 +11,7 @@ namespace Vulcanova.Features.Auth
         Task<IReadOnlyCollection<Account>> GetAccountsAsync();
         Task<Account> GetByIdAsync(int id);
         Task UpdateAccountAsync(Account account);
+        Task UpdateAccountsAsync(IEnumerable<Account> accounts);
         Task DeleteByIdAsync(int id);
     }
 }

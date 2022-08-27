@@ -5,17 +5,22 @@
     xmlns:views="http://xamarin.com/schemas/2020/toolkit"
     xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
     xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+    xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
     x:Class="Vulcanova.Features.Auth.AccountPickerView"
     x:Name="View">
     <ContentView.Resources>
         <accounts:PupilToInitialsConverter x:Key="PupilToInitialsConverter" />
     </ContentView.Resources>
     <ContentView.Content>
-        <StackLayout Padding="16, 8">
+        <StackLayout>
             <CollectionView BindingContext="{x:Reference View}" ItemsSource="{Binding AvailableAccounts}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="accounts:Account">
-                        <Grid ColumnSpacing="12">
+                        <Grid ColumnSpacing="12"
+                              Padding="16, 8"
+                              xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
+                              xe:Commands.Tap="{Binding Source={x:Reference View}, Path=OpenAccountCommand}"
+                              xe:Commands.TapParameter="{Binding Id}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -24,7 +29,7 @@
                             <views:AvatarView
                                 VerticalOptions="Center"
                                 Text="{Binding Pupil, Converter={StaticResource PupilToInitialsConverter}}" />
-                            <StackLayout Grid.Column="1" Spacing="0">
+                            <StackLayout Grid.Column="1" Spacing="0" Background="Transparent">
                                 <Label>
                                     <Label.Text>
                                         <MultiBinding StringFormat="{}{0} {1}">
@@ -49,7 +54,8 @@
             </CollectionView>
             <Button Command="{Binding Source={x:Reference View}, Path=AddAccountCommand}"
                     Style="{StaticResource DefaultButtonStyle}"
-                    Text="{x:Static resx:Strings.AddNewAccountButton}" />
+                    Text="{x:Static resx:Strings.AddNewAccountButton}"
+                    Margin="16, 0" />
         </StackLayout>
     </ContentView.Content>
 </ContentView>
