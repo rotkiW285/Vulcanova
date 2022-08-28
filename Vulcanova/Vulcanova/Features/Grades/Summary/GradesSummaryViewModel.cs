@@ -42,7 +42,7 @@ public class GradesSummaryViewModel : ViewModelBase
     {
         GetGrades = ReactiveCommand.CreateFromObservable((bool forceSync) =>
             gradesService
-                .GetPeriodGrades(accountContext.AccountId, PeriodId!.Value, forceSync));
+                .GetPeriodGrades(accountContext.Account.Id, PeriodId!.Value, forceSync));
 
         GetGrades.ToPropertyEx(this, vm => vm.RawGrades);
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using Vulcanova.Features.Auth.Accounts;
@@ -29,8 +30,8 @@ public class AccountsManager
         }
 
         await _accountRepository.UpdateAccountsAsync(accounts);
-            
-        _accountContext.AccountId = accountId;
+
+        _accountContext.Account = accounts.Single(acc => acc.IsActive);
 
         if (navigateToHomePage)
         {

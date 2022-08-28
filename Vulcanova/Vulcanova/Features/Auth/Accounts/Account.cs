@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using Vulcanova.Features.Shared;
+using Vulcanova.Uonet.Api.Auth;
+using Period = Vulcanova.Features.Shared.Period;
 
 namespace Vulcanova.Features.Auth.Accounts;
 
@@ -12,4 +13,8 @@ public class Account
     public bool IsActive { get; set; }
     public List<Period> Periods { get; set; }
     public string IdentityThumbprint { get; set; }
+    public Login Login { get; set; }
+    public string[] Capabilities { get; set; }
+    public SenderEntry SenderEntry { get; set; }
+    public string ClassDisplay { get; set; }
 }

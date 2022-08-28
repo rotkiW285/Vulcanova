@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -42,8 +43,9 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
 
         LoadAccount.ToPropertyEx(this, vm => vm.Account);
 
-        accountContext.WhenAnyValue(ctx => ctx.AccountId)
+        accountContext.WhenAnyValue(ctx => ctx.Account)
             .WhereNotNull()
+            .Select(acc => acc.Id)
             .InvokeCommand(this, vm => vm.LoadAccount);
 
         ShowAccountsDialog = ReactiveCommand.CreateFromTask<Unit>(async _

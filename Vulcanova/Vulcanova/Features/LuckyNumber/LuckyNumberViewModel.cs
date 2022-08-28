@@ -1,4 +1,5 @@
 using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using ReactiveUI;
@@ -33,7 +34,9 @@ public class LuckyNumberViewModel : ViewModelBase
         GetLuckyNumber = ReactiveCommand.CreateFromTask((int accountId) => GetLuckyNumberAsync(accountId));
         GetLuckyNumber.ToPropertyEx(this, vm => vm.LuckyNumber);
 
-        accountContext.WhenAnyValue(ctx => ctx.AccountId)
+        accountContext.WhenAnyValue(ctx => ctx.Account)
+            .WhereNotNull()
+            .Select(acc => acc.Id)
             .InvokeCommand(GetLuckyNumber);
     }
 

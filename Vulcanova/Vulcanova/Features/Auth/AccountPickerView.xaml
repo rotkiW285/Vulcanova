@@ -6,10 +6,12 @@
     xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
     xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
     xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
+    xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
     x:Class="Vulcanova.Features.Auth.AccountPickerView"
     x:Name="View">
     <ContentView.Resources>
         <accounts:PupilToInitialsConverter x:Key="PupilToInitialsConverter" />
+        <auth:LoginRoleDisplayConverter x:Key="LoginRoleDisplayConverter" />
     </ContentView.Resources>
     <ContentView.Content>
         <StackLayout>
@@ -32,14 +34,23 @@
                             <StackLayout Grid.Column="1" Spacing="0" Background="Transparent">
                                 <Label>
                                     <Label.Text>
-                                        <MultiBinding StringFormat="{}{0} {1}">
+                                        <MultiBinding StringFormat="{}{0} {1}{2}">
                                             <Binding Path="Pupil.FirstName" />
                                             <Binding Path="Pupil.Surname" />
+                                            <Binding Path="Login.LoginRole" Converter="{StaticResource LoginRoleDisplayConverter}" />
                                         </MultiBinding>
                                     </Label.Text>
                                 </Label>
-                                <Label Text="{Binding Unit.Name}"
-                                       TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}" />
+                                <Label 
+                                    FontSize="Small"
+                                    TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} – {1}">
+                                            <Binding Path="Unit.Short" />
+                                            <Binding Path="ClassDisplay" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
                             </StackLayout>
                             <layout:TintedCachedImage
                                 Grid.Column="2"

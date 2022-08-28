@@ -47,7 +47,7 @@ public partial class App
         if (activeAccount != null)
         {
             var ctx = Container.Resolve<AccountContext>();
-            ctx.AccountId = activeAccount.Id;
+            ctx.Account = activeAccount;
 
             await NavigationService.NavigateAsync(
                 "MainNavigationPage/HomeTabbedPage?selectedTab=GradesSummaryView");

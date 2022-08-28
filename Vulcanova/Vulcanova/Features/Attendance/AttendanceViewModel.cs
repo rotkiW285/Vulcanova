@@ -43,7 +43,7 @@ public class AttendanceViewModel : ViewModelBase
         _lessonsService = lessonsService;
 
         GetAttendanceEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-            GetEntries(accountContext.AccountId, SelectedDay, forceSync));
+            GetEntries(accountContext.Account.Id, SelectedDay, forceSync));
 
         GetAttendanceEntries.ToPropertyEx(this, vm => vm.Entries);
             

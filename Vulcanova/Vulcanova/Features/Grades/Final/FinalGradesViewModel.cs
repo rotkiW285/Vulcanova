@@ -29,7 +29,7 @@ public class FinalGradesViewModel : ViewModelBase
     {
         GetFinalGrades = ReactiveCommand.CreateFromObservable((bool forceSync) =>
             finalGradesService
-                .GetPeriodGrades(accountContext.AccountId, PeriodId!.Value, forceSync)
+                .GetPeriodGrades(accountContext.Account.Id, PeriodId!.Value, forceSync)
                 .SubscribeOn(RxApp.TaskpoolScheduler));
 
         GetFinalGrades.ToPropertyEx(this, vm => vm.FinalGrades);

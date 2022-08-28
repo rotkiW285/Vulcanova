@@ -587,5 +587,13 @@ namespace Vulcanova.Resources
                 return ResourceManager.GetString("AddNewAccountButton", resourceCulture);
             }
         }
+        
+        internal static string ParentAccountLabel
+        {
+            get
+            {
+                return ResourceManager.GetString("ParentAccountLabel", resourceCulture);
+            }
+        }
     }
 }

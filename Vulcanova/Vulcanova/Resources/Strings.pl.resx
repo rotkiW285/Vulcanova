@@ -213,4 +213,7 @@
     <data name="AddNewAccountButton" xml:space="preserve">
         <value>Dodaj nowe konto</value>
     </data>
+    <data name="ParentAccountLabel" xml:space="preserve">
+        <value>konto rodzica</value>
+    </data>
 </root>

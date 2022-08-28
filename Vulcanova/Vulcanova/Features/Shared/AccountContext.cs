@@ -1,9 +1,10 @@
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Features.Auth.Accounts;
 
 namespace Vulcanova.Features.Shared;
 
 public class AccountContext : ReactiveObject
 {
-    [Reactive] public int AccountId { get; set; }
+    [Reactive] public Account Account { get; set; }
 }

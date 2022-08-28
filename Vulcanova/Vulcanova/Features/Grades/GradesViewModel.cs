@@ -1,4 +1,5 @@
 using System.Reactive;
+using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -39,19 +40,21 @@ public class GradesViewModel : ViewModelBase
             ReactiveCommand.CreateFromTask(async (int accountId) =>
                 PeriodInfo = await periodService.GetCurrentPeriodAsync(accountId));
 
-        accountContext.WhenAnyValue(ctx => ctx.AccountId)
+        accountContext.WhenAnyValue(ctx => ctx.Account)
+            .WhereNotNull()
+            .Select(acc => acc.Id)
             .InvokeCommand(setCurrentPeriod);
             
         NextSemester = ReactiveCommand.CreateFromTask(async () =>
         {
             PeriodInfo =
-                await periodService.ChangePeriodAsync(accountContext.AccountId, PeriodChangeDirection.Next);
+                await periodService.ChangePeriodAsync(accountContext.Account.Id, PeriodChangeDirection.Next);
         });
 
         PreviousSemester = ReactiveCommand.CreateFromTask(async () =>
         {
             PeriodInfo =
-                await periodService.ChangePeriodAsync(accountContext.AccountId, PeriodChangeDirection.Previous);
+                await periodService.ChangePeriodAsync(accountContext.Account.Id, PeriodChangeDirection.Previous);
         });
     }
 }

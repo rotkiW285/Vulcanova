@@ -40,7 +40,7 @@ public class TimetableViewModel : ViewModelBase
         AccountViewModel = accountViewModel;
 
         GetTimetableEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-            GetEntries(accountContext.AccountId, SelectedDay, forceSync)
+            GetEntries(accountContext.Account.Id, SelectedDay, forceSync)
                 .SubscribeOn(RxApp.TaskpoolScheduler));
 
         GetTimetableEntries.ToPropertyEx(this, vm => vm.Entries);

@@ -45,7 +45,7 @@ public class ExamsViewModel : ViewModelBase
         AccountViewModel = accountViewModel;
 
         GetExams = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-            GetEntries(accountContext.AccountId, SelectedDay, forceSync));
+            GetEntries(accountContext.Account.Id, SelectedDay, forceSync));
 
         GetExams.ToPropertyEx(this, vm => vm.Entries);
             

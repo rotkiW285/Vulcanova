@@ -49,11 +49,13 @@ namespace Vulcanova.Features.Homework
             var setCurrentPeriod = ReactiveCommand.CreateFromTask(async (int accountId) =>
                 PeriodInfo = await periodService.GetCurrentPeriodAsync(accountId));
             
-            accountContext.WhenAnyValue(ctx => ctx.AccountId)
+            accountContext.WhenAnyValue(ctx => ctx.Account)
+                .WhereNotNull()
+                .Select(acc => acc.Id)
                 .InvokeCommand(setCurrentPeriod);
 
             GetHomeworkEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-                GetEntries(accountContext.AccountId, PeriodInfo.CurrentPeriod.Id, forceSync));
+                GetEntries(accountContext.Account.Id, PeriodInfo.CurrentPeriod.Id, forceSync));
 
             GetHomeworkEntries.ToPropertyEx(this, vm => vm.Entries);
 

@@ -38,7 +38,7 @@ public class MainNavigationPageViewModel : ReactiveObject
 
         ShowSignInAlert = ReactiveCommand.CreateFromTask(async () =>
         {
-            await accountRepository.DeleteByIdAsync(accountContext.AccountId);
+            await accountRepository.DeleteByIdAsync(accountContext.Account.Id);
 
             await navigationService.NavigateAsync("/MainNavigationPage/IntroView");
 
