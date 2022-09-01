@@ -56,7 +56,7 @@ public class PeriodService : IPeriodService
 
         await _accountRepository.UpdateAccountAsync(account);
 
-        var (startYear, endYear) = GetSchoolYearDuration(allPeriods, currentPeriod);
+        var (startYear, endYear) = GetSchoolYearDuration(allPeriods, nextPeriod);
 
         return new PeriodResult(nextPeriod, hasNext, hasPrevious, startYear, endYear);
     }
