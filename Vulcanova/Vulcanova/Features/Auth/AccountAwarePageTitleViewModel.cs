@@ -69,7 +69,7 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
         OpenAddAccountPage = ReactiveCommand.CreateFromTask<Unit>(
             async _ =>
             {
-                await navigationService.NavigateAsync(nameof(IntroView), useModalNavigation: true);
+                await navigationService.NavigateAsync($"{nameof(MainNavigationPage)}/{nameof(IntroView)}", useModalNavigation: true);
             });
         
         OpenAccount = ReactiveCommand.CreateFromTask<int>(
