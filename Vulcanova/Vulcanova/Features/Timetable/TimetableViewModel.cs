@@ -103,7 +103,7 @@ public class TimetableViewModel : ViewModelBase
                     No = lesson.No,
                     Start = lesson.Start,
                     End = lesson.End,
-                    SubjectName = change?.Subject?.Name ?? lesson.Subject.Name,
+                    SubjectName = change?.Subject?.Name ?? lesson.Subject?.Name,
                     RoomName = change?.RoomName ?? lesson.RoomName,
                     TeacherName = change?.TeacherName ?? lesson.TeacherName,
                     Change = change?.Change.Type,
