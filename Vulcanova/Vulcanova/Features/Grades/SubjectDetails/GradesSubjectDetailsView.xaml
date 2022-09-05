@@ -48,7 +48,7 @@
                                     VerticalTextAlignment="Center"
                                     HorizontalTextAlignment="Center"
                                     FontSize="Large"
-                                    TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}}"
+                                    TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}"
                                     Text="{Binding Content}"
                                     LineBreakMode="TailTruncation" />
                                 <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="0">

@@ -32,7 +32,7 @@
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate x:DataType="grades:Grade">
                                                     <Label
-                                                        TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}}"
+                                                        TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}"
                                                         Text="{Binding Content}" />
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
