@@ -13,7 +13,7 @@ public class AttendanceColorConverter : IValueConverter
         {
             if (type.AbsenceJustified)
             {
-                return ThemeUtility.GetDefaultTextColor();
+                return parameter;
             }
 
             var baseColor = type switch
@@ -26,7 +26,7 @@ public class AttendanceColorConverter : IValueConverter
 
             if (baseColor == null)
             {
-                return ThemeUtility.GetDefaultTextColor();
+                return parameter;
             }
 
             return ThemeUtility.GetThemedColorByResourceKey(baseColor);

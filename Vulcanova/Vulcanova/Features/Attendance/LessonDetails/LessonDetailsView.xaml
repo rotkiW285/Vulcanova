@@ -24,7 +24,7 @@
                 <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
                        Text="{Binding Lesson.Subject.Name}" />
                 <Label Text="{Binding Lesson.PresenceType.Name}"
-                       TextColor="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
+                       TextColor="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}" />
             </StackLayout>
             <StackLayout Padding="16, 8" Spacing="16">
                 <controls:FieldView Name="{x:Static resx:Strings.LessonDateLabel}"
