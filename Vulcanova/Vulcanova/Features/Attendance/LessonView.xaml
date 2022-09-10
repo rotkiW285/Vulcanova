@@ -14,7 +14,7 @@
         <layoutConverters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
         <Style TargetType="Label">
             <Setter Property="TextColor"
-                    Value="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}" />
+                    Value="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
@@ -35,13 +35,13 @@
                     <Label
                         FontSize="Small"
                         Text="{Binding Lesson.PresenceType.Name}"
-                        TextColor="{Binding Lesson, Converter={StaticResource JustificationColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}" />
+                        TextColor="{Binding Lesson, Converter={StaticResource JustificationColorConverter}}" />
                     <layout:TintedCachedImage
                         IsVisible="{Binding Lesson.JustificationStatus, Converter={StaticResource NullToBooleanConverter}}"
                         HeightRequest="14"
                         WidthRequest="14"
-                        Source="{Binding Lesson.JustificationStatus, Converter={StaticResource JustificationStatusConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}"
-                        TintColor="{Binding Lesson, Converter={StaticResource JustificationColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}">
+                        Source="{Binding Lesson.JustificationStatus, Converter={StaticResource JustificationStatusConverter}}"
+                        TintColor="{Binding Lesson, Converter={StaticResource JustificationColorConverter}}">
                     </layout:TintedCachedImage>
                 </StackLayout>
             </StackLayout>

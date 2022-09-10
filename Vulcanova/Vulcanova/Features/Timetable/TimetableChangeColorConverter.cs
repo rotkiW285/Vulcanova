@@ -19,7 +19,7 @@ public class TimetableChangeColorConverter : IValueConverter
             return ThemeUtility.GetThemedColorByResourceKey(baseColor);
         }
 
-        return parameter;
+        return ThemeUtility.GetDefaultTextColor();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

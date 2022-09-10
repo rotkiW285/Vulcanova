@@ -11,7 +11,7 @@
         <local:TimetableChangeColorConverter x:Key="ColorConverter" />
         <local:TimetableChangeTextDecorationsConverter x:Key="TextDecorationsConverter" />
         <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{Binding Entry.Change, Converter={StaticResource ColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}" />
+            <Setter Property="TextColor" Value="{Binding Entry.Change, Converter={StaticResource ColorConverter}}" />
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
