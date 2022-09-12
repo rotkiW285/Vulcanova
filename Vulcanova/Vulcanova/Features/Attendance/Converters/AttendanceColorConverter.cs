@@ -5,10 +5,12 @@ using Xamarin.Forms;
 
 namespace Vulcanova.Features.Attendance.Converters;
 
-public class AttendanceColorConverter : IValueConverter
+public class AttendanceColorConverter : IMultiValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
+        var value = values[0];
+        
         if (value is PresenceType type)
         {
             if (type.AbsenceJustified)
@@ -35,7 +37,7 @@ public class AttendanceColorConverter : IValueConverter
         return ThemeUtility.GetDefaultTextColor();
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

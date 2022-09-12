@@ -6,12 +6,14 @@ using Xamarin.Forms;
 
 namespace Vulcanova.Features.Attendance.Converters;
 
-public class JustificationColorConverter : IValueConverter
+public class JustificationColorConverter : IMultiValueConverter
 {
     private static readonly AttendanceColorConverter AttendanceColorConverter = new();
 
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
+        var value = values[0];
+
         if (value is Lesson lesson)
         {
             if (lesson.PresenceType == null)
@@ -38,16 +40,18 @@ public class JustificationColorConverter : IValueConverter
 
             if (baseColor == null)
             {
-                return AttendanceColorConverter.Convert(lesson.PresenceType, targetType, parameter, culture);
+                // since the parent converter will be triggered anyway when the theme changes
+                // we can call the child converter with an arbitrary theme value of 0
+                return AttendanceColorConverter.Convert(new object[] {lesson.PresenceType, 0}, targetType, parameter, culture);
             }
 
             return ThemeUtility.GetThemedColorByResourceKey(baseColor);
         }
 
-        return null;
+        return ThemeUtility.GetDefaultTextColor();
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

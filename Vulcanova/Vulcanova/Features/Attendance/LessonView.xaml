@@ -13,8 +13,13 @@
         <converters:JustificationColorConverter x:Key="JustificationColorConverter" />
         <layoutConverters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
         <Style TargetType="Label">
-            <Setter Property="TextColor"
-                    Value="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
+            <Setter Property="TextColor">
+                <!-- We need to trigger the converter on theme change, thus MultiBinding with AppThemeBinding -->
+                <MultiBinding Converter="{StaticResource ColorConverter}">
+                    <Binding Path="Lesson.PresenceType" />
+                    <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                </MultiBinding>
+            </Setter>
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
@@ -34,14 +39,25 @@
                 <StackLayout Orientation="Horizontal">
                     <Label
                         FontSize="Small"
-                        Text="{Binding Lesson.PresenceType.Name}"
-                        TextColor="{Binding Lesson, Converter={StaticResource JustificationColorConverter}}" />
+                        Text="{Binding Lesson.PresenceType.Name}">
+                        <Label.TextColor>
+                            <MultiBinding Converter="{StaticResource JustificationColorConverter}">
+                                <Binding Path="Lesson" Source="{x:Reference View}" />
+                                <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                            </MultiBinding>
+                        </Label.TextColor>
+                    </Label>
                     <layout:TintedCachedImage
                         IsVisible="{Binding Lesson.JustificationStatus, Converter={StaticResource NullToBooleanConverter}}"
                         HeightRequest="14"
                         WidthRequest="14"
-                        Source="{Binding Lesson.JustificationStatus, Converter={StaticResource JustificationStatusConverter}}"
-                        TintColor="{Binding Lesson, Converter={StaticResource JustificationColorConverter}}">
+                        Source="{Binding Lesson.JustificationStatus, Converter={StaticResource JustificationStatusConverter}}">
+                        <layout:TintedCachedImage.TintColor>
+                                    <MultiBinding Converter="{StaticResource JustificationColorConverter}">
+                                        <Binding Path="Lesson" />
+                                        <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                                    </MultiBinding>
+                        </layout:TintedCachedImage.TintColor>
                     </layout:TintedCachedImage>
                 </StackLayout>
             </StackLayout>
