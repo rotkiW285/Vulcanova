@@ -39,7 +39,10 @@
                 <controls:HighlightValueView Name="{x:Static resx:Strings.GradesCountLabel}"
                                              Value="{Binding Subject.Grades.Count}" />
             </StackLayout>
-            <ListView HasUnevenRows="True" BindingContext="{x:Reference View}" ItemsSource="{Binding Subject.Grades}">
+            <ListView HasUnevenRows="True"
+                      BindingContext="{x:Reference View}"
+                      ItemsSource="{Binding Subject.Grades}"
+                      BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="grades:Grade">
                         <ViewCell>
