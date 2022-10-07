@@ -24,7 +24,12 @@
                             <StackLayout Padding="0, 1" xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
                                          xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type local:GradesSummaryViewModel}}, Path=ShowSubjectGradesDetails}"
                                          xe:Commands.TapParameter="{Binding SubjectId}">
-                                <StackLayout Orientation="Horizontal" Padding="16, 8">
+                                <Grid Padding="16, 8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
                                     <StackLayout HorizontalOptions="FillAndExpand">
                                         <Label Text="{Binding SubjectName}" />
                                         <StackLayout BindableLayout.ItemsSource="{Binding Grades}"
@@ -38,16 +43,18 @@
                                             </BindableLayout.ItemTemplate>
                                         </StackLayout>
                                     </StackLayout>
-                                    <Label Style="{StaticResource SmallLabelStyle}"
+                                    <Label Grid.Column="1"
+                                           Style="{StaticResource SmallLabelStyle}"
                                            Text="{Binding Average, StringFormat='{0:F2}'}"
                                            VerticalTextAlignment="Center" />
                                     <layout:TintedCachedImage
+                                        Grid.Column="2"
                                         HeightRequest="32"
                                         WidthRequest="32"
                                         Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
                                         TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
                                     </layout:TintedCachedImage>
-                                </StackLayout>
+                                </Grid>
                                 <!-- Separator -->
                                 <BoxView Style="{StaticResource SeparatorStyle}" />
                             </StackLayout>
