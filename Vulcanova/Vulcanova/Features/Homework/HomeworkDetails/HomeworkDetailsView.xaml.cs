@@ -1,10 +1,11 @@
+using Prism.Navigation;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Homework.HomeworkDetails;
 
 [XamlCompilation(XamlCompilationOptions.Compile)]
-public partial class HomeworkDetailsView
+public partial class HomeworkDetailsView : INavigationAware
 {
     public static readonly BindableProperty HomeworkProperty =
         BindableProperty.Create(nameof(Homework), typeof(Homework), typeof(HomeworkDetailsView));
@@ -18,5 +19,14 @@ public partial class HomeworkDetailsView
     public HomeworkDetailsView()
     {
         InitializeComponent();
+    }
+
+    public void OnNavigatedFrom(INavigationParameters parameters)
+    {
+    }
+
+    public void OnNavigatedTo(INavigationParameters parameters)
+    {
+        Homework = (Homework) parameters[nameof(Homework)];
     }
 }

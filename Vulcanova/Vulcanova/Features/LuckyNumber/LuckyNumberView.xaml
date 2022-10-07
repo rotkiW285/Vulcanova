@@ -5,12 +5,12 @@
                           xmlns:luckyNumber="clr-namespace:Vulcanova.Features.LuckyNumber;assembly=Vulcanova"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
-                          xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
+                          xmlns:accountPicker="clr-namespace:Vulcanova.Features.Auth.AccountPicker;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.LuckyNumberTabTitle}"
                           IconImageSource="{OnPlatform iOS=star-outline@3x.png, Android=ic_star_outline}"
                           x:Class="Vulcanova.Features.LuckyNumber.LuckyNumberView">
     <NavigationPage.TitleView>
-        <auth:AccountAwarePageTitleView x:Name="TitleView" />
+        <accountPicker:AccountAwarePageTitleView x:Name="TitleView" />
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <StackLayout>

@@ -1,5 +1,5 @@
-<ContentView
-    xmlns="http://xamarin.com/schemas/2014/forms"
+<layout:ReactiveSheetPage
+    x:TypeArguments="accountPicker:AccountPickerViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:accounts="clr-namespace:Vulcanova.Features.Auth.Accounts;assembly=Vulcanova"
     xmlns:views="http://xamarin.com/schemas/2020/toolkit"
@@ -7,21 +7,26 @@
     xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
     xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
     xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
-    x:Class="Vulcanova.Features.Auth.AccountPickerView"
+    xmlns:accountPicker="clr-namespace:Vulcanova.Features.Auth.AccountPicker;assembly=Vulcanova"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:vulcanovaIos="clr-namespace:Vulcanova.Core.Layout.PlatformSpecific.iOS;assembly=Vulcanova"
+    vulcanovaIos:Sheet.HasCloseButton="False"
+    ios:Page.UseSafeArea="True"
+    x:Class="Vulcanova.Features.Auth.AccountPicker.AccountPickerView"
     x:Name="View">
-    <ContentView.Resources>
+    <layout:ReactiveSheetPage.Resources>
         <accounts:PupilToInitialsConverter x:Key="PupilToInitialsConverter" />
         <auth:LoginRoleDisplayConverter x:Key="LoginRoleDisplayConverter" />
-    </ContentView.Resources>
+    </layout:ReactiveSheetPage.Resources>
     <ContentView.Content>
         <StackLayout>
-            <CollectionView BindingContext="{x:Reference View}" ItemsSource="{Binding AvailableAccounts}">
+            <CollectionView BindingContext="{x:Reference View}" ItemsSource="{Binding ViewModel.AvailableAccounts}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="accounts:Account">
                         <Grid ColumnSpacing="12"
                               Padding="16, 8"
                               xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
-                              xe:Commands.Tap="{Binding Source={x:Reference View}, Path=OpenAccountCommand}"
+                              xe:Commands.Tap="{Binding Source={x:Reference View}, Path=ViewModel.OpenAccount}"
                               xe:Commands.TapParameter="{Binding Id}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -63,10 +68,10 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Button Command="{Binding Source={x:Reference View}, Path=AddAccountCommand}"
+            <Button Command="{Binding Source={x:Reference View}, Path=ViewModel.OpenAddAccountPage}"
                     Style="{StaticResource DefaultButtonStyle}"
                     Text="{x:Static resx:Strings.AddNewAccountButton}"
                     Margin="16, 0" />
         </StackLayout>
     </ContentView.Content>
-</ContentView>
+</layout:ReactiveSheetPage>

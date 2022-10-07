@@ -1,9 +1,13 @@
+using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace Vulcanova.Core.Layout;
 
 public interface ISheetPopper
 {
-    void PushSheet(ContentView content, bool hasCloseButton = true, bool useSafeArea = false);
-    void PopSheet(ContentView content);
+    Dictionary<Page, Action> Sheets { get; }
+    
+    void PushSheet(Page page);
+    void PopSheet(Page page);
 }

@@ -7,10 +7,9 @@ using Vulcanova.Core.Layout;
 using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Features.Auth.Intro;
 using Vulcanova.Features.Shared;
-using Xamarin.Forms;
 using Unit = System.Reactive.Unit;
 
-namespace Vulcanova.Features.Auth;
+namespace Vulcanova.Features.Auth.AccountPicker;
 
 public class AccountAwarePageTitleViewModel : ReactiveObject
 {
@@ -28,15 +27,11 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
     [Reactive]
     public IReadOnlyCollection<Account> AvailableAccounts { get; private set; }
 
-    // iOS only
-    private ContentView _sheet;
-
     public AccountAwarePageTitleViewModel(
         AccountContext accountContext,
         IAccountRepository accountRepository,
         AccountsManager accountsManager,
-        INavigationService navigationService,
-        ISheetPopper popper = null)
+        INavigationService navigationService)
     {
         LoadAccount = ReactiveCommand.CreateFromTask(async (int accountId) 
             => await accountRepository.GetByIdAsync(accountId));
@@ -53,17 +48,8 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
         {
             AvailableAccounts = await accountRepository.GetAccountsAsync();
 
-            if (popper != null)
-            {
-                _sheet = new AccountPickerView
-                {
-                    AvailableAccounts = AvailableAccounts,
-                    AddAccountCommand = OpenAddAccountPage,
-                    OpenAccountCommand = OpenAccount
-                };
-
-                popper.PushSheet(_sheet, hasCloseButton: false, useSafeArea: true);
-            }
+            await navigationService.NavigateAsync(nameof(AccountPickerView),
+                (nameof(AccountPickerViewModel.AvailableAccounts), AvailableAccounts));
         });
 
         OpenAddAccountPage = ReactiveCommand.CreateFromTask<Unit>(
@@ -75,7 +61,6 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
         OpenAccount = ReactiveCommand.CreateFromTask<int>(
             async accountId =>
             {
-                popper?.PopSheet(_sheet);
                 await accountsManager.OpenAccountAndMarkAsCurrentAsync(accountId, false);
             });
     }

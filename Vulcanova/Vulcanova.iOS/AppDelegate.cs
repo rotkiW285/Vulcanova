@@ -49,7 +49,7 @@ namespace Vulcanova.iOS
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterScoped<ISheetPopper, SheetPopper>();
+            containerRegistry.RegisterSingleton<ISheetPopper, SheetPopper>();
         }
     }
 }

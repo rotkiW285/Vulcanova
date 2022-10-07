@@ -5,7 +5,7 @@ using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
-using Vulcanova.Features.Auth;
+using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Shared;
 
 namespace Vulcanova.Features.LuckyNumber;

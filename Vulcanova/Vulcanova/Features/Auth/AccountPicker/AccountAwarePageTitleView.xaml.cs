@@ -6,7 +6,7 @@ using Vulcanova.Core.Layout;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Vulcanova.Features.Auth;
+namespace Vulcanova.Features.Auth.AccountPicker;
 
 [XamlCompilation(XamlCompilationOptions.Compile)]
 public partial class AccountAwarePageTitleView
@@ -46,20 +46,6 @@ public partial class AccountAwarePageTitleView
 
             this.BindCommand(ViewModel, vm => vm.ShowAccountsDialog, v => v.AvatarTapRecognizer)
                 .DisposeWith(disposable);
-
-            this.BindCommand(ViewModel, vm => vm.OpenAddAccountPage, v => v.AccountPicker.AddAccountCommand)
-                .DisposeWith(disposable);
-
-            this.BindCommand(ViewModel, vm => vm.OpenAccount, v => v.AccountPicker.OpenAccountCommand)
-                .DisposeWith(disposable);
-
-            if (Device.RuntimePlatform != Device.iOS)
-            {
-                UiExtensions.WireUpNonNativeSheet(ViewModel, AccountPicker, Panel,
-                        vm => vm.AvailableAccounts,
-                        v => v.AvailableAccounts)
-                    .DisposeWith(disposable);
-            }
         });
     }
 }

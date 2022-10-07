@@ -11,7 +11,7 @@ using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Extensions;
-using Vulcanova.Features.Auth;
+using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Homework.HomeworkDetails;
 using Vulcanova.Features.Shared;
 using Xamarin.Forms;

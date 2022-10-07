@@ -11,12 +11,10 @@
     xmlns:tabs="http://sharpnado.com"
     xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
     xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
-    xmlns:subjectDetails="clr-namespace:Vulcanova.Features.Grades.SubjectDetails;assembly=Vulcanova"
-    xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
-    xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
+    xmlns:accountPicker="clr-namespace:Vulcanova.Features.Auth.AccountPicker;assembly=Vulcanova"
     Title="{x:Static resx:Strings.GradesTabTitle}">
     <NavigationPage.TitleView>
-        <auth:AccountAwarePageTitleView x:Name="TitleView" />
+        <accountPicker:AccountAwarePageTitleView x:Name="TitleView" />
     </NavigationPage.TitleView>
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -32,63 +30,58 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid>
-            <Grid RowSpacing="16">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <Grid RowSpacing="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <tabs:TabHostView
-                    x:Name="TabHost"
-                    TabType="Fixed">
-                    <tabs:TabHostView.Tabs>
-                        <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
-                                                Label="{x:Static resx:Strings.PartialGradesTabTitle}" />
-                        <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
-                                                Label="{x:Static resx:Strings.FinalGradesTabTitle}" />
-                    </tabs:TabHostView.Tabs>
-                </tabs:TabHostView>
+            <tabs:TabHostView
+                x:Name="TabHost"
+                TabType="Fixed">
+                <tabs:TabHostView.Tabs>
+                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                            Label="{x:Static resx:Strings.PartialGradesTabTitle}" />
+                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                            Label="{x:Static resx:Strings.FinalGradesTabTitle}" />
+                </tabs:TabHostView.Tabs>
+            </tabs:TabHostView>
 
-                <Frame Grid.Row="1" HasShadow="False" CornerRadius="16" Padding="0" IsClippedToBounds="True"
-                       Margin="16, 0">
-                    <StackLayout Orientation="Horizontal"
-                                 Style="{DynamicResource ControlStyle}"
-                                 Padding="8">
-                        <layout:TintedCachedImage
-                            x:Name="PreviousPeriodImg"
-                            HeightRequest="18"
-                            WidthRequest="18"
-                            Source="resource://Vulcanova.Resources.Icons.chevron-left.svg"
-                            TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
-                            <layout:TintedCachedImage.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="PreviousSemesterTap" />
-                            </layout:TintedCachedImage.GestureRecognizers>
-                        </layout:TintedCachedImage>
-                        <Label HorizontalOptions="CenterAndExpand" VerticalOptions="Center" x:Name="PeriodNameLabel" />
-                        <layout:TintedCachedImage
-                            x:Name="NextPeriodImg"
-                            HeightRequest="18"
-                            WidthRequest="18"
-                            Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
-                            TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
-                            <layout:TintedCachedImage.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="NextSemesterTap" />
-                            </layout:TintedCachedImage.GestureRecognizers>
-                        </layout:TintedCachedImage>
-                    </StackLayout>
-                </Frame>
+            <Frame Grid.Row="1" HasShadow="False" CornerRadius="16" Padding="0" IsClippedToBounds="True"
+                   Margin="16, 0">
+                <StackLayout Orientation="Horizontal"
+                             Style="{DynamicResource ControlStyle}"
+                             Padding="8">
+                    <layout:TintedCachedImage
+                        x:Name="PreviousPeriodImg"
+                        HeightRequest="18"
+                        WidthRequest="18"
+                        Source="resource://Vulcanova.Resources.Icons.chevron-left.svg"
+                        TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                        <layout:TintedCachedImage.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="PreviousSemesterTap" />
+                        </layout:TintedCachedImage.GestureRecognizers>
+                    </layout:TintedCachedImage>
+                    <Label HorizontalOptions="CenterAndExpand" VerticalOptions="Center" x:Name="PeriodNameLabel" />
+                    <layout:TintedCachedImage
+                        x:Name="NextPeriodImg"
+                        HeightRequest="18"
+                        WidthRequest="18"
+                        Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
+                        TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                        <layout:TintedCachedImage.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="NextSemesterTap" />
+                        </layout:TintedCachedImage.GestureRecognizers>
+                    </layout:TintedCachedImage>
+                </StackLayout>
+            </Frame>
 
-                <tabs:ViewSwitcher
-                    Grid.Row="2" x:Name="Switcher" Animate="True">
-                    <summary:GradesSummaryView x:Name="GradesSummaryView" />
-                    <final:FinalGradesView x:Name="FinalGradesView" />
-                </tabs:ViewSwitcher>
-            </Grid>
-            <controls:SlidingUpPanel x:Name="Panel" Open="False">
-                <subjectDetails:GradesSubjectDetailsView x:Name="DetailsView" />
-            </controls:SlidingUpPanel>
+            <tabs:ViewSwitcher
+                Grid.Row="2" x:Name="Switcher" Animate="True">
+                <summary:GradesSummaryView x:Name="GradesSummaryView" />
+                <final:FinalGradesView x:Name="FinalGradesView" />
+            </tabs:ViewSwitcher>
         </Grid>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>

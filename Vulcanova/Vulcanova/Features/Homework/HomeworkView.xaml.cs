@@ -2,9 +2,7 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
-using Vulcanova.Core.Layout;
 using Vulcanova.Core.Rx;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Homework;
@@ -32,17 +30,6 @@ public partial class HomeworkView
 
             this.OneWayBind(ViewModel, vm => vm.Entries, v => v.Calendar.Highlights,
                 entries => entries.Select(e => e.Deadline));
-
-            this.OneWayBind(ViewModel, vm => vm.SelectedHomework, v => v.DetailsView.Homework)
-                .DisposeWith(disposable);
-
-            if (Device.RuntimePlatform != Device.iOS)
-            {
-                UiExtensions.WireUpNonNativeSheet(ViewModel, DetailsView, Panel,
-                        vm => vm.SelectedHomework,
-                        v => v.Homework)
-                    .DisposeWith(disposable);
-            }
 
             this.WhenAnyObservable(v => v.ViewModel.GetHomeworkEntries.IsExecuting)
                 .Select(v => !v)

@@ -11,10 +11,9 @@ using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Extensions;
-using Vulcanova.Features.Auth;
+using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Exams.ExamDetails;
 using Vulcanova.Features.Shared;
-using Xamarin.Forms;
 
 namespace Vulcanova.Features.Exams;
 
@@ -53,15 +52,7 @@ public class ExamsViewModel : ViewModelBase
         {
             SelectedExam = CurrentWeekEntries?.First(g => g.Id == lessonId);
 
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                var view = new ExamDetailsView
-                {
-                    Exam = SelectedExam
-                };
-
-                popper!.PushSheet(view);
-            }
+            navigationService.NavigateAsync(nameof(ExamDetailsView), (nameof(ExamDetailsView.Exam), SelectedExam));
 
             return Unit.Default;
         });

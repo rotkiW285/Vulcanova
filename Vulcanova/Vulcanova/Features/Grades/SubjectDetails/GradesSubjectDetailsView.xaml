@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<forms:ContentView xmlns:forms="http://xamarin.com/schemas/2014/forms"
-                   xmlns="http://xamarin.com/schemas/2014/forms"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                   xmlns:grades="clr-namespace:Vulcanova.Features.Grades;assembly=Vulcanova"
-                   xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
-                   xmlns:converters="clr-namespace:Vulcanova.Core.Layout.Converters;assembly=Vulcanova"
-                   xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
-                   x:Class="Vulcanova.Features.Grades.SubjectDetails.GradesSubjectDetailsView"
-                   x:Name="View"
-                   BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
-    <ContentView.Resources>
+<layout:SheetPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:grades="clr-namespace:Vulcanova.Features.Grades;assembly=Vulcanova"
+    xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+    xmlns:converters="clr-namespace:Vulcanova.Core.Layout.Converters;assembly=Vulcanova"
+    xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+    xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+    x:Class="Vulcanova.Features.Grades.SubjectDetails.GradesSubjectDetailsView"
+    x:Name="View"
+    BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
+    <ContentPage.Effects>
+        <layout:SheetCloseButtonEffect />
+    </ContentPage.Effects>
+    <ContentPage.Resources>
         <ResourceDictionary>
             <grades:GradeColorConverter x:Key="GradeColorConverter" />
             <converters:FallbackStringConverter x:Key="FallbackStringConverter" />
@@ -19,9 +23,9 @@
                         Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
             </Style>
         </ResourceDictionary>
-    </ContentView.Resources>
-    <ContentPage.Content>
-        <StackLayout BindingContext="{x:Reference View}" Spacing="16">
+    </ContentPage.Resources>
+    <layout:SheetPage.Content>
+        <StackLayout BindingContext="{x:Reference View}" Spacing="16" Padding="0, 16">
             <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
                    Padding="16, 0"
                    Text="{Binding Subject.SubjectName}" />
@@ -35,43 +39,44 @@
                 <controls:HighlightValueView Name="{x:Static resx:Strings.GradesCountLabel}"
                                              Value="{Binding Subject.Grades.Count}" />
             </StackLayout>
-            <CollectionView BindingContext="{x:Reference View}" ItemsSource="{Binding Subject.Grades}">
-                <CollectionView.ItemTemplate>
+            <ListView HasUnevenRows="True" BindingContext="{x:Reference View}" ItemsSource="{Binding Subject.Grades}">
+                <ListView.ItemTemplate>
                     <DataTemplate x:DataType="grades:Grade">
-                        <StackLayout Padding="0, 1">
-                            <Grid Padding="12, 8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="46"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Label
-                                    VerticalTextAlignment="Center"
-                                    HorizontalTextAlignment="Center"
-                                    FontSize="Large"
-                                    TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}"
-                                    Text="{Binding Content}"
-                                    LineBreakMode="TailTruncation" />
-                                <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="0">
-                                    <Label FontSize="Small" FontAttributes="Bold"
-                                           Text="{Binding Column.Name, Converter={StaticResource FallbackStringConverter}, ConverterParameter={x:Static resx:Strings.GradeEmptyNameLabel}}" />
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding ContentRaw}" FontSize="Small" />
-                                        <Label FontSize="Small"
-                                               Text="{Binding Column.Weight, StringFormat={x:Static resx:Strings.GradeWeightLabel}}" />
+                        <ViewCell>
+                            <StackLayout Padding="0, 1">
+                                <Grid Padding="12, 8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="46"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        VerticalTextAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        FontSize="Large"
+                                        TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}"
+                                        Text="{Binding Content}"
+                                        LineBreakMode="TailTruncation" />
+                                    <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="0">
+                                        <Label FontSize="Small" FontAttributes="Bold"
+                                               Text="{Binding Column.Name, Converter={StaticResource FallbackStringConverter}, ConverterParameter={x:Static resx:Strings.GradeEmptyNameLabel}}" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding ContentRaw}" FontSize="Small" />
+                                            <Label FontSize="Small"
+                                                   Text="{Binding Column.Weight, StringFormat={x:Static resx:Strings.GradeWeightLabel}}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label FontSize="Small"
+                                                   Text="{Binding DateCreated, StringFormat={x:Static resx:Strings.GradeCreatedDateLabel}}" />
+                                            <Label FontSize="Small" IsVisible="{Binding IsModified}"
+                                                   Text="{Binding DateModify, StringFormat={x:Static resx:Strings.GradeModifiedDateLabel}}" />
+                                        </StackLayout>
                                     </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label FontSize="Small"
-                                               Text="{Binding DateCreated, StringFormat={x:Static resx:Strings.GradeCreatedDateLabel}}" />
-                                        <Label FontSize="Small" IsVisible="{Binding IsModified}"
-                                               Text="{Binding DateModify, StringFormat={x:Static resx:Strings.GradeModifiedDateLabel}}" />
-                                    </StackLayout>
-                                </StackLayout>
-                            </Grid>
-                            <BoxView Style="{StaticResource SeparatorStyle}" />
-                        </StackLayout>
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
-    </ContentPage.Content>
-</forms:ContentView>
+    </layout:SheetPage.Content>
+</layout:SheetPage>

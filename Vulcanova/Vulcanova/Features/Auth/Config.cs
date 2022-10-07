@@ -1,4 +1,5 @@
 using Prism.Ioc;
+using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Auth.Intro;
 using Vulcanova.Features.Auth.ManualSigningIn;
 using Vulcanova.Features.Auth.ScanningQrCode;
@@ -16,6 +17,7 @@ public static class Config
         container.RegisterForNavigation<ManualSignInView>();
         container.RegisterForNavigation<QrScannerView>();
         container.RegisterForNavigation<EnterPinCodeView>();
+        container.RegisterForNavigation<AccountPickerView>();
 
         container.RegisterSingleton<AccountAwarePageTitleViewModel>();
 

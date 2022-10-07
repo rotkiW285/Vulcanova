@@ -1,4 +1,5 @@
 using Prism.Ioc;
+using Vulcanova.Features.Attendance.LessonDetails;
 
 namespace Vulcanova.Features.Attendance;
 
@@ -8,5 +9,7 @@ public static class Config
     {
         container.RegisterScoped<ILessonsRepository, LessonsRepository>();
         container.RegisterScoped<ILessonsService, LessonsService>();
+
+        container.RegisterForNavigation<LessonDetailsView>();
     }
 }

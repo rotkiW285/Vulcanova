@@ -7,7 +7,6 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Shared;
 using Vulcanova.Core.Rx;
@@ -37,8 +36,7 @@ public class GradesSummaryViewModel : ViewModelBase
         INavigationService navigationService,
         AccountContext accountContext,
         IGradesService gradesService,
-        AppSettings settings,
-        ISheetPopper sheetPopper = null) : base(navigationService)
+        AppSettings settings) : base(navigationService)
     {
         GetGrades = ReactiveCommand.CreateFromObservable((bool forceSync) =>
             gradesService
@@ -54,12 +52,8 @@ public class GradesSummaryViewModel : ViewModelBase
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                var view = new GradesSubjectDetailsView
-                {
-                    Subject = CurrentSubject
-                };
-
-                sheetPopper!.PushSheet(view);
+                navigationService.NavigateAsync(nameof(GradesSubjectDetailsView), 
+                    ("Subject", CurrentSubject));
             }
 
             return Unit.Default;

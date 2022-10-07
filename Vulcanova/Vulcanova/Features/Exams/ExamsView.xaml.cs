@@ -2,9 +2,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
-using Vulcanova.Core.Layout;
 using Vulcanova.Core.Rx;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Exams;
@@ -38,19 +36,8 @@ public partial class ExamsView
             this.BindForceRefresh(RefreshView, v => v.ViewModel.GetExams)
                 .DisposeWith(disposable);
 
-            this.OneWayBind(ViewModel, vm => vm.SelectedExam, v => v.DetailsView.Exam)
-                .DisposeWith(disposable);
-
             this.OneWayBind(ViewModel, vm => vm.Entries, v => v.Calendar.Highlights,
                 exams => exams.Select(e => e.Deadline));
-
-            if (Device.RuntimePlatform != Device.iOS)
-            {
-                UiExtensions.WireUpNonNativeSheet(ViewModel, DetailsView, Panel,
-                        vm => vm.SelectedExam,
-                        v => v.Exam)
-                    .DisposeWith(disposable);
-            }
         });
     }
 }

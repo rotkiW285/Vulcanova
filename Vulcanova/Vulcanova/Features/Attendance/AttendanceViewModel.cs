@@ -6,13 +6,11 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Features.Attendance.LessonDetails;
-using Vulcanova.Features.Auth;
+using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Shared;
-using Xamarin.Forms;
 
 namespace Vulcanova.Features.Attendance;
 
@@ -36,8 +34,7 @@ public class AttendanceViewModel : ViewModelBase
         ILessonsService lessonsService,
         AccountContext accountContext,
         AccountAwarePageTitleViewModel accountViewModel,
-        INavigationService navigationService,
-        ISheetPopper popper = null) : base(navigationService)
+        INavigationService navigationService) : base(navigationService)
     {
         AccountViewModel = accountViewModel;
         _lessonsService = lessonsService;
@@ -51,15 +48,7 @@ public class AttendanceViewModel : ViewModelBase
         {
             SelectedLesson = CurrentDayEntries?.First(g => g.Id == lessonId);
 
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                var view = new LessonDetailsView
-                {
-                    Lesson = SelectedLesson
-                };
-
-                popper!.PushSheet(view);
-            }
+            NavigationService.NavigateAsync(nameof(LessonDetailsView), ("Lesson", SelectedLesson));
 
             return Unit.Default;
         });

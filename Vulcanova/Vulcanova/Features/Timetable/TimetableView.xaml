@@ -6,11 +6,11 @@
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:local="clr-namespace:Vulcanova.Features.Timetable;assembly=Vulcanova"
                           xmlns:calendar="clr-namespace:Vulcanova.Core.Layout.Controls.Calendar;assembly=Vulcanova"
-                          xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
+                          xmlns:accountPicker="clr-namespace:Vulcanova.Features.Auth.AccountPicker;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.TimetableTabTitle}"
                           x:Class="Vulcanova.Features.Timetable.TimetableView">
     <NavigationPage.TitleView>
-        <auth:AccountAwarePageTitleView x:Name="TitleView" />
+        <accountPicker:AccountAwarePageTitleView x:Name="TitleView" />
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <StackLayout>

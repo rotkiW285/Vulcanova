@@ -7,7 +7,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
-using Vulcanova.Features.Auth;
+using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Shared;
 using Vulcanova.Features.Timetable.Changes;
 

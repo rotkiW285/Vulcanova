@@ -78,10 +78,6 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Strings.resx</DependentUpon>
       </Compile>
-      <Compile Update="Core\Layout\Controls\SlidingUpPanel.xaml.cs">
-        <DependentUpon>SlidingUpPanel.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
       <Compile Update="Features\Attendance\LessonDetails\LessonDetailsView.xaml.cs">
         <DependentUpon>LessonDetailsView.xaml</DependentUpon>
         <SubType>Code</SubType>
@@ -108,6 +104,14 @@
       </Compile>
       <Compile Update="Core\Layout\Controls\Calendar\CalendarDateCell.xaml.cs">
         <DependentUpon>CalendarDateCell.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Auth\AccountPicker\AccountAwarePageTitleView.xaml.cs">
+        <DependentUpon>AccountAwarePageTitleView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Auth\AccountPicker\AccountPickerView.xaml.cs">
+        <DependentUpon>AccountPickerView.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

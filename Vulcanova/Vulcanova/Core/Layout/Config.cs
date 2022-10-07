@@ -7,7 +7,7 @@ public static class Config
 {
     public static void RegisterLayout(this IContainerRegistry container)
     {
-        container.RegisterPopupNavigationService();
+        container.RegisterPopupNavigationService<SheetPageNavigationService>();
 
         container.RegisterForNavigation<MainNavigationPage>();
         container.RegisterForNavigation<HomeTabbedPage>();

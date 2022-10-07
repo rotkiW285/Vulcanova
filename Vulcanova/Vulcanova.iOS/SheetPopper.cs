@@ -2,68 +2,70 @@ using System;
 using System.Collections.Generic;
 using UIKit;
 using Vulcanova.Core.Layout;
+using Vulcanova.Core.Layout.PlatformSpecific.iOS;
 using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
+using Page = Xamarin.Forms.Page;
 
 namespace Vulcanova.iOS
 {
     public class SheetPopper : ISheetPopper
     {
-        private readonly Dictionary<ContentView, Action> _sheets = new Dictionary<ContentView, Action>();
+        public Dictionary<Page, Action> Sheets { get; } = new Dictionary<Page, Action>();
 
-        public void PushSheet(ContentView content, bool hasCloseButton = true, bool useSafeArea = false)
+        public void PushSheet(Page page)
         {
-            // Maybe let the caller decide about this?
-            content.Padding = new Thickness(0, 14, 0, 0);
-
-            var page = new ContentPage
+            Device.InvokeOnMainThreadAsync(() =>
             {
-                Content = content,
-                Parent = Xamarin.Forms.Application.Current
-            };
-
-            if (useSafeArea)
-            {
-                page.On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
-            }
-
-            var cvc = page.CreateViewController();
-
-            var rootController = cvc;
-
-            var closeAction = new Action(() => rootController.DismissViewController(true, null));
-            
-            if (hasCloseButton)
-            {
-                rootController = new UINavigationController(cvc);
+                page.Parent = Xamarin.Forms.Application.Current;
+                page.NavigationProxy.Inner = Xamarin.Forms.Application.Current.NavigationProxy;
                 
-                cvc.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Close,
-                        (sender, args) => closeAction()),
-                    true);
-            }
+                var cvc = page.CreateViewController();
 
-            rootController.SheetPresentationController.Detents =
-                    new[]
-                    {
-                        UISheetPresentationControllerDetent.CreateMediumDetent(),
-                        UISheetPresentationControllerDetent.CreateLargeDetent()
-                    };
+                var rootController = cvc;
 
-            rootController.SheetPresentationController.PrefersGrabberVisible = true;
-            rootController.SheetPresentationController.PrefersScrollingExpandsWhenScrolledToEdge = true;
+                var closeAction = new Action(() => rootController.DismissViewController(true, null));
+            
+                if ((bool) page.GetValue(Sheet.HasCloseButtonProperty))
+                {
+                    rootController = new UINavigationController(cvc);
+                
+                    cvc.NavigationItem.SetRightBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Close,
+                            (sender, args) => closeAction()),
+                        true);
+                }
 
-            UIApplication.SharedApplication.KeyWindow?.RootViewController?
-                .PresentViewController(rootController, true, null);
+                var detents = new List<UISheetPresentationControllerDetent>();
 
-            _sheets[content] = closeAction;
+                if ((bool) page.GetValue(Sheet.MediumDetentProperty))
+                {
+                    detents.Add(UISheetPresentationControllerDetent.CreateMediumDetent());
+                }
+
+                if ((bool) page.GetValue(Sheet.LargeDetentProperty))
+                {
+                    detents.Add(UISheetPresentationControllerDetent.CreateLargeDetent());
+                }
+
+                rootController.SheetPresentationController.Detents = detents.ToArray();
+
+                rootController.SheetPresentationController.PrefersGrabberVisible =
+                    (bool) page.GetValue(Sheet.PrefersGrabberVisibleProperty);
+
+                rootController.SheetPresentationController.PrefersScrollingExpandsWhenScrolledToEdge =
+                    (bool) page.GetValue(Sheet.PrefersScrollingExpandsWhenScrolledToEdgeProperty);
+
+                UIApplication.SharedApplication.KeyWindow?.RootViewController?
+                    .PresentViewController(rootController, true, null);
+                
+                Sheets[page] = closeAction;
+            });
         }
 
-        public void PopSheet(ContentView content)
+        public void PopSheet(Page page)
         {
-            _sheets[content]();
+            Sheets[page]();
 
-            _sheets.Remove(content);
+            Sheets.Remove(page);
         }
     }
 }

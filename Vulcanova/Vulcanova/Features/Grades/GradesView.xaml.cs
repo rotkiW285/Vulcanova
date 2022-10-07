@@ -61,15 +61,6 @@ public partial class GradesView
             this.OneWayBind(ViewModel, vm => vm.PeriodInfo, v => v.FinalGradesView.PeriodId,
                     r => r?.CurrentPeriod?.Id)
                 .DisposeWith(disposable);
-
-            if (Device.RuntimePlatform != Device.iOS)
-            {
-                UiExtensions.WireUpNonNativeSheet(ViewModel,
-                    DetailsView,
-                    Panel,
-                    vm => vm.GradesSummaryViewModel.CurrentSubject,
-                    v => v.Subject).DisposeWith(disposable);
-            }
         });
     }
 }

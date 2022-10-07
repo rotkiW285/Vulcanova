@@ -25,17 +25,6 @@ public partial class AttendanceView
 
             this.OneWayBind(ViewModel, vm => vm.CurrentDayEntries, v => v.EntriesList.ItemsSource)
                 .DisposeWith(disposable);
-                
-            this.OneWayBind(ViewModel, vm => vm.SelectedLesson, v => v.DetailsView.Lesson)
-                .DisposeWith(disposable);
-
-            if (Device.RuntimePlatform != Device.iOS)
-            {
-                UiExtensions.WireUpNonNativeSheet(ViewModel, DetailsView, Panel,
-                        vm => vm.SelectedLesson,
-                        v => v.Lesson)
-                    .DisposeWith(disposable);
-            }
 
             this.WhenAnyObservable(v => v.ViewModel.GetAttendanceEntries.IsExecuting)
                 .Select(v => !v)

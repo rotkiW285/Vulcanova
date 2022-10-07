@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<forms:ContentView xmlns:forms="http://xamarin.com/schemas/2014/forms" xmlns="http://xamarin.com/schemas/2014/forms"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                   xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
-                   xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
-                   x:Class="Vulcanova.Features.Exams.ExamDetails.ExamDetailsView"
-                   x:Name="View"
-                   BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
-    <ContentView.Resources>
+<layout:SheetPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                  xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+                  xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+                  x:Class="Vulcanova.Features.Exams.ExamDetails.ExamDetailsView"
+                  x:Name="View"
+                  BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
+    <layout:SheetPage.Resources>
         <ResourceDictionary>
             <Style ApplyToDerivedTypes="true" TargetType="StackLayout">
                 <Setter Property="BackgroundColor"
                         Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
             </Style>
         </ResourceDictionary>
-    </ContentView.Resources>
-    <ContentPage.Content>
-        <StackLayout BindingContext="{x:Reference View}">
+    </layout:SheetPage.Resources>
+    <layout:SheetPage.Content>
+        <StackLayout BindingContext="{x:Reference View}" Padding="8, 0">
             <StackLayout Padding="16, 8">
                 <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
                        Text="{Binding Exam.Subject.Name}" />
@@ -33,5 +34,5 @@
                                     Value="{Binding Exam.DateCreated, StringFormat='{0:d}'}" />
             </StackLayout>
         </StackLayout>
-    </ContentPage.Content>
-</forms:ContentView>
+    </layout:SheetPage.Content>
+</layout:SheetPage>
