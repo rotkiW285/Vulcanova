@@ -1,6 +1,9 @@
 using System;
+using System.Linq;
 using Prism.Navigation;
 using Vulcanova.Features.Attendance.Justification;
+using Vulcanova.Features.Shared;
+using Vulcanova.Uonet.Api.Auth;
 using Vulcanova.Uonet.Api.Lessons;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,6 +14,7 @@ namespace Vulcanova.Features.Attendance.LessonDetails;
 public partial class LessonDetailsView : INavigationAware
 {
     private readonly INavigationService _navigationService;
+    private readonly AccountContext _accountContext;
 
     public static readonly BindableProperty LessonProperty =
         BindableProperty.Create(nameof(Lesson), typeof(Lesson), typeof(LessonDetailsView),
@@ -24,9 +28,10 @@ public partial class LessonDetailsView : INavigationAware
 
     private bool _didJustify;
 
-    public LessonDetailsView(INavigationService navigationService)
+    public LessonDetailsView(INavigationService navigationService, AccountContext accountContext)
     {
         _navigationService = navigationService;
+        _accountContext = accountContext;
         InitializeComponent();
         
         UpdateJustifyButtonPresence();
@@ -72,7 +77,8 @@ public partial class LessonDetailsView : INavigationAware
 
         if (l == null) return;
 
-        JustifyAbsenceButton.IsVisible = (l.PresenceType.Late || l.PresenceType.Absence)
+        JustifyAbsenceButton.IsVisible = _accountContext.Account.Capabilities.Contains(AccountCapabilities.JustificationsEnabled)
+                                         && (l.PresenceType.Late || l.PresenceType.Absence)
                                          && !l.PresenceType.AbsenceJustified
                                          && l.JustificationStatus == null;
     }
