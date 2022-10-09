@@ -2,6 +2,7 @@
 using Prism;
 using Prism.Common;
 using Prism.Ioc;
+using Prism.Navigation;
 using ReactiveUI;
 using Vulcanova.Core.Data;
 using Vulcanova.Core.Layout;
@@ -74,12 +75,18 @@ public partial class App
 
     private void SheetPopperOnSheetDisappeared(object sender, SheetEventArgs e)
     {
-        PageUtilities.HandleSystemGoBack(e.Sheet, _previousPage);
+        if (SheetPageNavigationService.PageNavigationSource == PageNavigationSource.Device)
+        {
+            PageUtilities.HandleSystemGoBack(e.Sheet, _previousPage);
+        }
     }
 
     private void SheetPopperOnSheetWillDisappear(object sender, SheetEventArgs e)
     {
-        _previousPage = PageUtilities.GetOnNavigatedToTarget(e.Sheet, MainPage, true);
+        if (SheetPageNavigationService.PageNavigationSource == PageNavigationSource.Device)
+        {
+            _previousPage = PageUtilities.GetOnNavigatedToTarget(e.Sheet, MainPage, true);
+        }
     }
     
     #endregion

@@ -14,6 +14,8 @@ public class SheetPageNavigationService : PopupPageNavigationService
 {
     private readonly ISheetPopper _popper;
 
+    public static PageNavigationSource PageNavigationSource => NavigationSource;
+
     public SheetPageNavigationService(IPopupNavigation popupNavigation, IContainerProvider container,
         IApplicationProvider applicationProvider, IPageBehaviorFactory pageBehaviorFactory,
         ISheetPopper popper = null) : base(
@@ -42,6 +44,7 @@ public class SheetPageNavigationService : PopupPageNavigationService
         if (_page is SheetPage && _popper != null)
         {
             _popper.PopSheet();
+            return null;
         }
 
         return base.DoPop(navigation, useModalNavigation, animated);

@@ -94,7 +94,6 @@ namespace Vulcanova.iOS
             }
 
             _popSheetAction();
-            DisplayedSheet = null;
         }
     }
 }

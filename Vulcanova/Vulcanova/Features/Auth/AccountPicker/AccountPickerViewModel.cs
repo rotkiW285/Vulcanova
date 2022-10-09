@@ -33,6 +33,8 @@ public class AccountPickerViewModel : ViewModelBase, INavigationAware
             async accountId =>
             {
                 await accountsManager.OpenAccountAndMarkAsCurrentAsync(accountId, false);
+
+                await navigationService.GoBackAsync();
             });
     }
 
