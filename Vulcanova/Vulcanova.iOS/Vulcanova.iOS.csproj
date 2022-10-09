@@ -95,6 +95,7 @@
         <MtouchLink>SdkOnly</MtouchLink>
     </PropertyGroup>
     <ItemGroup>
+        <Compile Include="DismissNotifyingUIController.cs" />
         <Compile Include="Main.cs" />
         <Compile Include="AppDelegate.cs" />
         <Compile Include="NativeOptionCell.cs" />

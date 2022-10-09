@@ -26,6 +26,10 @@
                        Text="{Binding Lesson.Subject.Name}" />
                 <Label Text="{Binding Lesson.PresenceType.Name}"
                        TextColor="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
+                <Button x:Name="JustifyAbsenceButton" 
+                        Text="{x:Static resx:Strings.LessonJustifyAbsenceButton}"
+                        Clicked="JustifyButton_OnClicked"
+                        IsVisible="False" />
             </StackLayout>
             <StackLayout Padding="16, 8" Spacing="16">
                 <controls:FieldView Name="{x:Static resx:Strings.LessonDateLabel}"
@@ -33,7 +37,8 @@
                 <lessonDetails:LessonTimeView Lesson="{Binding Lesson}" />
                 <controls:FieldView Name="{x:Static resx:Strings.LessonTeacherLabel}"
                                     Value="{Binding Lesson.TeacherName}" />
-                <controls:FieldView Name="{x:Static resx:Strings.LessonSubjectLabel}" Value="{Binding Lesson.Topic}" />
+                <controls:FieldView Name="{x:Static resx:Strings.LessonSubjectLabel}" 
+                                    Value="{Binding Lesson.Topic}" />
             </StackLayout>
         </StackLayout>
     </layout:SheetPage.Content>

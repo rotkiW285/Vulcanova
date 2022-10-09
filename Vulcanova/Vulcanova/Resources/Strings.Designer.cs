@@ -595,5 +595,45 @@ namespace Vulcanova.Resources
                 return ResourceManager.GetString("ParentAccountLabel", resourceCulture);
             }
         }
+        
+        internal static string JustificationViewTitle 
+        {
+            get 
+            {
+                return ResourceManager.GetString("JustificationViewTitle", resourceCulture);
+            }
+        }
+        
+        internal static string JustificationMessageLabel 
+        {
+            get 
+            {
+                return ResourceManager.GetString("JustificationMessageLabel", resourceCulture);
+            }
+        }
+        
+        internal static string JustificationMessagePlaceholder 
+        {
+            get 
+            {
+                return ResourceManager.GetString("JustificationMessagePlaceholder", resourceCulture);
+            }
+        }
+        
+        internal static string CommonSubmit 
+        {
+            get 
+            {
+                return ResourceManager.GetString("CommonSubmit", resourceCulture);
+            }
+        }
+        
+        internal static string LessonJustifyAbsenceButton {
+        
+            get 
+            {
+                return ResourceManager.GetString("LessonJustifyAbsenceButton", resourceCulture);
+            }
+        }
     }
 }

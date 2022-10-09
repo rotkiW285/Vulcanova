@@ -19,6 +19,7 @@ public class Lesson
     public PresenceType PresenceType { get; set; }
     public int AccountId { get; set; }
     public JustificationStatus? JustificationStatus { get; set; }
+    public int LessonClassId { get; set; }
 }
     
 public class PresenceType

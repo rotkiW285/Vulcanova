@@ -1,4 +1,7 @@
+using System;
 using Prism.Navigation;
+using Vulcanova.Features.Attendance.Justification;
+using Vulcanova.Uonet.Api.Lessons;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -7,8 +10,11 @@ namespace Vulcanova.Features.Attendance.LessonDetails;
 [XamlCompilation(XamlCompilationOptions.Compile)]
 public partial class LessonDetailsView : INavigationAware
 {
+    private readonly INavigationService _navigationService;
+
     public static readonly BindableProperty LessonProperty =
-        BindableProperty.Create(nameof(Lesson), typeof(Lesson), typeof(LessonDetailsView));
+        BindableProperty.Create(nameof(Lesson), typeof(Lesson), typeof(LessonDetailsView),
+            propertyChanged: LessonPropertyChanged);
 
     public Lesson Lesson
     {
@@ -16,17 +22,58 @@ public partial class LessonDetailsView : INavigationAware
         set => SetValue(LessonProperty, value);
     }
 
-    public LessonDetailsView()
+    private bool _didJustify;
+
+    public LessonDetailsView(INavigationService navigationService)
     {
+        _navigationService = navigationService;
         InitializeComponent();
+        
+        UpdateJustifyButtonPresence();
     }
 
     public void OnNavigatedFrom(INavigationParameters parameters)
     {
+        parameters.Add("didJustify", _didJustify);
     }
 
     public void OnNavigatedTo(INavigationParameters parameters)
     {
-        Lesson = (Lesson) parameters["Lesson"];
+        if (parameters.TryGetValue<Lesson>(nameof(Lesson), out var l))
+        {
+            Lesson = l;
+        }
+
+        if (parameters.TryGetValue("didJustify", out _didJustify) && _didJustify)
+        {
+            Lesson.JustificationStatus = JustificationStatus.Requested;
+         
+            UpdateJustifyButtonPresence();
+        }
+    }
+
+    private void JustifyButton_OnClicked(object sender, EventArgs e)
+    {
+        _navigationService.NavigateAsync(nameof(JustifyAbsenceView), parameters: new NavigationParameters
+        {
+            {nameof(JustifyAbsenceView.Lesson), Lesson}
+        }, useModalNavigation: true);
+    }
+    
+    private static void LessonPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        var view = (LessonDetailsView) bindable;
+        view.UpdateJustifyButtonPresence();
+    }
+
+    private void UpdateJustifyButtonPresence()
+    {
+        var l = Lesson;
+
+        if (l == null) return;
+
+        JustifyAbsenceButton.IsVisible = (l.PresenceType.Late || l.PresenceType.Absence)
+                                         && !l.PresenceType.AbsenceJustified
+                                         && l.JustificationStatus == null;
     }
 }

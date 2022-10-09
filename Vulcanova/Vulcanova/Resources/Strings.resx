@@ -216,4 +216,19 @@
     <data name="ParentAccountLabel" xml:space="preserve">
         <value>parent's account</value>
     </data>
+    <data name="JustificationViewTitle" xml:space="preserve">
+        <value>Justification</value>
+    </data>
+    <data name="JustificationMessageLabel" xml:space="preserve">
+        <value>Enter justification message</value>
+    </data>
+    <data name="JustificationMessagePlaceholder" xml:space="preserve">
+        <value>Please justify…</value>
+    </data>
+    <data name="CommonSubmit" xml:space="preserve">
+        <value>Submit</value>
+    </data>
+    <data name="LessonJustifyAbsenceButton" xml:space="preserve">
+        <value>Justify</value>
+    </data>
 </root>

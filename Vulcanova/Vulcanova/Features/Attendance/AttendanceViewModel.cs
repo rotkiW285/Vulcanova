@@ -14,7 +14,7 @@ using Vulcanova.Features.Shared;
 
 namespace Vulcanova.Features.Attendance;
 
-public class AttendanceViewModel : ViewModelBase
+public class AttendanceViewModel : ViewModelBase, INavigatedAware
 {
     public ReactiveCommand<bool, IReadOnlyDictionary<DateTime, List<Lesson>>> GetAttendanceEntries { get; }
 
@@ -90,5 +90,17 @@ public class AttendanceViewModel : ViewModelBase
         return lessons
             .GroupBy(l => l.Date)
             .ToDictionary(g => g.Key, g => g.OrderBy(l => l.No).ToList());
+    }
+
+    public void OnNavigatedFrom(INavigationParameters parameters)
+    {
+    }
+
+    public void OnNavigatedTo(INavigationParameters parameters)
+    {
+        if (parameters.TryGetValue("didJustify", out bool reload) && reload)
+        {
+            GetAttendanceEntries.Execute(true).Subscribe();
+        }
     }
 }

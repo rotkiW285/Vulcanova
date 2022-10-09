@@ -216,4 +216,19 @@
     <data name="ParentAccountLabel" xml:space="preserve">
         <value>konto rodzica</value>
     </data>
+    <data name="JustificationViewTitle" xml:space="preserve">
+        <value>Usprawiedliwienie</value>
+    </data>
+    <data name="JustificationMessageLabel" xml:space="preserve">
+        <value>Podaj treść usprawiedliwienia</value>
+    </data>
+    <data name="JustificationMessagePlaceholder" xml:space="preserve">
+        <value>Proszę usprawiedliwić…</value>
+    </data>
+    <data name="CommonSubmit" xml:space="preserve">
+        <value>Wyślij</value>
+    </data>
+    <data name="LessonJustifyAbsenceButton" xml:space="preserve">
+        <value>Usprawiedliw</value>
+    </data>
 </root>

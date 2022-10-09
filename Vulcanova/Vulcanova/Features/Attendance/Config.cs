@@ -1,4 +1,5 @@
 using Prism.Ioc;
+using Vulcanova.Features.Attendance.Justification;
 using Vulcanova.Features.Attendance.LessonDetails;
 
 namespace Vulcanova.Features.Attendance;
@@ -11,5 +12,7 @@ public static class Config
         container.RegisterScoped<ILessonsService, LessonsService>();
 
         container.RegisterForNavigation<LessonDetailsView>();
+        
+        container.RegisterForNavigation<JustifyAbsenceView>();
     }
 }

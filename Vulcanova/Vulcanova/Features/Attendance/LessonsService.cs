@@ -8,6 +8,7 @@ using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Uonet.Api.Lessons;
+using Vulcanova.Uonet.Api.Presence;
 
 namespace Vulcanova.Features.Attendance;
 
@@ -76,6 +77,16 @@ public class LessonsService : UonetResourceProvider, ILessonsService
         }
 
         return lessons;
+    }
+
+    public async Task SubmitAbsenceJustification(int accountId, int lessonClassId, string message)
+    {
+        var account = await _accountRepository.GetByIdAsync(accountId);
+        var request = new JustifyLessonRequest(message, lessonClassId, account.Pupil.Id, account.Login.Id);
+
+        var client = await _apiClientFactory.GetAuthenticatedAsync(account);
+
+        await client.PostAsync(JustifyLessonRequest.ApiEndpoint, request);
     }
 
     private static string GetTimetableResourceKey(Account account, DateTime monthAndYear)

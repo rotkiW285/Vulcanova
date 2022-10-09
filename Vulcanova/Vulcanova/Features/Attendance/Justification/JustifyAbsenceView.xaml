@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rxui:ReactiveContentPage x:TypeArguments="justification:JustifyAbsenceViewModel"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                          xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                          xmlns:justification="clr-namespace:Vulcanova.Features.Attendance.Justification;assembly=Vulcanova"
+                          xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                          ios:Page.ModalPresentationStyle="PageSheet"
+                          x:Class="Vulcanova.Features.Attendance.Justification.JustifyAbsenceView">
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Dark={StaticResource DarkPanelColor}, Light={StaticResource LightPanelColor}}" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="16, 8"
+                     Spacing="24">
+            <Label Style="{StaticResource TitleLabelStyle}"
+                   Text="{x:Static resx:Strings.JustificationViewTitle}" />
+            <Label>
+                <Label.Text>
+                    <MultiBinding StringFormat="{}{0}. {1} {2:d} ({3:HH:mm} - {4:HH:mm})">
+                        <Binding Path="Lesson.No" />
+                        <Binding Path="Lesson.Subject.Name" />
+                        <Binding Path="Lesson.Date" />
+                        <Binding Path="Lesson.Start" />
+                        <Binding Path="Lesson.End" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+            <StackLayout>
+                <Label Text="{x:Static resx:Strings.JustificationMessageLabel}" />
+                <Editor HeightRequest="80"
+                        Placeholder="{x:Static resx:Strings.JustificationMessagePlaceholder}"
+                        Text="{Binding Message}" />
+            </StackLayout>
+            <Button Style="{StaticResource DefaultButtonStyle}"
+                    Text="{x:Static resx:Strings.CommonSubmit}"
+                    Command="{Binding SubmitJustification}" />
+        </StackLayout>
+    </ContentPage.Content>
+</rxui:ReactiveContentPage>
