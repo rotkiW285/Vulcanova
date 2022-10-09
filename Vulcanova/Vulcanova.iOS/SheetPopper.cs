@@ -10,7 +10,12 @@ namespace Vulcanova.iOS
 {
     public class SheetPopper : ISheetPopper
     {
-        public Dictionary<Page, Action> Sheets { get; } = new Dictionary<Page, Action>();
+        public event EventHandler<SheetEventArgs> SheetWillDisappear;
+        public event EventHandler<SheetEventArgs> SheetDisappeared;
+
+        public Page DisplayedSheet { get; private set; }
+
+        private Action _popSheetAction;
 
         public void PushSheet(Page page)
         {
@@ -20,6 +25,13 @@ namespace Vulcanova.iOS
                 page.NavigationProxy.Inner = Xamarin.Forms.Application.Current.NavigationProxy;
                 
                 var cvc = page.CreateViewController();
+
+                var wrapper = new DismissNotifyingUIController();
+                wrapper.AddChildViewController(cvc);
+                cvc.DidMoveToParentViewController(wrapper);
+                wrapper.View.AddSubview(cvc.View);
+
+                cvc = wrapper;
 
                 var rootController = cvc;
 
@@ -54,18 +66,35 @@ namespace Vulcanova.iOS
                 rootController.SheetPresentationController.PrefersScrollingExpandsWhenScrolledToEdge =
                     (bool) page.GetValue(Sheet.PrefersScrollingExpandsWhenScrolledToEdgeProperty);
 
+                wrapper.WillDisappear += (s, e) =>
+                {
+                    SheetWillDisappear?.Invoke(s, new SheetEventArgs(DisplayedSheet));
+                };
+
+                wrapper.DidDisappear += (s, e) =>
+                {
+                    SheetDisappeared?.Invoke(s, new SheetEventArgs(DisplayedSheet));
+
+                    DisplayedSheet = null;
+                };
+
                 UIApplication.SharedApplication.KeyWindow?.RootViewController?
                     .PresentViewController(rootController, true, null);
-                
-                Sheets[page] = closeAction;
+
+                DisplayedSheet = page;
+                _popSheetAction = closeAction;
             });
         }
 
-        public void PopSheet(Page page)
+        public void PopSheet()
         {
-            Sheets[page]();
+            if (DisplayedSheet == null)
+            {
+                throw new NullReferenceException("No sheet is being displayed");
+            }
 
-            Sheets.Remove(page);
+            _popSheetAction();
+            DisplayedSheet = null;
         }
     }
 }

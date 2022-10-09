@@ -1,5 +1,6 @@
 ﻿using GoogleVisionBarCodeScanner;
 using Prism;
+using Prism.Common;
 using Prism.Ioc;
 using ReactiveUI;
 using Vulcanova.Core.Data;
@@ -16,6 +17,7 @@ using Vulcanova.Features.LuckyNumber;
 using Vulcanova.Features.Settings;
 using Vulcanova.Features.Shared;
 using Vulcanova.Features.Timetable;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -39,6 +41,14 @@ public partial class App
 
         Methods.SetSupportBarcodeFormat(BarcodeFormats.QRCode);
 
+        var sheetPopper = Container.Resolve<ISheetPopper>();
+
+        if (sheetPopper != null)
+        {
+            sheetPopper.SheetWillDisappear += SheetPopperOnSheetWillDisappear;
+            sheetPopper.SheetDisappeared += SheetPopperOnSheetDisappeared;
+        }
+
         var accRepo = Container.Resolve<IAccountRepository>();
 
         // breaks app startup when executed asynchronously
@@ -57,6 +67,22 @@ public partial class App
             await NavigationService.NavigateAsync("MainNavigationPage/IntroView");
         }
     }
+    
+    #region Sheet navigation handlers
+
+    private Page _previousPage;
+
+    private void SheetPopperOnSheetDisappeared(object sender, SheetEventArgs e)
+    {
+        PageUtilities.HandleSystemGoBack(e.Sheet, _previousPage);
+    }
+
+    private void SheetPopperOnSheetWillDisappear(object sender, SheetEventArgs e)
+    {
+        _previousPage = PageUtilities.GetOnNavigatedToTarget(e.Sheet, MainPage, true);
+    }
+    
+    #endregion
 
     protected override void RegisterTypes(IContainerRegistry containerRegistry)
     {
