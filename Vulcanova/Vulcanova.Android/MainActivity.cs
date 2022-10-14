@@ -8,6 +8,7 @@ using OliveTree.Transitions;
 using OliveTree.Transitions.Droid;
 using Prism;
 using Prism.Ioc;
+using Vulcanova.Core.Layout;
 
 namespace Vulcanova.Android
 {
@@ -32,11 +33,13 @@ namespace Vulcanova.Android
 
             TransitionsLibrary.Register<Provider>();
 
+            SheetPopper.Context = this;
+
             GoogleVisionBarCodeScanner.Droid.RendererInitializer.Init();
             
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(this));
-            
+
             Window?.SetStatusBarColor(Color.Argb(255, 0, 0, 0));
         }
 
@@ -48,7 +51,7 @@ namespace Vulcanova.Android
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            containerRegistry.RegisterSingleton<ISheetPopper, SheetPopper>();
         }
     }
 }
