@@ -54,9 +54,12 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CustomEntryRenderer.cs" />
+        <Compile Include="DismissNotifyingBottomSheetDialog.cs" />
         <Compile Include="MainActivity.cs" />
         <Compile Include="Resources\Resource.Designer.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="SheetPageRenderer.cs" />
+        <Compile Include="SheetPopper.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Include="Resources\AboutResources.txt" />
