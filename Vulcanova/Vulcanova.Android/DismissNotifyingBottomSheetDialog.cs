@@ -32,11 +32,8 @@ namespace Vulcanova.Android
             WillDismiss?.Invoke(this, EventArgs.Empty);
 
             base.Dismiss();
-            
-            DismissEvent += (s, e) =>
-            {
-                DidDismiss?.Invoke(this, EventArgs.Empty);
-            };
+
+            DidDismiss?.Invoke(this, EventArgs.Empty);
         }
     }
 }
