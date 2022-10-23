@@ -68,12 +68,18 @@ namespace Vulcanova.iOS
 
                 wrapper.WillDisappear += (s, e) =>
                 {
-                    SheetWillDisappear?.Invoke(s, new SheetEventArgs(DisplayedSheet));
+                    if (DisplayedSheet != null)
+                    {
+                        SheetWillDisappear?.Invoke(s, new SheetEventArgs(DisplayedSheet));
+                    }
                 };
 
                 wrapper.DidDisappear += (s, e) =>
                 {
-                    SheetDisappeared?.Invoke(s, new SheetEventArgs(DisplayedSheet));
+                    if (DisplayedSheet != null)
+                    {
+                        SheetDisappeared?.Invoke(s, new SheetEventArgs(DisplayedSheet));
+                    }
 
                     DisplayedSheet = null;
                 };
