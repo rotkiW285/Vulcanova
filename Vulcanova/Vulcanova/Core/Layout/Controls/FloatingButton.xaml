@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
+             xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+             x:Class="Vulcanova.Core.Layout.Controls.FloatingButton"
+             x:Name="View"
+             Scale="0">
+    <ContentView.Content>
+        <!-- here the wrapping frame so TouchEffect won't affect the shadow  -->
+        <Frame Padding="0"
+               CornerRadius="28"
+               HasShadow="False"
+               xe:Commands.Tap="{Binding Command, Source={x:Reference View}}" 
+               xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}">
+            <!-- HasShadow="False" - we aren't interested in Frame's built-in shadow as we use the effect from XCT -->
+            <Frame CornerRadius="28"
+                   Padding="16"
+                   HasShadow="False"
+                   BackgroundColor="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}"
+                   xct:ShadowEffect.Color="Black"
+                   xct:ShadowEffect.Opacity="0.5"
+                   xct:ShadowEffect.OffsetY="2"
+                   xct:ShadowEffect.Radius="4">
+                <layout:TintedCachedImage
+                    WidthRequest="24"
+                    Source="{Binding Path=Source, Source={x:Reference View}}"
+                    TintColor="White">
+                </layout:TintedCachedImage>
+            </Frame>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

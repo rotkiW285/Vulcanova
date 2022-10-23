@@ -231,4 +231,7 @@
     <data name="LessonJustifyAbsenceButton" xml:space="preserve">
         <value>Justify</value>
     </data>
+    <data name="CommonCancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
 </root>

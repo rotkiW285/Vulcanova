@@ -61,7 +61,7 @@ public partial class LessonDetailsView : INavigationAware
     {
         _navigationService.NavigateAsync(nameof(JustifyAbsenceView), parameters: new NavigationParameters
         {
-            {nameof(JustifyAbsenceView.Lesson), Lesson}
+            {nameof(JustifyAbsenceViewModel.Lessons), new[] { Lesson }}
         }, useModalNavigation: true);
     }
     

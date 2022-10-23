@@ -1,4 +1,5 @@
 using System;
+using LiteDB;
 using Vulcanova.Features.Shared;
 using Vulcanova.Uonet.Api.Lessons;
 
@@ -20,6 +21,11 @@ public class Lesson
     public int AccountId { get; set; }
     public JustificationStatus? JustificationStatus { get; set; }
     public int LessonClassId { get; set; }
+    
+    [BsonIgnore]
+    public bool CanBeJustified => (PresenceType.Late || PresenceType.Absence)
+                                  && !PresenceType.AbsenceJustified
+                                  && JustificationStatus == null;
 }
     
 public class PresenceType

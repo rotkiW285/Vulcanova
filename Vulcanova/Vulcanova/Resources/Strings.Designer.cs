@@ -635,5 +635,13 @@ namespace Vulcanova.Resources
                 return ResourceManager.GetString("LessonJustifyAbsenceButton", resourceCulture);
             }
         }
+        
+        internal static string CommonCancel
+         {
+            get 
+            {
+                return ResourceManager.GetString("CommonCancel", resourceCulture);
+            }
+        }
     }
 }

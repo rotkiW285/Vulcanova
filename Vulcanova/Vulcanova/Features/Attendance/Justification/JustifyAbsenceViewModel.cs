@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reactive;
 using Prism.Navigation;
 using ReactiveUI;
@@ -15,7 +16,7 @@ public class JustifyAbsenceViewModel : ViewModelBase, IInitialize
     public string Message { get; set; } = string.Empty;
     
     [Reactive]
-    public Lesson Lesson { get; private set; }
+    public IEnumerable<Lesson> Lessons { get; private set; }
 
     public JustifyAbsenceViewModel(
         INavigationService navigationService,
@@ -24,7 +25,11 @@ public class JustifyAbsenceViewModel : ViewModelBase, IInitialize
     {
         SubmitJustification = ReactiveCommand.CreateFromTask( async () =>
         {
-            await lessonsService.SubmitAbsenceJustification(accountContext.Account.Id, Lesson!.LessonClassId, Message);
+            foreach (var lesson in Lessons)
+            {
+                await lessonsService.SubmitAbsenceJustification(accountContext.Account.Id, lesson!.LessonClassId,
+                    Message);
+            }
 
             await navigationService.GoBackAsync(("didJustify", true));
         });
@@ -32,6 +37,6 @@ public class JustifyAbsenceViewModel : ViewModelBase, IInitialize
 
     public void Initialize(INavigationParameters parameters)
     {
-        Lesson = (Lesson) parameters["Lesson"];
+        Lessons = (IEnumerable<Lesson>) parameters[nameof(Lessons)];
     }
 }

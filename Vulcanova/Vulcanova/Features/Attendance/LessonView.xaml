@@ -5,8 +5,7 @@
              xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
              xmlns:converters="clr-namespace:Vulcanova.Features.Attendance.Converters;assembly=Vulcanova"
              xmlns:layoutConverters="clr-namespace:Vulcanova.Core.Layout.Converters;assembly=Vulcanova"
-             x:Class="Vulcanova.Features.Attendance.LessonView"
-             x:Name="View">
+             x:Class="Vulcanova.Features.Attendance.LessonView">
     <ContentView.Resources>
         <converters:AttendanceColorConverter x:Key="ColorConverter" />
         <converters:JustificationStatusConverter x:Key="JustificationStatusConverter" />
@@ -23,18 +22,20 @@
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid Padding="16, 8" BindingContext="{x:Reference View}">
+        <Grid Padding="16, 8">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0" x:Name="Col1" />
                 <ColumnDefinition Width="46" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center"
-                FontSize="Large"
-                Text="{Binding Lesson.No}" />
-            <StackLayout Grid.Column="1" Spacing="0">
+            <CheckBox IsChecked="{Binding IsSelected}" />
+            <Label Grid.Column="1"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   FontSize="Large"
+                   Text="{Binding Lesson.No}" />
+            <StackLayout Grid.Column="2" Spacing="0">
                 <Label Text="{Binding Lesson.Subject.Name}" />
                 <StackLayout Orientation="Horizontal">
                     <Label
@@ -42,7 +43,7 @@
                         Text="{Binding Lesson.PresenceType.Name}">
                         <Label.TextColor>
                             <MultiBinding Converter="{StaticResource JustificationColorConverter}">
-                                <Binding Path="Lesson" Source="{x:Reference View}" />
+                                <Binding Path="Lesson" />
                                 <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
                             </MultiBinding>
                         </Label.TextColor>
@@ -53,15 +54,15 @@
                         WidthRequest="14"
                         Source="{Binding Lesson.JustificationStatus, Converter={StaticResource JustificationStatusConverter}}">
                         <layout:TintedCachedImage.TintColor>
-                                    <MultiBinding Converter="{StaticResource JustificationColorConverter}">
-                                        <Binding Path="Lesson" />
-                                        <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
-                                    </MultiBinding>
+                            <MultiBinding Converter="{StaticResource JustificationColorConverter}">
+                                <Binding Path="Lesson" />
+                                <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                            </MultiBinding>
                         </layout:TintedCachedImage.TintColor>
                     </layout:TintedCachedImage>
                 </StackLayout>
             </StackLayout>
-            <StackLayout Grid.Column="2" Orientation="Horizontal" Spacing="4" VerticalOptions="Center">
+            <StackLayout Grid.Column="3" Orientation="Horizontal" Spacing="4" VerticalOptions="Center">
                 <layout:TintedCachedImage
                     HeightRequest="32"
                     WidthRequest="32"
