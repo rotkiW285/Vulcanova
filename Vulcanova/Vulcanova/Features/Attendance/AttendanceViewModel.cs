@@ -162,7 +162,11 @@ public class AttendanceViewModel : ViewModelBase, INavigatedAware
                     }
                 },
                 useModalNavigation: true);
-        }, selectedAnyJustifiable);
+        }, selectedAnyJustifiable
+            // [iOS] Modal with PageSheet presentation style navigation issue workaround:
+            // do not allow calling commands that do navigation until the modal presenting view is *fully* activated
+            // (wait until every modal is dismissed)
+            .CombineLatest(this.WhenAnyValue(vm => vm.IsActive), (x, y) => x && y));
     }
 
     private IObservable<IReadOnlyDictionary<DateTime, List<LessonViewModel>>> GetEntries(int accountId,
@@ -181,16 +185,21 @@ public class AttendanceViewModel : ViewModelBase, INavigatedAware
 
     public void OnNavigatedFrom(INavigationParameters parameters)
     {
+        IsActive = false;
     }
 
     public void OnNavigatedTo(INavigationParameters parameters)
     {
+        IsActive = true;
+
         if (parameters.TryGetValue("didJustify", out bool reload) && reload)
         {
             DisableJustificationMode.Execute(default).Subscribe();
             GetAttendanceEntries.Execute(true).Subscribe();
         }
     }
+
+    [Reactive] private bool IsActive { get; set; } = true;
 }
 
 public class LessonViewModel : ReactiveObject
