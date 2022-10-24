@@ -23,7 +23,8 @@ public class Lesson
     public int LessonClassId { get; set; }
     
     [BsonIgnore]
-    public bool CanBeJustified => (PresenceType.Late || PresenceType.Absence)
+    public bool CanBeJustified => PresenceType != null 
+                                  && (PresenceType.Late || PresenceType.Absence)
                                   && !PresenceType.AbsenceJustified
                                   && JustificationStatus == null;
 }
