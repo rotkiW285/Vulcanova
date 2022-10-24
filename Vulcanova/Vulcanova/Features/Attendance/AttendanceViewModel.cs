@@ -71,7 +71,11 @@ public class AttendanceViewModel : ViewModelBase, INavigatedAware
 
             if (JustificationMode)
             {
-                entry.IsSelected = !entry.IsSelected;
+                if (entry.Lesson.CanBeJustified)
+                {
+                    entry.IsSelected = !entry.IsSelected;
+                }
+
                 return default;
             }
 
