@@ -171,6 +171,11 @@ public class AttendanceViewModel : ViewModelBase, INavigatedAware
             // do not allow calling commands that do navigation until the modal presenting view is *fully* activated
             // (wait until every modal is dismissed)
             .CombineLatest(this.WhenAnyValue(vm => vm.IsActive), (x, y) => x && y));
+        
+        accountContext.WhenAnyValue(ctx => ctx.Account)
+            .WhereNotNull()
+            .Select(_ => false)
+            .InvokeCommand(GetAttendanceEntries);
     }
 
     private IObservable<IReadOnlyDictionary<DateTime, List<LessonViewModel>>> GetEntries(int accountId,

@@ -68,6 +68,11 @@ public class TimetableViewModel : ViewModelBase
 
                 CurrentDayEntries = null;
             });
+
+        accountContext.WhenAnyValue(ctx => ctx.Account)
+            .WhereNotNull()
+            .Select(_ => false)
+            .InvokeCommand(GetTimetableEntries);
     }
 
     private IObservable<IReadOnlyDictionary<DateTime, IEnumerable<TimetableListEntry>>> GetEntries(int accountId,

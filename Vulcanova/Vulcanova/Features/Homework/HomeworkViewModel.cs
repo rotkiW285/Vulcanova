@@ -25,8 +25,6 @@ namespace Vulcanova.Features.Homework
 
         [Reactive] public IReadOnlyCollection<Homework> CurrentWeekEntries { get; private set; }
         [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
-        [Reactive] public PeriodResult PeriodInfo { get; private set; }
-        [Reactive] public Homework SelectedHomework { get; set; }
 
         [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
 
@@ -43,16 +41,11 @@ namespace Vulcanova.Features.Homework
 
             AccountViewModel = accountViewModel;
 
-            var setCurrentPeriod = ReactiveCommand.CreateFromTask(async (int accountId) =>
-                PeriodInfo = await periodService.GetCurrentPeriodAsync(accountId));
-            
-            accountContext.WhenAnyValue(ctx => ctx.Account)
-                .WhereNotNull()
-                .Select(acc => acc.Id)
-                .InvokeCommand(setCurrentPeriod);
-
-            GetHomeworkEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-                GetEntries(accountContext.Account.Id, PeriodInfo.CurrentPeriod.Id, forceSync));
+            GetHomeworkEntries = ReactiveCommand.CreateFromTask(async (bool forceSync) =>
+            {
+                var periodInfo = await periodService.GetCurrentPeriodAsync(accountContext.Account.Id);
+                return await GetEntries(accountContext.Account.Id, periodInfo.CurrentPeriod.Id, forceSync);
+            });
 
             GetHomeworkEntries.ToPropertyEx(this, vm => vm.Entries);
 
@@ -69,17 +62,17 @@ namespace Vulcanova.Features.Homework
             var lastDate = SelectedDay;
 
             this.WhenAnyValue(vm => vm.SelectedDay)
-                .CombineLatest(this.WhenAnyValue(vm => vm.PeriodInfo.CurrentPeriod.Id))
                 .Subscribe((d) =>
                 {
-                    if (Entries == null || lastDate.Month != d.First.Month)
+                    if (Entries == null || lastDate.Month != d.Month)
                     {
                         GetHomeworkEntries.Execute(false).SubscribeAndIgnoreErrors();
                     }
+
+                    lastDate = d;
                 });
 
             this.WhenAnyValue(vm => vm.Entries)
-                .Where(e => !e.IsDefaultOrEmpty)
                 .CombineLatest(this.WhenAnyValue(vm => vm.SelectedDay))
                 .Subscribe(tuple =>
                 {
@@ -91,6 +84,11 @@ namespace Vulcanova.Features.Homework
                     CurrentWeekEntries = entries.Where(e => e.Deadline >= monday && e.Deadline < sunday)
                         .ToImmutableList();
                 });
+
+            accountContext.WhenAnyValue(ctx => ctx.Account)
+                .WhereNotNull()
+                .Select(_ => false)
+                .InvokeCommand(GetHomeworkEntries);
         }
 
         private IObservable<ImmutableArray<Homework>> GetEntries(int accountId, int periodId,

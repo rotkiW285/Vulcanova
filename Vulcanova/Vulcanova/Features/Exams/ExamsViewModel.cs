@@ -83,6 +83,11 @@ public class ExamsViewModel : ViewModelBase
                 CurrentWeekEntries = entries.Where(e => e.Deadline >= monday && e.Deadline < sunday)
                     .ToImmutableList();
             });
+        
+        accountContext.WhenAnyValue(ctx => ctx.Account)
+            .WhereNotNull()
+            .Select(_ => false)
+            .InvokeCommand(GetExams);
     }
 
     private IObservable<ImmutableArray<Exam>> GetEntries(int accountId, DateTime date, bool forceSync = false)
