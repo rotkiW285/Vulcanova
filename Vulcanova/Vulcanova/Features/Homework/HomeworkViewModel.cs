@@ -7,14 +7,12 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Extensions;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Homework.HomeworkDetails;
 using Vulcanova.Features.Shared;
-using Xamarin.Forms;
 
 namespace Vulcanova.Features.Homework
 {
@@ -39,8 +37,7 @@ namespace Vulcanova.Features.Homework
             AccountContext accountContext,
             AccountAwarePageTitleViewModel accountViewModel,
             INavigationService navigationService,
-            IPeriodService periodService,
-            ISheetPopper popper = null) : base(navigationService)
+            IPeriodService periodService) : base(navigationService)
         {
             _homeworksService = homeworksService;
 
@@ -61,17 +58,10 @@ namespace Vulcanova.Features.Homework
 
             ShowHomeworkDetails = ReactiveCommand.Create((int lessonId) =>
             {
-                SelectedHomework = CurrentWeekEntries?.First(g => g.Id == lessonId);
-                
-                if (Device.RuntimePlatform == Device.iOS)
-                {
-                    var view = new HomeworkDetailsView
-                    {
-                        Homework = SelectedHomework
-                    };
+                var homework = CurrentWeekEntries?.First(g => g.Id == lessonId);
 
-                    popper!.PushSheet(view);
-                }
+                navigationService.NavigateAsync(nameof(HomeworkDetailsView),
+                    (nameof(HomeworkDetailsView.Homework), homework));
 
                 return Unit.Default;
             });
