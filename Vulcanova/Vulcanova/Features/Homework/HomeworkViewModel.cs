@@ -18,10 +18,10 @@ namespace Vulcanova.Features.Homework
 {
     public class HomeworkViewModel : ViewModelBase
     {
-        public ReactiveCommand<bool, ImmutableArray<Homework>> GetHomeworkEntries { get; }
+        public ReactiveCommand<bool, IReadOnlyCollection<Homework>> GetHomeworkEntries { get; }
         public ReactiveCommand<int, Unit> ShowHomeworkDetails { get; }
         
-        [ObservableAsProperty] public ImmutableArray<Homework> Entries { get; }
+        [ObservableAsProperty] public IReadOnlyCollection<Homework> Entries { get; }
 
         [Reactive] public IReadOnlyCollection<Homework> CurrentWeekEntries { get; private set; }
         [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
@@ -73,6 +73,7 @@ namespace Vulcanova.Features.Homework
                 });
 
             this.WhenAnyValue(vm => vm.Entries)
+                .WhereNotNull()
                 .CombineLatest(this.WhenAnyValue(vm => vm.SelectedDay))
                 .Subscribe(tuple =>
                 {
@@ -81,8 +82,9 @@ namespace Vulcanova.Features.Homework
                     var monday = selectedDay.LastMonday();
                     var sunday = selectedDay.NextSunday();
 
-                    CurrentWeekEntries = entries.Where(e => e.Deadline >= monday && e.Deadline < sunday)
-                        .ToImmutableList();
+                    CurrentWeekEntries = Array.AsReadOnly(entries
+                        .Where(e => e.Deadline >= monday && e.Deadline < sunday)
+                        .ToArray());
                 });
 
             accountContext.WhenAnyValue(ctx => ctx.Account)
@@ -91,11 +93,11 @@ namespace Vulcanova.Features.Homework
                 .InvokeCommand(GetHomeworkEntries);
         }
 
-        private IObservable<ImmutableArray<Homework>> GetEntries(int accountId, int periodId,
+        private IObservable<IReadOnlyCollection<Homework>> GetEntries(int accountId, int periodId,
             bool forceSync = false)
         {
             return _homeworksService.GetHomework(accountId, periodId, forceSync)
-                .Select(e => e.ToImmutableArray());
+                .Select(e => Array.AsReadOnly(e.ToArray()));
         }
     }
 }
