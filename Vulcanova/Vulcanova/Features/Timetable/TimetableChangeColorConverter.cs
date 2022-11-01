@@ -6,10 +6,12 @@ using Xamarin.Forms;
 
 namespace Vulcanova.Features.Timetable;
 
-public class TimetableChangeColorConverter : IValueConverter
+public class TimetableChangeColorConverter : IMultiValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
+        var value = values[0];
+
         if (value is ChangeType type)
         {
             var baseColor = type is ChangeType.Exemption or ChangeType.ClassAbsence
@@ -22,7 +24,7 @@ public class TimetableChangeColorConverter : IValueConverter
         return ThemeUtility.GetDefaultTextColor();
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
