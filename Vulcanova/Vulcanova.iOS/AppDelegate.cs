@@ -1,5 +1,6 @@
 ﻿using FFImageLoading.Forms.Platform;
 using Foundation;
+using LabelHtml.Forms.Plugin.iOS;
 using OliveTree.Transitions;
 using OliveTree.Transitions.iOS;
 using Prism;
@@ -25,6 +26,8 @@ namespace Vulcanova.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            HtmlLabelRenderer.Initialize();
+
             global::Xamarin.Forms.Forms.Init();
             
             Xamarin.Essentials.Platform.Init(UiHelper.GetTopViewController);

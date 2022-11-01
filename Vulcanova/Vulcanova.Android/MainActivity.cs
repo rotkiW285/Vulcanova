@@ -4,6 +4,7 @@ using Android.Graphics;
 using Android.Runtime;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
+using LabelHtml.Forms.Plugin.Droid;
 using OliveTree.Transitions;
 using OliveTree.Transitions.Droid;
 using Prism;
@@ -36,6 +37,8 @@ namespace Vulcanova.Android
             SheetPopper.Context = this;
 
             GoogleVisionBarCodeScanner.Droid.RendererInitializer.Init();
+            
+            HtmlLabelRenderer.Initialize();
             
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(this));

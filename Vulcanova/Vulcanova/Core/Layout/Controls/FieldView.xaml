@@ -2,12 +2,19 @@
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:LabelHtml.Forms.Plugin.Abstractions;assembly=HtmlLabel.Forms.Plugin"
+             xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
              x:Class="Vulcanova.Core.Layout.Controls.FieldView"
              x:Name="View">
+    <ContentView.Resources>
+        <controls:TextToHtmlConverter x:Key="TextToHtmlConverter" />
+    </ContentView.Resources>
     <ContentView.Content>
         <StackLayout BindingContext="{x:Reference View}">
             <Label Text="{Binding Name}" FontAttributes="Bold" />
-            <Label Text="{Binding  Value}" />
+            <!-- For some reason on iOS text in this component has a padding of (a rough estimation) 4.5 units -->
+            <!-- TODO: Check this on Android -->
+            <abstractions:HtmlLabel Text="{Binding Value, Converter={StaticResource TextToHtmlConverter}}" Margin="-4.5, 0" VerticalTextAlignment="Start" />
         </StackLayout>
     </ContentView.Content>
 </ContentView>
