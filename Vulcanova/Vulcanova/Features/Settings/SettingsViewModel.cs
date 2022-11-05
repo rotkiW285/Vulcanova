@@ -2,7 +2,7 @@ using System.Reactive;
 using Prism.Navigation;
 using ReactiveUI;
 using Vulcanova.Core.Mvvm;
-using Vulcanova.Features.Settings.Grades;
+using Vulcanova.Features.Settings.Grades.iOS;
 
 namespace Vulcanova.Features.Settings;
 

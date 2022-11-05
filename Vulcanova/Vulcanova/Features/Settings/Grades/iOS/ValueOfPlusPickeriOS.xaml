@@ -7,7 +7,7 @@
                               xmlns:local="clr-namespace:Vulcanova.Features.Settings.Grades;assembly=Vulcanova"
                               xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                               Title="{x:Static resx:Strings.GradesSettingsValueOfPlus}"
-                              x:Class="Vulcanova.Features.Settings.Grades.ValueOfPlusPickeriOS">
+                              x:Class="Vulcanova.Features.Settings.Grades.iOS.ValueOfPlusPickeriOS">
     <ContentPage.Content>
         <TableView Intent="Settings">
             <TableRoot x:Name="TableRoot">

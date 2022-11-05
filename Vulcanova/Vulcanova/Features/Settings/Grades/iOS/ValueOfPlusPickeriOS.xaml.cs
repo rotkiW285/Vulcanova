@@ -2,13 +2,12 @@ using System;
 using System.Globalization;
 using System.Reactive.Disposables;
 using ImTools;
-using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using Vulcanova.Features.Settings.Controls;
 using Vulcanova.Resources;
 using Xamarin.Forms.Xaml;
 
-namespace Vulcanova.Features.Settings.Grades;
+namespace Vulcanova.Features.Settings.Grades.iOS;
 
 [XamlCompilation(XamlCompilationOptions.Compile)]
 public partial class ValueOfPlusPickeriOS
@@ -47,7 +46,12 @@ public partial class ValueOfPlusPickeriOS
                 })
                 .DisposeWith(disposable);
 
-            this.Bind(ViewModel, vm => vm.SelectedValue, v => v.CustomValue.Text, CustomValue.Events().Completed, f => f.ToString(CultureInfo.CurrentCulture), decimal.Parse)
+            this.Bind(ViewModel, 
+                    vm => vm.SelectedValue, 
+                    v => v.CustomValue.Text, 
+                    CustomValue.WhenAnyValue(v => v.Text), 
+                    f => f.ToString(CultureInfo.CurrentCulture), 
+                    s => decimal.TryParse(s, out var d) ? d : 0)
                 .DisposeWith(disposable);
         });
     }

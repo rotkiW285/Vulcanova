@@ -3,6 +3,7 @@ using Prism.AppModel;
 using Prism.Ioc;
 using Vulcanova.Features.Settings.Grades;
 using Vulcanova.Features.Settings.Grades.Android;
+using Vulcanova.Features.Settings.Grades.iOS;
 
 namespace Vulcanova.Features.Settings;
 
