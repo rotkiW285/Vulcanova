@@ -75,7 +75,7 @@ public partial class CalendarWeekGrid
 
     public static readonly BindableProperty HighlightsProperty =
         BindableProperty.Create(nameof(Highlights), typeof(IEnumerable<DateTime>), typeof(Calendar),
-            Array.Empty<DateTime>());
+            Array.Empty<DateTime>(), propertyChanged: HighlightsChanged);
 
     public IEnumerable<DateTime> Highlights
     {
@@ -83,9 +83,7 @@ public partial class CalendarWeekGrid
         set => SetValue(HighlightsProperty, value);
     }
 
-    private IEnumerable<CalendarDateCell> DateCells => CalendarGrid.Children
-        .Skip(7)
-        .Cast<CalendarDateCell>();
+    private readonly Dictionary<DateTime, CalendarDateCell> _dateCells = new();
 
     public CalendarWeekGrid()
     {
@@ -139,6 +137,8 @@ public partial class CalendarWeekGrid
             var cell = CreateCellForDate(date);
 
             CalendarGrid.Children.Add(cell, dayOffset, 1);
+
+            _dateCells[date] = cell;
         }
     }
 
@@ -204,21 +204,29 @@ public partial class CalendarWeekGrid
     {
         var firstDay = SelectedDate.LastMonday();
 
-        foreach (var (cell, index) in DateCells
+        foreach (var (kvp, index) in _dateCells
+                     .OrderBy(kvp => kvp.Key)
                      .Select((c, i) => (c, i)))
         {
-            UpdateCellForDate(cell, firstDay.AddDays(index));
+            UpdateCellForDate(kvp.Value, kvp.Key, firstDay.AddDays(index));
         }
     }
 
-    private void UpdateCellForDate(CalendarDateCell cell, DateTime date)
+    private void UpdateCellForDate(CalendarDateCell cell, DateTime previousDate, DateTime newDate)
     {
+        // When SelectionMode is "week" each date cell in the grid will be selected.
+        // That happens because we always display the selection.
+        // Considering that we display a single week, the displayed week will always be the selected one.
         cell.Selected = SelectionMode != CalendarSelectionMode.SingleDay
-                        || SelectedDate == date;
+                        || SelectedDate == newDate;
 
-        cell.Day = date.Day;
-        cell.TapCommand = new Command(() => SelectedDate = date);
-        cell.Secondary = date.Month != SelectedDate.Month;
+        cell.Day = newDate.Day;
+        cell.TapCommand = new Command(() => SelectedDate = newDate);
+        cell.Secondary = newDate.Month != SelectedDate.Month;
+        cell.IsHighlight = Highlights.Contains(newDate);
+
+        _dateCells.Remove(previousDate);
+        _dateCells[newDate] = cell;
     }
 
     private void SwipeGestureRecognizer_OnSwiped(object sender, SwipedEventArgs e)
@@ -230,5 +238,16 @@ public partial class CalendarWeekGrid
                                                 SwipeDirection.Right => -1,
                                                 _ => 0
                                             });
+    }
+    
+    private static void HighlightsChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var calendar = (CalendarWeekGrid) bindable;
+        var newHighlights = (newValue as IEnumerable<DateTime>)?.ToArray();
+
+        foreach (var (date, cell) in calendar._dateCells)
+        {
+            cell.IsHighlight = newHighlights?.Select(h => h.Date).Contains(date) ?? false;
+        }
     }
 }
