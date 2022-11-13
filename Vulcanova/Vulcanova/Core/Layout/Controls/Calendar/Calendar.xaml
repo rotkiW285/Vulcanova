@@ -2,27 +2,42 @@
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:calendar="clr-namespace:Vulcanova.Core.Layout.Controls.Calendar;assembly=Vulcanova"
+             xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
              x:Class="Vulcanova.Core.Layout.Controls.Calendar.Calendar"
              x:Name="View">
-    <ContentView.GestureRecognizers>
-        <SwipeGestureRecognizer Direction="Left" Swiped="SwipeGestureRecognizer_OnSwiped" />
-        <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_OnSwiped" />
-    </ContentView.GestureRecognizers>
     <ContentView.Content>
-        <StackLayout>
-            <Label Text="{Binding Source={x:Reference View}, Path=SelectedDate, StringFormat='{0:MMMM yyyy}'}"
-                   HorizontalTextAlignment="Center" />
-            <Grid x:Name="CalendarGrid">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </StackLayout>
+        <Grid BindingContext="{x:Reference View}" IsClippedToBounds="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
+                <Label Text="{Binding Source={x:Reference View}, Path=SelectedDate, StringFormat='{0:MMMM yyyy}'}"
+                       HorizontalTextAlignment="Center" />
+                <Frame Padding="4, 2" HasShadow="False">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ToggleModeArrow_OnTapped" />
+                    </Frame.GestureRecognizers>
+                    <layout:TintedCachedImage
+                        x:Name="ToggleModeArrow"
+                        WidthRequest="17"
+                        TintColor="{AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}" />
+                </Frame>
+            </StackLayout>
+            <calendar:CalendarMonthGrid Grid.Row="1" x:Name="CalendarGrid"
+                                        SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                                        SelectedColor="{Binding SelectedColor}" TextColor="{Binding TextColor}"
+                                        SelectedTextColor="{Binding SelectedTextColor}"
+                                        SecondaryTextColor="{Binding SecondaryTextColor}"
+                                        SelectionMode="{Binding SelectionMode}" Highlights="{Binding Highlights}"
+                                        IsVisible="False" />
+            <calendar:CalendarWeekGrid Grid.Row="1" x:Name="WeekGrid"
+                                       SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                                       SelectedColor="{Binding SelectedColor}" TextColor="{Binding TextColor}"
+                                       SelectedTextColor="{Binding SelectedTextColor}"
+                                       SecondaryTextColor="{Binding SecondaryTextColor}"
+                                       SelectionMode="{Binding SelectionMode}" Highlights="{Binding Highlights}" />
+        </Grid>
     </ContentView.Content>
 </ContentView>

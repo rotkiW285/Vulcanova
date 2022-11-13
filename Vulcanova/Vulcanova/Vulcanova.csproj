@@ -70,6 +70,8 @@
       <EmbeddedResource Include="Resources\Icons\alert-circle-outline.svg" />
       <EmbeddedResource Include="Resources\Icons\checkmark-done-outline.svg" />
       <EmbeddedResource Include="Resources\Icons\checkmark-outline.svg" />
+      <EmbeddedResource Include="Resources\Icons\chevron-up.svg" />
+      <EmbeddedResource Include="Resources\Icons\chevron-down.svg" />
     </ItemGroup>
 
     <ItemGroup>
