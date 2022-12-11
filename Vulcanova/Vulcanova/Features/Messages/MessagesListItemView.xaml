@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
+             xmlns:views="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             x:Name="View"
+             x:Class="Vulcanova.Features.Messages.MessagesListItemView">
+    <ContentView.Resources>
+        <messages:CorrespondentToInitialsConverter x:Key="CorrespondentToInitialsConverter" />
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid Padding="16, 8" ColumnSpacing="8" BindingContext="{x:Reference View}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <views:AvatarView
+                Text="{Binding Message.Sender, Converter={StaticResource CorrespondentToInitialsConverter}}" />
+            <StackLayout Grid.Column="1" Spacing="0">
+                <Label FontAttributes="Bold" MaxLines="1" LineBreakMode="TailTruncation"
+                       Text="{Binding Message.Sender.Name}" />
+                <Label FontSize="Small" MaxLines="1" LineBreakMode="TailTruncation" Text="{Binding Message.Subject}" />
+            </StackLayout>
+            <StackLayout Grid.Column="2" Spacing="0">
+                <Label FontSize="Small" Text="{Binding Message.DateSent, StringFormat='{0:d}'}" />
+                <Label FontSize="Small" HorizontalTextAlignment="End"
+                       Text="{Binding Message.DateSent, StringFormat='{0:HH:mm}'}" />
+            </StackLayout>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

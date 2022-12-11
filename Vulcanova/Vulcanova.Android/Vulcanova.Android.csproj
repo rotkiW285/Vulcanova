@@ -70,6 +70,7 @@
         <AndroidResource Include="Resources\drawable\ic_calendar_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_calendar_number_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_checkmark_done_outline.xml" />
+        <AndroidResource Include="Resources\drawable\ic_mail_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_medal_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_settings_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_star_outline.xml" />

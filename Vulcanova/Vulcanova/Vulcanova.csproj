@@ -119,5 +119,13 @@
         <DependentUpon>AccountPickerView.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Features\Messages\MessagesView.xaml.cs">
+        <DependentUpon>MessagesView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Messages\MessagesListItemView.xaml.cs">
+        <DependentUpon>MessagesListItemView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rxui:ReactiveContentPage x:TypeArguments="messages:MessagesViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:tabs="http://sharpnado.com"
+                          xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                          xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                          xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
+                          xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                          ios:Page.UseSafeArea="True"
+                          Title="{x:Static resx:Strings.MessagesTabTitle}"
+                          IconImageSource="{OnPlatform iOS=mail-outline@3x.png, Android=ic_mail_outline}"
+                          x:Class="Vulcanova.Features.Messages.MessagesView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TabStyle" TargetType="tabs:UnderlinedTabItem">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource DarkControlColor}, Light={StaticResource LightControlColor}}" />
+                <Setter Property="SelectedTabColor"
+                        Value="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}" />
+                <Setter Property="UnderlineAllTab" Value="True" />
+                <Setter Property="UnselectedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <tabs:TabHostView
+                x:Name="TabHost"
+                TabType="Fixed">
+                <tabs:TabHostView.Tabs>
+                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                            Label="{x:Static resx:Strings.MessagesInboxFolder}" />
+                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                            Label="{x:Static resx:Strings.MessagesSentFolder}" />
+                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                            Label="{x:Static resx:Strings.MessagesDeletedFolder}" />
+                </tabs:TabHostView.Tabs>
+            </tabs:TabHostView>
+
+            <CollectionView Grid.Row="1" x:Name="MessagesList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="messages:Message">
+                        <StackLayout Padding="0, 1" Spacing="0">
+                            <messages:MessagesListItemView Message="{Binding .}" />
+                            <BoxView Style="{StaticResource SeparatorStyle}" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ContentPage.Content>
+</rxui:ReactiveContentPage>

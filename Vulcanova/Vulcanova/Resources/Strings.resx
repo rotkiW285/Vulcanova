@@ -234,6 +234,18 @@
     <data name="CommonCancel" xml:space="preserve">
         <value>Cancel</value>
     </data>
+    <data name="MessagesInboxFolder" xml:space="preserve">
+        <value>Inbox</value>
+    </data>
+    <data name="MessagesSentFolder" xml:space="preserve">
+        <value>Sent</value>
+    </data>
+    <data name="MessagesDeletedFolder" xml:space="preserve">
+        <value>Deleted</value>
+    </data>
+    <data name="MessagesTabTitle" xml:space="preserve">
+        <value>Messages</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Notes</value>
     </data>

@@ -15,6 +15,7 @@ using Vulcanova.Features.Exams;
 using Vulcanova.Features.Grades;
 using Vulcanova.Features.Homework;
 using Vulcanova.Features.LuckyNumber;
+using Vulcanova.Features.Messages;
 using Vulcanova.Features.Notes;
 using Vulcanova.Features.Settings;
 using Vulcanova.Features.Shared;
@@ -107,6 +108,7 @@ public partial class App
         containerRegistry.RegisterAttendance();
         containerRegistry.RegisterExams();
         containerRegistry.RegisterHomework();
+        containerRegistry.RegisterMessages();
         containerRegistry.RegisterNotes();
 
         containerRegistry.RegisterSettings();
