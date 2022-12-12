@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
 using Xamarin.Forms.Xaml;
@@ -16,7 +17,8 @@ public partial class MessagesView
             this.Bind(ViewModel, vm => vm.SelectedFolderIndex, v => v.TabHost.SelectedIndex)
                 .DisposeWith(disposable);
 
-            this.OneWayBind(ViewModel, vm => vm.Messages, v => v.MessagesList.ItemsSource)
+            this.OneWayBind(ViewModel, vm => vm.Messages, v => v.MessagesList.ItemsSource,
+                    msg => msg.OrderByDescending(x => x.DateSent))
                 .DisposeWith(disposable);
         });
     }
