@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
+using Vulcanova.Uonet.Api.MessageBox;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Messages;
@@ -14,7 +15,9 @@ public partial class MessagesView
 
         this.WhenActivated(disposable =>
         {
-            this.Bind(ViewModel, vm => vm.SelectedFolderIndex, v => v.TabHost.SelectedIndex)
+            this.Bind(ViewModel, vm => vm.SelectedFolder, v => v.TabHost.SelectedIndex,
+                    viewToVmConverter: i => (MessageBoxFolder)(i + 1),
+                    vmToViewConverter: folder => (int)(folder - 1))
                 .DisposeWith(disposable);
 
             this.OneWayBind(ViewModel, vm => vm.Messages, v => v.MessagesList.ItemsSource,

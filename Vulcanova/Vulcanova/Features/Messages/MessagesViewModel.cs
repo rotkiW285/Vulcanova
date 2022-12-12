@@ -25,9 +25,9 @@ public class MessagesViewModel : ViewModelBase
     
     [ObservableAsProperty]
     public IEnumerable<Message> Messages { get; private set; }
-    
+
     [Reactive]
-    public int SelectedFolderIndex { get; set; }
+    public MessageBoxFolder SelectedFolder { get; set; } = MessageBoxFolder.Received;
 
     public MessagesViewModel(
         INavigationService navigationService,
@@ -41,7 +41,7 @@ public class MessagesViewModel : ViewModelBase
         LoadBoxes.ToPropertyEx(this, vm => vm.MessageBoxes);
 
         LoadMessages = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-            messagesService.GetMessagesByBox(accountContext.Account.Id, CurrentBox.GlobalKey, MessageBoxFolder.Received,
+            messagesService.GetMessagesByBox(accountContext.Account.Id, CurrentBox.GlobalKey, SelectedFolder,
                 forceSync));
 
         LoadMessages.ToPropertyEx(this, vm => vm.Messages);
@@ -56,8 +56,11 @@ public class MessagesViewModel : ViewModelBase
                              ?? messageBoxes.FirstOrDefault();
             });
 
+        var whenAnyFolder = this.WhenAnyValue(vm => vm.SelectedFolder);
+
         this.WhenAnyValue(vm => vm.CurrentBox)
             .WhereNotNull()
+            .CombineLatest(whenAnyFolder)
             .Select(_ => false) // don't force refresh
             .InvokeCommand(LoadMessages);
 
