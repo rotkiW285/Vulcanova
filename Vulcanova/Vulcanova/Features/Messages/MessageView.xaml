@@ -36,11 +36,17 @@
                        Text="{Binding Message.Sender.Name}"
                        FontAttributes="Bold"
                        LineBreakMode="TailTruncation" />
-                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Message.DateSent, StringFormat='{0:d}'}" />
-                <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                <Label Grid.Row="0" Grid.Column="2"
+                       Text="{Binding Message.DateSent, StringFormat='{0:d}'}"
+                       FontSize="Small" />
+                <Label Grid.Row="1" Grid.Column="1"
                        Text="{Binding Message.Receiver[0].Name}"
                        FontSize="Small"
                        LineBreakMode="TailTruncation" />
+                <Label Grid.Row="1" Grid.Column="2"
+                       FontSize="Small"
+                       HorizontalTextAlignment="End"
+                       Text="{Binding Message.DateSent, StringFormat='{0:HH:mm}'}" />
             </Grid>
             <Label Grid.Row="1" FontSize="Large" FontAttributes="Bold" Text="{Binding Message.Subject}" />
             <abstractions:HtmlLabel Grid.Row="2" Text="{Binding Message.Content}" Margin="-4.5, 0" />
