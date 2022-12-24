@@ -44,16 +44,18 @@
                 </tabs:TabHostView.Tabs>
             </tabs:TabHostView>
 
-            <CollectionView Grid.Row="1" x:Name="MessagesList">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="messages:Message">
-                        <StackLayout Padding="0, 1" Spacing="0">
-                            <messages:MessagesListItemView Message="{Binding .}" />
-                            <BoxView Style="{StaticResource SeparatorStyle}" />
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <RefreshView Grid.Row="1" x:Name="RefreshView">
+                <CollectionView x:Name="MessagesList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="messages:Message">
+                            <StackLayout Padding="0, 1" Spacing="0">
+                                <messages:MessagesListItemView Message="{Binding .}" />
+                                <BoxView Style="{StaticResource SeparatorStyle}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
         </Grid>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>

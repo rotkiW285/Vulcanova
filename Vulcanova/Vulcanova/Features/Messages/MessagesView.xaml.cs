@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
+using Vulcanova.Core.Rx;
 using Vulcanova.Uonet.Api.MessageBox;
 using Xamarin.Forms.Xaml;
 
@@ -22,6 +23,9 @@ public partial class MessagesView
 
             this.OneWayBind(ViewModel, vm => vm.Messages, v => v.MessagesList.ItemsSource,
                     msg => msg.OrderByDescending(x => x.DateSent))
+                .DisposeWith(disposable);
+
+            this.BindForceRefresh(RefreshView, v => v.ViewModel.LoadMessages)
                 .DisposeWith(disposable);
         });
     }
