@@ -7,6 +7,7 @@
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
                           xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                          xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
                           ios:Page.UseSafeArea="True"
                           Title="{x:Static resx:Strings.MessagesTabTitle}"
                           IconImageSource="{OnPlatform iOS=mail-outline@3x.png, Android=ic_mail_outline}"
@@ -48,7 +49,10 @@
                 <CollectionView x:Name="MessagesList">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="messages:Message">
-                            <StackLayout Padding="0, 1" Spacing="0">
+                            <StackLayout Padding="0, 1" Spacing="0"
+                                         xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
+                                         xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type messages:MessagesViewModel}}, Path=ShowMessage}"
+                                         xe:Commands.TapParameter="{Binding Id}">
                                 <messages:MessagesListItemView Message="{Binding .}" />
                                 <BoxView Style="{StaticResource SeparatorStyle}" />
                             </StackLayout>

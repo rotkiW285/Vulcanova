@@ -7,6 +7,7 @@ public static class Config
     public static void RegisterMessages(this IContainerRegistry container)
     {
         container.RegisterForNavigation<MessagesView>();
+        container.RegisterForNavigation<MessageView>();
 
         container.RegisterScoped<IMessagesService, MessagesService>();
         container.RegisterScoped<IMessagesRepository, MessagesRepository>();

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
+             xmlns:abstractions="clr-namespace:LabelHtml.Forms.Plugin.Abstractions;assembly=HtmlLabel.Forms.Plugin"
+             x:Class="Vulcanova.Features.Messages.MessageView"
+             Title="{Binding Message.Subject, Source={x:Reference View}}"
+             x:Name="View">
+    <ContentPage.Resources>
+        <messages:CorrespondentToInitialsConverter x:Key="CorrespondentToInitialsConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+        <Grid BindingContext="{x:Reference View}" Padding="16, 8" RowSpacing="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid RowSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto " />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <views:AvatarView
+                    Grid.RowSpan="2"
+                    Text="{Binding Message.Sender.Name, Converter={StaticResource CorrespondentToInitialsConverter}}" />
+                <Label Grid.Row="0" Grid.Column="1"
+                       Text="{Binding Message.Sender.Name}"
+                       FontAttributes="Bold"
+                       LineBreakMode="TailTruncation" />
+                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Message.DateSent, StringFormat='{0:d}'}" />
+                <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                       Text="{Binding Message.Receiver[0].Name}"
+                       FontSize="Small"
+                       LineBreakMode="TailTruncation" />
+            </Grid>
+            <Label Grid.Row="1" FontSize="Large" FontAttributes="Bold" Text="{Binding Message.Subject}" />
+            <abstractions:HtmlLabel Grid.Row="2" Text="{Binding Message.Content}" Margin="-4.5, 0" />
+        </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

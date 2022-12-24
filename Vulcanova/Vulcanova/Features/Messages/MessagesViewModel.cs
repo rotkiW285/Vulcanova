@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
@@ -16,6 +17,8 @@ public class MessagesViewModel : ViewModelBase
     public ReactiveCommand<bool, IEnumerable<MessageBox>> LoadBoxes { get; }
     
     public ReactiveCommand<bool, IEnumerable<Message>> LoadMessages { get; }
+    
+    public ReactiveCommand<Guid, Unit> ShowMessage { get; }
 
     [ObservableAsProperty]
     public IEnumerable<MessageBox> MessageBoxes { get; }
@@ -45,6 +48,13 @@ public class MessagesViewModel : ViewModelBase
                 forceSync));
 
         LoadMessages.ToPropertyEx(this, vm => vm.Messages);
+
+        ShowMessage = ReactiveCommand.CreateFromTask(async (Guid messageId) =>
+        {
+            var message = Messages.Single(x => x.Id == messageId);
+
+            await navigationService.NavigateAsync(nameof(MessageView), (nameof(MessageView.Message), message));
+        });
 
         this.WhenAnyValue(vm => vm.MessageBoxes)
             .WhereNotNull()

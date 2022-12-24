@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace Vulcanova.Features.Messages;
 
-public class CorrespondentNameConverter : IValueConverter
+public class OtherCorrespondentNameConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         => value switch
