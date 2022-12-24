@@ -8,6 +8,7 @@
              x:Class="Vulcanova.Features.Messages.MessagesListItemView">
     <ContentView.Resources>
         <messages:CorrespondentToInitialsConverter x:Key="CorrespondentToInitialsConverter" />
+        <messages:CorrespondentNameConverter x:Key="CorrespondentNameConverter" />
     </ContentView.Resources>
     <ContentView.Content>
         <Grid Padding="16, 8" ColumnSpacing="8" BindingContext="{x:Reference View}">
@@ -20,7 +21,7 @@
                 Text="{Binding Message.Sender, Converter={StaticResource CorrespondentToInitialsConverter}}" />
             <StackLayout Grid.Column="1" Spacing="0">
                 <Label FontAttributes="Bold" MaxLines="1" LineBreakMode="TailTruncation"
-                       Text="{Binding Message.Sender.Name}" />
+                       Text="{Binding Message, Converter={StaticResource CorrespondentNameConverter}}" />
                 <Label FontSize="Small" MaxLines="1" LineBreakMode="TailTruncation" Text="{Binding Message.Subject}" />
             </StackLayout>
             <StackLayout Grid.Column="2" Spacing="0">
