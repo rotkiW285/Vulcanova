@@ -20,6 +20,7 @@ public static class Config
         container.RegisterForNavigation<AccountPickerView>();
 
         container.RegisterSingleton<AccountAwarePageTitleViewModel>();
+        container.RegisterScoped<IAccountSyncService, AccountSyncService>();
 
         container.RegisterScoped<IAuthenticationService, AuthenticationService>();
     }
