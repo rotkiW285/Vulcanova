@@ -11,7 +11,7 @@ namespace Vulcanova.Core.Layout;
 public class HomeTabbedPageViewModel : ViewModelBase
 {
     public ReactiveCommand<string, string> UpdateTitle { get; }
-    public ReactiveCommand<Unit, Unit> UpdateAccount { get; }
+    public ReactiveCommand<Unit, Unit> SyncAccounts { get; }
 
     [ObservableAsProperty]
     public string Title { get; }
@@ -22,13 +22,13 @@ public class HomeTabbedPageViewModel : ViewModelBase
 
         UpdateTitle.ToPropertyEx(this, vm => vm.Title);
 
-        UpdateAccount = ReactiveCommand.CreateFromTask<Unit, Unit>(async _ =>
+        SyncAccounts = ReactiveCommand.CreateFromTask<Unit, Unit>(async _ =>
         {
             await accountSyncService.SyncAccountsIfRequiredAsync();
 
             return default;
         });
 
-        UpdateAccount.Execute().Subscribe();
+        SyncAccounts.Execute().Subscribe();
     }
 }
