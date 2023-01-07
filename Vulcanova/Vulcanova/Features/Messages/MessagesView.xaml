@@ -2,12 +2,12 @@
 
 <rxui:ReactiveContentPage x:TypeArguments="messages:MessagesViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
                           xmlns:tabs="http://sharpnado.com"
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
                           xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-                          xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
                           ios:Page.UseSafeArea="True"
                           Title="{x:Static resx:Strings.MessagesTabTitle}"
                           IconImageSource="{OnPlatform iOS=mail-outline@3x.png, Android=ic_mail_outline}"
@@ -50,9 +50,9 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="messages:Message">
                             <StackLayout Padding="0, 1" Spacing="0"
-                                         xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
-                                         xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type messages:MessagesViewModel}}, Path=ShowMessage}"
-                                         xe:Commands.TapParameter="{Binding Id}">
+                                         xct:TouchEffect.PressedBackgroundColor="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
+                                         xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type messages:MessagesViewModel}}, Path=ShowMessage}"
+                                         xct:TouchEffect.CommandParameter="{Binding Id}">
                                 <messages:MessagesListItemView Message="{Binding .}" />
                                 <BoxView Style="{StaticResource SeparatorStyle}" />
                             </StackLayout>

@@ -19,12 +19,12 @@
             </Grid.ColumnDefinitions>
             <views:AvatarView
                 Text="{Binding Message, Converter={StaticResource OtherCorrespondentToInitialsConverter}}" />
-            <StackLayout Grid.Column="1" Spacing="0">
+            <StackLayout BackgroundColor="Transparent" Grid.Column="1" Spacing="0">
                 <Label FontAttributes="Bold" MaxLines="1" LineBreakMode="TailTruncation"
                        Text="{Binding Message, Converter={StaticResource CorrespondentNameConverter}}" />
                 <Label FontSize="Small" MaxLines="1" LineBreakMode="TailTruncation" Text="{Binding Message.Subject}" />
             </StackLayout>
-            <StackLayout Grid.Column="2" Spacing="0">
+            <StackLayout BackgroundColor="Transparent" Grid.Column="2" Spacing="0">
                 <Label FontSize="Small" Text="{Binding Message.DateSent, StringFormat='{0:d}'}" />
                 <Label FontSize="Small" HorizontalTextAlignment="End"
                        Text="{Binding Message.DateSent, StringFormat='{0:HH:mm}'}" />
