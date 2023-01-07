@@ -246,6 +246,9 @@
     <data name="MessagesTabTitle" xml:space="preserve">
         <value>Wiadomości</value>
     </data>
+    <data name="MessageReadByLabel" xml:space="preserve">
+        <value>Wyświetlono: {0}/{1}</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Osiągnięcia i uwagi</value>
     </data>

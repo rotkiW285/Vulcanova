@@ -246,6 +246,9 @@
     <data name="MessagesTabTitle" xml:space="preserve">
         <value>Messages</value>
     </data>
+    <data name="MessageReadByLabel" xml:space="preserve">
+        <value>Seen by {0}/{1}</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Notes</value>
     </data>

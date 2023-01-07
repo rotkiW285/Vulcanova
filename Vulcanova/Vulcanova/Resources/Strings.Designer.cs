@@ -513,6 +513,12 @@ namespace Vulcanova.Resources {
             }
         }
         
+        internal static string MessageReadByLabel {
+            get {
+                return ResourceManager.GetString("MessageReadByLabel", resourceCulture);
+            }
+        }
+        
         internal static string NotesTabTitle {
             get {
                 return ResourceManager.GetString("NotesTabTitle", resourceCulture);
