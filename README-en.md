@@ -24,3 +24,4 @@ An unofficial Vulcan UONET+ mobile cross-platform register client made in Xamari
 * [kapi2289/vulcan-api](https://github.com/kapi2289/vulcan-api/)
 * [wulkanowy/qr](https://github.com/wulkanowy/qr)
 * [wulkanowy/uonet-request-signer](https://github.com/wulkanowy/uonet-request-signer)
+* [Ionicons](https://ionic.io/ionicons)
