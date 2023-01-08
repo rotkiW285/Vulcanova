@@ -71,7 +71,7 @@ public partial class MessageView : IInitialize
     private async void AttachmentLinkTapped(object sender, EventArgs e)
     {
         // god forgive me
-        var gestureRecognizer = (TapGestureRecognizer) ((Label) sender).GestureRecognizers.First();
+        var gestureRecognizer = (TapGestureRecognizer) ((StackLayout) sender).GestureRecognizers.First();
         var link = (string) gestureRecognizer.CommandParameter;
 
         await Browser.OpenAsync(link);

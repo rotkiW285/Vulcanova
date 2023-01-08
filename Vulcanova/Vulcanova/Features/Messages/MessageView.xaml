@@ -75,13 +75,19 @@
                              BindableLayout.ItemsSource="{Binding Message.Attachments}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="messageBox:Attachment">
-                            <Label Text="{Binding Name}"
-                                   Style="{StaticResource LinkLabelStyle}">
-                                <Label.GestureRecognizers>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer CommandParameter="{Binding Link}"
-                                                          Tapped="AttachmentLinkTapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                                                          Tapped="AttachmentLinkTapped" />
+                                </StackLayout.GestureRecognizers>
+                                <layout:TintedCachedImage
+                                    WidthRequest="24"
+                                    Source="resource://Vulcanova.Resources.Icons.attach-outline.svg"
+                                    TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
+                                <Label Text="{Binding Name}"
+                                       Style="{StaticResource PrimaryColorLabelStyle}">
+                                </Label>
+                            </StackLayout>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>
