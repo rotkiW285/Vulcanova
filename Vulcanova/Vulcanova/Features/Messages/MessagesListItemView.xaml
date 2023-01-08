@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
              xmlns:views="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
              x:Name="View"
              x:Class="Vulcanova.Features.Messages.MessagesListItemView">
     <ContentView.Resources>
@@ -16,6 +17,7 @@
                 <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <views:AvatarView
                 Text="{Binding Message, Converter={StaticResource OtherCorrespondentToInitialsConverter}}" />
@@ -24,7 +26,14 @@
                        Text="{Binding Message, Converter={StaticResource CorrespondentNameConverter}}" />
                 <Label FontSize="Small" MaxLines="1" LineBreakMode="TailTruncation" Text="{Binding Message.Subject}" />
             </StackLayout>
-            <StackLayout BackgroundColor="Transparent" Grid.Column="2" Spacing="0">
+            <layout:TintedCachedImage
+                x:Name="ClippyBoi"
+                Grid.Column="2"
+                HeightRequest="24"
+                WidthRequest="24"
+                Source="resource://Vulcanova.Resources.Icons.attach-outline.svg"
+                TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
+            <StackLayout BackgroundColor="Transparent" Grid.Column="3" Spacing="0">
                 <Label FontSize="Small" Text="{Binding Message.DateSent, StringFormat='{0:d}'}" />
                 <Label FontSize="Small" HorizontalTextAlignment="End"
                        Text="{Binding Message.DateSent, StringFormat='{0:HH:mm}'}" />
