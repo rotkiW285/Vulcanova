@@ -519,6 +519,18 @@ namespace Vulcanova.Resources {
             }
         }
         
+        internal static string WhoSeenMessageDialogTitle {
+            get {
+                return ResourceManager.GetString("WhoSeenMessageDialogTitle", resourceCulture);
+            }
+        }
+        
+        internal static string WhoSeenMessageDialogNobodyContent {
+            get {
+                return ResourceManager.GetString("WhoSeenMessageDialogNobodyContent", resourceCulture);
+            }
+        }
+        
         internal static string NotesTabTitle {
             get {
                 return ResourceManager.GetString("NotesTabTitle", resourceCulture);

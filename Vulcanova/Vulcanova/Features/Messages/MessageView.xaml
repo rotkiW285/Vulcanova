@@ -5,6 +5,7 @@
              xmlns:views="http://xamarin.com/schemas/2020/toolkit"
              xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
              xmlns:abstractions="clr-namespace:LabelHtml.Forms.Plugin.Abstractions;assembly=HtmlLabel.Forms.Plugin"
+             xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
              x:Class="Vulcanova.Features.Messages.MessageView"
              Title="{Binding Message.Subject, Source={x:Reference View}}"
              x:Name="View">
@@ -49,10 +50,22 @@
                            FontSize="Small"
                            HorizontalTextAlignment="End"
                            Text="{Binding Message.DateSent, StringFormat='{0:HH:mm}'}" />
-                    <Label Grid.Row="2"
-                           Grid.Column="1"
-                           FontSize="Small"
-                           x:Name="ReadByLabel" />
+                    <StackLayout Grid.Row="2"
+                                 Grid.Column="1"
+                                 Orientation="Horizontal"
+                                 x:Name="ReadByControls">
+                        <Label
+                            FontSize="Small"
+                            x:Name="ReadByLabel" />
+                        <layout:TintedCachedImage
+                            WidthRequest="18"
+                            Source="resource://Vulcanova.Resources.Icons.help-circle-outline.svg"
+                            TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                            <layout:TintedCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ReadCountQuestionMarkTapped" />
+                            </layout:TintedCachedImage.GestureRecognizers>
+                        </layout:TintedCachedImage>
+                    </StackLayout>
                 </Grid>
                 <Label Grid.Row="1" FontSize="Large" FontAttributes="Bold" Text="{Binding Message.Subject}" />
                 <abstractions:HtmlLabel Grid.Row="2" Text="{Binding Message.Content}" Margin="-4.5, 0" />

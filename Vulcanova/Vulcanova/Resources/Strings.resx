@@ -249,6 +249,12 @@
     <data name="MessageReadByLabel" xml:space="preserve">
         <value>Seen by {0}/{1}</value>
     </data>
+    <data name="WhoSeenMessageDialogTitle" xml:space="preserve">
+        <value>Seen by</value>
+    </data>
+    <data name="WhoSeenMessageDialogNobodyContent" xml:space="preserve">
+        <value>No recipient has seen the message</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Notes</value>
     </data>

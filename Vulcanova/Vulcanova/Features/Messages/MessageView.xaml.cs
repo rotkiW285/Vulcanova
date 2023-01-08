@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Prism.Navigation;
 using Vulcanova.Resources;
@@ -34,9 +35,11 @@ public partial class MessageView : IInitialize
 
         if (message.Folder == MessageBoxFolder.Received)
         {
-            view.ReadByLabel.Text = string.Empty;
+            view.ReadByControls.IsVisible = false;
             return;
         }
+
+        view.ReadByControls.IsVisible = true;
 
         view.ReadByLabel.Text = string.Format(Strings.MessageReadByLabel,
             message.Receiver.Count(x => x.HasRead == 1),
@@ -47,5 +50,20 @@ public partial class MessageView : IInitialize
     public void Initialize(INavigationParameters parameters)
     {
         Message = (Message) parameters[nameof(Message)];
+    }
+
+    private async void ReadCountQuestionMarkTapped(object sender, EventArgs e)
+    {
+        var seenByOrderedAlphabetically = Message.Receiver
+            .Where(x => x.HasRead == 1)
+            .OrderBy(x => x.Name)
+            .Select(x => x.Name)
+            .ToArray();
+
+        var message = seenByOrderedAlphabetically.Length == 0
+            ? Strings.WhoSeenMessageDialogNobodyContent
+            : string.Join(Environment.NewLine, seenByOrderedAlphabetically);
+
+        await DisplayAlert(Strings.WhoSeenMessageDialogTitle, message, "OK");
     }
 }
