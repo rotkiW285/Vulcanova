@@ -28,3 +28,4 @@ Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzon
 * [kapi2289/vulcan-api](https://github.com/kapi2289/vulcan-api/)
 * [wulkanowy/qr](https://github.com/wulkanowy/qr)
 * [wulkanowy/uonet-request-signer](https://github.com/wulkanowy/uonet-request-signer)
+* [Ionicons](https://ionic.io/ionicons)
