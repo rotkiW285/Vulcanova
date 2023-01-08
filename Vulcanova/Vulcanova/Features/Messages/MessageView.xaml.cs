@@ -3,6 +3,7 @@ using System.Linq;
 using Prism.Navigation;
 using Vulcanova.Resources;
 using Vulcanova.Uonet.Api.MessageBox;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -65,5 +66,14 @@ public partial class MessageView : IInitialize
             : string.Join(Environment.NewLine, seenByOrderedAlphabetically);
 
         await DisplayAlert(Strings.WhoSeenMessageDialogTitle, message, "OK");
+    }
+
+    private async void AttachmentLinkTapped(object sender, EventArgs e)
+    {
+        // god forgive me
+        var gestureRecognizer = (TapGestureRecognizer) ((Label) sender).GestureRecognizers.First();
+        var link = (string) gestureRecognizer.CommandParameter;
+
+        await Browser.OpenAsync(link);
     }
 }

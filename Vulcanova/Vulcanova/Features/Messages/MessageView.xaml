@@ -6,6 +6,7 @@
              xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
              xmlns:abstractions="clr-namespace:LabelHtml.Forms.Plugin.Abstractions;assembly=HtmlLabel.Forms.Plugin"
              xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+             xmlns:messageBox="clr-namespace:Vulcanova.Uonet.Api.MessageBox;assembly=Vulcanova.Uonet"
              x:Class="Vulcanova.Features.Messages.MessageView"
              Title="{Binding Message.Subject, Source={x:Reference View}}"
              x:Name="View">
@@ -16,6 +17,7 @@
         <ScrollView>
             <Grid BindingContext="{x:Reference View}" Padding="16, 8" RowSpacing="16">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -69,6 +71,20 @@
                 </Grid>
                 <Label Grid.Row="1" FontSize="Large" FontAttributes="Bold" Text="{Binding Message.Subject}" />
                 <abstractions:HtmlLabel Grid.Row="2" Text="{Binding Message.Content}" Margin="-4.5, 0" />
+                <StackLayout Grid.Row="3"
+                             BindableLayout.ItemsSource="{Binding Message.Attachments}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="messageBox:Attachment">
+                            <Label Text="{Binding Name}"
+                                   Style="{StaticResource LinkLabelStyle}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding Link}"
+                                                          Tapped="AttachmentLinkTapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
             </Grid>
         </ScrollView>
     </ContentPage.Content>
