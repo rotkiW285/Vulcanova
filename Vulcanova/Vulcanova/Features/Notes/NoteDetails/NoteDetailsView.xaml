@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<layout:SheetPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+                  xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+                  xmlns:converters="clr-namespace:Vulcanova.Core.Layout.Converters;assembly=Vulcanova"
+                  xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                  xmlns:noteConverters="clr-namespace:Vulcanova.Features.Notes.Converters;assembly=Vulcanova"
+                  x:Class="Vulcanova.Features.Notes.NoteDetails.NoteDetailsView"
+                  x:Name="View"
+                  BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
+    <layout:SheetPage.Resources>
+        <noteConverters:BooleanToPositiveNegativeConverter x:Key="BooleanToPositiveNegativeConverter" />
+        <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+        <noteConverters:PositiveColorConverter x:Key="PositiveColorConverter" />
+        <ResourceDictionary>
+            <Style ApplyToDerivedTypes="true" TargetType="StackLayout">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
+            </Style>
+        </ResourceDictionary>
+    </layout:SheetPage.Resources>
+    <layout:SheetPage.Content>
+        <StackLayout BindingContext="{x:Reference View}" Padding="0, 16">
+            <StackLayout Padding="16, 0">
+                <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
+                       Text="{Binding Note.CategoryName}" />
+                <Label
+                    FontSize="Small"
+                    Text="{Binding Note.Positive, Converter={StaticResource BooleanToPositiveNegativeConverter}}">
+                    <Label.TextColor>
+                        <MultiBinding Converter="{StaticResource PositiveColorConverter}">
+                            <Binding Path="Note.Positive" />
+                            <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                        </MultiBinding>
+                    </Label.TextColor>
+                </Label>
+            </StackLayout>
+            <StackLayout Padding="16, 8" Spacing="16">
+                <controls:FieldView Name="{x:Static resx:Strings.NoteCreatorLabel}"
+                                    Value="{Binding Note.CreatorName}" />
+                <controls:FieldView Name="{x:Static resx:Strings.NotePointsLabel}"
+                                    IsVisible="{Binding Note.Points, Converter={StaticResource NullToBooleanConverter}}"
+                                    Value="{Binding Note.Points}" />
+                <controls:FieldView Name="{x:Static resx:Strings.NoteCreatedOnLabel}"
+                                    Value="{Binding  Note.DateModified, StringFormat='{0:d}'}" />
+                <controls:FieldView Name="{x:Static resx:Strings.NoteCommentLabel}"
+                                    Value="{Binding Note.Content}" />
+            </StackLayout>
+        </StackLayout>
+    </layout:SheetPage.Content>
+</layout:SheetPage>

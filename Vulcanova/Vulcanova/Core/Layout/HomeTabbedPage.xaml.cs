@@ -1,5 +1,6 @@
 using Vulcanova.Features.Homework;
 using Vulcanova.Features.LuckyNumber;
+using Vulcanova.Features.Notes;
 using Vulcanova.Features.Settings;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,7 +16,7 @@ public partial class HomeTabbedPage
 
         // These pages are expected to be placed in "More" tab.
         // On iOS this breaks Prism's NavigationService if a page is wrapped in a NavigationPage
-        Page[] pages = {new HomeworkView(), new LuckyNumberView(), new SettingsView()};
+        Page[] pages = {new HomeworkView(), new LuckyNumberView(), new NotesView(), new SettingsView()};
 
         foreach (var page in pages)
         {

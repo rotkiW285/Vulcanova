@@ -74,6 +74,7 @@
         <AndroidResource Include="Resources\drawable\ic_settings_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_star_outline.xml" />
         <AndroidResource Include="Resources\drawable\ic_reader_outline.xml" />
+        <AndroidResource Include="Resources\drawable\ic_trophy_outline.xml" />
         <AndroidResource Include="Resources\layout\Tabbar.axml" />
         <AndroidResource Include="Resources\layout\Toolbar.axml" />
         <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />

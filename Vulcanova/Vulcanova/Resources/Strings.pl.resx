@@ -234,4 +234,28 @@
     <data name="CommonCancel" xml:space="preserve">
         <value>Anuluj</value>
     </data>
+    <data name="NotesTabTitle" xml:space="preserve">
+        <value>Osiągnięcia i uwagi</value>
+    </data>
+    <data name="NoNotesLabel" xml:space="preserve">
+        <value>Brak uwag</value>
+    </data>
+    <data name="NotePositiveLabel" xml:space="preserve">
+        <value>Pozytywna</value>
+    </data>
+    <data name="NotePointsLabel" xml:space="preserve">
+        <value>Punkty</value>
+    </data>
+    <data name="NoteCreatorLabel" xml:space="preserve">
+        <value>Dodano przez</value>
+    </data>
+    <data name="NoteCreatedOnLabel" xml:space="preserve">
+        <value>Dodano</value>
+    </data>
+    <data name="NoteCommentLabel" xml:space="preserve">
+        <value>Opis</value>
+    </data>
+    <data name="NoteNegativeLabel" xml:space="preserve">
+        <value>Negatywna</value>
+    </data>
 </root>
