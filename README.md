@@ -17,11 +17,11 @@ Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzon
 - sprawdziany
 - zadania domowe
 - usprawiedliwianie nieobecności
+- uwagi
 
 ## Co jest planowane?
 - wiadomości
 - dashboard
-- uwagi
 - …i wiele więcej :)
 
 ## Wykorzystane projekty

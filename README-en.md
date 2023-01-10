@@ -13,11 +13,11 @@ An unofficial Vulcan UONET+ mobile cross-platform register client made in Xamari
 - exams
 - homework
 - absence justification
+- notes (points)
 
 ## What's planned:
 - messages 
 - dashboard
-- notes (points)
 - …and more :)
 
 ## Credits
