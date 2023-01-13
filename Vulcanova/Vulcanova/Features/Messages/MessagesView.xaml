@@ -50,6 +50,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="messages:Message">
                             <StackLayout Padding="0, 1" Spacing="0"
+                                         xct:TouchEffect.NormalBackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}"
                                          xct:TouchEffect.PressedBackgroundColor="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
                                          xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type messages:MessagesViewModel}}, Path=ShowMessage}"
                                          xct:TouchEffect.CommandParameter="{Binding Id}">
