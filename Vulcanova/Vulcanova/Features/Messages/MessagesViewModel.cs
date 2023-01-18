@@ -7,6 +7,7 @@ using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
+using Vulcanova.Features.Settings;
 using Vulcanova.Features.Shared;
 using Vulcanova.Uonet.Api.MessageBox;
 
@@ -36,7 +37,8 @@ public class MessagesViewModel : ViewModelBase
         INavigationService navigationService,
         IMessageBoxesService messageBoxesService,
         IMessagesService messagesService,
-        AccountContext accountContext) : base(navigationService)
+        AccountContext accountContext,
+        AppSettings appSettings) : base(navigationService)
     {
         LoadBoxes = ReactiveCommand.CreateFromObservable((bool forceSync) => 
             messageBoxesService.GetMessageBoxesByAccountId(accountContext.Account.Id, forceSync));
@@ -54,6 +56,12 @@ public class MessagesViewModel : ViewModelBase
             var message = Messages.Single(x => x.Id == messageId);
 
             await navigationService.NavigateAsync(nameof(MessageView), (nameof(MessageView.Message), message));
+
+            if (!appSettings.DisableReadReceipts)
+            {
+                await messagesService.MarkMessageAsReadAsync(accountContext.Account.Id, message.MessageBoxId,
+                    messageId);
+            }
         });
 
         this.WhenAnyValue(vm => vm.MessageBoxes)

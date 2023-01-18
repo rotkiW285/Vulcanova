@@ -16,6 +16,12 @@ public class SettingsViewModel : ViewModelBase
     public ReactiveCommand<Unit, INavigationResult> OpenValueOfPlusPicker { get; }
     public ReactiveCommand<Unit, INavigationResult> OpenValueOfMinusPicker { get; }
 
+    public bool DisableReadReceipts
+    {
+        get => _appSettings.DisableReadReceipts;
+        set => _appSettings.DisableReadReceipts = value;
+    }
+
     public SettingsViewModel(INavigationService navigationService, AppSettings appSettings) : base(navigationService)
     {
         _appSettings = appSettings;

@@ -60,6 +60,16 @@ public class MessagesService : UonetResourceProvider, IMessagesService
         });
     }
 
+    public async Task MarkMessageAsReadAsync(int accountId, Guid messageBoxId, Guid messageId)
+    {
+        var account = await _accountRepository.GetByIdAsync(accountId);
+
+        var apiClient = await _apiClientFactory.GetAuthenticatedAsync(account);
+
+        await apiClient.PostAsync(ChangeMessageStatusRequest.ApiEndpoint,
+            new ChangeMessageStatusRequest(messageBoxId, messageId, ChangeMessageStatusRequest.SetMessageStatus.Read));
+    }
+
     private async Task<Message[]> FetchMessagesByBoxAsync(Account account, Guid messageBoxId, MessageBoxFolder folder)
     {
         var lastSync = GetLastSync(GetResourceKey(messageBoxId, folder));

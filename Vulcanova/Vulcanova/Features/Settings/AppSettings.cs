@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Reactive.Linq;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Xamarin.Essentials;
@@ -8,7 +9,18 @@ namespace Vulcanova.Features.Settings;
 
 public class AppSettings : ReactiveObject
 {
+    private const string DisableReadReceiptsKey = "Options_DisableReadReceipts";
+    [Reactive] public bool DisableReadReceipts { get; set; } = Preferences.Get(DisableReadReceiptsKey, false);
+
     public ModifiersSettings Modifiers { get; } = new();
+
+    public AppSettings()
+    {
+        this.WhenAnyValue(v => v.DisableReadReceipts)
+            .Skip(1)
+            .Subscribe(v =>
+                Preferences.Set(DisableReadReceiptsKey, v));
+    }
 }
 
 public class ModifiersSettings : ReactiveObject

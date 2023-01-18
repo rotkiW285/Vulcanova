@@ -255,6 +255,12 @@
     <data name="WhoSeenMessageDialogNobodyContent" xml:space="preserve">
         <value>No recipient has seen the message</value>
     </data>
+    <data name="SettingsMessagesSection" xml:space="preserve">
+        <value>Messages</value>
+    </data>
+    <data name="SettingsDisableReadReceipts" xml:space="preserve">
+        <value>Disable read receipts</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Notes</value>
     </data>

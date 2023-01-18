@@ -255,6 +255,12 @@
     <data name="WhoSeenMessageDialogNobodyContent" xml:space="preserve">
         <value>Żaden z adresatów nie wyświetlił wiadomości</value>
     </data>
+    <data name="SettingsMessagesSection" xml:space="preserve">
+        <value>Wiadomości</value>
+    </data>
+    <data name="SettingsDisableReadReceipts" xml:space="preserve">
+        <value>Nie informuj o odczytaniu wiadomości</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Osiągnięcia i uwagi</value>
     </data>

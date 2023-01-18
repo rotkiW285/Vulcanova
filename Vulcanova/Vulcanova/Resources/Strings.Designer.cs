@@ -531,6 +531,18 @@ namespace Vulcanova.Resources {
             }
         }
         
+        internal static string SettingsMessagesSection {
+            get {
+                return ResourceManager.GetString("SettingsMessagesSection", resourceCulture);
+            }
+        }
+        
+        internal static string SettingsDisableReadReceipts {
+            get {
+                return ResourceManager.GetString("SettingsDisableReadReceipts", resourceCulture);
+            }
+        }
+        
         internal static string NotesTabTitle {
             get {
                 return ResourceManager.GetString("NotesTabTitle", resourceCulture);
