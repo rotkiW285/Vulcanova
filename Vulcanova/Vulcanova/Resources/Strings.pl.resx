@@ -261,6 +261,15 @@
     <data name="SettingsDisableReadReceipts" xml:space="preserve">
         <value>Nie informuj o odczytaniu wiadomości</value>
     </data>
+    <data name="ComposeMessageToLabel" xml:space="preserve">
+        <value>Adresat:</value>
+    </data>
+    <data name="ComposeMessageSubjectLabel" xml:space="preserve">
+        <value>Temat:</value>
+    </data>
+    <data name="ComposeMessageTitle" xml:space="preserve">
+        <value>Nowa wiadomość</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Osiągnięcia i uwagi</value>
     </data>

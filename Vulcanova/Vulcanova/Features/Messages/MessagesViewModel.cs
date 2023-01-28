@@ -7,6 +7,7 @@ using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
+using Vulcanova.Features.Messages.Compose;
 using Vulcanova.Features.Settings;
 using Vulcanova.Features.Shared;
 using Vulcanova.Uonet.Api.MessageBox;
@@ -19,6 +20,8 @@ public class MessagesViewModel : ViewModelBase
     
     public ReactiveCommand<bool, IEnumerable<Message>> LoadMessages { get; }
     
+    public ReactiveCommand<Unit, INavigationResult> ShowMessageComposer { get; }
+
     public ReactiveCommand<Guid, Unit> ShowMessage { get; }
 
     [ObservableAsProperty]
@@ -63,6 +66,9 @@ public class MessagesViewModel : ViewModelBase
                     messageId);
             }
         });
+
+        ShowMessageComposer = ReactiveCommand.CreateFromTask(async _ =>
+            await navigationService.NavigateAsync(nameof(ComposeMessageView), useModalNavigation: true));
 
         this.WhenAnyValue(vm => vm.MessageBoxes)
             .WhereNotNull()

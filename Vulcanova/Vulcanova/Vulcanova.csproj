@@ -74,6 +74,8 @@
       <EmbeddedResource Include="Resources\Icons\chevron-down.svg" />
       <EmbeddedResource Include="Resources\Icons\help-circle-outline.svg" />
       <EmbeddedResource Include="Resources\Icons\attach-outline.svg" />
+      <EmbeddedResource Include="Resources\Icons\pencil-outline.svg" />
+      <EmbeddedResource Include="Resources\Icons\arrow-up-circle.svg" />
     </ItemGroup>
 
     <ItemGroup>

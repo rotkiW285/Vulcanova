@@ -8,6 +8,7 @@
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
                           xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                          xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                           ios:Page.UseSafeArea="True"
                           Title="{x:Static resx:Strings.MessagesTabTitle}"
                           IconImageSource="{OnPlatform iOS=mail-outline@3x.png, Android=ic_mail_outline}"
@@ -26,41 +27,49 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid RowSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <RelativeLayout>
+            <Grid RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <tabs:TabHostView
-                x:Name="TabHost"
-                TabType="Fixed">
-                <tabs:TabHostView.Tabs>
-                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
-                                            Label="{x:Static resx:Strings.MessagesInboxFolder}" />
-                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
-                                            Label="{x:Static resx:Strings.MessagesSentFolder}" />
-                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
-                                            Label="{x:Static resx:Strings.MessagesDeletedFolder}" />
-                </tabs:TabHostView.Tabs>
-            </tabs:TabHostView>
+                <tabs:TabHostView
+                    x:Name="TabHost"
+                    TabType="Fixed">
+                    <tabs:TabHostView.Tabs>
+                        <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                                Label="{x:Static resx:Strings.MessagesInboxFolder}" />
+                        <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                                Label="{x:Static resx:Strings.MessagesSentFolder}" />
+                        <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                                Label="{x:Static resx:Strings.MessagesDeletedFolder}" />
+                    </tabs:TabHostView.Tabs>
+                </tabs:TabHostView>
 
-            <RefreshView Grid.Row="1" x:Name="RefreshView">
-                <CollectionView x:Name="MessagesList">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="messages:Message">
-                            <StackLayout Padding="0, 1" Spacing="0"
-                                         xct:TouchEffect.NormalBackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}"
-                                         xct:TouchEffect.PressedBackgroundColor="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
-                                         xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type messages:MessagesViewModel}}, Path=ShowMessage}"
-                                         xct:TouchEffect.CommandParameter="{Binding Id}">
-                                <messages:MessagesListItemView Message="{Binding .}" />
-                                <BoxView Style="{StaticResource SeparatorStyle}" />
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </RefreshView>
-        </Grid>
+                <RefreshView Grid.Row="1" x:Name="RefreshView">
+                    <CollectionView x:Name="MessagesList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="messages:Message">
+                                <StackLayout Padding="0, 1" Spacing="0"
+                                             xct:TouchEffect.NormalBackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}"
+                                             xct:TouchEffect.PressedBackgroundColor="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
+                                             xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type messages:MessagesViewModel}}, Path=ShowMessage}"
+                                             xct:TouchEffect.CommandParameter="{Binding Id}">
+                                    <messages:MessagesListItemView Message="{Binding .}" />
+                                    <BoxView Style="{StaticResource SeparatorStyle}" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </RefreshView>
+            </Grid>
+            <controls:FloatingButton
+                IsVisible="True"
+                x:Name="NewMessageButton"
+                Source="resource://Vulcanova.Resources.Icons.pencil-outline.svg"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-72}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-72}" />
+        </RelativeLayout>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>

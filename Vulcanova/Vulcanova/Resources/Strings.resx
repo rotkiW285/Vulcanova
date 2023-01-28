@@ -261,6 +261,15 @@
     <data name="SettingsDisableReadReceipts" xml:space="preserve">
         <value>Disable read receipts</value>
     </data>
+    <data name="ComposeMessageToLabel" xml:space="preserve">
+        <value>To:</value>
+    </data>
+    <data name="ComposeMessageSubjectLabel" xml:space="preserve">
+        <value>Subject:</value>
+    </data>
+    <data name="ComposeMessageTitle" xml:space="preserve">
+        <value>New Message</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Notes</value>
     </data>

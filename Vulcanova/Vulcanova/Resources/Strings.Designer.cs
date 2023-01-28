@@ -543,6 +543,24 @@ namespace Vulcanova.Resources {
             }
         }
         
+        internal static string ComposeMessageToLabel {
+            get {
+                return ResourceManager.GetString("ComposeMessageToLabel", resourceCulture);
+            }
+        }
+        
+        internal static string ComposeMessageSubjectLabel {
+            get {
+                return ResourceManager.GetString("ComposeMessageSubjectLabel", resourceCulture);
+            }
+        }
+        
+        internal static string ComposeMessageTitle {
+            get {
+                return ResourceManager.GetString("ComposeMessageTitle", resourceCulture);
+            }
+        }
+        
         internal static string NotesTabTitle {
             get {
                 return ResourceManager.GetString("NotesTabTitle", resourceCulture);
