@@ -17,5 +17,10 @@ public static class Config
         
         container.RegisterScoped<IMessageBoxesService, MessageBoxesService>();
         container.RegisterScoped<IMessageBoxesRepository, MessageBoxesRepository>();
+
+        container.RegisterScoped<IAddressBookEntryRepository, AddressBookEntryRepository>();
+        container.RegisterScoped<IAddressBookProvider, AddressBookProvider>();
+
+        container.RegisterScoped<IMessageSender, MessageSender>();
     }
 }

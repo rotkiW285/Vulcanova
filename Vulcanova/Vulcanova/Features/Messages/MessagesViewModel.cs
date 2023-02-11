@@ -68,7 +68,10 @@ public class MessagesViewModel : ViewModelBase
         });
 
         ShowMessageComposer = ReactiveCommand.CreateFromTask(async _ =>
-            await navigationService.NavigateAsync(nameof(ComposeMessageView), useModalNavigation: true));
+            await navigationService.NavigateAsync(nameof(ComposeMessageView), useModalNavigation: true, parameters: new NavigationParameters
+            {
+                {nameof(ComposeMessageViewModel.MessageBoxId), CurrentBox.GlobalKey}
+            }));
 
         this.WhenAnyValue(vm => vm.MessageBoxes)
             .WhereNotNull()

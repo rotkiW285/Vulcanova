@@ -17,4 +17,5 @@ public class Account
     public string[] Capabilities { get; set; }
     public SenderEntry SenderEntry { get; set; }
     public string ClassDisplay { get; set; }
+    public string Partition { get; set; }
 }

@@ -9,21 +9,24 @@
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                          xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+                          xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
                           ios:Page.ModalPresentationStyle="PageSheet">
     <ContentPage.Resources>
         <ColumnDefinitionCollection x:Key="FieldColumns">
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </ColumnDefinitionCollection>
+        <messages:CorrespondentToInitialsConverter x:Key="CorrespondentToInitialsConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid Padding="16, 8" BackgroundColor="Transparent">
+        <Grid Padding="0, 8" BackgroundColor="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" Padding="16, 0">
                 <Label Style="{StaticResource TitleLabelStyle}"
                        Margin="0, 16"
                        Text="{x:Static resx:Strings.ComposeMessageTitle}" />
@@ -33,25 +36,51 @@
                     WidthRequest="36"
                     Source="resource://Vulcanova.Resources.Icons.arrow-up-circle.svg"
                     TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}">
+                    <layout:TintedCachedImage.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="SendTapGestureRecognizer" />
+                    </layout:TintedCachedImage.GestureRecognizers>
                 </layout:TintedCachedImage>
             </StackLayout>
             <StackLayout Grid.Row="1" Spacing="16">
-                <Grid ColumnDefinitions="{StaticResource FieldColumns}">
+                <Grid ColumnDefinitions="{StaticResource FieldColumns}" Margin="16, 0">
                     <Label
                         TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}"
                         Text="{x:Static resx:Strings.ComposeMessageToLabel}" />
-                    <Entry Grid.Column="1">
+                    <Entry Grid.Column="1" x:Name="ToEntry" IsTextPredictionEnabled="False">
                         <Entry.Effects>
                             <layout:BorderlessEntryEffect />
                         </Entry.Effects>
                     </Entry>
                 </Grid>
+                <ListView x:Name="AddressBookSuggestions"
+                          HasUnevenRows="True"
+                          BackgroundColor="Transparent"
+                          IsVisible="False">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="compose:AddressBookEntry">
+                            <ViewCell>
+                                <Grid Padding="16, 8" ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <views:AvatarView
+                                        VerticalOptions="Center"
+                                        Text="{Binding Name, Converter={StaticResource CorrespondentToInitialsConverter}}" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Name}"
+                                           VerticalTextAlignment="Center" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <BoxView Style="{StaticResource SeparatorStyle}" />
-                <Grid ColumnDefinitions="{StaticResource FieldColumns}">
+                <Grid ColumnDefinitions="{StaticResource FieldColumns}" Margin="16, 0">
                     <Label
                         TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}"
                         Text="{x:Static resx:Strings.ComposeMessageSubjectLabel}" />
-                    <Entry Grid.Column="1">
+                    <Entry Grid.Column="1" x:Name="SubjectEntry">
                         <Entry.Effects>
                             <layout:BorderlessEntryEffect />
                         </Entry.Effects>
@@ -59,7 +88,7 @@
                 </Grid>
                 <BoxView Style="{StaticResource SeparatorStyle}" />
             </StackLayout>
-            <Editor Grid.Row="2" BackgroundColor="Transparent" />
+            <Editor Grid.Row="2" BackgroundColor="Transparent" Margin="16, 0" x:Name="ContentEdior" />
         </Grid>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>
