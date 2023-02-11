@@ -72,6 +72,10 @@
       <EmbeddedResource Include="Resources\Icons\checkmark-outline.svg" />
       <EmbeddedResource Include="Resources\Icons\chevron-up.svg" />
       <EmbeddedResource Include="Resources\Icons\chevron-down.svg" />
+      <EmbeddedResource Include="Resources\Icons\help-circle-outline.svg" />
+      <EmbeddedResource Include="Resources\Icons\attach-outline.svg" />
+      <EmbeddedResource Include="Resources\Icons\pencil-outline.svg" />
+      <EmbeddedResource Include="Resources\Icons\arrow-up-circle.svg" />
     </ItemGroup>
 
     <ItemGroup>
@@ -117,6 +121,14 @@
       </Compile>
       <Compile Update="Features\Auth\AccountPicker\AccountPickerView.xaml.cs">
         <DependentUpon>AccountPickerView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Messages\MessagesView.xaml.cs">
+        <DependentUpon>MessagesView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Messages\MessagesListItemView.xaml.cs">
+        <DependentUpon>MessagesListItemView.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

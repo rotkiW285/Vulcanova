@@ -234,6 +234,42 @@
     <data name="CommonCancel" xml:space="preserve">
         <value>Anuluj</value>
     </data>
+    <data name="MessagesInboxFolder" xml:space="preserve">
+        <value>Odebrane</value>
+    </data>
+    <data name="MessagesSentFolder" xml:space="preserve">
+        <value>Wysłane</value>
+    </data>
+    <data name="MessagesDeletedFolder" xml:space="preserve">
+        <value>Skasowane</value>
+    </data>
+    <data name="MessagesTabTitle" xml:space="preserve">
+        <value>Wiadomości</value>
+    </data>
+    <data name="MessageReadByLabel" xml:space="preserve">
+        <value>Wyświetlono: {0}/{1}</value>
+    </data>
+    <data name="WhoSeenMessageDialogTitle" xml:space="preserve">
+        <value>Wyświetlono przez</value>
+    </data>
+    <data name="WhoSeenMessageDialogNobodyContent" xml:space="preserve">
+        <value>Żaden z adresatów nie wyświetlił wiadomości</value>
+    </data>
+    <data name="SettingsMessagesSection" xml:space="preserve">
+        <value>Wiadomości</value>
+    </data>
+    <data name="SettingsDisableReadReceipts" xml:space="preserve">
+        <value>Nie informuj o odczytaniu wiadomości</value>
+    </data>
+    <data name="ComposeMessageToLabel" xml:space="preserve">
+        <value>Adresat:</value>
+    </data>
+    <data name="ComposeMessageSubjectLabel" xml:space="preserve">
+        <value>Temat:</value>
+    </data>
+    <data name="ComposeMessageTitle" xml:space="preserve">
+        <value>Nowa wiadomość</value>
+    </data>
     <data name="NotesTabTitle" xml:space="preserve">
         <value>Osiągnięcia i uwagi</value>
     </data>

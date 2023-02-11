@@ -43,6 +43,10 @@
                         </Grid>
                     </ViewCell>
                 </TableSection>
+                <TableSection Title="{x:Static resx:Strings.SettingsMessagesSection}">
+                    <SwitchCell Text="{x:Static resx:Strings.SettingsDisableReadReceipts}"
+                                On="{Binding DisableReadReceipts}" />
+                </TableSection>
             </TableRoot>
         </TableView>
     </ContentPage.Content>

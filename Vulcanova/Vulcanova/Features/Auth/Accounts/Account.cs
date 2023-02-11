@@ -18,4 +18,5 @@ public class Account
     public SenderEntry SenderEntry { get; set; }
     public string ClassDisplay { get; set; }
     public string Context { get; set; }
+    public string Partition { get; set; }
 }
