@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth;
@@ -34,7 +35,7 @@ public class MessageSender : IMessageSender
             Partition = account.Partition,
             ThreadKey = threadKey,
             Subject = subject,
-            Content = message,
+            Content = PrepareMessageForSending(message),
             Status = 1,
             Owner = recipient.MessageBoxId,
             DateSent = DateTimeInfo.FromDateTime(DateTime.Now),
@@ -63,4 +64,8 @@ public class MessageSender : IMessageSender
 
         await apiClient.PostAsync(SendMessageRequest.ApiEndpoint, request);
     }
+
+    private static string PrepareMessageForSending(string message) =>
+        string.Join(string.Empty, message.Split(Environment.NewLine)
+            .Select(line => line != string.Empty ? $"<p>{line}</p>" : "<br>"));
 }
