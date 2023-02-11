@@ -11,18 +11,19 @@ public class ApiClientFactory : IApiClientFactory
 {
     private readonly ConcurrentDictionary<string, IApiClient> _reusableClients = new();
 
-    private static string GetCacheKey(string thumbprint, string instanceUrl) =>
-        $"{thumbprint}+{instanceUrl}";
+    private static string GetCacheKey(string thumbprint, string instanceUrl, string accountContext) =>
+        $"{thumbprint}+{instanceUrl}+{accountContext}";
 
-    public IApiClient GetAuthenticated(ClientIdentity identity, string apiInstanceUrl) =>
-        _reusableClients.GetOrAdd(
-            GetCacheKey(identity.Certificate.Thumbprint, apiInstanceUrl),
-            static (_, values) => CreateApiClient(values.identity, values.apiInstanceUrl),
-            (identity, apiInstanceUrl));
+    public IApiClient GetAuthenticated(ClientIdentity identity, string apiInstanceUrl, string accountContext = null)
+        => _reusableClients.GetOrAdd(
+            GetCacheKey(identity.Certificate.Thumbprint, apiInstanceUrl, accountContext),
+            static (_, values) => CreateApiClient(values.identity, values.apiInstanceUrl, values.accountContext),
+            (identity, apiInstanceUrl, accountContext));
 
-    public async Task<IApiClient> GetAuthenticatedAsync(string identityThumbprint, string apiInstanceUrl)
+    public async Task<IApiClient> GetAuthenticatedAsync(string identityThumbprint, string apiInstanceUrl,
+        string accountContext = null)
     {
-        var cacheKey = GetCacheKey(identityThumbprint, apiInstanceUrl);
+        var cacheKey = GetCacheKey(identityThumbprint, apiInstanceUrl, accountContext);
 
         if (_reusableClients.TryGetValue(cacheKey, out var value))
         {
@@ -31,18 +32,21 @@ public class ApiClientFactory : IApiClientFactory
 
         var identity = await ClientIdentityStore.GetIdentityAsync(identityThumbprint);
 
-        var apiClient = CreateApiClient(identity, apiInstanceUrl);
+        var apiClient = CreateApiClient(identity, apiInstanceUrl, accountContext);
 
         _reusableClients.TryAdd(cacheKey, apiClient);
 
         return apiClient;
     }
 
-    private static IApiClient CreateApiClient(ClientIdentity identity, string apiInstanceUrl)
+    private static IApiClient CreateApiClient(ClientIdentity identity, string apiInstanceUrl, string accountContext)
     {
         var (cert, privateKey, firebaseToken) = identity;
 
-        var signer = new RequestSigner(cert.Thumbprint, privateKey, firebaseToken);
+        var signer =
+            accountContext is not null
+                ? new ContextualRequestSigner(cert.Thumbprint, privateKey, firebaseToken, accountContext)
+                : new RequestSigner(cert.Thumbprint, privateKey, firebaseToken);
 
         return new ApiClient(signer, apiInstanceUrl);
     }
@@ -52,6 +56,6 @@ public static class ApiClientFactoryExtensions
 {
     public static async Task<IApiClient> GetAuthenticatedAsync(this IApiClientFactory factory, Account account)
     {
-        return await factory.GetAuthenticatedAsync(account.IdentityThumbprint, account.Unit.RestUrl);
+        return await factory.GetAuthenticatedAsync(account.IdentityThumbprint, account.Unit.RestUrl, account.Context);
     }
 }

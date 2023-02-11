@@ -6,7 +6,9 @@ namespace Vulcanova.Core.Uonet;
 
 public interface IApiClientFactory
 {
-    IApiClient GetAuthenticated(ClientIdentity identity, string apiInstanceUrl);
+    IApiClient GetAuthenticated(ClientIdentity identity, string apiInstanceUrl,
+        string accountContext = null);
 
-    Task<IApiClient> GetAuthenticatedAsync(string identityThumbprint, string apiInstanceUrl);
+    Task<IApiClient> GetAuthenticatedAsync(string identityThumbprint, string apiInstanceUrl,
+        string accountContext = null);
 }
