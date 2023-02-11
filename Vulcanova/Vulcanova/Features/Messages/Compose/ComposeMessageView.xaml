@@ -11,6 +11,7 @@
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                           xmlns:views="http://xamarin.com/schemas/2020/toolkit"
                           xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
+                          xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
                           ios:Page.ModalPresentationStyle="PageSheet">
     <ContentPage.Resources>
         <ColumnDefinitionCollection x:Key="FieldColumns">
@@ -35,7 +36,8 @@
                     HeightRequest="36"
                     WidthRequest="36"
                     Source="resource://Vulcanova.Resources.Icons.arrow-up-circle.svg"
-                    TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}">
+                    TintColor="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
+                    x:Name="SendImage">
                     <layout:TintedCachedImage.GestureRecognizers>
                         <TapGestureRecognizer x:Name="SendTapGestureRecognizer" />
                     </layout:TintedCachedImage.GestureRecognizers>
@@ -55,11 +57,14 @@
                 <ListView x:Name="AddressBookSuggestions"
                           HasUnevenRows="True"
                           BackgroundColor="Transparent"
-                          IsVisible="False">
+                          IsVisible="False"
+                          SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="compose:AddressBookEntry">
                             <ViewCell>
-                                <Grid Padding="16, 8" ColumnSpacing="8">
+                                <Grid Padding="16, 8" ColumnSpacing="8"
+                                      xe:Commands.TapParameter="{Binding .}"
+                                      xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type compose:ComposeMessageViewModel}}, Path=SelectRecipient}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="40" />
                                         <ColumnDefinition Width="*" />

@@ -21,9 +21,12 @@ public class ComposeMessageViewModel : ViewModelBase, IInitialize
 
     private ReactiveCommand<Unit, IEnumerable<AddressBookEntry>> GetAddressBookEntries { get; }
 
+    [Reactive] public bool IsPickingRecipient { get; set; }
     [Reactive] public string RecipientFilter { get; set; } = string.Empty;
 
     [Reactive] public Guid? MessageBoxId { get; private set; }
+
+    public ReactiveCommand<AddressBookEntry, Unit> SelectRecipient { get; }
 
     [Reactive] public AddressBookEntry Recipient { get; set; }
 
@@ -71,9 +74,23 @@ public class ComposeMessageViewModel : ViewModelBase, IInitialize
             .Select(_ => Unit.Default)
             .InvokeCommand(GetAddressBookEntries);
 
-        this.WhenAnyValue(vm => vm.Recipient)
-            .WhereNotNull()
-            .Subscribe(v => RecipientFilter = v.Name);
+        this.WhenAnyValue(vm => vm.RecipientFilter)
+            .Subscribe(_ =>
+            {
+                if (IsPickingRecipient)
+                {
+                    Recipient = null;
+                }
+            });
+
+        SelectRecipient = ReactiveCommand.Create<AddressBookEntry, Unit>(entry =>
+        {
+            IsPickingRecipient = false;
+            Recipient = entry;
+            RecipientFilter = entry.Name;
+
+            return default;
+        });
 
         var canSend = this.WhenAnyValue(
                 vm => vm.Recipient,

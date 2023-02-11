@@ -3,6 +3,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
+using Vulcanova.Core.Layout;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -34,34 +35,38 @@ public partial class ComposeMessageView
 
             ToEntry.Events()
                 .Focused
-                .Select(_ => true)
-                .BindTo(this, v => v.AddressBookSuggestions.IsVisible)
+                .Subscribe(_ => ViewModel.IsPickingRecipient = true)
                 .DisposeWith(disposable);
 
             ToEntry.Events()
                 .Unfocused
-                .Select(_ => false)
-                .BindTo(this, v => v.AddressBookSuggestions.IsVisible)
+                .Subscribe(_ => ViewModel.IsPickingRecipient = false)
                 .DisposeWith(disposable);
             
-            AddressBookSuggestions.Events()
-                .ItemSelected
-                .Subscribe(e =>
+            this.WhenAnyValue(v => v.ViewModel.IsPickingRecipient)
+                .Subscribe(v =>
                 {
-                    if (e.SelectedItem != null)
-                        ViewModel.Recipient = (AddressBookEntry) e.SelectedItem;
-            
+                    if (v)
+                    {
+                        AddressBookSuggestions.IsVisible = true;
+                        return;
+                    }
+
                     var hide = new Animation(d => AddressBookSuggestions.HeightRequest = d,
                         AddressBookSuggestions.Height, 0);
-                    
+
                     hide.Commit(this, "PickerHide", finished: (_, _) =>
                     {
                         ToEntry.Unfocus();
                         AddressBookSuggestions.IsVisible = false;
-                        AddressBookSuggestions.SelectedItem = null;
                         AddressBookSuggestions.HeightRequest = -1;
                     });
                 })
+                .DisposeWith(disposable);
+
+            ViewModel.Send.CanExecute
+                .Select(x => ThemeUtility.GetThemedColorByResourceKey(x ? "PrimaryColor" : "BorderColor"))
+                .BindTo(this, v => v.SendImage.TintColor)
                 .DisposeWith(disposable);
         });
     }
