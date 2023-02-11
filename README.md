@@ -18,9 +18,9 @@ Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzon
 - zadania domowe
 - usprawiedliwianie nieobecności
 - uwagi
+- wiadomości
 
 ## Co jest planowane?
-- wiadomości
 - dashboard
 - …i wiele więcej :)
 
