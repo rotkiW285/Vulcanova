@@ -18,7 +18,7 @@ public class GradeMapperProfile : Profile
 
         CreateMap<Uonet.Api.Common.Models.Subject, Subject>();
 
-        CreateMap<Date, DateTime>()
+        CreateMap<DateTimeInfo, DateTime>()
             .ConvertUsing(d => DateTimeOffset.FromUnixTimeMilliseconds(d.Timestamp).LocalDateTime);
 
         CreateMap<GradesSummaryEntryPayload, FinalGradesEntry>()
