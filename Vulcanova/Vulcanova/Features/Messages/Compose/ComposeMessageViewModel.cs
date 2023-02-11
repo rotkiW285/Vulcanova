@@ -7,11 +7,12 @@ using DynamicData;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Shared;
 
 namespace Vulcanova.Features.Messages.Compose;
 
-public class ComposeMessageViewModel : ReactiveObject, IInitialize
+public class ComposeMessageViewModel : ViewModelBase, IInitialize
 {
     [ObservableAsProperty] public IEnumerable<AddressBookEntry> AddressBookEntries { get; }
 
@@ -35,7 +36,8 @@ public class ComposeMessageViewModel : ReactiveObject, IInitialize
     public ComposeMessageViewModel(
         IAddressBookProvider addressBookProvider,
         IMessageSender messageSender,
-        AccountContext accountContext)
+        AccountContext accountContext,
+        INavigationService navigationService) : base(navigationService)
     {
         var currentEntriesSource = new SourceList<AddressBookEntry>();
 
@@ -82,7 +84,11 @@ public class ComposeMessageViewModel : ReactiveObject, IInitialize
                               && !string.IsNullOrEmpty(values.Item3));
 
         Send = ReactiveCommand.CreateFromTask(async _
-                => await messageSender.SendMessageAsync(accountContext.Account.Id, Recipient, Subject, Content),
+                =>
+            {
+                await messageSender.SendMessageAsync(accountContext.Account.Id, Recipient, Subject, Content);
+                await navigationService.GoBackAsync();
+            },
             canExecute: canSend);
     }
 
