@@ -24,7 +24,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="accounts:Account">
                         <Grid ColumnSpacing="12"
-                              Padding="16, 8"
+                              Padding="16, 16"
                               xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
                               xe:Commands.Tap="{Binding Source={x:Reference View}, Path=ViewModel.OpenAccount}"
                               xe:Commands.TapParameter="{Binding Id}">
