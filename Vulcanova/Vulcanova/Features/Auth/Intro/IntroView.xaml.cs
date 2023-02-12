@@ -15,7 +15,11 @@ public partial class IntroView
         {
             this.BindCommand(ViewModel, x => x.ScanQrCode, x => x.ScanQrButton)
                 .DisposeWith(disposable);
+
             this.BindCommand(ViewModel, x => x.SignInManually, x => x.ManualSignInButton)
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, x => x.OpenGitHubLink, x => x.GithubLinkTapRecognizer.Command)
                 .DisposeWith(disposable);
         });
     }

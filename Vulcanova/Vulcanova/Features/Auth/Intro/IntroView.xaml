@@ -23,7 +23,11 @@
                         Text="{x:Static resx:Strings.SignInManuallyButton}" x:Name="ManualSignInButton" />
             </StackLayout>
             <Label HorizontalTextAlignment="Center" FontSize="Small" Style="{StaticResource LinkLabelStyle}"
-                   x:Name="GitHubLinkLbl" Text="{x:Static resx:Strings.GitHubLinkLabel}" />
+                   Text="{x:Static resx:Strings.GitHubLinkLabel}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="GithubLinkTapRecognizer" />
+                </Label.GestureRecognizers>
+            </Label>
         </StackLayout>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>
