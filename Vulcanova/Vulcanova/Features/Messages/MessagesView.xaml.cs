@@ -27,7 +27,7 @@ public partial class MessagesView
                     msg => msg.OrderByDescending(x => x.DateSent))
                 .DisposeWith(disposable);
 
-            this.BindForceRefresh(RefreshView, v => v.ViewModel.LoadMessages)
+            this.BindForceRefresh(RefreshView, v => v.ViewModel.LoadMessages, true)
                 .DisposeWith(disposable);
 
             this.OneWayBind(ViewModel, vm => vm.ShowMessageComposer, v => v.NewMessageButton.Command)
