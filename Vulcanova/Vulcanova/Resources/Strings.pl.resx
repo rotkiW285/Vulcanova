@@ -64,7 +64,7 @@
         <value>data: {0:d}</value>
     </data>
     <data name="GradeModifiedDateLabel" xml:space="preserve">
-        <value>(zmodifykowano: {0:d})</value>
+        <value>(zmodyfikowano: {0:d})</value>
     </data>
     <data name="GradeEmptyNameLabel" xml:space="preserve">
         <value>bez nazwy</value>
