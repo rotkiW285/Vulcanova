@@ -44,6 +44,9 @@ public class AccountPickerViewModel : ViewModelBase, INavigationAware
 
     public void OnNavigatedTo(INavigationParameters parameters)
     {
-        AvailableAccounts = (IReadOnlyCollection<Account>) parameters[nameof(AvailableAccounts)];
+        if (parameters.TryGetValue(nameof(AvailableAccounts), out IReadOnlyCollection<Account> availableAccounts))
+        {
+            AvailableAccounts = availableAccounts;
+        }
     }
 }
