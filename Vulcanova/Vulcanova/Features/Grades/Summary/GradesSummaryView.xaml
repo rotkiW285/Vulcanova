@@ -32,16 +32,17 @@
                                     </Grid.ColumnDefinitions>
                                     <StackLayout HorizontalOptions="FillAndExpand">
                                         <Label Text="{Binding SubjectName}" />
-                                        <StackLayout BindableLayout.ItemsSource="{Binding Grades}"
-                                                     Orientation="Horizontal">
+                                        <FlexLayout BindableLayout.ItemsSource="{Binding Grades}"
+                                                    Direction="Row" Wrap="Wrap">
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate x:DataType="grades:Grade">
                                                     <Label
+                                                        Padding="0,0,6,0"
                                                         TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}"
                                                         Text="{Binding Content}" />
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
-                                        </StackLayout>
+                                        </FlexLayout>
                                     </StackLayout>
                                     <Label Grid.Column="1"
                                            Style="{StaticResource SmallLabelStyle}"
