@@ -28,6 +28,8 @@
         <StackLayout BindingContext="{x:Reference View}" Spacing="16" Padding="0, 16">
             <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
                    Padding="16, 0"
+                   Margin="{OnPlatform iOS='0,0,32,0'}"
+                   LineBreakMode="TailTruncation"
                    Text="{Binding Subject.SubjectName}" />
             <StackLayout Orientation="Horizontal" Spacing="16" Padding="16, 0">
                 <controls:HighlightValueView Name="{x:Static resx:Strings.GradesAverageLabel}"

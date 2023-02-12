@@ -19,7 +19,10 @@
     <layout:SheetPage.Content>
         <StackLayout BindingContext="{x:Reference View}" Padding="0, 16">
             <StackLayout Padding="16, 0">
-                <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
+                <Label Style="{StaticResource TitleLabelStyle}"
+                       Margin="{OnPlatform iOS='0,0,32,0'}"
+                       LineBreakMode="TailTruncation"
+                       HorizontalOptions="FillAndExpand"
                        Text="{Binding Exam.Subject.Name}" />
                 <Label Text="{Binding Exam.Type}" />
             </StackLayout>

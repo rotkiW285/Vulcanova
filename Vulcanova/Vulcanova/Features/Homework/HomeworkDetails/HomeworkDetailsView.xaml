@@ -21,7 +21,10 @@
     <ContentView.Content>
         <StackLayout BindingContext="{x:Reference View}" Padding="0, 8">
             <StackLayout Padding="16, 8">
-                <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
+                <Label Style="{StaticResource TitleLabelStyle}"
+                       HorizontalOptions="FillAndExpand"
+                       LineBreakMode="TailTruncation"
+                       Margin="{OnPlatform iOS='0,0,32,0'}"
                        Text="{Binding Homework.Subject.Name}" />
             </StackLayout>
             <StackLayout Padding="16, 8" Spacing="16">

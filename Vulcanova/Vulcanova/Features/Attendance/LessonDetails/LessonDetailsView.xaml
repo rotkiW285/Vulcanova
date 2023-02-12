@@ -22,7 +22,10 @@
     <layout:SheetPage.Content>
         <StackLayout BindingContext="{x:Reference View}" BackgroundColor="Transparent" Padding="0, 8">
             <StackLayout Padding="16, 8" BackgroundColor="Transparent">
-                <Label Style="{StaticResource TitleLabelStyle}" HorizontalOptions="FillAndExpand"
+                <Label Style="{StaticResource TitleLabelStyle}"
+                       HorizontalOptions="FillAndExpand"
+                       Margin="{OnPlatform iOS='0,0,32,0'}"
+                       LineBreakMode="TailTruncation"
                        Text="{Binding Lesson.Subject.Name}" />
                 <Label Text="{Binding Lesson.PresenceType.Name}"
                        TextColor="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
