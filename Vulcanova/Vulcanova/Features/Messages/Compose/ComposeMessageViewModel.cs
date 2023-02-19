@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Reactive;
 using System.Reactive.Linq;
 using DynamicData;
@@ -45,7 +46,8 @@ public class ComposeMessageViewModel : ViewModelBase, IInitialize
         var currentEntriesSource = new SourceList<AddressBookEntry>();
 
         var observableFilter = this.WhenAnyValue(vm => vm.RecipientFilter)
-            .Select<string, Func<AddressBookEntry, bool>>(value => entry => entry.Name.Contains(value));
+            .Select<string, Func<AddressBookEntry, bool>>(value => entry =>
+                CultureInfo.InvariantCulture.CompareInfo.IndexOf(entry.Name, value, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) != -1);
 
         currentEntriesSource
             .Connect()
