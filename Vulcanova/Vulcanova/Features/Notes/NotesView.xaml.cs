@@ -18,22 +18,7 @@ public partial class NotesView
         {
             this.OneWayBind(ViewModel, vm => vm.AccountViewModel, v => v.TitleView.ViewModel);
 
-            this.BindCommand(ViewModel, vm => vm.PreviousSemester, v => v.PreviousSemesterTap)
-                .DisposeWith(disposable);
-
-            this.BindCommand(ViewModel, vm => vm.NextSemester, v => v.NextSemesterTap)
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.PeriodInfo, v => v.PeriodNameLabel.Text,
-                    p => p is null
-                        ? string.Empty
-                        : $"{p.YearStart}/{p.YearEnd} – {p.CurrentPeriod.Number}")
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.CurrentPeriodEntries, v => v.EntriesList.ItemsSource,
-                    ex => ex?.GroupBy(x => x.DateModified)
-                        .OrderBy(g => g.Key)
-                        .Select(g => new NotesGroup(g.Key, g.ToList())))
+            this.OneWayBind(ViewModel, vm => vm.CurrentPeriodEntries, v => v.EntriesList.ItemsSource)
                 .DisposeWith(disposable);
 
             this.WhenAnyObservable(v => v.ViewModel.GetNotesEntries.IsExecuting)
@@ -42,6 +27,12 @@ public partial class NotesView
                 .DisposeWith(disposable);
 
             this.BindForceRefresh(RefreshView, v => v.ViewModel.GetNotesEntries)
+                .DisposeWith(disposable);
+
+            this.Bind(ViewModel, vm => vm.SelectedPeriod, v => v.PeriodPicker.SelectedPeriod)
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.Periods, v => v.PeriodPicker.Periods)
                 .DisposeWith(disposable);
         });
     }

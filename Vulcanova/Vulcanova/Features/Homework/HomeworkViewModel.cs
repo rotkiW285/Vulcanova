@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reactive;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Reactive.Linq;
 using Prism.Navigation;
@@ -34,8 +33,7 @@ namespace Vulcanova.Features.Homework
             IHomeworkService homeworksService,
             AccountContext accountContext,
             AccountAwarePageTitleViewModel accountViewModel,
-            INavigationService navigationService,
-            IPeriodService periodService) : base(navigationService)
+            INavigationService navigationService) : base(navigationService)
         {
             _homeworksService = homeworksService;
 
@@ -43,8 +41,8 @@ namespace Vulcanova.Features.Homework
 
             GetHomeworkEntries = ReactiveCommand.CreateFromTask(async (bool forceSync) =>
             {
-                var periodInfo = await periodService.GetCurrentPeriodAsync(accountContext.Account.Id);
-                return await GetEntries(accountContext.Account.Id, periodInfo.CurrentPeriod.Id, forceSync);
+                var currentPeriod = accountContext.Account.Periods.Single(x => x.Current);
+                return await GetEntries(accountContext.Account.Id, currentPeriod.Id, forceSync);
             });
 
             GetHomeworkEntries.ToPropertyEx(this, vm => vm.Entries);

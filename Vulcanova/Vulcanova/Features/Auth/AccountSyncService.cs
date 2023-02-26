@@ -56,9 +56,18 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
 
                 var periodsChanged = newAccount.Periods.Any(x => !currentPeriodsIds.Contains(x.Id));
 
-                if (!periodsChanged) continue;
+                if (!periodsChanged)
+                {
+                    var newCurrentPeriod = newAccount.Periods.Single(x => x.Current);
+                    var oldCurrentPeriod = acc.Periods.Single(x => x.Current);
 
-                acc.Periods = newAccount.Periods.Select(_mapper.Map<Period>).ToList();
+                    periodsChanged = newCurrentPeriod.Id != oldCurrentPeriod.Id;
+                }
+
+                if (periodsChanged)
+                {
+                    acc.Periods = newAccount.Periods.Select(_mapper.Map<Period>).ToList();
+                }
 
                 await _accountRepository.UpdateAccountAsync(acc);
 
@@ -69,7 +78,7 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
                 }
             }
         }
-        
+
         SetJustSynced(ResourceKey);
     }
 

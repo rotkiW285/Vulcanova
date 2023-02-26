@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+             x:Class="Vulcanova.Features.Shared.PeriodPicker">
+    <ContentView.Content>
+        <Frame HasShadow="False" CornerRadius="16" Padding="0" IsClippedToBounds="True"
+               Margin="16, 0">
+            <StackLayout Orientation="Horizontal"
+                         Style="{DynamicResource ControlStyle}"
+                         Padding="8">
+                <layout:TintedCachedImage
+                    x:Name="PreviousImg"
+                    IsVisible="False"
+                    HeightRequest="18"
+                    WidthRequest="18"
+                    Source="resource://Vulcanova.Resources.Icons.chevron-left.svg"
+                    TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                    <layout:TintedCachedImage.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="PreviousTap" />
+                    </layout:TintedCachedImage.GestureRecognizers>
+                </layout:TintedCachedImage>
+                <Label HorizontalOptions="CenterAndExpand" VerticalOptions="Center" x:Name="PeriodNameLabel" />
+                <layout:TintedCachedImage
+                    x:Name="NextImg"
+                    IsVisible="False"
+                    HeightRequest="18"
+                    WidthRequest="18"
+                    Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
+                    TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                    <layout:TintedCachedImage.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="NextTap" />
+                    </layout:TintedCachedImage.GestureRecognizers>
+                </layout:TintedCachedImage>
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

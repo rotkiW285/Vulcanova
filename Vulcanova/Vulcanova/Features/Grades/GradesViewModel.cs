@@ -1,4 +1,5 @@
-using System.Reactive;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
@@ -13,48 +14,34 @@ namespace Vulcanova.Features.Grades;
 
 public class GradesViewModel : ViewModelBase
 {
-    public ReactiveCommand<Unit, Unit> NextSemester { get; }
-    public ReactiveCommand<Unit, Unit> PreviousSemester { get; }
-
     [Reactive] public GradesSummaryViewModel GradesSummaryViewModel { get; private set; }
     [Reactive] public FinalGradesViewModel FinalGradesViewModel { get; private set; }
     [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
 
         
     [Reactive] public int SelectedViewModelIndex { get; set; }
-    [Reactive] public PeriodResult PeriodInfo { get; private set; }
+
+    [Reactive] public IEnumerable<Period> Periods { get; private set; }
+    [Reactive] public Period SelectedPeriod { get; private set; }
 
     public GradesViewModel(
         GradesSummaryViewModel gradesSummaryViewModel,
         FinalGradesViewModel finalGradesViewModel,
         AccountAwarePageTitleViewModel accountViewModel,
         AccountContext accountContext,
-        IPeriodService periodService,
         INavigationService navigationService) : base(navigationService)
     {
         GradesSummaryViewModel = gradesSummaryViewModel;
         FinalGradesViewModel = finalGradesViewModel;
         AccountViewModel = accountViewModel;
-
-        var setCurrentPeriod =
-            ReactiveCommand.CreateFromTask(async (int accountId) =>
-                PeriodInfo = await periodService.GetCurrentPeriodAsync(accountId));
-
-        accountContext.WhenAnyValue(ctx => ctx.Account)
-            .WhereNotNull()
-            .Select(acc => acc.Id)
-            .InvokeCommand(setCurrentPeriod);
-            
-        NextSemester = ReactiveCommand.CreateFromTask(async () =>
-        {
-            PeriodInfo =
-                await periodService.ChangePeriodAsync(accountContext.Account.Id, PeriodChangeDirection.Next);
-        });
-
-        PreviousSemester = ReactiveCommand.CreateFromTask(async () =>
-        {
-            PeriodInfo =
-                await periodService.ChangePeriodAsync(accountContext.Account.Id, PeriodChangeDirection.Previous);
-        });
+        
+        var accountSetObservable = accountContext.WhenAnyValue(ctx => ctx.Account)
+            .WhereNotNull();
+        
+        accountSetObservable.Select(a => a.Periods)
+            .BindTo(this, vm => vm.Periods);
+        
+        accountSetObservable.Select(a => a.Periods.Single(p => p.Current))
+            .BindTo(this, vm => vm.SelectedPeriod);
     }
 }
