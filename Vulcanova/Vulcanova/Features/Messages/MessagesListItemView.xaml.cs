@@ -26,6 +26,6 @@ public partial class MessagesListItemView
     {
         var view = (MessagesListItemView) bindable;
 
-        view.ClippyBoi.IsVisible = ((Message) newValue).Attachments.Count > 0;
+        view.ClippyBoi.IsVisible = ((Message) newValue)?.Attachments.Count > 0;
     }
 }
