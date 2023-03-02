@@ -15,7 +15,10 @@
                     <Label Text="{x:Static resx:Strings.EnterPinCodeSubheadingLabel}" />
                 </StackLayout>
                 <StackLayout>
-                    <Entry x:Name="Pin" Placeholder="PIN" />
+                    <Entry 
+                        x:Name="Pin" 
+                        Placeholder="PIN"
+                        Keyboard="Numeric"/>
                 </StackLayout>
                 <Button IsEnabled="False"
                         Style="{StaticResource DefaultButtonStyle}"

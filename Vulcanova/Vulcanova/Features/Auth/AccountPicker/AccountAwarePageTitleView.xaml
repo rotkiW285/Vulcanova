@@ -16,7 +16,9 @@
             </Grid.ColumnDefinitions>
             <Label FontAttributes="Bold" VerticalOptions="Center" Grid.Column="1" x:Name="TitleLabel" />
             <views:AvatarView IsVisible="False" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center"
-                              Size="35" x:Name="AvatarView">
+                              Size="35" x:Name="AvatarView" 
+                              Color="{AppThemeBinding Dark={StaticResource DarkTranslucentPrimaryColor}, Light={StaticResource LightTranslucentPrimaryColor}}" 
+                              TextColor="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}">
                 <views:AvatarView.GestureRecognizers>
                     <TapGestureRecognizer x:Name="AvatarTapRecognizer" />
                 </views:AvatarView.GestureRecognizers>

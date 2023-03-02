@@ -35,7 +35,9 @@
                             </Grid.ColumnDefinitions>
                             <views:AvatarView
                                 VerticalOptions="Center"
-                                Text="{Binding Pupil, Converter={StaticResource PupilToInitialsConverter}}" />
+                                Text="{Binding Pupil, Converter={StaticResource PupilToInitialsConverter}}"
+                                Color="{AppThemeBinding Dark={StaticResource DarkTranslucentPrimaryColor}, Light={StaticResource LightTranslucentPrimaryColor}}" 
+                                TextColor="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}"/>
                             <StackLayout Grid.Column="1" Spacing="0" Background="Transparent">
                                 <Label>
                                     <Label.Text>
