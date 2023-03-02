@@ -9,6 +9,7 @@
                           xmlns:local="clr-namespace:Vulcanova.Features.Grades.Summary;assembly=Vulcanova"
                           xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
                           xmlns:grades="clr-namespace:Vulcanova.Features.Grades;assembly=Vulcanova"
+                          xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                           x:Class="Vulcanova.Features.Grades.Summary.GradesSummaryView">
     <ContentView.Resources>
         <ResourceDictionary>
@@ -19,6 +20,14 @@
         <Grid>
             <RefreshView x:Name="RefreshView">
                 <CollectionView x:Name="SubjectGrades">
+                    <CollectionView.Header>
+                        <StackLayout x:Name="PartialAverageContainer">
+                            <Label HorizontalTextAlignment="Center" x:Name="PartialAverage" />
+                            <Label HorizontalTextAlignment="Center"
+                                   Text="{x:Static resx:Strings.PartialGradesAverage}"
+                                   FontSize="Small" />
+                        </StackLayout>
+                    </CollectionView.Header>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="local:SubjectGrades">
                             <StackLayout Padding="0, 1" xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"

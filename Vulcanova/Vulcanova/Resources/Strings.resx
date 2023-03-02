@@ -294,4 +294,7 @@
     <data name="NoteNegativeLabel" xml:space="preserve">
         <value>Negative</value>
     </data>
+    <data name="PartialGradesAverage" xml:space="preserve">
+        <value>Partial grades average</value>
+    </data>
 </root>

@@ -28,13 +28,20 @@ public partial class GradesSummaryView
             this.OneWayBind(ViewModel, vm => vm.Grades, v => v.SubjectGrades.ItemsSource)
                 .DisposeWith(disposable);
 
-            this.BindForceRefresh(RefreshView, v => v.ViewModel.GetGrades)
+            this.BindForceRefresh(RefreshView, v => v.ViewModel.GetGrades, true)
                 .DisposeWith(disposable);
 
             this.WhenAnyValue(v => v.PeriodId)
                 .WhereNotNull()
                 .Subscribe((val) => ViewModel!.PeriodId = val!.Value)
                 .DisposeWith(disposable);
+            
+            this.OneWayBind(ViewModel, vm => vm.PartialGradesAverage, v => v.PartialAverage.Text,
+                    value => value?.ToString("F2"))
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.PartialGradesAverage, v => v.PartialAverageContainer.IsVisible,
+                value => value != null);
         });
     }
 }

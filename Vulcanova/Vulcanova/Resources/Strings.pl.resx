@@ -294,4 +294,7 @@
     <data name="NoteNegativeLabel" xml:space="preserve">
         <value>Negatywna</value>
     </data>
+    <data name="PartialGradesAverage" xml:space="preserve">
+        <value>Średnia ocen częściowych</value>
+    </data>
 </root>
