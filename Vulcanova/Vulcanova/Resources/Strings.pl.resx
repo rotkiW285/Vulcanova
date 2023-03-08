@@ -297,4 +297,28 @@
     <data name="PartialGradesAverage" xml:space="preserve">
         <value>Średnia ocen częściowych</value>
     </data>
+    <data name="AttendanceReportAbsenceCountLabel" xml:space="preserve">
+        <value>Nieobecność</value>
+    </data>
+    <data name="AttendanceReportLateCountLabel" xml:space="preserve">
+        <value>Spóźnienie</value>
+    </data>
+    <data name="AttendanceReportPresenceCountLabel" xml:space="preserve">
+        <value>Obecność</value>
+    </data>
+    <data name="AttendanceReportSummaryPercentageLabel" xml:space="preserve">
+        <value>Sumaryczna frekwencja</value>
+    </data>
+    <data name="AttendanceReportPercentageLabel" xml:space="preserve">
+        <value>Procent frekwencji</value>
+    </data>
+    <data name="AttendanceReportSubjectPicker" xml:space="preserve">
+        <value>Wybierz przedmiot</value>
+    </data>
+    <data name="AttendanceDetailsTab" xml:space="preserve">
+        <value>Szczegóły</value>
+    </data>
+    <data name="AttendanceReportTab" xml:space="preserve">
+        <value>Raport</value>
+    </data>
 </root>

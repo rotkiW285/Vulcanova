@@ -2,67 +2,53 @@
 
 <rxui:ReactiveContentPage x:TypeArguments="local:AttendanceViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:local="clr-namespace:Vulcanova.Features.Attendance;assembly=Vulcanova"
-                          xmlns:calendar="clr-namespace:Vulcanova.Core.Layout.Controls.Calendar;assembly=Vulcanova"
                           xmlns:accountPicker="clr-namespace:Vulcanova.Features.Auth.AccountPicker;assembly=Vulcanova"
-                          xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+                          xmlns:tabs="http://sharpnado.com"
+                          xmlns:report="clr-namespace:Vulcanova.Features.Attendance.Report;assembly=Vulcanova"
                           Title="{x:Static resx:Strings.AttendanceTabTitle}"
                           x:Class="Vulcanova.Features.Attendance.AttendanceView">
     <NavigationPage.TitleView>
         <accountPicker:AccountAwarePageTitleView x:Name="TitleView" />
     </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TabStyle" TargetType="tabs:UnderlinedTabItem">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource DarkControlColor}, Light={StaticResource LightControlColor}}" />
+                <Setter Property="SelectedTabColor"
+                        Value="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}" />
+                <Setter Property="UnderlineAllTab" Value="True" />
+                <Setter Property="UnselectedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <RelativeLayout>
-            <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-                <StackLayout>
-                    <calendar:Calendar
-                        x:Name="Calendar"
-                        Padding="0, 10"
-                        SelectedColor="{AppThemeBinding Dark={StaticResource DarkTranslucentPrimaryColor}, Light={StaticResource LightTranslucentPrimaryColor}}"
-                        TextColor="{AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}"
-                        SelectedTextColor="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}"
-                        SecondaryTextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}" />
-                    <RefreshView x:Name="RefreshView">
-                        <CollectionView x:Name="EntriesList" SelectionMode="Multiple">
-                            <CollectionView.EmptyView>
-                                <Grid VerticalOptions="FillAndExpand" x:Name="NoElementsView">
-                                    <StackLayout Padding="16" VerticalOptions="Center">
-                                        <Label HorizontalTextAlignment="Center"
-                                               Text="{x:Static resx:Strings.NoAttendanceLabel}" />
-                                    </StackLayout>
-                                </Grid>
-                            </CollectionView.EmptyView>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="local:LessonViewModel">
-                                    <StackLayout Padding="0, 1" Spacing="0"
-                                                 xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
-                                                 xe:Commands.TapParameter="{Binding Lesson.Id}"
-                                                 xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type local:AttendanceViewModel}}, Path=ShowLessonDetails}">
-                                        <local:LessonView Lesson="{Binding Lesson}" IsSelected="{Binding IsSelected}"
-                                                          JustificationMode="{Binding Source={RelativeSource AncestorType={x:Type local:AttendanceViewModel}}, Path=JustificationMode}" />
-                                        <BoxView Style="{StaticResource SeparatorStyle}" />
-                                    </StackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </RefreshView>
-                </StackLayout>
-            </Grid>
-            <controls:FloatingButton
-                IsVisible="False"
-                x:Name="EnableJustificationButton"
-                Source="resource://Vulcanova.Resources.Icons.checkmark-done-outline.svg"
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-72}"
-                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-72}" />
-            <controls:FloatingButton
-                IsVisible="False"
-                x:Name="JustifyButton"
-                Source="resource://Vulcanova.Resources.Icons.checkmark-outline.svg"
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-72}"
-                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-72}" />
-        </RelativeLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <tabs:TabHostView
+                x:Name="TabHost"
+                TabType="Fixed">
+                <tabs:TabHostView.Tabs>
+                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                            Label="{x:Static resx:Strings.AttendanceDetailsTab}" />
+                    <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                            Label="{x:Static resx:Strings.AttendanceReportTab}" />
+                </tabs:TabHostView.Tabs>
+            </tabs:TabHostView>
+
+            <tabs:ViewSwitcher
+                Grid.Row="1" x:Name="Switcher" Animate="True">
+                <local:AttendanceDetailedView x:Name="AttendanceDetailedView" />
+                <report:AttendanceReportView x:Name="AttendanceReportView" />
+            </tabs:ViewSwitcher>
+        </Grid>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>

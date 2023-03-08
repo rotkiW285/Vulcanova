@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rxui:ReactiveContentView x:TypeArguments="report:AttendanceReportViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                              xmlns:report="clr-namespace:Vulcanova.Features.Attendance.Report;assembly=Vulcanova"
+                              xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                              xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                              x:Class="Vulcanova.Features.Attendance.Report.AttendanceReportView">
+    <ContentPage.Content>
+        <CollectionView x:Name="ReportsList" ItemSizingStrategy="MeasureFirstItem">
+            <CollectionView.Header>
+                <StackLayout Padding="0, 12">
+                    <Label HorizontalTextAlignment="Center" x:Name="SummaryPercentageLabel" />
+                    <Label HorizontalTextAlignment="Center"
+                           Text="{x:Static resx:Strings.AttendanceReportSummaryPercentageLabel}"
+                           FontSize="Small" />
+                </StackLayout>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="report:AttendanceReport">
+                    <StackLayout Padding="0, 1" Spacing="0">
+                        <Grid Padding="16, 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding Subject.Name}" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding PresencePercentage, StringFormat='{0:F2}%'}" HorizontalTextAlignment="End" />
+                        
+                        <Label Grid.Row="1" Grid.Column="0" Text="{x:Static resx:Strings.AttendanceReportPresenceCountLabel}" FontSize="Small" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Presence}" HorizontalTextAlignment="End" FontSize="Small" />
+                        
+                        <Label Grid.Row="2" Grid.Column="0" Text="{x:Static resx:Strings.AttendanceReportAbsenceCountLabel}" FontSize="Small" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding Absence}" HorizontalTextAlignment="End" FontSize="Small" />
+                        
+                        <Label Grid.Row="3" Grid.Column="0" Text="{x:Static resx:Strings.AttendanceReportLateCountLabel}" FontSize="Small" />
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding Late}" HorizontalTextAlignment="End" FontSize="Small" />
+                    </Grid>
+                        <!-- Separator -->
+                        <BoxView Style="{StaticResource SeparatorStyle}" />
+                        </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</rxui:ReactiveContentView>

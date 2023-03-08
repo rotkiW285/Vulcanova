@@ -21,6 +21,12 @@ public class LessonsRepository : ILessonsRepository
                 g.AccountId == accountId && g.Date.Year == monthAndYear.Year && g.Date.Month == monthAndYear.Month);
     }
 
+    public async Task<IEnumerable<Lesson>> GetLessonsBetweenAsync(int accountId, DateTime start, DateTime end)
+    {
+        return await _db.GetCollection<Lesson>()
+            .FindAsync(g => g.AccountId == accountId && g.Date >= start && g.Date <= end);
+    }
+
     public async Task UpsertLessonsForAccountAsync(IEnumerable<Lesson> entries, int accountId, DateTime monthAndYear)
     {
         await _db.GetCollection<Lesson>()

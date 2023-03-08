@@ -1,9 +1,7 @@
 using System;
 using System.Linq;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using ReactiveUI;
-using Vulcanova.Core.Rx;
 using Vulcanova.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,31 +17,22 @@ public partial class AttendanceView
             
         this.WhenActivated(disposable =>
         {
+            this.Bind(ViewModel, vm => vm.SelectedViewModelIndex, v => v.TabHost.SelectedIndex)
+                .DisposeWith(disposable);
+
+            this.Bind(ViewModel, vm => vm.SelectedViewModelIndex, v => v.Switcher.SelectedIndex)
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.AttendanceDetailedViewModel, v => v.AttendanceDetailedView.ViewModel)
+                .DisposeWith(disposable);
+
+            this.OneWayBind(ViewModel, vm => vm.AttendanceReportViewModel, v => v.AttendanceReportView.ViewModel)
+                .DisposeWith(disposable);
+
             this.OneWayBind(ViewModel, vm => vm.AccountViewModel, v => v.TitleView.ViewModel)
                 .DisposeWith(disposable);
 
-            this.Bind(ViewModel, vm => vm.SelectedDay, v => v.Calendar.SelectedDate)
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.CurrentDayEntries, v => v.EntriesList.ItemsSource)
-                .DisposeWith(disposable);
-
-            this.WhenAnyObservable(v => v.ViewModel.GetAttendanceEntries.IsExecuting)
-                .Select(v => !v)
-                .BindTo(NoElementsView, x => x.IsVisible)
-                .DisposeWith(disposable);
-                
-            this.BindForceRefresh(RefreshView, v => v.ViewModel.GetAttendanceEntries)
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.EnableJustificationMode, v => v.EnableJustificationButton.Command)
-                .DisposeWith(disposable);
-
-            this.WhenAnyObservable(v => v.ViewModel.EnableJustificationMode.CanExecute)
-                .BindTo(this, v => v.EnableJustificationButton.IsVisible)
-                .DisposeWith(disposable);
-
-            this.WhenAnyValue(v => v.ViewModel.JustificationMode)
+            this.WhenAnyValue(v => v.ViewModel.AttendanceDetailedViewModel.JustificationMode)
                 .Subscribe(v =>
                 {
                     if (v)
@@ -54,7 +43,7 @@ public partial class AttendanceView
                         {
                             ToolbarItems.Add(new ToolbarItem(Strings.CommonCancel, null, () => { })
                             {
-                                Command = ViewModel.DisableJustificationMode
+                                Command = ViewModel.AttendanceDetailedViewModel.DisableJustificationMode
                             });
                         }
                     }
@@ -64,13 +53,6 @@ public partial class AttendanceView
                         TitleView.IsVisible = true;
                     }
                 })
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.JustifyLessonsAttendance, v => v.JustifyButton.Command)
-                .DisposeWith(disposable);
-
-            this.WhenAnyObservable(v => v.ViewModel.JustifyLessonsAttendance.CanExecute)
-                .BindTo(this, v => v.JustifyButton.IsVisible)
                 .DisposeWith(disposable);
         });
     }

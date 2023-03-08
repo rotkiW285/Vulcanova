@@ -1,0 +1,53 @@
+using System.Linq;
+using System.Threading.Tasks;
+using Vulcanova.Features.Auth;
+using Vulcanova.Features.Shared;
+
+namespace Vulcanova.Features.Attendance.Report;
+
+public class AttendanceReportService : IAttendanceReportService
+{
+    private readonly ILessonsRepository _lessonsRepository;
+    private readonly IAccountRepository _accountRepository;
+    private readonly IAttendanceReportRepository _attendanceReportRepository;
+
+    public AttendanceReportService(
+        ILessonsRepository lessonsRepository,
+        IAccountRepository accountRepository,
+        IAttendanceReportRepository attendanceReportRepository)
+    {
+        _lessonsRepository = lessonsRepository;
+        _accountRepository = accountRepository;
+        _attendanceReportRepository = attendanceReportRepository;
+    }
+
+    public async Task InvalidateReportsAsync(int accountId)
+    {
+        var account = await _accountRepository.GetByIdAsync(accountId);
+        var (yearStart, yearEnd) = account.GetSchoolYearDuration();
+
+        var entries = (await _lessonsRepository.GetLessonsBetweenAsync(accountId, yearStart, yearEnd))
+            .Where(l => l.PresenceType != null)
+            .ToArray();
+
+        var entriesBySubject = entries
+            .Where(e => e.PresenceType != null)
+            .GroupBy(e => e.Subject.Id);
+
+        var reports = entriesBySubject.Select(g =>
+        {
+            var subject = g.First().Subject;
+
+            return new AttendanceReport
+            {
+                AccountId = accountId,
+                Absence = g.Count(x => x.PresenceType.Absence),
+                Late = g.Count(x => x.PresenceType.Late),
+                Presence = g.Count(x => x.PresenceType.Presence),
+                Subject = subject
+            };
+        });
+
+        await _attendanceReportRepository.UpdateAttendanceReportsAsync(accountId, reports);
+    }
+}

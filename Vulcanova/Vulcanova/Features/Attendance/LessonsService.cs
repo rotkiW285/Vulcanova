@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Vulcanova.Core.Uonet;
+using Vulcanova.Features.Attendance.Report;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Uonet.Api.Lessons;
@@ -18,15 +19,19 @@ public class LessonsService : UonetResourceProvider, ILessonsService
     private readonly IAccountRepository _accountRepository;
     private readonly IApiClientFactory _apiClientFactory;
     private readonly IMapper _mapper;
+    private readonly IAttendanceReportService _attendanceReportService;
 
     public LessonsService(ILessonsRepository changesRepository,
         IAccountRepository accountRepository,
-        IApiClientFactory apiClientFactory, IMapper mapper)
+        IApiClientFactory apiClientFactory,
+        IMapper mapper,
+        IAttendanceReportService attendanceReportService)
     {
         _changesRepository = changesRepository;
         _accountRepository = accountRepository;
         _apiClientFactory = apiClientFactory;
         _mapper = mapper;
+        _attendanceReportService = attendanceReportService;
     }
 
     public IObservable<IEnumerable<Lesson>> GetLessonsByMonth(int accountId, DateTime monthAndYear, bool forceSync = false)
@@ -52,6 +57,8 @@ public class LessonsService : UonetResourceProvider, ILessonsService
                 items = await _changesRepository.GetLessonsForAccountAsync(account.Id, monthAndYear);
 
                 observer.OnNext(items);
+
+                await _attendanceReportService.InvalidateReportsAsync(account.Id);
             }
 
             observer.OnCompleted();

@@ -297,4 +297,28 @@
     <data name="PartialGradesAverage" xml:space="preserve">
         <value>Partial grades average</value>
     </data>
+    <data name="AttendanceReportAbsenceCountLabel" xml:space="preserve">
+        <value>Absent</value>
+    </data>
+    <data name="AttendanceReportLateCountLabel" xml:space="preserve">
+        <value>Late</value>
+    </data>
+    <data name="AttendanceReportPresenceCountLabel" xml:space="preserve">
+        <value>Present</value>
+    </data>
+    <data name="AttendanceReportSummaryPercentageLabel" xml:space="preserve">
+        <value>Total presence</value>
+    </data>
+    <data name="AttendanceReportPercentageLabel" xml:space="preserve">
+        <value>Presence percentage</value>
+    </data>
+    <data name="AttendanceReportSubjectPicker" xml:space="preserve">
+        <value>Pick subject</value>
+    </data>
+    <data name="AttendanceDetailsTab" xml:space="preserve">
+        <value>Details</value>
+    </data>
+    <data name="AttendanceReportTab" xml:space="preserve">
+        <value>Report</value>
+    </data>
 </root>
