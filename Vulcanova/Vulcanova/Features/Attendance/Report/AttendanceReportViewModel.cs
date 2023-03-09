@@ -48,5 +48,9 @@ public class AttendanceReportViewModel : ReactiveObject
         {
             SelectedReport = Reports.ElementAtOrDefault(index);
         });
+
+        MessageBus.Current.Listen<AttendanceReportUpdatedEvent>()
+            .Select(_ => Unit.Default)
+            .InvokeCommand(fetchReports);
     }
 }

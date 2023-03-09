@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using ReactiveUI;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Shared;
 
@@ -48,5 +49,9 @@ public class AttendanceReportService : IAttendanceReportService
         });
 
         await _attendanceReportRepository.UpdateAttendanceReportsAsync(accountId, reports);
+
+        MessageBus.Current.SendMessage(new AttendanceReportUpdatedEvent());
     }
 }
+
+public record AttendanceReportUpdatedEvent;
