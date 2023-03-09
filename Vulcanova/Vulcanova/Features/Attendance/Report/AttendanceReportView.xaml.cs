@@ -20,8 +20,8 @@ public partial class AttendanceReportView
             this.OneWayBind(ViewModel, vm => vm.Reports, v => v.SummaryPercentageLabel.Text,
                     selector: v =>
                     {
-                        var allPresences = v.Sum(x => x.Presence);
-                        var allNonPresence = v.Sum(x => x.Late) + v.Sum(x => x.Absence);
+                        var allPresences = v.Sum(x => x.Presence + x.Late);
+                        var allNonPresence = v.Sum(x => x.Absence);
 
                         var percentage = (float) allPresences / (allPresences + allNonPresence) * 100;
 

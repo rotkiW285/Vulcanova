@@ -27,11 +27,10 @@ public class AttendanceReportService : IAttendanceReportService
         var (yearStart, yearEnd) = account.GetSchoolYearDuration();
 
         var entries = (await _lessonsRepository.GetLessonsBetweenAsync(accountId, yearStart, yearEnd))
-            .Where(l => l.PresenceType != null)
+            .Where(l => l.PresenceType != null && l.CalculatePresence)
             .ToArray();
 
         var entriesBySubject = entries
-            .Where(e => e.PresenceType != null)
             .GroupBy(e => e.Subject.Id);
 
         var reports = entriesBySubject.Select(g =>
@@ -43,7 +42,7 @@ public class AttendanceReportService : IAttendanceReportService
                 AccountId = accountId,
                 Absence = g.Count(x => x.PresenceType.Absence),
                 Late = g.Count(x => x.PresenceType.Late),
-                Presence = g.Count(x => x.PresenceType.Presence),
+                Presence = g.Count(x => x.PresenceType.Presence && !x.PresenceType.Late),
                 Subject = subject
             };
         });

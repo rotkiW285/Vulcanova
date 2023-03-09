@@ -13,5 +13,5 @@ public class AttendanceReport
     public int Late { get; set; }
 
     [BsonIgnore]
-    public float PresencePercentage => (float) Presence / (Presence + Absence + Late) * 100;
+    public float PresencePercentage => (float) (Presence + Late) / (Presence + Absence + Late) * 100;
 }
