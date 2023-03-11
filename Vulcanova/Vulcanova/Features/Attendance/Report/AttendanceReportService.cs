@@ -28,7 +28,7 @@ public class AttendanceReportService : IAttendanceReportService
         var (yearStart, yearEnd) = account.GetSchoolYearDuration();
 
         var entries = (await _lessonsRepository.GetLessonsBetweenAsync(accountId, yearStart, yearEnd))
-            .Where(l => l.PresenceType != null && l.CalculatePresence)
+            .Where(l => l.PresenceType != null && l.CalculatePresence && l.Subject != null)
             .ToArray();
 
         var entriesBySubject = entries
