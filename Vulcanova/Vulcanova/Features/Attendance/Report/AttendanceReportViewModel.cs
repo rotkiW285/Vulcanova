@@ -25,13 +25,6 @@ public class AttendanceReportViewModel : ReactiveObject
     {
         var fetchReports = ReactiveCommand.CreateFromTask(async (Unit _) =>
         {
-            var currentPeriod = accountContext.Account.Periods.Single(x => x.Current);
-            var allPeriodsInYear = accountContext.Account.Periods.Where(x => x.Level == currentPeriod.Level)
-                .ToArray();
-
-            var yearStart = allPeriodsInYear.First().Start;
-            var yearEnd = allPeriodsInYear.Last().End;
-
             var items = await attendanceReportRepository.GetAttendanceReportsAsync(accountContext.Account.Id);
 
             return Array.AsReadOnly(items.OrderBy(x => x.Subject.Name).ToArray());
