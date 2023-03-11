@@ -25,6 +25,6 @@ public class AttendanceReportRepository : IAttendanceReportRepository
             .DeleteManyAsync(a => a.AccountId == accountId);
 
         await _liteDatabaseAsync.GetCollection<AttendanceReport>()
-            .InsertAsync(reports);
+            .UpsertAsync(reports);
     }
 }
