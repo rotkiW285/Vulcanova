@@ -8,8 +8,11 @@ using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Attendance.Report;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Auth.Accounts;
+using Vulcanova.Features.Shared;
+using Vulcanova.Uonet.Api;
 using Vulcanova.Uonet.Api.Lessons;
 using Vulcanova.Uonet.Api.Presence;
+using Xamarin.Essentials;
 
 namespace Vulcanova.Features.Attendance;
 
@@ -48,9 +51,32 @@ public class LessonsService : UonetResourceProvider, ILessonsService
 
             if (ShouldSync(resourceKey) || forceSync)
             {
-                var onlineEntries = await FetchEntriesForMonthAndYear(account, monthAndYear);
+                DateTime from;
+                DateTime to;
+
+                var hasPerformedFullSyncKey = $"Lessons_{account.Id}_HasPerformedFullSync";
+
+                var hasPerformedFullSync = Preferences.Get(hasPerformedFullSyncKey, false);
+
+                if (!hasPerformedFullSync)
+                {
+                    (from, to) = account.GetSchoolYearDuration();
+                }
+                else
+                {
+                    from = new DateTime(monthAndYear.Year, monthAndYear.Month, 1);
+                    to = new DateTime(monthAndYear.Year, monthAndYear.Month,
+                        DateTime.DaysInMonth(from.Year, from.Month));
+                }
+
+                var onlineEntries = await FetchEntriesForMonthAndYear(account, from, to);
 
                 await _changesRepository.UpsertLessonsForAccountAsync(onlineEntries, account.Id, monthAndYear);
+
+                if (!hasPerformedFullSync)
+                {
+                    Preferences.Set(hasPerformedFullSyncKey, true);
+                }
 
                 SetJustSynced(resourceKey);
 
@@ -65,18 +91,15 @@ public class LessonsService : UonetResourceProvider, ILessonsService
         });
     }
 
-    private async Task<Lesson[]> FetchEntriesForMonthAndYear(Account account, DateTime monthAndYear)
+    private async Task<Lesson[]> FetchEntriesForMonthAndYear(Account account, DateTime from, DateTime to)
     {
-        var from = new DateTime(monthAndYear.Year, monthAndYear.Month, 1);
-        var to = new DateTime(monthAndYear.Year, monthAndYear.Month, DateTime.DaysInMonth(from.Year, from.Month));
-
         var query = new GetLessonsByPupilQuery(account.Pupil.Id, from, to, DateTime.MinValue);
 
         var client = await _apiClientFactory.GetAuthenticatedAsync(account);
 
-        var response = await client.GetAsync(GetLessonsByPupilQuery.ApiEndpoint, query);
+        var response = client.GetAllAsync(GetLessonsByPupilQuery.ApiEndpoint, query);
 
-        var lessons = response.Envelope.Select(_mapper.Map<Lesson>).ToArray();
+        var lessons = await response.Select(_mapper.Map<Lesson>).ToArrayAsync();
 
         foreach (var lesson in lessons)
         {
