@@ -28,8 +28,6 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
     public ReactiveCommand<Unit, Unit> DisableJustificationMode { get; }
     
     public ReactiveCommand<Unit, Unit> JustifyLessonsAttendance { get; }
-    
-    public ReactiveCommand<Unit, INavigationResult> LesGo { get; }
 
     [ObservableAsProperty] private IReadOnlyDictionary<DateTime, List<LessonViewModel>> Entries { get; }
 
@@ -51,8 +49,6 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
         INavigationService navigationService) : base(navigationService)
     {
         _lessonsService = lessonsService;
-
-        LesGo = ReactiveCommand.CreateFromTask((Unit _) => navigationService.NavigateAsync(nameof(AttendanceReportView)));
 
         var currentEntriesSource = new SourceList<LessonViewModel>();
 
