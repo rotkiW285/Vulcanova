@@ -1,3 +1,4 @@
+using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Features.Attendance.Report;
@@ -5,7 +6,7 @@ using Vulcanova.Features.Auth.AccountPicker;
 
 namespace Vulcanova.Features.Attendance;
 
-public class AttendanceViewModel : ReactiveObject
+public class AttendanceViewModel : ReactiveObject, INavigationAware
 {
     public AttendanceDetailedViewModel AttendanceDetailedViewModel { get; }
     public AttendanceReportViewModel AttendanceReportViewModel { get; }
@@ -21,5 +22,15 @@ public class AttendanceViewModel : ReactiveObject
         AttendanceDetailedViewModel = attendanceDetailedViewModel;
         AttendanceReportViewModel = attendanceReportViewModel;
         AccountViewModel = accountViewModel;
+    }
+
+    public void OnNavigatedFrom(INavigationParameters parameters)
+    {
+        AttendanceDetailedViewModel.OnNavigatedFrom(parameters);
+    }
+
+    public void OnNavigatedTo(INavigationParameters parameters)
+    {
+        AttendanceDetailedViewModel.OnNavigatedTo(parameters);
     }
 }

@@ -11,7 +11,6 @@ using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Features.Attendance.Justification;
 using Vulcanova.Features.Attendance.LessonDetails;
-using Vulcanova.Features.Attendance.Report;
 using Vulcanova.Features.Shared;
 using Vulcanova.Uonet.Api.Auth;
 using Unit = System.Reactive.Unit;
@@ -163,11 +162,7 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
                     }
                 },
                 useModalNavigation: true);
-        }, selectedAnyJustifiable
-            // [iOS] Modal with PageSheet presentation style navigation issue workaround:
-            // do not allow calling commands that do navigation until the modal presenting view is *fully* activated
-            // (wait until every modal is dismissed)
-            .CombineLatest(this.WhenAnyValue(vm => vm.IsActive), (x, y) => x && y));
+        }, selectedAnyJustifiable);
         
         accountContext.WhenAnyValue(ctx => ctx.Account)
             .WhereNotNull()
@@ -191,21 +186,16 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 
     public void OnNavigatedFrom(INavigationParameters parameters)
     {
-        IsActive = false;
     }
 
     public void OnNavigatedTo(INavigationParameters parameters)
     {
-        IsActive = true;
-
         if (parameters.TryGetValue("didJustify", out bool reload) && reload)
         {
             DisableJustificationMode.Execute(default).Subscribe();
             GetAttendanceEntries.Execute(true).Subscribe();
         }
     }
-
-    [Reactive] private bool IsActive { get; set; } = true;
 }
 
 public class LessonViewModel : ReactiveObject
