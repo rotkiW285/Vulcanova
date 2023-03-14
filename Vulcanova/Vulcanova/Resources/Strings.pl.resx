@@ -321,4 +321,10 @@
     <data name="AttendanceReportTab" xml:space="preserve">
         <value>Raport</value>
     </data>
+    <data name="MaintenanceBreakErrorPopupTitle" xml:space="preserve">
+        <value>Przerwa techniczna</value>
+    </data>
+    <data name="MaintenanceBreakErrorPopupMessage" xml:space="preserve">
+        <value>Dziennik Vulcan UONET+ jest obecnie w trybie prac konserwacyjnych. Spróbuj ponownie później.</value>
+    </data>
 </root>

@@ -321,4 +321,10 @@
     <data name="AttendanceReportTab" xml:space="preserve">
         <value>Report</value>
     </data>
+    <data name="MaintenanceBreakErrorPopupTitle" xml:space="preserve">
+        <value>Maintenance break</value>
+    </data>
+    <data name="MaintenanceBreakErrorPopupMessage" xml:space="preserve">
+        <value>Vulcan UONET+ is undergoing maintenance. Try again later.</value>
+    </data>
 </root>

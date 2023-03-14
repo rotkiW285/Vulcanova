@@ -662,5 +662,17 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("AttendanceReportTab", resourceCulture);
             }
         }
+        
+        internal static string MaintenanceBreakErrorPopupTitle {
+            get {
+                return ResourceManager.GetString("MaintenanceBreakErrorPopupTitle", resourceCulture);
+            }
+        }
+        
+        internal static string MaintenanceBreakErrorPopupMessage {
+            get {
+                return ResourceManager.GetString("MaintenanceBreakErrorPopupMessage", resourceCulture);
+            }
+        }
     }
 }

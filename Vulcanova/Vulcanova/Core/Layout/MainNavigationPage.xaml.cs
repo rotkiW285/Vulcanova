@@ -30,6 +30,14 @@ public partial class MainNavigationPage
                     ViewModel.ShowSignInAlert,
                     Unit.Default),
 
+                MaintenanceBreakException _ => (
+                    Strings.MaintenanceBreakErrorPopupTitle,
+                    Strings.MaintenanceBreakErrorPopupMessage,
+                    SvgImageSource.FromResource("Vulcanova.Resources.Icons.alert-circle-outline.svg"),
+                    Strings.ShowErrorDetails,
+                    ViewModel.ShowErrorDetails,
+                    ctx.Input),
+
                 _ => (
                     Strings.ErrorAlertTitle,
                     ctx.Input.Message,
