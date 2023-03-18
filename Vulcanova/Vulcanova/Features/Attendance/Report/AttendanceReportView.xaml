@@ -7,7 +7,7 @@
                               xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                               x:Class="Vulcanova.Features.Attendance.Report.AttendanceReportView">
     <ContentPage.Content>
-        <CollectionView x:Name="ReportsList" ItemSizingStrategy="MeasureFirstItem">
+        <CollectionView x:Name="ReportsList">
             <CollectionView.Header>
                 <StackLayout Padding="0, 12">
                     <Label HorizontalTextAlignment="Center" x:Name="SummaryPercentageLabel" />
