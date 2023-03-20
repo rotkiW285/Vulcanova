@@ -12,11 +12,20 @@ public class TimetableChangeColorConverter : IMultiValueConverter
     {
         var value = values[0];
 
-        if (value is ChangeType type)
+        if (value is TimetableListEntry.ChangeDetails change)
         {
-            var baseColor = type is ChangeType.Exemption or ChangeType.ClassAbsence
-                ? "ErrorColor"
-                : "WarningColor";
+            var baseColor = change switch
+            {
+                {ChangeType: ChangeType.Exemption or ChangeType.ClassAbsence} => "ErrorColor",
+                {ChangeType: ChangeType.Substitution} => "WarningColor",
+                {
+                    ChangeType: ChangeType.Rescheduled, RescheduleKind: TimetableListEntry.RescheduleKind.Added
+                } => "WarningColor",
+                {
+                    ChangeType: ChangeType.Rescheduled, RescheduleKind: TimetableListEntry.RescheduleKind.Removed
+                } => "ErrorColor",
+                _ => "WarningColor"
+            };
 
             return ThemeUtility.GetThemedColorByResourceKey(baseColor);
         }

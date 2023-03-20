@@ -42,8 +42,8 @@
                         Text="{Binding Entry.TeacherName}" />
                     <Label FontSize="Small" Text="{Binding Entry.RoomName}" />
                 </StackLayout>
-                <Label IsVisible="{Binding Entry.ChangeNote, Converter={StaticResource NullToBooleanConverter}}"
-                       FontSize="Small" Text="{Binding Entry.ChangeNote}" />
+                <Label IsVisible="{Binding Entry.Change.ChangeNote, Converter={StaticResource NullToBooleanConverter}}"
+                       FontSize="Small" Text="{Binding Entry.Change.ChangeNote}" />
             </StackLayout>
             <StackLayout Grid.Column="2" Spacing="0" VerticalOptions="Center">
                 <Label

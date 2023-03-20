@@ -12,6 +12,8 @@ public class TimetableChangeEntry
     public int AccountId { get; set; }
     public Shared.Subject Subject { get; set; }
     public DateTime LessonDate { get; set; }
+    public DateTime? ChangeDate { get; set; }
+    public TimetableTimeSlot TimeSlot { get; set; }
     public string Note { get; set; }
     public string Reason { get; set; }
     public string TeacherName { get; set; }

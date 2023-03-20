@@ -20,7 +20,7 @@ public class TimetableChangesRepository : ITimetableChangesRepository
         return await _db.GetCollection<TimetableChangeEntry>()
             .FindAsync(g =>
                 g.PupilId == pupilId && g.AccountId == accountId && g.LessonDate.Year == monthAndYear.Year &&
-                g.LessonDate.Month == monthAndYear.Month);
+                (g.LessonDate.Month == monthAndYear.Month || (g.ChangeDate != null && g.ChangeDate.Value.Month == monthAndYear.Month)));
     }
 
     public async Task UpsertEntriesAsync(IEnumerable<TimetableChangeEntry> entries, DateTime monthAndYear)
