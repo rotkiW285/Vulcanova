@@ -327,4 +327,16 @@
     <data name="MaintenanceBreakErrorPopupMessage" xml:space="preserve">
         <value>Vulcan UONET+ is undergoing maintenance. Try again later.</value>
     </data>
+    <data name="DashboardTabTitle" xml:space="preserve">
+        <value>Home</value>
+    </data>
+    <data name="NoLuckyNumberShort" xml:space="preserve">
+        <value>None</value>
+    </data>
+    <data name="NoNewGradesLabel" xml:space="preserve">
+        <value>No new grades</value>
+    </data>
+    <data name="NewGrades" xml:space="preserve">
+        <value>Latest grades</value>
+    </data>
 </root>

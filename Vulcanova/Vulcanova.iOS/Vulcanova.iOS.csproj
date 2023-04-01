@@ -166,6 +166,7 @@
     </ItemGroup>
     <ItemGroup>
         <BundleResource Include="GoogleService-Info.plist"/>
+        <BundleResource Include="Resources\home-outline@3x.png"/>
         <BundleResource Include="Resources\mail-outline@3x.png"/>
         <BundleResource Include="Resources\medal-outline@3x.png"/>
         <BundleResource Include="Resources\star-outline@3x.png"/>

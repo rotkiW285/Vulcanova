@@ -1,3 +1,4 @@
+using Vulcanova.Features.Attendance;
 using Vulcanova.Features.Homework;
 using Vulcanova.Features.LuckyNumber;
 using Vulcanova.Features.Messages;
@@ -17,7 +18,7 @@ public partial class HomeTabbedPage
 
         // These pages are expected to be placed in "More" tab.
         // On iOS this breaks Prism's NavigationService if a page is wrapped in a NavigationPage
-        Page[] pages = {new HomeworkView(), new MessagesView(), new LuckyNumberView(), new NotesView(), new SettingsView()};
+        Page[] pages = {new AttendanceView(), new HomeworkView(), new MessagesView(), new LuckyNumberView(), new NotesView(), new SettingsView()};
 
         foreach (var page in pages)
         {

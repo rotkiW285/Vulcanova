@@ -327,4 +327,16 @@
     <data name="MaintenanceBreakErrorPopupMessage" xml:space="preserve">
         <value>Dziennik Vulcan UONET+ jest obecnie w trybie prac konserwacyjnych. Spróbuj ponownie później.</value>
     </data>
+    <data name="DashboardTabTitle" xml:space="preserve">
+        <value>Start</value>
+    </data>
+    <data name="NoLuckyNumberShort" xml:space="preserve">
+        <value>Brak</value>
+    </data>
+    <data name="NoNewGradesLabel" xml:space="preserve">
+        <value>Brak nowych ocen</value>
+    </data>
+    <data name="NewGrades" xml:space="preserve">
+        <value>Ostatnie oceny</value>
+    </data>
 </root>

@@ -8,7 +8,10 @@
                           xmlns:accountPicker="clr-namespace:Vulcanova.Features.Auth.AccountPicker;assembly=Vulcanova"
                           xmlns:tabs="http://sharpnado.com"
                           xmlns:report="clr-namespace:Vulcanova.Features.Attendance.Report;assembly=Vulcanova"
+                          xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
                           Title="{x:Static resx:Strings.AttendanceTabTitle}"
+                          iOsSpecific:Page.UseSafeArea="True"
+                          IconImageSource="{OnPlatform iOS=checkmark-done-outline@3x.png, Android=ic_checkmark_done_outline}"
                           x:Class="Vulcanova.Features.Attendance.AttendanceView">
     <NavigationPage.TitleView>
         <accountPicker:AccountAwarePageTitleView x:Name="TitleView" />

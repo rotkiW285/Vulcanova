@@ -116,9 +116,9 @@
 
     <Style ApplyToDerivedTypes="true" TargetType="TabbedPage">
         <Setter Property="BarBackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}} " />
+                Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
         <Setter Property="SelectedTabColor"
-                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}} " />
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
         <Setter Property="UnselectedTabColor"
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
     </Style>

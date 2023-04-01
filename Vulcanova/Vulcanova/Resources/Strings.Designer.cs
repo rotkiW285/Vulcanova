@@ -674,5 +674,29 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("MaintenanceBreakErrorPopupMessage", resourceCulture);
             }
         }
+        
+        internal static string DashboardTabTitle {
+            get {
+                return ResourceManager.GetString("DashboardTabTitle", resourceCulture);
+            }
+        }
+        
+        internal static string NoLuckyNumberShort {
+            get {
+                return ResourceManager.GetString("NoLuckyNumberShort", resourceCulture);
+            }
+        }
+        
+        internal static string NoNewGradesLabel {
+            get {
+                return ResourceManager.GetString("NoNewGradesLabel", resourceCulture);
+            }
+        }
+        
+        internal static string NewGrades {
+            get {
+                return ResourceManager.GetString("NewGrades", resourceCulture);
+            }
+        }
     }
 }

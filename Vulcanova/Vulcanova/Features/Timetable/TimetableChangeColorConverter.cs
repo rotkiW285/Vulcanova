@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Linq;
 using Vulcanova.Core.Layout;
 using Vulcanova.Uonet.Api.Schedule;
 using Xamarin.Forms;

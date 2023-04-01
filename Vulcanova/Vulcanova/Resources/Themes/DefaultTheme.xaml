@@ -15,6 +15,12 @@
     <Color x:Key="LightBackgroundColor">White</Color>
     <Color x:Key="DarkBackgroundColor">Black</Color>
     
+    <Color x:Key="LightDashboardControlColor">#FFF</Color>
+    <Color x:Key="DarkDashboardControlColor">#131313</Color>
+
+    <Color x:Key="LightDashboardBackgroundColor">#F3F3F5</Color>
+    <Color x:Key="DarkDashboardBackgroundColor">#000</Color>
+    
     <Color x:Key="LightPanelColor">White</Color>
     <Color x:Key="DarkPanelColor">#131313</Color>
 

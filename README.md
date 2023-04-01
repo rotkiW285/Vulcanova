@@ -19,10 +19,7 @@ Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzon
 - usprawiedliwianie nieobecności
 - uwagi
 - wiadomości
-
-## Co jest planowane?
 - dashboard
-- …i wiele więcej :)
 
 ## Wykorzystane projekty
 * [kapi2289/vulcan-api](https://github.com/kapi2289/vulcan-api/)
