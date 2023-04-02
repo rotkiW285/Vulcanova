@@ -109,6 +109,18 @@
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
+        <ImageAsset Include="Assets.xcassets\Contents.json">
+            <Visible>False</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\SplashBg.colorset\Contents.json">
+            <Visible>False</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\SplashIcon.imageset\Contents.json">
+            <Visible>False</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\SplashIcon.imageset\icon-splash@1x.png"/>
+        <ImageAsset Include="Assets.xcassets\SplashIcon.imageset\icon-splash@2x.png"/>
+        <ImageAsset Include="Assets.xcassets\SplashIcon.imageset\icon-splash@3x.png"/>
         <InterfaceDefinition Include="Resources\LaunchScreen.storyboard"/>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024.png">
             <Visible>false</Visible>
@@ -167,6 +179,9 @@
     <ItemGroup>
         <BundleResource Include="GoogleService-Info.plist"/>
         <BundleResource Include="Resources\home-outline@3x.png"/>
+        <BundleResource Include="Resources\icon-splash@1x.png"/>
+        <BundleResource Include="Resources\icon-splash@2x.png"/>
+        <BundleResource Include="Resources\icon-splash@3x.png"/>
         <BundleResource Include="Resources\mail-outline@3x.png"/>
         <BundleResource Include="Resources\medal-outline@3x.png"/>
         <BundleResource Include="Resources\star-outline@3x.png"/>
