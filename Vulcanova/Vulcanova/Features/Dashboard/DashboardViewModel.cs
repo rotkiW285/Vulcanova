@@ -21,11 +21,6 @@ namespace Vulcanova.Features.Dashboard
     public class DashboardViewModel : ViewModelBase
     {
         public ReactiveCommand<bool, DashboardModel> RefreshData { get; private set; }
-        
-        private readonly ITimetableService _timetableService;
-        private readonly ITimetableChangesService _timetableChangesService;
-        private readonly IExamsService _examsService;
-        private readonly IGradesService _gradesService;
 
         [ObservableAsProperty] public DashboardModel DashboardModel { get; private set; }
 
@@ -33,6 +28,10 @@ namespace Vulcanova.Features.Dashboard
         [Reactive] public DateTime SelectedDay { get; private set; } = DateTime.Now;
 
         private readonly ILuckyNumberService _luckyNumberService;
+        private readonly ITimetableService _timetableService;
+        private readonly ITimetableChangesService _timetableChangesService;
+        private readonly IExamsService _examsService;
+        private readonly IGradesService _gradesService;
         private readonly IHomeworkService _homeworksService;
 
         public DashboardViewModel(
@@ -115,7 +114,8 @@ namespace Vulcanova.Features.Dashboard
         {
             return _homeworksService.GetHomework(accountId, periodId, forceSync)
                 .Select(list => Array.AsReadOnly(list
-                    .Where(e => IsInTheSameWeekAs(date.Date, e.DateCreated.Date))
+                    .Where(e => IsInTheNext7DaysFrom(date.Date, e.Deadline.Date))
+                    .OrderBy(e => e.Deadline.Date)
                     .ToArray()));
         }
 
@@ -126,7 +126,11 @@ namespace Vulcanova.Features.Dashboard
             var (firstDay, lastDay) = date.GetMondayOfFirstWeekAndSundayOfLastWeekOfMonth();
 
             return _examsService.GetExamsByDateRange(accountId, firstDay, lastDay, forceSync)
-                .Select(list => list.Where(e => IsInTheSameWeekAs(date.Date, e.Deadline.Date)).ToList().AsReadOnly());
+                .Select(list => list
+                    .Where(e => IsInTheNext7DaysFrom(date.Date, e.Deadline.Date))
+                    .OrderBy(e => e.Deadline.Date)
+                    .ToList()
+                    .AsReadOnly());
         }
 
         private IObservable<IReadOnlyCollection<Grade>> GetGrades(int accountId, DateTime date, int periodId,
@@ -134,19 +138,20 @@ namespace Vulcanova.Features.Dashboard
         {
             return _gradesService.GetPeriodGrades(accountId, periodId, forceSync)
                 .Select(list => list
-                    .Where(e => IsInTheSameWeekAs(date.Date, e.DateCreated?.Date))
+                    .Where(e => (date.Date - (e.DateCreated ?? e.DateModify).Date).TotalDays <= 7)
+                    .OrderBy(e => (e.DateCreated ?? e.DateModify).Date)
                     .ToList()
                     .AsReadOnly());
         }
 
-        private static bool IsInTheSameWeekAs(DateTime d1, DateTime? d2)
+        private static bool IsInTheNext7DaysFrom(DateTime from, DateTime? d2)
         {
             if (d2 == null) return false;
 
-            var monday = d1.Date.LastMonday();
-            var sunday = d1.Date.NextSunday();
+            var start = from.Date;
+            var end = from.Date.AddDays(7);
 
-            return d2.Value.Date >= monday && d2.Value.Date <= sunday;
+            return d2.Value.Date >= start && d2.Value.Date <= end;
         }
     }
 }
