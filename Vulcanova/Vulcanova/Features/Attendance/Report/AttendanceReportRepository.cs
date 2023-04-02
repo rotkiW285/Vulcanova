@@ -15,8 +15,11 @@ public class AttendanceReportRepository : IAttendanceReportRepository
 
     public async Task<IEnumerable<AttendanceReport>> GetAttendanceReportsAsync(int accountId)
     {
+        var maxDate = await _liteDatabaseAsync.GetCollection<AttendanceReport>()
+            .MaxAsync(r => r.DateGenerated);
+
         return await _liteDatabaseAsync.GetCollection<AttendanceReport>()
-            .FindAsync(r => r.AccountId == accountId);
+            .FindAsync(r => r.AccountId == accountId && r.DateGenerated == maxDate);
     }
 
     public async Task UpdateAttendanceReportsAsync(int accountId, IEnumerable<AttendanceReport> reports)

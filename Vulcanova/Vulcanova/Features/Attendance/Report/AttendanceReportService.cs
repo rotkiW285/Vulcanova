@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ReactiveUI;
@@ -34,6 +35,8 @@ public class AttendanceReportService : IAttendanceReportService
         var entriesBySubject = entries
             .GroupBy(e => e.Subject.Id);
 
+        var generationDate = DateTime.UtcNow;
+
         var reports = entriesBySubject.Select(g =>
         {
             var subject = g.First().Subject;
@@ -41,6 +44,7 @@ public class AttendanceReportService : IAttendanceReportService
             return new AttendanceReport
             {
                 AccountId = accountId,
+                DateGenerated = generationDate,
                 Absence = g.Count(x => x.PresenceType.Absence),
                 Late = g.Count(x => x.PresenceType.Late),
                 Presence = g.Count(x => x.PresenceType.Presence && !x.PresenceType.Late),
