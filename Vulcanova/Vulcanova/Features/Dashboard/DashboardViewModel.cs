@@ -139,7 +139,7 @@ namespace Vulcanova.Features.Dashboard
             return _gradesService.GetPeriodGrades(accountId, periodId, forceSync)
                 .Select(list => list
                     .Where(e => (date.Date - (e.DateCreated ?? e.DateModify).Date).TotalDays <= 7)
-                    .OrderBy(e => (e.DateCreated ?? e.DateModify).Date)
+                    .OrderByDescending(e => (e.DateCreated ?? e.DateModify).Date)
                     .ToList()
                     .AsReadOnly());
         }
