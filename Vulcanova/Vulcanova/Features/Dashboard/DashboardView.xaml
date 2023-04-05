@@ -93,101 +93,60 @@
                                 </BindableLayout.EmptyView>
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="timetable:TimetableListEntry">
-                                        <StackLayout>
-                                            <Grid
-                                                BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="18*"/>
-                                                    <ColumnDefinition Width="8*"/>
-                                                </Grid.ColumnDefinitions>
-                                                
-                                                <Label LineBreakMode="NoWrap"
-                                                       Text="{Binding  No, StringFormat='{0}.'}"
-                                                       Style="{StaticResource SmallLabelStyle}"
-                                                       VerticalTextAlignment="Center">
-                                                    <Label.TextColor>
-                                                        <MultiBinding Converter="{StaticResource ColorConverter}">
-                                                            <Binding Path="Change" />
-                                                            <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
-                                                        </MultiBinding>
-                                                    </Label.TextColor>
-                                                </Label>
-                                                <StackLayout 
-                                                    Grid.Column="1"
-                                                    VerticalOptions="Center" 
-                                                    Orientation="Horizontal" 
-                                                    Spacing="5"
-                                                    BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
-                                                    <Label LineBreakMode="TailTruncation" 
-                                                           Text="{Binding SubjectName}"
-                                                           TextDecorations="{Binding .Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}"
-                                                           Style="{StaticResource SmallLabelStyle}"
-                                                           VerticalTextAlignment="Center">
-                                                        <Label.TextColor>
-                                                                <MultiBinding Converter="{StaticResource ColorConverter}">
-                                                                    <Binding Path="Change" />
-                                                                    <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
-                                                                </MultiBinding>
-                                                        </Label.TextColor>
-                                                    </Label>
-                                                    <Label 
-                                                        LineBreakMode="TailTruncation"
-                                                        MinimumWidthRequest="35"
-                                                        Text="{Binding  RoomName, StringFormat='({0})'}"
-                                                        Style="{StaticResource SmallLabelStyle}"
-                                                        VerticalTextAlignment="Center">
-                                                        <Label.TextColor>
-                                                            <MultiBinding Converter="{StaticResource ColorConverter}">
-                                                                <Binding Path="Change" />
-                                                                <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
-                                                            </MultiBinding>
-                                                        </Label.TextColor>
-                                                    </Label>
-                                                </StackLayout>
-                                                <StackLayout 
-                                                    Grid.Column="2" 
-                                                    Spacing="0" 
-                                                    VerticalOptions="Center"
-                                                    HorizontalOptions="EndAndExpand"
-                                                    Orientation="Horizontal"
-                                                    BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
-                                                    <Label LineBreakMode="TailTruncation" 
-                                                            Text="{Binding Start, StringFormat='{0:HH:mm}'}"
-                                                            Style="{StaticResource SmallLabelStyle}"
-                                                            VerticalTextAlignment="Center">
-                                                            <Label.TextColor>
-                                                                <MultiBinding Converter="{StaticResource ColorConverter}">
-                                                                    <Binding Path="Change" />
-                                                                    <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
-                                                                </MultiBinding>
-                                                            </Label.TextColor>
-                                                        </Label>
-                                                        <Label LineBreakMode="TailTruncation" 
-                                                            Text=" – "
-                                                            Style="{StaticResource SmallLabelStyle}"
-                                                            VerticalTextAlignment="Center">
-                                                            <Label.TextColor>
-                                                                <MultiBinding Converter="{StaticResource ColorConverter}">
-                                                                    <Binding Path="Change" />
-                                                                    <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
-                                                                </MultiBinding>
-                                                            </Label.TextColor>
-                                                        </Label>
-                                                        <Label LineBreakMode="TailTruncation" 
-                                                            Text="{Binding End, StringFormat='{0:HH:mm}'}"
-                                                            Style="{StaticResource SmallLabelStyle}"
-                                                            VerticalTextAlignment="Center">
-                                                            <Label.TextColor>
-                                                                <MultiBinding Converter="{StaticResource ColorConverter}">
-                                                                    <Binding Path="Change" />
-                                                                    <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
-                                                                </MultiBinding>
-                                                            </Label.TextColor>
-                                                        </Label>
-                                                </StackLayout>
-                                            </Grid>
-                                        </StackLayout>
+                                        <Grid
+                                            BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label LineBreakMode="NoWrap"
+                                                   Text="{Binding  No, StringFormat='{0}.'}"
+                                                   Style="{StaticResource SmallLabelStyle}"
+                                                   VerticalTextAlignment="Center">
+                                                <Label.TextColor>
+                                                    <MultiBinding Converter="{StaticResource ColorConverter}">
+                                                        <Binding Path="Change" />
+                                                        <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                                                    </MultiBinding>
+                                                </Label.TextColor>
+                                            </Label>
+                                            <Label
+                                                Grid.Column="1"
+                                                LineBreakMode="TailTruncation"
+                                                TextDecorations="{Binding .Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}"
+                                                Style="{StaticResource SmallLabelStyle}">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0} ({1})">
+                                                        <Binding Path="SubjectName" />
+                                                        <Binding Path="RoomName" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                                <Label.TextColor>
+                                                    <MultiBinding Converter="{StaticResource ColorConverter}">
+                                                        <Binding Path="Change" />
+                                                        <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                                                    </MultiBinding>
+                                                </Label.TextColor>
+                                            </Label>
+                                            <Label
+                                                Grid.Column="2"
+                                                Style="{StaticResource SmallLabelStyle}">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0:HH:mm} – {1:HH:mm}">
+                                                        <Binding Path="Start" />
+                                                        <Binding Path="End" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                                <Label.TextColor>
+                                                    <MultiBinding Converter="{StaticResource ColorConverter}">
+                                                        <Binding Path="Change" />
+                                                        <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                                                    </MultiBinding>
+                                                </Label.TextColor>
+                                            </Label>
+                                        </Grid>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
