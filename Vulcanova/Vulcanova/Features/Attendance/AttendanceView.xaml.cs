@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
+using Vulcanova.Core.Layout;
 using Vulcanova.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -54,6 +55,12 @@ public partial class AttendanceView
                     }
                 })
                 .DisposeWith(disposable);
+            
+            // workaround https://github.com/xamarin/Xamarin.Forms/issues/1336 as this breaks pushing modals
+            if (Application.Current.MainPage is NavigationPage {CurrentPage: HomeTabbedPage {CurrentPage: null} page})
+            {
+                page.CurrentPage = this;
+            }
         });
     }
 }
