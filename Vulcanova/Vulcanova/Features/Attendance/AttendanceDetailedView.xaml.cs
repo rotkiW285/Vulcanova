@@ -1,7 +1,9 @@
+using System;
 using System.Reactive.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
 using Vulcanova.Core.Rx;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Attendance;
@@ -18,8 +20,17 @@ public partial class AttendanceDetailedView
             this.Bind(ViewModel, vm => vm.SelectedDay, v => v.Calendar.SelectedDate)
                 .DisposeWith(disposable);
 
-            this.OneWayBind(ViewModel, vm => vm.CurrentDayEntries, v => v.EntriesList.ItemsSource)
-                .DisposeWith(disposable);
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                this.OneWayBind(ViewModel, vm => vm.CurrentDayEntries, v => v.EntriesList.ItemsSource,
+                        TimeSpan.FromMilliseconds(50))
+                    .DisposeWith(disposable);
+            }
+            else
+            {
+                this.OneWayBind(ViewModel, vm => vm.CurrentDayEntries, v => v.EntriesList.ItemsSource)
+                    .DisposeWith(disposable);
+            }
 
             this.WhenAnyObservable(v => v.ViewModel.GetAttendanceEntries.IsExecuting)
                 .Select(v => !v)
