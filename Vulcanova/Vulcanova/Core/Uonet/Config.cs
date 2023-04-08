@@ -9,7 +9,8 @@ public static class Config
     public static void RegisterUonet(this IContainerRegistry container)
     {
         container.RegisterSingleton<IApiClientFactory, ApiClientFactory>();
-        container.RegisterSingleton<IInstanceUrlProvider, InstanceUrlProvider>();
+        container.RegisterSingleton<InstanceUrlProvider>();
+        container.RegisterSingleton<IInstanceUrlProvider, FebeInstanceUrlProviderDecorator>();
         container.RegisterSingleton<AccountContext>();
     }
 }
