@@ -7,7 +7,7 @@
     "disable": false
   },
   "automaticVersioning": {
-    "behavior": "PreferBuildNumber",
+    "behavior": "Off",
     "environment": "All",
     "versionOffset": 0
   },
