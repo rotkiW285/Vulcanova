@@ -75,7 +75,7 @@ public static class RxUiExtensions
     /// <returns></returns>
     public static IDisposable OneWayBind<TViewModel, TView, TVMProp, TVProp>(this TView view,
         TViewModel viewModel,
-        Func<TViewModel, TVMProp> vmProperty,
+        Expression<Func<TViewModel, TVMProp>> vmProperty,
         Expression<Func<TView, TVProp>> viewProperty,
         TimeSpan delay)
         where TView : class, IViewFor
@@ -83,8 +83,9 @@ public static class RxUiExtensions
         return view.WhenAnyValue(v => (TViewModel) v.ViewModel)
             .WhereNotNull()
             .Delay(delay)
+            .Select(vm => vm.WhenAnyValue(vmProperty))
+            .Switch()
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Select(vmProperty)
             .BindTo(view, viewProperty);
     }
 }
