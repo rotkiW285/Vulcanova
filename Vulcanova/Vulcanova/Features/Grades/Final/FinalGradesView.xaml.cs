@@ -4,6 +4,8 @@ using Vulcanova.Features.Grades.Summary;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Vulcanova.Core.Rx;
 
@@ -27,19 +29,29 @@ public partial class FinalGradesView
 
         this.WhenActivated(disposable =>
         {
-            this.OneWayBind(ViewModel, vm => vm.FinalGrades, v => v.FinalGradesList.ItemsSource, grades =>
+            static IEnumerable GradesSelector(IEnumerable<FinalGradesEntry> grades)
+            {
+                if (grades == null)
                 {
-                    if (grades == null)
-                    {
-                        return null;
-                    }
+                    return null;
+                }
 
-                    var finalGradesEntries = grades as FinalGradesEntry[] ?? grades.ToArray();
-                    return finalGradesEntries.All(g => g.PredictedGrade == null && g.FinalGrade == null)
-                        ? null
-                        : finalGradesEntries;
-                })
-                .DisposeWith(disposable);
+                var finalGradesEntries = grades as FinalGradesEntry[] ?? grades.ToArray();
+                return finalGradesEntries.All(g => g.PredictedGrade == null && g.FinalGrade == null)
+                    ? null
+                    : finalGradesEntries;
+            }
+
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                this.OneWayBind(ViewModel, vm => vm.FinalGrades, v => v.FinalGradesList.ItemsSource, GradesSelector, TimeSpan.FromMilliseconds(50))
+                    .DisposeWith(disposable);
+            }
+            else
+            {
+                this.OneWayBind(ViewModel, vm => vm.FinalGrades, v => v.FinalGradesList.ItemsSource, GradesSelector)
+                    .DisposeWith(disposable);
+            }
 
             this.BindForceRefresh(RefreshView, v => v.ViewModel.GetFinalGrades, true)
                 .DisposeWith(disposable);
