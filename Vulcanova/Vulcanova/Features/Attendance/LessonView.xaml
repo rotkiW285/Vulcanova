@@ -11,6 +11,7 @@
         <converters:JustificationStatusConverter x:Key="JustificationStatusConverter" />
         <converters:JustificationColorConverter x:Key="JustificationColorConverter" />
         <layoutConverters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+        <layoutConverters:PriorityBindingConverter x:Key="PriorityBindingConverter" />
         <Style TargetType="Label">
             <Setter Property="TextColor">
                 <!-- We need to trigger the converter on theme change, thus MultiBinding with AppThemeBinding -->
@@ -36,7 +37,14 @@
                    FontSize="Large"
                    Text="{Binding Lesson.No}" />
             <StackLayout Grid.Column="2" Spacing="0">
-                <Label Text="{Binding Lesson.Subject.Name}" />
+                <Label> 
+                    <Label.Text>
+                        <MultiBinding Converter="{StaticResource PriorityBindingConverter}">
+                            <Binding Path="Lesson.Subject.Name" />
+                            <Binding Path="Lesson.Topic" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
                 <StackLayout Orientation="Horizontal">
                     <Label
                         FontSize="Small"
