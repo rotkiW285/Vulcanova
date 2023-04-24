@@ -25,7 +25,7 @@ namespace Vulcanova.Features.Dashboard
         [ObservableAsProperty] public DashboardModel DashboardModel { get; private set; }
 
         [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; set; }
-        [Reactive] public DateTime SelectedDay { get; private set; } = DateTime.Now;
+        [ObservableAsProperty] public DateTime SelectedDay { get; private set; }
 
         private readonly ILuckyNumberService _luckyNumberService;
         private readonly ITimetableService _timetableService;
@@ -79,11 +79,22 @@ namespace Vulcanova.Features.Dashboard
 
             accountContext.WhenAnyValue(ctx => ctx.Account)
                 .WhereNotNull()
+                .CombineLatest(
+                    this.WhenAnyValue(vm => vm.SelectedDay)
+                        // skip initial value
+                        .Skip(1))
                 .Select(_ => false)
                 .InvokeCommand(RefreshData);
+
+            Observable.Generate(
+                    DateTime.Now,
+                    _ => true,
+                    date => date.Date.AddDays(1),
+                    date => date,
+                    dt => dt)
+                .ToPropertyEx(this, vm => vm.SelectedDay);
         }
-        
-        
+
         private IObservable<LuckyNumber.LuckyNumber> GetLuckyNumberAsync(int accountId, DateTime date)
         {
             return Observable.FromAsync(() => _luckyNumberService.GetLuckyNumberAsync(accountId, date));
