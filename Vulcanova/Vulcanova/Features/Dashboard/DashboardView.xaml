@@ -118,9 +118,9 @@
                                                 TextDecorations="{Binding .Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}"
                                                 Style="{StaticResource SmallLabelStyle}">
                                                 <Label.Text>
-                                                    <MultiBinding StringFormat="{}{0} ({1})">
+                                                    <MultiBinding StringFormat="{}{0}{1}">
                                                         <Binding Path="SubjectName" />
-                                                        <Binding Path="RoomName" />
+                                                        <Binding Path="RoomName" StringFormat=" ({0})" TargetNullValue="" />
                                                     </MultiBinding>
                                                 </Label.Text>
                                                 <Label.TextColor>
