@@ -64,7 +64,7 @@ public class TimetableChangesService : UonetResourceProvider, ITimetableChangesS
     private async Task<TimetableChangeEntry[]> FetchEntriesForMonthAndYear(Account account, DateTime monthAndYear)
     {
         var from = new DateTime(monthAndYear.Year, monthAndYear.Month, 1);
-        var to = new DateTime(monthAndYear.Year, monthAndYear.Month, DateTime.DaysInMonth(from.Year, from.Month));
+        var to = new DateTime(monthAndYear.Year, monthAndYear.Month, DateTime.DaysInMonth(from.Year, from.Month), 23, 59, 59);
 
         var query = new GetScheduleChangesEntriesByPupilQuery(account.Pupil.Id, from, to, DateTime.MinValue);
 
