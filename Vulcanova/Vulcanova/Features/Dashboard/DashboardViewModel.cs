@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using Prism.Navigation;
+using Prism.Navigation.TabbedPages;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
@@ -20,7 +21,8 @@ namespace Vulcanova.Features.Dashboard
 {
     public class DashboardViewModel : ViewModelBase
     {
-        public ReactiveCommand<bool, DashboardModel> RefreshData { get; private set; }
+        public ReactiveCommand<bool, DashboardModel> RefreshData { get; }
+        public ReactiveCommand<string, INavigationResult> OpenTab { get; }
 
         [ObservableAsProperty] public DashboardModel DashboardModel { get; private set; }
 
@@ -99,6 +101,9 @@ namespace Vulcanova.Features.Dashboard
                     date => date,
                     dt => dt)
                 .ToPropertyEx(this, vm => vm.SelectedDay);
+
+            OpenTab = ReactiveCommand.CreateFromTask((string name) =>
+                NavigationService.SelectTabAsync(name));
         }
 
         private IObservable<LuckyNumber.LuckyNumber> GetLuckyNumberAsync(int accountId, DateTime date)

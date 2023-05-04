@@ -7,6 +7,7 @@ public static class Config
 {
     public static void RegisterHomework(this IContainerRegistry container)
     {
+        container.RegisterForNavigation<HomeworkView>();
         container.RegisterForNavigation<HomeworkDetailsView>();
 
         container.RegisterScoped<IHomeworkRepository, HomeworkRepository>();

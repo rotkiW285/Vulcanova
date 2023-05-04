@@ -7,6 +7,8 @@ public static class Config
 {
     public static void RegisterTimetable(this IContainerRegistry container)
     {
+        container.RegisterForNavigation<TimetableView>();
+
         container.RegisterScoped<ITimetableRepository, TimetableRepository>();
         container.RegisterScoped<ITimetableService, TimetableService>();
 

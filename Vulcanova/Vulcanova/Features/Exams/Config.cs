@@ -7,6 +7,7 @@ public static class Config
 {
     public static void RegisterExams(this IContainerRegistry container)
     {
+        container.RegisterForNavigation<ExamsView>();
         container.RegisterForNavigation<ExamDetailsView>();
 
         container.RegisterScoped<IExamsRepository, ExamsRepository>();

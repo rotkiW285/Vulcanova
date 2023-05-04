@@ -11,6 +11,7 @@
                               xmlns:homework="clr-namespace:Vulcanova.Features.Homework;assembly=Vulcanova"
                               xmlns:grades="clr-namespace:Vulcanova.Features.Grades;assembly=Vulcanova"
                               xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+                              xmlns:luckyNumber="clr-namespace:Vulcanova.Features.LuckyNumber;assembly=Vulcanova"
                               x:Class="Vulcanova.Features.Dashboard.DashboardView">
     <ContentPage.Resources>
         <timetable:TimetableChangeColorConverter x:Key="ColorConverter" />
@@ -52,6 +53,9 @@
                             HasShadow="False"
                             CornerRadius="10"
                             BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenTab}" CommandParameter="{layout:NameOfType Type={x:Type luckyNumber:LuckyNumberView}}"/>
+                            </Frame.GestureRecognizers>
                             <StackLayout 
                                 Orientation="Horizontal"
                                 BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
@@ -74,6 +78,9 @@
                         CornerRadius="10"
                         HasShadow="False"
                         BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenTab}" CommandParameter="{layout:NameOfType Type={x:Type timetable:TimetableView}}"/>
+                        </Frame.GestureRecognizers>
                         <StackLayout
                             BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
                             <Label LineBreakMode="TailTruncation"
@@ -157,6 +164,9 @@
                         CornerRadius="10"
                         HasShadow="False"
                         BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenTab}" CommandParameter="{layout:NameOfType Type={x:Type grades:GradesView}}"/>
+                        </Frame.GestureRecognizers>
                         <StackLayout BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
                             <Label LineBreakMode="TailTruncation"
                                 Style="{StaticResource MediumLabelStyle}"
@@ -210,6 +220,9 @@
                         CornerRadius="10"
                         HasShadow="False"
                         BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenTab}" CommandParameter="{layout:NameOfType Type={x:Type exams:ExamsView}}"/>
+                        </Frame.GestureRecognizers>
                         <StackLayout                                                
                             BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
                             <Label LineBreakMode="TailTruncation"
@@ -263,6 +276,9 @@
                         CornerRadius="10"
                         HasShadow="False"
                         BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenTab}" CommandParameter="{layout:NameOfType Type={x:Type homework:HomeworkView}}"/>
+                        </Frame.GestureRecognizers>
                         <StackLayout
                             BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
                             <Label LineBreakMode="TailTruncation"
