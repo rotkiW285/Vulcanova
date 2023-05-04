@@ -56,8 +56,15 @@ namespace Vulcanova.Features.Dashboard
 
             RefreshData = ReactiveCommand.CreateFromObservable((bool forceRefresh) =>
             {
-                var selectedPeriodId = accountContext.Account.Periods
-                    .Single(p => p.Start <= SelectedDay && p.End >= SelectedDay).Id;
+                var selectedPeriodIdNullable = accountContext.Account.Periods
+                    .SingleOrDefault(p => p.Start <= SelectedDay && p.End >= SelectedDay)?.Id;
+
+                if (selectedPeriodIdNullable is null)
+                {
+                    return Observable.Return(new DashboardModel());
+                }
+
+                var selectedPeriodId = selectedPeriodIdNullable.Value;
 
                 return GetTimetableEntries(accountContext.Account.Id, SelectedDay, forceRefresh)
                     .SubscribeOn(RxApp.TaskpoolScheduler)
