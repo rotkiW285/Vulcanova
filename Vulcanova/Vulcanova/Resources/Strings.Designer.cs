@@ -698,5 +698,11 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("NewGrades", resourceCulture);
             }
         }
+        
+        internal static string AccountPickerTitle {
+            get {
+                return ResourceManager.GetString("AccountPickerTitle", resourceCulture);
+            }
+        }
     }
 }

@@ -339,4 +339,7 @@
     <data name="NewGrades" xml:space="preserve">
         <value>Latest grades</value>
     </data>
+    <data name="AccountPickerTitle" xml:space="preserve">
+        <value>Accounts</value>
+    </data>
 </root>
