@@ -14,6 +14,7 @@
             <StackLayout Grid.Column="0" Spacing="0">
                 <Label Text="{Binding Exam.Subject.Name}" />
                 <Label FontSize="Small" Text="{Binding Exam.Content}"
+                       MaxLines="2" LineBreakMode="TailTruncation"
                        TextColor="{AppThemeBinding Light={StaticResource LightSecondaryTextColor}, Dark={StaticResource DarkSecondaryTextColor}}" />
             </StackLayout>
             <layout:TintedCachedImage
