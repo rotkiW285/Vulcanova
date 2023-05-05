@@ -18,9 +18,9 @@ public class NotesViewModel : ViewModelBase
     public ReactiveCommand<bool, IReadOnlyCollection<Note>> GetNotesEntries { get; }
     public ReactiveCommand<int, Unit> ShowNoteDetails { get; }
 
-    // ObservableCollection can't be used here: https://github.com/xamarin/Xamarin.Forms/issues/13268
     [ObservableAsProperty] private IReadOnlyCollection<Note> Notes { get; }
 
+    // ObservableCollection can't be used here: https://github.com/xamarin/Xamarin.Forms/issues/13268
     [Reactive] public IReadOnlyCollection<NotesGroup> CurrentPeriodEntries { get; private set; }
     [Reactive] public IEnumerable<Period> Periods { get; private set; }
     [Reactive] public Period SelectedPeriod { get; private set; }
