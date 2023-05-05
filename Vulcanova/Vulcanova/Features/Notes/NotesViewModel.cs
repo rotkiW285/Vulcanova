@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using DynamicData;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -12,7 +10,6 @@ using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Notes.NoteDetails;
 using Vulcanova.Features.Shared;
-using Xamarin.CommunityToolkit.ObjectModel;
 
 namespace Vulcanova.Features.Notes;
 
@@ -20,12 +17,11 @@ public class NotesViewModel : ViewModelBase
 {
     public ReactiveCommand<bool, IReadOnlyCollection<Note>> GetNotesEntries { get; }
     public ReactiveCommand<int, Unit> ShowNoteDetails { get; }
-    public ReactiveCommand<Unit, Unit> NextSemester { get; }
-    public ReactiveCommand<Unit, Unit> PreviousSemester { get; }
 
-    public ReadOnlyObservableCollection<NotesGroup> CurrentPeriodEntries => _currentPeriodEntries;
-    private readonly ReadOnlyObservableCollection<NotesGroup> _currentPeriodEntries;
+    // ObservableCollection can't be used here: https://github.com/xamarin/Xamarin.Forms/issues/13268
+    [ObservableAsProperty] private IReadOnlyCollection<Note> Notes { get; }
 
+    [Reactive] public IReadOnlyCollection<NotesGroup> CurrentPeriodEntries { get; private set; }
     [Reactive] public IEnumerable<Period> Periods { get; private set; }
     [Reactive] public Period SelectedPeriod { get; private set; }
     [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; set; }
@@ -39,18 +35,6 @@ public class NotesViewModel : ViewModelBase
         AccountAwarePageTitleViewModel accountViewModel,
         INotesService notesService) : base(navigationService)
     {
-        var currentEntriesSource = new SourceList<NotesGroup>();
-
-        var observableFilter = this.WhenAnyValue(vm => vm.SelectedPeriod)
-            .Select<Period, Func<NotesGroup, bool>>(period => notesGroup => notesGroup.Date >= period.Start &&
-                                                                            notesGroup.Date <= period.End);
-
-        currentEntriesSource
-            .Connect()
-            .Filter(observableFilter)
-            .Bind(out _currentPeriodEntries)
-            .Subscribe();
-
         _notesService = notesService;
 
         AccountViewModel = accountViewModel;
@@ -67,17 +51,24 @@ public class NotesViewModel : ViewModelBase
         GetNotesEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
             GetEntries(accountContext.Account.Id, forceSync));
 
-        GetNotesEntries.Subscribe(notes =>
-        {
-            currentEntriesSource.Edit(items =>
-            {
-                items.Clear();
+        GetNotesEntries.ToPropertyEx(this, vm => vm.Notes);
 
-                items.AddRange(notes.GroupBy(x => x.DateModified)
+        this.WhenAnyValue(vm => vm.Notes,
+                vm => vm.SelectedPeriod)
+            .Select(tuple =>
+            {
+                var notes = tuple.Item1;
+                var period = tuple.Item2;
+        
+                return notes?
+                    .Where(n => n.DateModified >= period.Start && n.DateModified <= period.End)
+                    .GroupBy(n => n.DateModified)
                     .OrderBy(g => g.Key)
-                    .Select(g => new NotesGroup(g.Key, g.ToList())));
-            });
-        });
+                    .Select(g => new NotesGroup(g.Key, g.ToList()))
+                    .ToList()
+                    .AsReadOnly();
+            })
+            .BindTo(this, vm => vm.CurrentPeriodEntries);
 
         ShowNoteDetails = ReactiveCommand.Create((int noteId) =>
         {
