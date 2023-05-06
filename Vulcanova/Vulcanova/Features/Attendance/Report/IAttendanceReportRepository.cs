@@ -7,5 +7,5 @@ public interface IAttendanceReportRepository
 {
     Task<IEnumerable<AttendanceReport>> GetAttendanceReportsAsync(int accountId);
 
-    Task UpdateAttendanceReportsAsync(int accountId, IEnumerable<AttendanceReport> reports);
+    Task UpdateAttendanceReportsAsync(int accountId, ICollection<AttendanceReport> reports);
 }

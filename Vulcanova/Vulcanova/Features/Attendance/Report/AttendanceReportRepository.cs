@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LiteDB.Async;
 
@@ -22,12 +23,12 @@ public class AttendanceReportRepository : IAttendanceReportRepository
             .FindAsync(r => r.AccountId == accountId && r.DateGenerated == maxDate);
     }
 
-    public async Task UpdateAttendanceReportsAsync(int accountId, IEnumerable<AttendanceReport> reports)
+    public async Task UpdateAttendanceReportsAsync(int accountId, ICollection<AttendanceReport> reports)
     {
         await _liteDatabaseAsync.GetCollection<AttendanceReport>()
-            .DeleteManyAsync(a => a.AccountId == accountId);
+            .UpsertAsync(reports);
 
         await _liteDatabaseAsync.GetCollection<AttendanceReport>()
-            .UpsertAsync(reports);
+            .DeleteManyAsync(x => x.AccountId == accountId && !reports.Select(r => r.Id).Contains(x.Id));
     }
 }

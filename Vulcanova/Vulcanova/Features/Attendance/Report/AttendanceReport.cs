@@ -6,7 +6,7 @@ namespace Vulcanova.Features.Attendance.Report;
 
 public class AttendanceReport
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public DateTime DateGenerated { get; set; }
     public int AccountId { get; set; }
     public Subject Subject { get; set; }

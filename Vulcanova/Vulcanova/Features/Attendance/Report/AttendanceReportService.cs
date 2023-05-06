@@ -43,6 +43,7 @@ public class AttendanceReportService : IAttendanceReportService
 
             return new AttendanceReport
             {
+                Id = $"{accountId}/{subject.Id}",
                 AccountId = accountId,
                 DateGenerated = generationDate,
                 Absence = g.Count(x => x.PresenceType.Absence),
@@ -52,7 +53,7 @@ public class AttendanceReportService : IAttendanceReportService
             };
         });
 
-        await _attendanceReportRepository.UpdateAttendanceReportsAsync(accountId, reports);
+        await _attendanceReportRepository.UpdateAttendanceReportsAsync(accountId, reports.ToArray());
 
         MessageBus.Current.SendMessage(new AttendanceReportUpdatedEvent());
     }
