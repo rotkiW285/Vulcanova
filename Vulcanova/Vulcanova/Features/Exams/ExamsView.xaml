@@ -7,8 +7,11 @@
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:calendar="clr-namespace:Vulcanova.Core.Layout.Controls.Calendar;assembly=Vulcanova"
+                          xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
                           xmlns:accountPicker="clr-namespace:Vulcanova.Features.Auth.AccountPicker;assembly=Vulcanova"
+                          ios:Page.UseSafeArea="True"
                           Title="{x:Static resx:Strings.ExamsTabTitle}"
+                          IconImageSource="{OnPlatform iOS=calendar-number-outline@3x.png, Android=ic_calendar_number_outline}"
                           x:Class="Vulcanova.Features.Exams.ExamsView">
     <NavigationPage.TitleView>
         <accountPicker:AccountAwarePageTitleView x:Name="TitleView" />
