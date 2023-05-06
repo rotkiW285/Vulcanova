@@ -136,6 +136,16 @@ public partial class Calendar
     {
         WeekDisplay = !WeekDisplay;
     }
+
+    private void LeftArrow_OnTapped(object sender, EventArgs e)
+    {
+        SelectedDate = WeekDisplay ? SelectedDate.AddDays(-7) : SelectedDate.AddMonths(-1);
+    }
+
+    private void RightArrow_OnTapped(object sender, EventArgs e)
+    {
+        SelectedDate = WeekDisplay ? SelectedDate.AddDays(7) : SelectedDate.AddMonths(1);
+    }
 }
 
 public enum CalendarSelectionMode

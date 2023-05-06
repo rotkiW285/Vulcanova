@@ -31,18 +31,28 @@
                     </Frame>
                 </StackLayout>
                 <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End">
-                    <layout:TintedCachedImage
-                        VerticalOptions="Center"
-                        WidthRequest="17"
-                        Source="resource://Vulcanova.Resources.Icons.chevron-left.svg"
-                        TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}">
-                    </layout:TintedCachedImage>
-                    <layout:TintedCachedImage
-                        VerticalOptions="Center"
-                        WidthRequest="17"
-                        Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
-                        TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}">
-                    </layout:TintedCachedImage>
+                    <Frame Padding="4, 2" HasShadow="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="LeftArrow_OnTapped" />
+                        </Frame.GestureRecognizers>
+                        <layout:TintedCachedImage
+                            VerticalOptions="Center"
+                            WidthRequest="17"
+                            Source="resource://Vulcanova.Resources.Icons.chevron-left.svg"
+                            TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}">
+                        </layout:TintedCachedImage>
+                    </Frame>
+                    <Frame Padding="4, 2" HasShadow="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="RightArrow_OnTapped" />
+                        </Frame.GestureRecognizers>
+                        <layout:TintedCachedImage
+                            VerticalOptions="Center"
+                            WidthRequest="17"
+                            Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
+                            TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}">
+                        </layout:TintedCachedImage>
+                    </Frame>
                 </StackLayout>
             </Grid>
             <calendar:CalendarMonthGrid Grid.Row="1" x:Name="CalendarGrid"
