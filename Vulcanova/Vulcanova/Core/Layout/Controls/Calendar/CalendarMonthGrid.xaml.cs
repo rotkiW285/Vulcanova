@@ -121,12 +121,17 @@ public partial class CalendarMonthGrid : ContentView
 
         for (var day = 0; day < 7; day++)
         {
-            var text = date.ToString("ddd", CultureInfo.CurrentCulture).ToUpperInvariant()[..1];
+            var text = date.ToString("ddd", CultureInfo.CurrentCulture).ToUpperInvariant().TrimEnd('.');
             var label = new Label
             {
                 Text = text,
                 HorizontalTextAlignment = TextAlignment.Center
             };
+
+            label.SetAppThemeColor(Label.TextColorProperty, 
+                ThemeUtility.GetColor("LightSecondaryTextColor"), 
+                ThemeUtility.GetColor("DarkSecondaryTextColor"));
+
             label.FontSize = Device.GetNamedSize(NamedSize.Small, label);
 
             CalendarGrid.Children.Add(label, day, 0);
