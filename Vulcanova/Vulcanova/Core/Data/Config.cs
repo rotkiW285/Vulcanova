@@ -11,6 +11,8 @@ public static class Config
     {
         var dbPath = Path.Combine(FileSystem.AppDataDirectory, "data.db");
         var db = new LiteDatabaseAsync(dbPath);
+        
+        LiteDbMigrator.Migrate(db.UnderlyingDatabase);
 
         containerRegistry.RegisterInstance(typeof(LiteDatabaseAsync), db);
     }
