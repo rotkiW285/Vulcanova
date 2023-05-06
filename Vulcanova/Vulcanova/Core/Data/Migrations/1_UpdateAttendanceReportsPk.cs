@@ -22,6 +22,11 @@ public class UpdateAttendanceReportsPk : LiteDbMigration
             var subjectId = subject["_id"].AsInt32;
             var newId = new BsonValue($"{doc["AccountId"].AsInt32}/{subjectId}");
 
+            if (collection.Exists(d => d["_id"] == newId))
+            {
+                continue;
+            }
+
             doc["_id"] = newId;
 
             collection.Insert(doc);
