@@ -31,10 +31,10 @@
                        Text="{Binding Note.CategoryName}" />
                 <Label
                     FontSize="Small"
-                    Text="{Binding Note.Positive, Converter={StaticResource BooleanToPositiveNegativeConverter}}">
+                    Text="{Binding Note.NoteOrCategoryPositive, Converter={StaticResource BooleanToPositiveNegativeConverter}}">
                     <Label.TextColor>
                         <MultiBinding Converter="{StaticResource PositiveColorConverter}">
-                            <Binding Path="Note.Positive" />
+                            <Binding Path="Note.NoteOrCategoryPositive" />
                             <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
                         </MultiBinding>
                     </Label.TextColor>
