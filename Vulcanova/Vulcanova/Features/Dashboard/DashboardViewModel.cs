@@ -89,8 +89,7 @@ namespace Vulcanova.Features.Dashboard
             accountContext.WhenAnyValue(ctx => ctx.Account)
                 .WhereNotNull()
                 .CombineLatest(
-                    this.WhenAnyValue(vm => vm.SelectedDay)
-                        .Where(x => x != default))
+                    this.WhenAnyValue(vm => vm.SelectedDay))
                 .Select(_ => false)
                 .InvokeCommand(RefreshData);
 
