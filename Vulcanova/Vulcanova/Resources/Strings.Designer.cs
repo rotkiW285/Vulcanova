@@ -704,5 +704,41 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("AccountPickerTitle", resourceCulture);
             }
         }
+        
+        internal static string LessonClassroomLabel {
+            get {
+                return ResourceManager.GetString("LessonClassroomLabel", resourceCulture);
+            }
+        }
+        
+        internal static string TimetableEntrySubjectLabel {
+            get {
+                return ResourceManager.GetString("TimetableEntrySubjectLabel", resourceCulture);
+            }
+        }
+        
+        internal static string CommonChangeExemption {
+            get {
+                return ResourceManager.GetString("CommonChangeExemption", resourceCulture);
+            }
+        }
+        
+        internal static string CommonChangeSubstitution {
+            get {
+                return ResourceManager.GetString("CommonChangeSubstitution", resourceCulture);
+            }
+        }
+        
+        internal static string CommonChangeRescheduled {
+            get {
+                return ResourceManager.GetString("CommonChangeRescheduled", resourceCulture);
+            }
+        }
+        
+        internal static string CommonChangeClassAbsence {
+            get {
+                return ResourceManager.GetString("CommonChangeClassAbsence", resourceCulture);
+            }
+        }
     }
 }

@@ -41,14 +41,14 @@
                 </Label>
             </StackLayout>
             <StackLayout Padding="16, 8" Spacing="16">
-                <controls:FieldView Name="{x:Static resx:Strings.NoteCreatorLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCreatorLabel}"
                                     Value="{Binding Note.CreatorName}" />
-                <controls:FieldView Name="{x:Static resx:Strings.NotePointsLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.NotePointsLabel}"
                                     IsVisible="{Binding Note.Points, Converter={StaticResource NullToBooleanConverter}}"
                                     Value="{Binding Note.Points}" />
-                <controls:FieldView Name="{x:Static resx:Strings.NoteCreatedOnLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCreatedOnLabel}"
                                     Value="{Binding  Note.DateModified, StringFormat='{0:d}'}" />
-                <controls:FieldView Name="{x:Static resx:Strings.NoteCommentLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCommentLabel}"
                                     Value="{Binding Note.Content}" />
             </StackLayout>
         </StackLayout>

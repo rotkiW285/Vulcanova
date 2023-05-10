@@ -21,18 +21,28 @@
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid Padding="16, 8" BindingContext="{x:Reference View}">
+        <Grid Padding="20, 8" BindingContext="{x:Reference View}" ColumnSpacing="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="46" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Label
                 VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center"
+                HorizontalTextAlignment="Start"
                 FontSize="Large"
+                Padding="0, 0, 10, 0"
                 Text="{Binding Entry.No}" />
-            <StackLayout Grid.Column="1" Spacing="0">
+            <StackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                <Label
+                    FontSize="Small"
+                    Text="{Binding Entry.Start, StringFormat='{0:HH:mm}'}" />
+                <Label
+                    FontSize="Small"
+                    Text="{Binding Entry.End, StringFormat='{0:HH:mm}'}" />
+            </StackLayout>
+            <StackLayout Grid.Column="2" Spacing="0">
                 <Label
                     Text="{Binding Entry.SubjectName}"
                     TextDecorations="{Binding Entry.Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}" />
@@ -45,14 +55,18 @@
                 <Label IsVisible="{Binding Entry.Change.ChangeNote, Converter={StaticResource NullToBooleanConverter}}"
                        FontSize="Small" Text="{Binding Entry.Change.ChangeNote}" />
             </StackLayout>
-            <StackLayout Grid.Column="2" Spacing="0" VerticalOptions="Center">
-                <Label
-                    FontSize="Small"
-                    Text="{Binding Entry.Start, StringFormat='{0:HH:mm}'}" />
-                <Label
-                    FontSize="Small"
-                    Text="{Binding Entry.End, StringFormat='{0:HH:mm}'}" />
-            </StackLayout>
+            <Frame
+                Grid.Column="3"
+                HasShadow="False"
+                Padding="0">
+                <layout:TintedCachedImage
+                    VerticalOptions="Center"
+                    HeightRequest="32"
+                    WidthRequest="32"
+                    Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
+                    TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                </layout:TintedCachedImage>
+            </Frame>
         </Grid>
     </ContentView.Content>
 </ContentView>

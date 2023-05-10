@@ -127,7 +127,7 @@
                                                 <Label.Text>
                                                     <MultiBinding StringFormat="{}{0}{1}">
                                                         <Binding Path="SubjectName" />
-                                                        <Binding Path="RoomName" StringFormat=" ({0})" TargetNullValue="" />
+                                                        <Binding Path="RoomName.Value" StringFormat=" ({0})" TargetNullValue="" />
                                                     </MultiBinding>
                                                 </Label.Text>
                                                 <Label.TextColor>

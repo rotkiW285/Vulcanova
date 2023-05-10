@@ -32,9 +32,10 @@ public static class TimetableBuilder
 
             if (lessonToUpdate != null)
             {
-                lessonToUpdate.SubjectName = change.Subject?.Name ?? lessonToUpdate.SubjectName;
-                lessonToUpdate.RoomName = change.RoomName ?? lessonToUpdate.RoomName;
-                lessonToUpdate.TeacherName = change.TeacherName ?? lessonToUpdate.TeacherName;
+                lessonToUpdate.SubjectName.Override = change.Subject?.Name;
+                lessonToUpdate.RoomName.Override = change.RoomName;
+                lessonToUpdate.TeacherName.Override = change.TeacherName;
+
                 lessonToUpdate.Change = new TimetableListEntry.ChangeDetails
                 {
                     ChangeNote = change.Note ?? change.Reason,
@@ -47,20 +48,48 @@ public static class TimetableBuilder
                 }
             }
 
-            
+
             if (change.Change.Type is ChangeType.Rescheduled
                 // for now a hack to not display "ghost" lessons
                 && (change.Subject != null || lessonToUpdate != null))
             {
                 timetable.Add(new TimetableListEntry
                 {
-                    No = change.TimeSlot?.Position ?? lessonToUpdate?.No ?? 0,
-                    Start = change.TimeSlot?.Start ?? lessonToUpdate?.Start ?? DateTime.MaxValue,
-                    End = change.TimeSlot?.End ?? lessonToUpdate?.End ?? DateTime.MaxValue,
-                    Date = change.ChangeDate?.Date ?? change.LessonDate.Date,
-                    SubjectName = change.Subject?.Name ?? lessonToUpdate?.SubjectName,
-                    RoomName = change.RoomName ?? lessonToUpdate?.RoomName,
-                    TeacherName = change.TeacherName ?? lessonToUpdate?.TeacherName,
+                    No = new TimetableListEntry.OverridableValue<int>
+                    {
+                        Override = change.TimeSlot?.Position,
+                        OriginalValue = lessonToUpdate?.No ?? 0
+                    },
+                    Start = new TimetableListEntry.OverridableValue<DateTime>
+                    {
+                        Override = change.TimeSlot?.Start,
+                        OriginalValue = lessonToUpdate?.Start ?? DateTime.MaxValue
+                    },
+                    End = new TimetableListEntry.OverridableValue<DateTime>
+                    {
+                        Override = change.TimeSlot?.End,
+                        OriginalValue = lessonToUpdate?.End ?? DateTime.MaxValue
+                    },
+                    Date = new TimetableListEntry.OverridableValue<DateTime>
+                    {
+                        Override = change.ChangeDate?.Date,
+                        OriginalValue = change.LessonDate.Date
+                    },
+                    SubjectName = new TimetableListEntry.OverridableRefValue<string>
+                    {
+                        Override = change.Subject?.Name,
+                        OriginalValue = lessonToUpdate?.SubjectName
+                    },
+                    RoomName = new TimetableListEntry.OverridableRefValue<string>
+                    {
+                        Override = change.RoomName,
+                        OriginalValue = lessonToUpdate?.RoomName
+                    },
+                    TeacherName = new TimetableListEntry.OverridableRefValue<string>
+                    {
+                        Override = change.TeacherName,
+                        OriginalValue = lessonToUpdate?.TeacherName,
+                    },
                     Change = new TimetableListEntry.ChangeDetails
                     {
                         ChangeNote = change.Note ?? change.Reason,
@@ -72,7 +101,7 @@ public static class TimetableBuilder
         }
 
         var result = timetable
-            .GroupBy(l => l.Date)
+            .GroupBy(l => l.Date.Value)
             .ToDictionary(l => l.Key,
                 l => (IReadOnlyCollection<TimetableListEntry>) l.OrderBy(x => x.No)
                     .ThenByDescending(x => x.Change != null).ToList().AsReadOnly());

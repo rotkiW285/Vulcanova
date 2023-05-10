@@ -28,15 +28,15 @@
                        Text="{Binding Homework.Subject.Name}" />
             </StackLayout>
             <StackLayout Padding="16, 8" Spacing="16">
-                <controls:FieldView Name="{x:Static resx:Strings.HomeworkCreatorLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkCreatorLabel}"
                                     Value="{Binding Homework.CreatorName}" />
-                <controls:FieldView Name="{x:Static resx:Strings.HomeworkCreatedOnLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkCreatedOnLabel}"
                                     Value="{Binding Homework.DateCreated, StringFormat='{0:d}'}" />
-                <controls:FieldView Name="{x:Static resx:Strings.HomeworkDueLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkDueLabel}"
                                     Value="{Binding Homework.Deadline, StringFormat='{0:d}'}" />
-                <controls:FieldView Name="{x:Static resx:Strings.HomeworkContentLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkContentLabel}"
                                     Value="{Binding Homework.Content}" />
-                <controls:FieldView Name="{x:Static resx:Strings.HomeworkRequiresAnswerLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkRequiresAnswerLabel}"
                                     Value="{Binding Homework.IsAnswerRequired, Converter={StaticResource YesNoConverter}}" />
             </StackLayout>
         </StackLayout>

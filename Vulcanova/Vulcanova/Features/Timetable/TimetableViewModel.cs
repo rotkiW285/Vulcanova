@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
-using Vulcanova.Features.Attendance;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Shared;
 using Vulcanova.Features.Timetable.Changes;
-using Vulcanova.Uonet.Api.Schedule;
 
 namespace Vulcanova.Features.Timetable;
 
@@ -23,6 +22,8 @@ public class TimetableViewModel : ViewModelBase
 
     [Reactive] public IEnumerable<TimetableListEntry> CurrentDayEntries { get; private set; }
     [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
+    
+    public ReactiveCommand<int?, Unit> ShowEntryDetails { get; }
 
     [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
 
@@ -70,6 +71,16 @@ public class TimetableViewModel : ViewModelBase
 
                 CurrentDayEntries = null;
             });
+        
+        ShowEntryDetails = ReactiveCommand.CreateFromTask(async (int? entryId) =>
+        {
+            var entry = CurrentDayEntries.Single(e => e.OriginalId == entryId);
+
+            await navigationService.NavigateAsync(nameof(TimetableEntryDetailsView),
+                (nameof(TimetableEntryDetailsView.TimetableEntry), entry));
+
+            return Unit.Default;
+        });
 
         accountContext.WhenAnyValue(ctx => ctx.Account)
             .WhereNotNull()

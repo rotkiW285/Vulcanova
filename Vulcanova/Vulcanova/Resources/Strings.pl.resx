@@ -342,4 +342,22 @@
     <data name="AccountPickerTitle" xml:space="preserve">
         <value>Konta</value>
     </data>
+    <data name="LessonClassroomLabel" xml:space="preserve">
+        <value>Sala</value>
+    </data>
+    <data name="TimetableEntrySubjectLabel" xml:space="preserve">
+        <value>Przedmiot</value>
+    </data>
+    <data name="CommonChangeExemption" xml:space="preserve">
+        <value>Uczniowie zwolnieni</value>
+    </data>
+    <data name="CommonChangeSubstitution" xml:space="preserve">
+        <value>Zastępstwo</value>
+    </data>
+    <data name="CommonChangeRescheduled" xml:space="preserve">
+        <value>Przeniesiona</value>
+    </data>
+    <data name="CommonChangeClassAbsence" xml:space="preserve">
+        <value>Nieobecność oddziału</value>
+    </data>
 </root>

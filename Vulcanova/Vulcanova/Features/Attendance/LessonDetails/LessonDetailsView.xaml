@@ -35,12 +35,12 @@
                         IsVisible="False" />
             </StackLayout>
             <StackLayout Padding="16, 8" Spacing="16">
-                <controls:FieldView Name="{x:Static resx:Strings.LessonDateLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonDateLabel}"
                                     Value="{Binding Lesson.Date, StringFormat='{0:d}'}" />
                 <lessonDetails:LessonTimeView Lesson="{Binding Lesson}" />
-                <controls:FieldView Name="{x:Static resx:Strings.LessonTeacherLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonTeacherLabel}"
                                     Value="{Binding Lesson.TeacherName}" />
-                <controls:FieldView Name="{x:Static resx:Strings.LessonSubjectLabel}" 
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonSubjectLabel}" 
                                     Value="{Binding Lesson.Topic}" />
             </StackLayout>
         </StackLayout>

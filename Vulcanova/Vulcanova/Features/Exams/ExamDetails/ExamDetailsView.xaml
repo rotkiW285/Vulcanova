@@ -27,13 +27,13 @@
                 <Label Text="{Binding Exam.Type}" />
             </StackLayout>
             <StackLayout Padding="16, 8" Spacing="16">
-                <controls:FieldView Name="{x:Static resx:Strings.ExamsCreatorLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.ExamsCreatorLabel}"
                                     Value="{Binding Exam.CreatorName}" />
-                <controls:FieldView Name="{x:Static resx:Strings.ExamsDeadlineLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.ExamsDeadlineLabel}"
                                     Value="{Binding Exam.Deadline, StringFormat='{0:d}'}" />
-                <controls:FieldView Name="{x:Static resx:Strings.ExamsCommentLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.ExamsCommentLabel}"
                                     Value="{Binding Exam.Content}" />
-                <controls:FieldView Name="{x:Static resx:Strings.ExamsCreatedOnLabel}"
+                <controls:HtmlFieldView Name="{x:Static resx:Strings.ExamsCreatedOnLabel}"
                                     Value="{Binding Exam.DateCreated, StringFormat='{0:d}'}" />
             </StackLayout>
         </StackLayout>
