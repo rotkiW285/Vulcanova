@@ -23,10 +23,10 @@
         </Style>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid Padding="16, 8">
+        <Grid Padding="20, 8" ColumnSpacing="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0" x:Name="Col1" />
-                <ColumnDefinition Width="46" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -35,6 +35,7 @@
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center"
                    FontSize="Large"
+                   Padding="0, 0, 20, 0"
                    Text="{Binding Lesson.No}" />
             <StackLayout Grid.Column="2" Spacing="0">
                 <Label> 
