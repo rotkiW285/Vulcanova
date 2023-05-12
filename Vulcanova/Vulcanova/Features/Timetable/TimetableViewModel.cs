@@ -23,7 +23,7 @@ public class TimetableViewModel : ViewModelBase
     [Reactive] public IEnumerable<TimetableListEntry> CurrentDayEntries { get; private set; }
     [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
     
-    public ReactiveCommand<int?, Unit> ShowEntryDetails { get; }
+    public ReactiveCommand<TimetableListEntry, Unit> ShowEntryDetails { get; }
 
     [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; private set; }
 
@@ -72,10 +72,8 @@ public class TimetableViewModel : ViewModelBase
                 CurrentDayEntries = null;
             });
         
-        ShowEntryDetails = ReactiveCommand.CreateFromTask(async (int? entryId) =>
+        ShowEntryDetails = ReactiveCommand.CreateFromTask(async (TimetableListEntry entry) =>
         {
-            var entry = CurrentDayEntries.Single(e => e.OriginalId == entryId);
-
             await navigationService.NavigateAsync(nameof(TimetableEntryDetailsView),
                 (nameof(TimetableEntryDetailsView.TimetableEntry), entry));
 

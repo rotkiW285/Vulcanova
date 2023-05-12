@@ -36,7 +36,7 @@
                             <StackLayout Padding="0, 1" Spacing="0">
                                 <local:TimetableListEntryView Entry="{Binding .}"
                                                               xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type local:TimetableViewModel}}, Path=ShowEntryDetails}"
-                                                              xe:Commands.TapParameter="{Binding OriginalId}"/>
+                                                              xe:Commands.TapParameter="{Binding .}"/>
                                 <BoxView Style="{StaticResource SeparatorStyle}" />
                             </StackLayout>
                         </DataTemplate>
