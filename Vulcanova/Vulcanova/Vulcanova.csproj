@@ -78,6 +78,7 @@
       <EmbeddedResource Include="Resources\Icons\attach-outline.svg" />
       <EmbeddedResource Include="Resources\Icons\pencil-outline.svg" />
       <EmbeddedResource Include="Resources\Icons\arrow-up-circle.svg" />
+      <EmbeddedResource Include="Resources\Icons\arrow-undo.svg" />
     </ItemGroup>
 
     <ItemGroup>

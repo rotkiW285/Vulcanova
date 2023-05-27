@@ -58,7 +58,7 @@ public class MessagesViewModel : ViewModelBase
         {
             var message = Messages.Single(x => x.Id == messageId);
 
-            await navigationService.NavigateAsync(nameof(MessageView), (nameof(MessageView.Message), message));
+            await navigationService.NavigateAsync(nameof(MessageView), (nameof(MessageViewModel.Message), message));
 
             if (!appSettings.DisableReadReceipts)
             {

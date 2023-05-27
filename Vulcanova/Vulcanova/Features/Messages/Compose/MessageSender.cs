@@ -20,20 +20,22 @@ public class MessageSender : IMessageSender
         _apiClientFactory = apiClientFactory;
     }
 
-    public async Task SendMessageAsync(int accountId, AddressBookEntry recipient, string subject, string message)
+    public async Task SendMessageAsync(int accountId, AddressBookEntry recipient, string subject, string message,
+        Guid? threadKey)
     {
         var account = await _accountRepository.GetByIdAsync(accountId);
 
         var apiClient = await _apiClientFactory.GetAuthenticatedAsync(account);
 
-        var threadKey = Guid.NewGuid();
+        var isNewThread = threadKey == null;
+        threadKey ??= Guid.NewGuid();
 
         var request = new SendMessageRequest
         {
             Id = Guid.NewGuid(),
-            GlobalKey = threadKey,
+            GlobalKey = isNewThread ? threadKey.Value : Guid.NewGuid(),
             Partition = account.Partition,
-            ThreadKey = threadKey,
+            ThreadKey = threadKey.Value,
             Subject = subject,
             Content = PrepareMessageForSending(message),
             Status = 1,

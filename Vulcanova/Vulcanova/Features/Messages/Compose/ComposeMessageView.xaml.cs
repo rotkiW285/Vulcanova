@@ -18,21 +18,6 @@ public partial class ComposeMessageView
 
         this.WhenActivated(disposable =>
         {
-            this.Bind(ViewModel, vm => vm.RecipientFilter, v => v.ToEntry.Text)
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.FilteredAddressBookEntries, v => v.AddressBookSuggestions.ItemsSource)
-                .DisposeWith(disposable);
-
-            this.Bind(ViewModel, vm => vm.Subject, v => v.SubjectEntry.Text)
-                .DisposeWith(disposable);
-
-            this.Bind(ViewModel, vm => vm.Content, v => v.ContentEdior.Text)
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.Send, v => v.SendTapGestureRecognizer.Command)
-                .DisposeWith(disposable);
-
             ToEntry.Events()
                 .Focused
                 .Subscribe(_ => ViewModel.IsPickingRecipient = true)

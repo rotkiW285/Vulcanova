@@ -39,7 +39,7 @@
                     TintColor="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
                     x:Name="SendImage">
                     <layout:TintedCachedImage.GestureRecognizers>
-                        <TapGestureRecognizer x:Name="SendTapGestureRecognizer" />
+                        <TapGestureRecognizer Command="{Binding Send}" />
                     </layout:TintedCachedImage.GestureRecognizers>
                 </layout:TintedCachedImage>
             </StackLayout>
@@ -48,13 +48,17 @@
                     <Label
                         TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}"
                         Text="{x:Static resx:Strings.ComposeMessageToLabel}" />
-                    <Entry Grid.Column="1" x:Name="ToEntry" IsTextPredictionEnabled="False">
+                    <Entry Grid.Column="1" 
+                           x:Name="ToEntry"
+                           Text="{Binding RecipientFilter}" 
+                           IsTextPredictionEnabled="False">
                         <Entry.Effects>
                             <layout:BorderlessEntryEffect />
                         </Entry.Effects>
                     </Entry>
                 </Grid>
                 <ListView x:Name="AddressBookSuggestions"
+                          ItemsSource="{Binding FilteredAddressBookEntries}"
                           HasUnevenRows="True"
                           BackgroundColor="Transparent"
                           IsVisible="False"
@@ -85,7 +89,7 @@
                     <Label
                         TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}"
                         Text="{x:Static resx:Strings.ComposeMessageSubjectLabel}" />
-                    <Entry Grid.Column="1" x:Name="SubjectEntry">
+                    <Entry Grid.Column="1" Text="{Binding Subject}">
                         <Entry.Effects>
                             <layout:BorderlessEntryEffect />
                         </Entry.Effects>
@@ -93,7 +97,7 @@
                 </Grid>
                 <BoxView Style="{StaticResource SeparatorStyle}" />
             </StackLayout>
-            <Editor Grid.Row="2" BackgroundColor="Transparent" Margin="16, 0" x:Name="ContentEdior" />
+            <Editor Grid.Row="2" BackgroundColor="Transparent" Margin="16, 0" Text="{Binding Content}" />
         </Grid>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>

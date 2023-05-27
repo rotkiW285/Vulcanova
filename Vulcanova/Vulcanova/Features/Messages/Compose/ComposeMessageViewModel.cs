@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Text.RegularExpressions;
 using DynamicData;
 using Prism.Navigation;
 using ReactiveUI;
@@ -36,6 +37,8 @@ public class ComposeMessageViewModel : ViewModelBase, IInitialize
     [Reactive] public string Content { get; set; } = string.Empty;
 
     public ReactiveCommand<Unit, Unit> Send { get; }
+
+    private Guid? _threadKey;
 
     public ComposeMessageViewModel(
         IAddressBookProvider addressBookProvider,
@@ -105,7 +108,9 @@ public class ComposeMessageViewModel : ViewModelBase, IInitialize
         Send = ReactiveCommand.CreateFromTask(async _
                 =>
             {
-                await messageSender.SendMessageAsync(accountContext.Account.Id, Recipient, Subject, Content);
+                await messageSender.SendMessageAsync(accountContext.Account.Id, Recipient, Subject, Content, 
+                    _threadKey);
+
                 await navigationService.GoBackAsync();
             },
             canExecute: canSend);
@@ -114,5 +119,28 @@ public class ComposeMessageViewModel : ViewModelBase, IInitialize
     public void Initialize(INavigationParameters parameters)
     {
         MessageBoxId = (Guid) parameters[nameof(MessageBoxId)];
+
+        if (parameters.TryGetValue<Message>("InReplyTo", out var message))
+        {
+            var cleanContent = message.Content.Replace("<br>", "\n");
+
+            cleanContent = Regex.Replace(cleanContent, @"<p>(.*?)<\/p>", 
+                m => m.Groups[1].Value + Environment.NewLine, RegexOptions.Singleline);
+
+            Content = $"\n\nOd: {message.Sender.Name}\nData: {message.DateSent:G}\n\n{cleanContent}";
+            Subject = $"RE: {message.Subject}";
+
+            // TODO: Perhaps try to look-up the entry in the DB?
+            Recipient = new AddressBookEntry
+            {
+                Id = message.Sender.GlobalKey,
+                MessageBoxId = MessageBoxId.Value,
+                Name = message.Sender.Name
+            };
+
+            RecipientFilter = message.Sender.Name;
+
+            _threadKey = message.ThreadKey;
+        }
     }
 }
