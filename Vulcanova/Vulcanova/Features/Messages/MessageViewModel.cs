@@ -29,6 +29,9 @@ public class MessageViewModel : ReactiveObject, IInitialize
 
     [ObservableAsProperty]
     public int ReadBy { get; set; }
+    
+    [ObservableAsProperty]
+    public bool CanReply { get; set; }
 
     public MessageViewModel(IPageDialogService dialogService, INavigationService navigationService)
     {
@@ -59,7 +62,11 @@ public class MessageViewModel : ReactiveObject, IInitialize
             {
                 {nameof(ComposeMessageViewModel.MessageBoxId), Message.MessageBoxId},
                 {"InReplyTo", Message}
-            }));
+            }), this.WhenAnyValue(vm => vm.Message)
+            .WhereNotNull()
+            .Select(m => m.Folder == MessageBoxFolder.Received));
+
+        Reply.CanExecute.ToPropertyEx(this, vm => vm.CanReply);
 
         this.WhenAnyValue(vm => vm.Message)
             .WhereNotNull()

@@ -104,7 +104,7 @@
             </ScrollView>
             <controls:FloatingButton
                 Command="{Binding Reply}"
-                IsVisible="True"
+                IsVisible="{Binding CanReply}"
                 Source="resource://Vulcanova.Resources.Icons.arrow-undo.svg"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-72}"
                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-155}" />
