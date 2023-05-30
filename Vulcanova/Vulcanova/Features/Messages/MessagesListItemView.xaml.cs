@@ -1,3 +1,5 @@
+using System;
+using ReactiveUI;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,13 +21,27 @@ public partial class MessagesListItemView
     public MessagesListItemView()
     {
         InitializeComponent();
+
+        MessageBus.Current.Listen<MessageReadEvent>()
+            .Subscribe(@event =>
+            {
+                Message.DateRead = @event.DateRead;
+                UpdateMessageReadIndicator();
+            });
     }
-    
-    
+
     private static void MessageChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var view = (MessagesListItemView) bindable;
 
         view.ClippyBoi.IsVisible = ((Message) newValue)?.Attachments.Count > 0;
+        view.UpdateMessageReadIndicator();
+    }
+
+    private void UpdateMessageReadIndicator()
+    {
+        MessageSubjectLabel.FontAttributes = Message.DateRead != null
+            ? FontAttributes.None
+            : FontAttributes.Bold;
     }
 }

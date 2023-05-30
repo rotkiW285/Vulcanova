@@ -24,7 +24,8 @@
             <StackLayout BackgroundColor="Transparent" Grid.Column="1" Spacing="0">
                 <Label FontAttributes="Bold" MaxLines="1" LineBreakMode="TailTruncation"
                        Text="{Binding Message, Converter={StaticResource CorrespondentNameConverter}}" />
-                <Label FontSize="Small" MaxLines="1" LineBreakMode="TailTruncation" Text="{Binding Message.Subject}" />
+                <Label x:Name="MessageSubjectLabel" FontSize="Small" MaxLines="1" LineBreakMode="TailTruncation"
+                       Text="{Binding Message.Subject}" />
             </StackLayout>
             <layout:TintedCachedImage
                 x:Name="ClippyBoi"

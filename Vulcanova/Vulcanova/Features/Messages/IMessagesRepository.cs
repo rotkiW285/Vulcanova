@@ -10,4 +10,8 @@ public interface IMessagesRepository
     Task<IEnumerable<Message>> GetMessagesByBoxAsync(Guid messageBoxId, MessageBoxFolder folder);
 
     Task UpsertMessagesForBoxAsync(Guid messageBoxId, IEnumerable<Message> messages);
+
+    Task<Message> GetMessageAsync(Guid messageBoxId, Guid messageId);
+
+    Task UpdateMessageAsync(Message message);
 }

@@ -26,4 +26,15 @@ public class MessagesRepository : IMessagesRepository
         await _db.GetCollection<Message>()
             .UpsertAsync(messages);
     }
+
+    public async Task<Message> GetMessageAsync(Guid messageBoxId, Guid messageId)
+    {
+        return await _db.GetCollection<Message>()
+            .FindOneAsync(m => m.MessageBoxId == messageBoxId && m.Id == messageId);
+    }
+
+    public async Task UpdateMessageAsync(Message message)
+    {
+        await _db.GetCollection<Message>().UpdateAsync(message);
+    }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ReactiveUI;
 using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Auth.Accounts;
@@ -68,6 +69,13 @@ public class MessagesService : UonetResourceProvider, IMessagesService
 
         await apiClient.PostAsync(ChangeMessageStatusRequest.ApiEndpoint,
             new ChangeMessageStatusRequest(messageBoxId, messageId, ChangeMessageStatusRequest.SetMessageStatus.Read));
+
+        var message = await _messagesRepository.GetMessageAsync(messageBoxId, messageId);
+        message.DateRead = DateTime.UtcNow;
+
+        await _messagesRepository.UpdateMessageAsync(message);
+
+        MessageBus.Current.SendMessage(new MessageReadEvent(messageBoxId, messageId, message.DateRead.Value));
     }
 
     private async Task<Message[]> FetchMessagesByBoxAsync(Account account, Guid messageBoxId, MessageBoxFolder folder)
@@ -99,3 +107,5 @@ public class MessagesService : UonetResourceProvider, IMessagesService
 
     protected override TimeSpan OfflineDataLifespan => TimeSpan.FromHours(1);
 }
+
+public record MessageReadEvent(Guid MessageBoxId, Guid MessageId, DateTime DateRead);
