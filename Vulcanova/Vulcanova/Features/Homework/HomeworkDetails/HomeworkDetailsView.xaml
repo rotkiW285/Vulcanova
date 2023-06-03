@@ -27,18 +27,20 @@
                        Margin="{OnPlatform iOS='0,0,32,0'}"
                        Text="{Binding Homework.Subject.Name}" />
             </StackLayout>
-            <StackLayout Padding="16, 8" Spacing="16">
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkCreatorLabel}"
-                                    Value="{Binding Homework.CreatorName}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkCreatedOnLabel}"
-                                    Value="{Binding Homework.DateCreated, StringFormat='{0:d}'}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkDueLabel}"
-                                    Value="{Binding Homework.Deadline, StringFormat='{0:d}'}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkContentLabel}"
-                                    Value="{Binding Homework.Content}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkRequiresAnswerLabel}"
-                                    Value="{Binding Homework.IsAnswerRequired, Converter={StaticResource YesNoConverter}}" />
-            </StackLayout>
+            <ScrollView>
+                <StackLayout Padding="16, 8" Spacing="16">
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkCreatorLabel}"
+                                            Value="{Binding Homework.CreatorName}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkCreatedOnLabel}"
+                                            Value="{Binding Homework.DateCreated, StringFormat='{0:d}'}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkDueLabel}"
+                                            Value="{Binding Homework.Deadline, StringFormat='{0:d}'}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkContentLabel}"
+                                            Value="{Binding Homework.Content}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.HomeworkRequiresAnswerLabel}"
+                                            Value="{Binding Homework.IsAnswerRequired, Converter={StaticResource YesNoConverter}}" />
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentView.Content>
 </layout:SheetPage>

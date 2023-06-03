@@ -29,20 +29,22 @@
                        Text="{Binding Lesson.Subject.Name}" />
                 <Label Text="{Binding Lesson.PresenceType.Name}"
                        TextColor="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
-                <Button x:Name="JustifyAbsenceButton" 
+                <Button x:Name="JustifyAbsenceButton"
                         Text="{x:Static resx:Strings.LessonJustifyAbsenceButton}"
                         Clicked="JustifyButton_OnClicked"
                         IsVisible="False" />
             </StackLayout>
-            <StackLayout Padding="16, 8" Spacing="16">
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonDateLabel}"
-                                    Value="{Binding Lesson.Date, StringFormat='{0:d}'}" />
-                <lessonDetails:LessonTimeView Lesson="{Binding Lesson}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonTeacherLabel}"
-                                    Value="{Binding Lesson.TeacherName}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonSubjectLabel}" 
-                                    Value="{Binding Lesson.Topic}" />
-            </StackLayout>
+            <ScrollView>
+                <StackLayout Padding="16, 8" Spacing="16">
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonDateLabel}"
+                                            Value="{Binding Lesson.Date, StringFormat='{0:d}'}" />
+                    <lessonDetails:LessonTimeView Lesson="{Binding Lesson}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonTeacherLabel}"
+                                            Value="{Binding Lesson.TeacherName}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.LessonSubjectLabel}"
+                                            Value="{Binding Lesson.Topic}" />
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </layout:SheetPage.Content>
 </layout:SheetPage>

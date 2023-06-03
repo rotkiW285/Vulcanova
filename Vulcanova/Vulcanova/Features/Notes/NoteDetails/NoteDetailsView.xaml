@@ -40,17 +40,19 @@
                     </Label.TextColor>
                 </Label>
             </StackLayout>
-            <StackLayout Padding="16, 8" Spacing="16">
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCreatorLabel}"
-                                    Value="{Binding Note.CreatorName}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.NotePointsLabel}"
-                                    IsVisible="{Binding Note.Points, Converter={StaticResource NullToBooleanConverter}}"
-                                    Value="{Binding Note.Points}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCreatedOnLabel}"
-                                    Value="{Binding  Note.DateModified, StringFormat='{0:d}'}" />
-                <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCommentLabel}"
-                                    Value="{Binding Note.Content}" />
-            </StackLayout>
+            <ScrollView>
+                <StackLayout Padding="16, 8" Spacing="16">
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCreatorLabel}"
+                                            Value="{Binding Note.CreatorName}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.NotePointsLabel}"
+                                            IsVisible="{Binding Note.Points, Converter={StaticResource NullToBooleanConverter}}"
+                                            Value="{Binding Note.Points}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCreatedOnLabel}"
+                                            Value="{Binding  Note.DateModified, StringFormat='{0:d}'}" />
+                    <controls:HtmlFieldView Name="{x:Static resx:Strings.NoteCommentLabel}"
+                                            Value="{Binding Note.Content}" />
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </layout:SheetPage.Content>
 </layout:SheetPage>
