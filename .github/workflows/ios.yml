@@ -33,7 +33,7 @@ jobs:
       - name: Create GoogleService-Info.plist file
         run: 'echo "$GOOGLE_SERVICE__INFO_PLIST" > Vulcanova/Vulcanova.iOS/GoogleService-Info.plist'
         env:
-          GOOGLE_SERVICE__INFO_PLIST: ${{ secrets.$GOOGLE_SERVICE__INFO_PLIST }}
+          GOOGLE_SERVICE__INFO_PLIST: ${{ secrets.GOOGLE_SERVICE__INFO_PLIST }}
 
       - name: Build
         run: /Library/Frameworks/Mono.framework/Versions/Current/Commands/mono '/Applications/Visual Studio.app/Contents/MonoBundle/MSBuild/Current/bin/MSBuild.dll'  Vulcanova/Vulcanova.iOS/Vulcanova.iOS.csproj /p:Configuration='Release' /t:Build /p:Platform='iPhone' /p:BuildIpa=true /p:EnableCodeSigning=false
