@@ -16,5 +16,8 @@ public static class Config
 
         container.RegisterScoped<IFinalGradesRepository, FinalGradesRepository>();
         container.RegisterScoped<IFinalGradesService, FinalGradesService>();
+
+        container.RegisterScoped<IAverageGradesRepository, AverageGradesRepository>();
+        container.RegisterScoped<IAverageGradesService, AverageGradesService>();
     }
 }

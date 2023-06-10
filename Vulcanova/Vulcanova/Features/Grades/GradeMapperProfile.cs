@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using AutoMapper;
 using Vulcanova.Features.Grades.Final;
 using Vulcanova.Uonet.Api.Common.Models;
@@ -25,5 +26,11 @@ public class GradeMapperProfile : Profile
             .ForMember(f => f.Id, cfg => cfg.MapFrom(src => $"{src.PeriodId}_{src.Id}"))
             .ForMember(f => f.PredictedGrade, cfg => cfg.MapFrom(src => src.Entry1))
             .ForMember(f => f.FinalGrade, cfg => cfg.MapFrom(src => src.Entry2));
+
+        CreateMap<AverageGradePayload, AverageGrade>()
+            .ForMember(a => a.SubjectId, cfg => cfg.MapFrom(src => src.Subject.Id))
+            .ForMember(a => a.Average,
+                cfg => cfg.MapFrom(src =>
+                    decimal.Parse(src.Average, NumberStyles.Number, CultureInfo.CreateSpecificCulture("pl-PL"))));
     }
 }
