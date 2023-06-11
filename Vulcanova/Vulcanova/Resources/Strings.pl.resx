@@ -360,4 +360,7 @@
     <data name="CommonChangeClassAbsence" xml:space="preserve">
         <value>Nieobecność oddziału</value>
     </data>
+    <data name="SettingsForceAverageCalculationByApp" xml:space="preserve">
+        <value>Wymuś liczenie średniej przez aplikację</value>
+    </data>
 </root>

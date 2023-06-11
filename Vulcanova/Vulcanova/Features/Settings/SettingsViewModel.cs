@@ -21,6 +21,12 @@ public class SettingsViewModel : ViewModelBase
         get => _appSettings.DisableReadReceipts;
         set => _appSettings.DisableReadReceipts = value;
     }
+    
+    public bool ForceAverageCalculationByApp
+    {
+        get => _appSettings.ForceAverageCalculationByApp;
+        set => _appSettings.ForceAverageCalculationByApp = value;
+    }
 
     public SettingsViewModel(INavigationService navigationService, AppSettings appSettings) : base(navigationService)
     {

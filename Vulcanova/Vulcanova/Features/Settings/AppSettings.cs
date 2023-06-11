@@ -12,6 +12,10 @@ public class AppSettings : ReactiveObject
     private const string DisableReadReceiptsKey = "Options_DisableReadReceipts";
     [Reactive] public bool DisableReadReceipts { get; set; } = Preferences.Get(DisableReadReceiptsKey, false);
 
+    private const string ForceAverageCalculationByAppKey = "Options_ForceAverageCalculationByApp";
+    [Reactive]
+    public bool ForceAverageCalculationByApp { get; set; } = Preferences.Get(ForceAverageCalculationByAppKey, false);
+
     public ModifiersSettings Modifiers { get; } = new();
 
     public AppSettings()
@@ -20,6 +24,11 @@ public class AppSettings : ReactiveObject
             .Skip(1)
             .Subscribe(v =>
                 Preferences.Set(DisableReadReceiptsKey, v));
+
+        this.WhenAnyValue(v => v.ForceAverageCalculationByApp)
+            .Skip(1)
+            .Subscribe(v =>
+                Preferences.Set(ForceAverageCalculationByAppKey, v));
     }
 }
 

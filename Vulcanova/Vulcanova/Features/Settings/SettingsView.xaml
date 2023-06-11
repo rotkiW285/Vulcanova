@@ -42,6 +42,8 @@
                                 FontSize="Small" />
                         </Grid>
                     </ViewCell>
+                    <SwitchCell Text="{x:Static resx:Strings.SettingsForceAverageCalculationByApp}"
+                                On="{Binding ForceAverageCalculationByApp}" />
                 </TableSection>
                 <TableSection Title="{x:Static resx:Strings.SettingsMessagesSection}">
                     <SwitchCell Text="{x:Static resx:Strings.SettingsDisableReadReceipts}"

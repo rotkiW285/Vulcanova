@@ -740,5 +740,11 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("CommonChangeClassAbsence", resourceCulture);
             }
         }
+        
+        internal static string SettingsForceAverageCalculationByApp {
+            get {
+                return ResourceManager.GetString("SettingsForceAverageCalculationByApp", resourceCulture);
+            }
+        }
     }
 }

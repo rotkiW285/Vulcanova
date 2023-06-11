@@ -82,7 +82,8 @@ public class GradesSummaryViewModel : ViewModelBase
             });
 
         var modifiersObservable = settings
-            .WhenAnyValue(s => s.Modifiers.PlusSettings.SelectedValue, s => s.Modifiers.MinusSettings.SelectedValue)
+            .WhenAnyValue(s => s.Modifiers.PlusSettings.SelectedValue, s => s.Modifiers.MinusSettings.SelectedValue,
+                s => s.ForceAverageCalculationByApp)
             .WhereNotNull();
 
         this.WhenAnyValue(vm => vm.RawGrades)
@@ -91,7 +92,7 @@ public class GradesSummaryViewModel : ViewModelBase
             .Subscribe(values =>
             {
                 var (grades, _) = values;
-                Grades = ToSubjectGrades(grades.Grades, grades.AverageGrades, settings.Modifiers);
+                Grades = ToSubjectGrades(grades.Grades, grades.AverageGrades, settings);
             });
         
         this.WhenAnyValue(vm => vm.RawGrades)
@@ -103,7 +104,7 @@ public class GradesSummaryViewModel : ViewModelBase
             });
     }
 
-    private static IEnumerable<SubjectGrades> ToSubjectGrades(IEnumerable<Grade> grades, IEnumerable<AverageGrade> averageGrades, ModifiersSettings modifiers)
+    private static IEnumerable<SubjectGrades> ToSubjectGrades(IEnumerable<Grade> grades, IEnumerable<AverageGrade> averageGrades, AppSettings settings)
         => grades.GroupBy(g => new
             {
                 g.Column.Subject.Id,
@@ -113,10 +114,21 @@ public class GradesSummaryViewModel : ViewModelBase
             {
                 SubjectId = g.Key.Id,
                 SubjectName = g.Key.Name,
-                Average = averageGrades
-                    .SingleOrDefault(x => x.SubjectId == g.Key.Id)?.Average ?? g.Average(modifiers),
+                Average = CalculateAverage(g.Key.Id, g, averageGrades, settings),
                 Grades = new ObservableCollection<Grade>(g.ToArray())
             });
+
+    private static decimal? CalculateAverage(int subjectId, IEnumerable<Grade> grades,
+        IEnumerable<AverageGrade> averageGrades, AppSettings settings)
+    {
+        if (settings.ForceAverageCalculationByApp)
+        {
+            return grades.Average(settings.Modifiers);
+        }
+
+        return averageGrades
+            .SingleOrDefault(x => x.SubjectId == subjectId)?.Average ?? grades.Average(settings.Modifiers);
+    }
 
     public sealed record GradesResult(IEnumerable<Grade> Grades, IEnumerable<AverageGrade> AverageGrades);
 }

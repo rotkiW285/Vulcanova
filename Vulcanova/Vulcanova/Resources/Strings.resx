@@ -360,4 +360,7 @@
     <data name="CommonChangeClassAbsence" xml:space="preserve">
         <value>Class absence</value>
     </data>
+    <data name="SettingsForceAverageCalculationByApp" xml:space="preserve">
+        <value>Force average calculation by app</value>
+    </data>
 </root>
