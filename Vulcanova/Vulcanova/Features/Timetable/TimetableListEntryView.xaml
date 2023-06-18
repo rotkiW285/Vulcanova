@@ -45,7 +45,13 @@
             <StackLayout Grid.Column="2" Spacing="0">
                 <Label
                     Text="{Binding Entry.SubjectName}"
-                    TextDecorations="{Binding Entry.Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}" />
+                    TextDecorations="{Binding Entry.Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Path=Entry.SubjectName}" Value="{x:Null}">
+                            <Setter Property="Text" Value="{Binding Entry.Event}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <StackLayout Orientation="Horizontal">
                     <Label
                         FontSize="Small"

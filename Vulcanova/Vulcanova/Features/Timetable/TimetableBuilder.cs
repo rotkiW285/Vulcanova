@@ -22,7 +22,8 @@ public static class TimetableBuilder
                 End = lesson.TimeSlot.End,
                 SubjectName = lesson.Subject?.Name,
                 RoomName = lesson.RoomName,
-                TeacherName = lesson.TeacherName
+                TeacherName = lesson.TeacherName,
+                Event = lesson.Event
             })
             .ToList();
 
@@ -35,6 +36,7 @@ public static class TimetableBuilder
                 lessonToUpdate.SubjectName.Override = change.Subject?.Name;
                 lessonToUpdate.RoomName.Override = change.RoomName;
                 lessonToUpdate.TeacherName.Override = change.TeacherName;
+                lessonToUpdate.Event.Override = change.Event;
 
                 lessonToUpdate.Change = new TimetableListEntry.ChangeDetails
                 {
@@ -95,6 +97,11 @@ public static class TimetableBuilder
                         ChangeNote = change.Note ?? change.Reason,
                         ChangeType = change.Change.Type,
                         RescheduleKind = TimetableListEntry.RescheduleKind.Added
+                    },
+                    Event = new TimetableListEntry.OverridableRefValue<string>
+                    {
+                        Override = change.Event,
+                        OriginalValue = lessonToUpdate?.Event
                     }
                 });
             }

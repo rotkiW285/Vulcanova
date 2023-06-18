@@ -13,6 +13,7 @@ public class TimetableEntry
     public string TeacherName { get; set; }
     public DateTime Date { get; set; }
     public Subject Subject { get; set; }
+    public string Event { get; set; }
     public bool Visible { get; set; }
     public int PeriodId { get; set; }
 }

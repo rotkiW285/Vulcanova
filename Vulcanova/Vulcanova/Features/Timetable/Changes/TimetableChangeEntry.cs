@@ -15,6 +15,7 @@ public class TimetableChangeEntry
     public DateTime? ChangeDate { get; set; }
     public TimetableTimeSlot TimeSlot { get; set; }
     public string Note { get; set; }
+    public string Event { get; set; }
     public string Reason { get; set; }
     public string TeacherName { get; set; }
     public string RoomName { get; set; }

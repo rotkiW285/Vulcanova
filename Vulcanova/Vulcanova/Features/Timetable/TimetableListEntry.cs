@@ -9,6 +9,7 @@ public class TimetableListEntry
     public OverridableValue<int> No { get; set; }
     public OverridableRefValue<string> SubjectName { get; set; }
     public OverridableRefValue<string> TeacherName { get; set; }
+    public OverridableRefValue<string> Event { get; set; }
     public OverridableValue<DateTime> Date { get; set; }
     public OverridableValue<DateTime> Start { get; set; }
     public OverridableValue<DateTime> End { get; set; }
