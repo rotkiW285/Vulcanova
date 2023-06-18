@@ -11,6 +11,7 @@
         <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
         <local:TimetableChangeColorConverter x:Key="ColorConverter" />
         <local:TimetableChangeTextDecorationsConverter x:Key="TextDecorationsConverter" />
+        <local:TimetableViewLessonNameConverter x:Key="TimetableViewLessonNameConverter" />
         <Style TargetType="Label">
             <Setter Property="TextColor">
                 <MultiBinding Converter="{StaticResource ColorConverter}">
@@ -43,14 +44,13 @@
                     Text="{Binding Entry.End, StringFormat='{0:HH:mm}'}" />
             </StackLayout>
             <StackLayout Grid.Column="2" Spacing="0">
-                <Label
-                    Text="{Binding Entry.SubjectName}"
-                    TextDecorations="{Binding Entry.Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}">
-                    <Label.Triggers>
-                        <DataTrigger TargetType="Label" Binding="{Binding Path=Entry.SubjectName}" Value="{x:Null}">
-                            <Setter Property="Text" Value="{Binding Entry.Event}" />
-                        </DataTrigger>
-                    </Label.Triggers>
+                <Label TextDecorations="{Binding Entry.Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}">
+                    <Label.Text>
+                        <MultiBinding Converter="{StaticResource TimetableViewLessonNameConverter}">
+                            <Binding Path="Entry.SubjectName" />
+                            <Binding Path="Entry.Event" />
+                        </MultiBinding>
+                    </Label.Text>
                 </Label>
                 <StackLayout Orientation="Horizontal">
                     <Label
