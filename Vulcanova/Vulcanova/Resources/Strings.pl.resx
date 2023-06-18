@@ -363,4 +363,16 @@
     <data name="SettingsForceAverageCalculationByApp" xml:space="preserve">
         <value>Wymuś liczenie średniej przez aplikację</value>
     </data>
+    <data name="SettingsDebuggingSection" xml:space="preserve">
+        <value>Debugowanie</value>
+    </data>
+    <data name="SettingsNetworkDebugging" xml:space="preserve">
+        <value>Debugowanie ruchu sieciowego</value>
+    </data>
+    <data name="HttpTrafficRequest" xml:space="preserve">
+        <value>Żądanie</value>
+    </data>
+    <data name="HttpTrafficResponse" xml:space="preserve">
+        <value>Odpowiedź</value>
+    </data>
 </root>

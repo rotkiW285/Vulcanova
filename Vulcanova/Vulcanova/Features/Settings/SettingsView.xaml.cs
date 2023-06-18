@@ -31,6 +31,11 @@ public partial class SettingsView
                 
             this.OneWayBind(ViewModel, vm => vm.ValueOfMinus, v => v.ValueOfMinusLabel.Text)
                 .DisposeWith(disposable);
+
+            NetworkDebuggingCell.Events().Tapped
+                .Select(_ => Unit.Default)
+                .InvokeCommand(ViewModel, vm => vm.OpenHttpTrafficLogger)
+                .DisposeWith(disposable);
         });
     }
 }

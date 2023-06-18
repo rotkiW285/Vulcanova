@@ -79,6 +79,7 @@
       <EmbeddedResource Include="Resources\Icons\pencil-outline.svg" />
       <EmbeddedResource Include="Resources\Icons\arrow-up-circle.svg" />
       <EmbeddedResource Include="Resources\Icons\arrow-undo.svg" />
+      <EmbeddedResource Include="Resources\Icons\clipboard.svg" />
     </ItemGroup>
 
     <ItemGroup>
@@ -136,6 +137,18 @@
       </Compile>
       <Compile Update="Core\Layout\Controls\FieldView.xaml.cs">
         <DependentUpon>FieldView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Settings\HttpTrafficLogger\Details\HttpRequestView.xaml.cs">
+        <DependentUpon>HttpRequestView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Settings\HttpTrafficLogger\Details\HttpResponseView.xaml.cs">
+        <DependentUpon>HttpResponseView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Settings\HttpTrafficLogger\Details\HttpTrafficLoggerEntryDetailsView.xaml.cs">
+        <DependentUpon>HttpTrafficLoggerEntryDetailsView.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

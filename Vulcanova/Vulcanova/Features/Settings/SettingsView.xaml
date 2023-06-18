@@ -49,6 +49,12 @@
                     <SwitchCell Text="{x:Static resx:Strings.SettingsDisableReadReceipts}"
                                 On="{Binding DisableReadReceipts}" />
                 </TableSection>
+                <TableSection Title="{x:Static resx:Strings.SettingsDebuggingSection}">
+                    <ViewCell x:Name="NetworkDebuggingCell">
+                        <Label Margin="20, 0" VerticalOptions="Center" 
+                               Text="{x:Static resx:Strings.SettingsNetworkDebugging}" />
+                    </ViewCell>
+                </TableSection>
             </TableRoot>
         </TableView>
     </ContentPage.Content>

@@ -746,5 +746,29 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("SettingsForceAverageCalculationByApp", resourceCulture);
             }
         }
+        
+        internal static string SettingsDebuggingSection {
+            get {
+                return ResourceManager.GetString("SettingsDebuggingSection", resourceCulture);
+            }
+        }
+        
+        internal static string SettingsNetworkDebugging {
+            get {
+                return ResourceManager.GetString("SettingsNetworkDebugging", resourceCulture);
+            }
+        }
+        
+        internal static string HttpTrafficRequest {
+            get {
+                return ResourceManager.GetString("HttpTrafficRequest", resourceCulture);
+            }
+        }
+        
+        internal static string HttpTrafficResponse {
+            get {
+                return ResourceManager.GetString("HttpTrafficResponse", resourceCulture);
+            }
+        }
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rxui:ReactiveContentPage x:TypeArguments="details:HttpTrafficLoggerEntryDetailsViewModel"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:tabs="http://sharpnado.com"
+                          xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                          xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                          xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
+                          xmlns:details="clr-namespace:Vulcanova.Features.Settings.HttpTrafficLogger.Details;assembly=Vulcanova"
+                          x:Class="Vulcanova.Features.Settings.HttpTrafficLogger.Details.HttpTrafficLoggerEntryDetailsView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TabStyle" TargetType="tabs:UnderlinedTabItem">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Dark={StaticResource DarkControlColor}, Light={StaticResource LightControlColor}}" />
+                <Setter Property="SelectedTabColor"
+                        Value="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}" />
+                <Setter Property="UnderlineAllTab" Value="True" />
+                <Setter Property="UnselectedLabelColor"
+                        Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Grid RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <tabs:TabHostView
+                    x:Name="TabHost"
+                    TabType="Fixed">
+                    <tabs:TabHostView.Tabs>
+                        <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                                Label="{x:Static resx:Strings.HttpTrafficRequest}" />
+                        <tabs:UnderlinedTabItem Style="{DynamicResource TabStyle}"
+                                                Label="{x:Static resx:Strings.HttpTrafficResponse}" />
+                    </tabs:TabHostView.Tabs>
+                </tabs:TabHostView>
+
+                <tabs:ViewSwitcher
+                    Grid.Row="1" x:Name="Switcher" Animate="True">
+                    <details:HttpRequestView LogEntry="{Binding Entry}" />
+                    <details:HttpResponseView LogEntry="{Binding Entry}" />
+                </tabs:ViewSwitcher>
+            </Grid>
+
+            <controls:FloatingButton
+                Command="{Binding CopyDetailsToClipboard}"
+                IsVisible="True"
+                Source="resource://Vulcanova.Resources.Icons.clipboard.svg"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-72}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-155}" />
+        </RelativeLayout>
+    </ContentPage.Content>
+</rxui:ReactiveContentPage>

@@ -1,4 +1,5 @@
-﻿using GoogleVisionBarCodeScanner;
+﻿using System.Net.Http;
+using GoogleVisionBarCodeScanner;
 using Prism;
 using Prism.Common;
 using Prism.Ioc;
@@ -18,6 +19,7 @@ using Vulcanova.Features.LuckyNumber;
 using Vulcanova.Features.Messages;
 using Vulcanova.Features.Notes;
 using Vulcanova.Features.Settings;
+using Vulcanova.Features.Settings.HttpTrafficLogger;
 using Vulcanova.Features.Shared;
 using Vulcanova.Features.Timetable;
 using Xamarin.Forms;
@@ -38,6 +40,8 @@ public partial class App
         InitializeComponent();
 
         RxApp.DefaultExceptionHandler = new ReactiveExceptionHandler();
+
+        Uonet.Config.HttpClient = new HttpClient(LoggingHttpMessageHandler.Instance);
 
         Sharpnado.Tabs.Initializer.Initialize(false, false); 
         Sharpnado.Shades.Initializer.Initialize(false);
