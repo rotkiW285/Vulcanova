@@ -27,13 +27,13 @@
         <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
         <PackageReference Include="Prism.Forms" Version="8.1.97" />
         <PackageReference Include="Prism.Plugin.Popups" Version="8.0.76" />
-        <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator" Version="1.1.4">
+        <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator" Version="1.2.3">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="ReactiveUI.Fody" Version="18.1.8" />
-        <PackageReference Include="ReactiveUI.Validation" Version="3.0.1" />
-        <PackageReference Include="ReactiveUI.XamForms" Version="18.1.8" />
+        <PackageReference Include="ReactiveUI.Fody" Version="19.3.2" />
+        <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
+        <PackageReference Include="ReactiveUI.XamForms" Version="19.3.2" />
         <PackageReference Include="RxUI.Plugins.Popup" Version="0.4.0" />
         <PackageReference Include="Sharpnado.Tabs" Version="2.2.0" />
         <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
