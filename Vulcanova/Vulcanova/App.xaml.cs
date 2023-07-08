@@ -1,5 +1,8 @@
 ﻿using System.Net.Http;
 using GoogleVisionBarCodeScanner;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Prism;
 using Prism.Common;
 using Prism.Ioc;
@@ -24,6 +27,7 @@ using Vulcanova.Features.Shared;
 using Vulcanova.Features.Timetable;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using AppSettings = Vulcanova.Helpers.AppSettings;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
@@ -118,5 +122,15 @@ public partial class App
         containerRegistry.RegisterSettings();
 
         containerRegistry.RegisterUonet();
+    }
+
+    protected override void OnStart()
+    {
+        if (AppSettings.EnableAnalytics)
+        {
+            AppCenter.Start($"ios={AppSettings.AppCenterSecret}", typeof(Analytics), typeof(Crashes));
+        }
+
+        base.OnStart();
     }
 }

@@ -53,6 +53,15 @@
             "name": "FebeInstanceUrl",
             "type": "String",
             "defaultValue": "https://localhost:7208/febe"
+          },
+          {
+            "name": "EnableAnalytics",
+            "type": "Bool",
+            "defaultValue": "false"
+          },
+          {
+            "name": "AppCenterSecret",
+            "type": "String"
           }
         ]
       }
