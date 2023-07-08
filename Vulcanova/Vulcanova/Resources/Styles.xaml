@@ -101,6 +101,11 @@
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}" />
     </Style>
+    
+    <Style ApplyToDerivedTypes="true" TargetType="TableView">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}" />
+    </Style>
 
     <Style ApplyToDerivedTypes="true" TargetType="ContentPage">
         <Setter Property="BackgroundColor"
