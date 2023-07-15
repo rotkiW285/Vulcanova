@@ -788,5 +788,11 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("AboutAuthors", resourceCulture);
             }
         }
+        
+        internal static string MessageReplyButton {
+            get {
+                return ResourceManager.GetString("MessageReplyButton", resourceCulture);
+            }
+        }
     }
 }

@@ -1,113 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
-             xmlns:abstractions="clr-namespace:LabelHtml.Forms.Plugin.Abstractions;assembly=HtmlLabel.Forms.Plugin"
-             xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
-             xmlns:messageBox="clr-namespace:Vulcanova.Uonet.Api.MessageBox;assembly=Vulcanova.Uonet"
-             xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
-             xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
-             x:Class="Vulcanova.Features.Messages.MessageView"
-             Title="{Binding Message.Subject, Source={x:Reference View}}"
-             x:Name="View">
+<rxui:ReactiveContentPage x:TypeArguments="messages:MessageViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                          xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+                          xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
+                          xmlns:abstractions="clr-namespace:LabelHtml.Forms.Plugin.Abstractions;assembly=HtmlLabel.Forms.Plugin"
+                          xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
+                          xmlns:messageBox="clr-namespace:Vulcanova.Uonet.Api.MessageBox;assembly=Vulcanova.Uonet"
+                          xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                          x:Class="Vulcanova.Features.Messages.MessageView"
+                          Title="{Binding Message.Subject}"
+                          x:Name="View">
     <ContentPage.Resources>
         <messages:CorrespondentToInitialsConverter x:Key="CorrespondentToInitialsConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
-        <RelativeLayout x:DataType="messages:MessageViewModel">
-
-            <ScrollView RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
-                <Grid Padding="16, 8" RowSpacing="16">
+        <ScrollView>
+            <Grid Padding="16, 8" RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto " />
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid RowSpacing="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto " />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <views:AvatarView
-                            Grid.RowSpan="3"
-                            VerticalOptions="Center"
-                            Text="{Binding Message.Sender.Name, Converter={StaticResource CorrespondentToInitialsConverter}}" />
-                        <Label Grid.Row="0" Grid.Column="1"
-                               Text="{Binding Message.Sender.Name}"
-                               FontAttributes="Bold"
-                               LineBreakMode="TailTruncation" />
-                        <Label Grid.Row="0" Grid.Column="2"
-                               Text="{Binding Message.DateSent, StringFormat='{0:d}'}"
-                               FontSize="Small" />
-                        <Label Grid.Row="1" Grid.Column="1"
-                               Text="{Binding Message.Receiver[0].Name}"
-                               FontSize="Small"
-                               LineBreakMode="TailTruncation" />
-                        <Label Grid.Row="1" Grid.Column="2"
-                               FontSize="Small"
-                               HorizontalTextAlignment="End"
-                               Text="{Binding Message.DateSent, StringFormat='{0:HH:mm}'}" />
-                        <StackLayout Grid.Row="2"
-                                     Grid.Column="1"
-                                     Orientation="Horizontal"
-                                     IsVisible="{Binding ShowReadByControls}">
-                            <Label FontSize="Small">
-                                <Label.Text>
-                                    <MultiBinding StringFormat="{x:Static resx:Strings.MessageReadByLabel}">
-                                        <Binding Path="ReadBy" />
-                                        <Binding Path="Message.Receiver.Count"></Binding>
-                                    </MultiBinding>
-                                </Label.Text>
-                            </Label>
-                            <layout:TintedCachedImage
-                                WidthRequest="18"
-                                Source="resource://Vulcanova.Resources.Icons.help-circle-outline.svg"
-                                TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
-                                <layout:TintedCachedImage.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ShowSeenByDialog}" />
-                                </layout:TintedCachedImage.GestureRecognizers>
-                            </layout:TintedCachedImage>
-                        </StackLayout>
-                    </Grid>
-                    <Label Grid.Row="1" FontSize="Large" FontAttributes="Bold" Text="{Binding Message.Subject}" />
-                    <abstractions:HtmlLabel Grid.Row="2" Text="{Binding Message.Content}" Margin="-4.5, 0" />
-                    <StackLayout Grid.Row="3"
-                                 BindableLayout.ItemsSource="{Binding Message.Attachments}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="messageBox:Attachment">
-                                <StackLayout Orientation="Horizontal">
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer CommandParameter="{Binding Link}"
-                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type messages:MessageViewModel}}, Path=OpenAttachment}" />
-                                    </StackLayout.GestureRecognizers>
-                                    <layout:TintedCachedImage
-                                        WidthRequest="24"
-                                        Source="resource://Vulcanova.Resources.Icons.attach-outline.svg"
-                                        TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
-                                    <Label Text="{Binding Name}"
-                                           Style="{StaticResource PrimaryColorLabelStyle}">
-                                    </Label>
-                                </StackLayout>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+                    <views:AvatarView
+                        Grid.RowSpan="3"
+                        VerticalOptions="Center"
+                        Text="{Binding Message.Sender.Name, Converter={StaticResource CorrespondentToInitialsConverter}}" />
+                    <Label Grid.Row="0" Grid.Column="1"
+                           Text="{Binding Message.Sender.Name}"
+                           FontAttributes="Bold"
+                           LineBreakMode="TailTruncation" />
+                    <Label Grid.Row="0" Grid.Column="2"
+                           Text="{Binding Message.DateSent, StringFormat='{0:d}'}"
+                           FontSize="Small" />
+                    <Label Grid.Row="1" Grid.Column="1"
+                           Text="{Binding Message.Receiver[0].Name}"
+                           FontSize="Small"
+                           LineBreakMode="TailTruncation" />
+                    <Label Grid.Row="1" Grid.Column="2"
+                           FontSize="Small"
+                           HorizontalTextAlignment="End"
+                           Text="{Binding Message.DateSent, StringFormat='{0:HH:mm}'}" />
+                    <StackLayout Grid.Row="2"
+                                 Grid.Column="1"
+                                 Orientation="Horizontal"
+                                 IsVisible="{Binding ShowReadByControls}">
+                        <Label FontSize="Small">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{x:Static resx:Strings.MessageReadByLabel}">
+                                    <Binding Path="ReadBy" />
+                                    <Binding Path="Message.Receiver.Count"></Binding>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <layout:TintedCachedImage
+                            WidthRequest="18"
+                            Source="resource://Vulcanova.Resources.Icons.help-circle-outline.svg"
+                            TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                            <layout:TintedCachedImage.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShowSeenByDialog}" />
+                            </layout:TintedCachedImage.GestureRecognizers>
+                        </layout:TintedCachedImage>
                     </StackLayout>
                 </Grid>
-            </ScrollView>
-            <controls:FloatingButton
-                Command="{Binding Reply}"
-                IsVisible="{Binding CanReply}"
-                Source="resource://Vulcanova.Resources.Icons.arrow-undo.svg"
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-72}"
-                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-155}" />
-        </RelativeLayout>
+                <Label Grid.Row="1" FontSize="Large" FontAttributes="Bold" Text="{Binding Message.Subject}" />
+                <abstractions:HtmlLabel Grid.Row="2" Text="{Binding Message.Content}" Margin="-4.5, 0" />
+                <StackLayout Grid.Row="3"
+                             BindableLayout.ItemsSource="{Binding Message.Attachments}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="messageBox:Attachment">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding Link}"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type messages:MessageViewModel}}, Path=OpenAttachment}" />
+                                </StackLayout.GestureRecognizers>
+                                <layout:TintedCachedImage
+                                    WidthRequest="24"
+                                    Source="resource://Vulcanova.Resources.Icons.attach-outline.svg"
+                                    TintColor="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
+                                <Label Text="{Binding Name}"
+                                       Style="{StaticResource PrimaryColorLabelStyle}">
+                                </Label>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
-</ContentPage>
+</rxui:ReactiveContentPage>

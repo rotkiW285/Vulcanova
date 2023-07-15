@@ -384,4 +384,7 @@
     <data name="AboutAuthors" xml:space="preserve">
         <value>Piotr Romanowski oraz Kontrybutorzy</value>
     </data>
+    <data name="MessageReplyButton" xml:space="preserve">
+        <value>Odpowiedz</value>
+    </data>
 </root>
