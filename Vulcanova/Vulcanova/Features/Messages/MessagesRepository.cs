@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LiteDB.Async;
 using Vulcanova.Uonet.Api.MessageBox;
@@ -17,8 +18,9 @@ public class MessagesRepository : IMessagesRepository
 
     public async Task<IEnumerable<Message>> GetMessagesByBoxAsync(Guid messageBoxId, MessageBoxFolder folder)
     {
-        return await _db.GetCollection<Message>()
-            .FindAsync(m => m.MessageBoxId == messageBoxId && m.Folder == folder);
+        return (await _db.GetCollection<Message>()
+            .FindAsync(m => m.MessageBoxId == messageBoxId && m.Folder == folder))
+            .OrderByDescending(x => x.DateSent);
     }
 
     public async Task UpsertMessagesForBoxAsync(Guid messageBoxId, IEnumerable<Message> messages)

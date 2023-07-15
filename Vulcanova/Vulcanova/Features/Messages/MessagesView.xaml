@@ -48,7 +48,7 @@
                 </tabs:TabHostView>
 
                 <RefreshView Grid.Row="1" x:Name="RefreshView">
-                    <CollectionView x:Name="MessagesList">
+                    <CollectionView ItemsSource="{Binding Messages}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="messages:Message">
                                 <StackLayout Padding="0, 1" Spacing="0"

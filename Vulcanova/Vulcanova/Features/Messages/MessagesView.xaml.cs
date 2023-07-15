@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
 using Vulcanova.Core.Layout;
@@ -21,10 +20,6 @@ public partial class MessagesView
             this.Bind(ViewModel, vm => vm.SelectedFolder, v => v.TabHost.SelectedIndex,
                     viewToVmConverter: i => (MessageBoxFolder)(i + 1),
                     vmToViewConverter: folder => (int)(folder - 1))
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.Messages, v => v.MessagesList.ItemsSource,
-                    msg => msg.OrderByDescending(x => x.DateSent))
                 .DisposeWith(disposable);
 
             this.BindForceRefresh(RefreshView, v => v.ViewModel.LoadMessages, true)

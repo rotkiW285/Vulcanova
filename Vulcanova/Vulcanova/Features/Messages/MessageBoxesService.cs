@@ -5,7 +5,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Vulcanova.Core.Uonet;
-using Vulcanova.Features.Auth;
 using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Uonet.Api.MessageBox;
 
@@ -15,27 +14,23 @@ public class MessageBoxesService : UonetResourceProvider, IMessageBoxesService
 {
     private readonly IApiClientFactory _apiClientFactory;
     private readonly IMapper _mapper;
-    private readonly IAccountRepository _accountRepository;
     private readonly IMessageBoxesRepository _messageBoxesRepository;
 
     public MessageBoxesService(
         IApiClientFactory apiClientFactory,
         IMapper mapper,
-        IAccountRepository accountRepository,
         IMessageBoxesRepository messageBoxesRepository)
     {
         _apiClientFactory = apiClientFactory;
         _mapper = mapper;
-        _accountRepository = accountRepository;
         _messageBoxesRepository = messageBoxesRepository;
     }
 
-    public IObservable<IEnumerable<MessageBox>> GetMessageBoxesByAccountId(int accountId, bool forceSync = false)
+    public IObservable<IEnumerable<MessageBox>> GetMessageBoxesByAccountId(Account account, bool forceSync = false)
     {
         return Observable.Create<IEnumerable<MessageBox>>(async observer =>
         {
-            var account = await _accountRepository.GetByIdAsync(accountId);
-
+            var accountId = account.Id;
             var resourceKey = GetResourceKey(accountId);
 
             var items = await _messageBoxesRepository.GetMessageBoxesForAccountAsync(accountId);

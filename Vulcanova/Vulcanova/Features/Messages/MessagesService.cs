@@ -32,12 +32,10 @@ public class MessagesService : UonetResourceProvider, IMessagesService
     }
 
     public IObservable<IEnumerable<Message>> GetMessagesByBox(
-        int accountId, Guid messageBoxId, MessageBoxFolder folder, bool forceSync = false)
+        Account account, Guid messageBoxId, MessageBoxFolder folder, bool forceSync = false)
     {
         return Observable.Create<IEnumerable<Message>>(async observer =>
         {
-            var account = await _accountRepository.GetByIdAsync(accountId);
-
             var resourceKey = GetResourceKey(messageBoxId, folder);
 
             var items = await _messagesRepository.GetMessagesByBoxAsync(messageBoxId, folder);

@@ -44,12 +44,12 @@ public class MessagesViewModel : ViewModelBase
         AppSettings appSettings) : base(navigationService)
     {
         LoadBoxes = ReactiveCommand.CreateFromObservable((bool forceSync) => 
-            messageBoxesService.GetMessageBoxesByAccountId(accountContext.Account.Id, forceSync));
+            messageBoxesService.GetMessageBoxesByAccountId(accountContext.Account, forceSync));
 
         LoadBoxes.ToPropertyEx(this, vm => vm.MessageBoxes);
 
         LoadMessages = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-            messagesService.GetMessagesByBox(accountContext.Account.Id, CurrentBox.GlobalKey, SelectedFolder,
+            messagesService.GetMessagesByBox(accountContext.Account, CurrentBox.GlobalKey, SelectedFolder,
                 forceSync));
 
         LoadMessages.ToPropertyEx(this, vm => vm.Messages);
