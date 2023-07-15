@@ -28,7 +28,7 @@
         <value>Wpisz dane ręcznie</value>
     </data>
     <data name="VulcanovaSubheadingLabel" xml:space="preserve">
-        <value>Nieoficjalna aplikacja dla dziennika Vulcan UONET+</value>
+        <value>Nieoficjalna otwartoźródłowa aplikacja dla dziennika Vulcan UONET+</value>
     </data>
     <data name="AddAccountLabel" xml:space="preserve">
         <value>Dodaj konto</value>
@@ -374,5 +374,14 @@
     </data>
     <data name="HttpTrafficResponse" xml:space="preserve">
         <value>Odpowiedź</value>
+    </data>
+    <data name="SettingsAboutSection" xml:space="preserve">
+        <value>O aplikacji</value>
+    </data>
+    <data name="SettingsAboutApp" xml:space="preserve">
+        <value>Informacje o aplikacji</value>
+    </data>
+    <data name="AboutAuthors" xml:space="preserve">
+        <value>Piotr Romanowski oraz Kontrybutorzy</value>
     </data>
 </root>

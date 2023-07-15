@@ -82,6 +82,7 @@
       <EmbeddedResource Include="Resources\Icons\arrow-up-circle.svg" />
       <EmbeddedResource Include="Resources\Icons\arrow-undo.svg" />
       <EmbeddedResource Include="Resources\Icons\clipboard.svg" />
+      <EmbeddedResource Include="Resources\Icons\vulcanova.svg" />
     </ItemGroup>
 
     <ItemGroup>

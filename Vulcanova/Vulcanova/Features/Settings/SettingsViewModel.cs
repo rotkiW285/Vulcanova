@@ -2,6 +2,7 @@ using System.Reactive;
 using Prism.Navigation;
 using ReactiveUI;
 using Vulcanova.Core.Mvvm;
+using Vulcanova.Features.Settings.About;
 using Vulcanova.Features.Settings.Grades.iOS;
 using Vulcanova.Features.Settings.HttpTrafficLogger;
 
@@ -17,6 +18,7 @@ public class SettingsViewModel : ViewModelBase
     public ReactiveCommand<Unit, INavigationResult> OpenValueOfPlusPicker { get; }
     public ReactiveCommand<Unit, INavigationResult> OpenValueOfMinusPicker { get; }
     public ReactiveCommand<Unit, INavigationResult> OpenHttpTrafficLogger { get; }
+    public ReactiveCommand<Unit, INavigationResult> OpenAboutPage { get; }
 
     public bool DisableReadReceipts
     {
@@ -43,5 +45,8 @@ public class SettingsViewModel : ViewModelBase
         OpenHttpTrafficLogger =
             ReactiveCommand.CreateFromTask(async () =>
                 await NavigationService.NavigateAsync(nameof(HttpTrafficLoggerView)));
+
+        OpenAboutPage =
+            ReactiveCommand.CreateFromTask(async () => await NavigationService.NavigateAsync(nameof(AboutPage)));
     }
 }

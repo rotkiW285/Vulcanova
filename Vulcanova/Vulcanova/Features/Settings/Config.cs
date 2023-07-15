@@ -1,6 +1,7 @@
 using Prism;
 using Prism.AppModel;
 using Prism.Ioc;
+using Vulcanova.Features.Settings.About;
 using Vulcanova.Features.Settings.Grades;
 using Vulcanova.Features.Settings.Grades.Android;
 using Vulcanova.Features.Settings.Grades.iOS;
@@ -25,5 +26,7 @@ public static class Config
         );
         
         container.RegisterHttpTrafficLogger();
+        
+        container.RegisterForNavigation<AboutPage>();
     }
 }

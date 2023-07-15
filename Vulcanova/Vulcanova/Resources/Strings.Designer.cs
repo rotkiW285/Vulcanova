@@ -770,5 +770,23 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("HttpTrafficResponse", resourceCulture);
             }
         }
+        
+        internal static string SettingsAboutSection {
+            get {
+                return ResourceManager.GetString("SettingsAboutSection", resourceCulture);
+            }
+        }
+        
+        internal static string SettingsAboutApp {
+            get {
+                return ResourceManager.GetString("SettingsAboutApp", resourceCulture);
+            }
+        }
+        
+        internal static string AboutAuthors {
+            get {
+                return ResourceManager.GetString("AboutAuthors", resourceCulture);
+            }
+        }
     }
 }

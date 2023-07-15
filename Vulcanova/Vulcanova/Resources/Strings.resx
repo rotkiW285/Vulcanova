@@ -19,7 +19,7 @@
         <value>Enter data manually</value>
     </data>
     <data name="VulcanovaSubheadingLabel" xml:space="preserve">
-        <value>Unofficial Vulcan UONET+ mobile client</value>
+        <value>Unofficial open–source Vulcan UONET+ mobile client</value>
     </data>
     <data name="GitHubLinkLabel" xml:space="preserve">
         <value>Vulcanova on GitHub</value>
@@ -374,5 +374,14 @@
     </data>
     <data name="HttpTrafficResponse" xml:space="preserve">
         <value>Response</value>
+    </data>
+    <data name="SettingsAboutSection" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="SettingsAboutApp" xml:space="preserve">
+        <value>About app</value>
+    </data>
+    <data name="AboutAuthors" xml:space="preserve">
+        <value>Piotr Romanowski &amp; Contributors</value>
     </data>
 </root>

@@ -33,8 +33,11 @@ public partial class SettingsView
                 .DisposeWith(disposable);
 
             NetworkDebuggingCell.Events().Tapped
-                .Select(_ => Unit.Default)
+                .Select(_ => Unit.Default) 
                 .InvokeCommand(ViewModel, vm => vm.OpenHttpTrafficLogger)
+                .DisposeWith(disposable);
+
+            this.BindCommand(ViewModel, vm => vm.OpenAboutPage, v => v.AboutCell)
                 .DisposeWith(disposable);
         });
     }
