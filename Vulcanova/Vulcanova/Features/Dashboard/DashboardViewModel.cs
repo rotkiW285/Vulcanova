@@ -9,6 +9,7 @@ using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Extensions;
 using Vulcanova.Features.Auth.AccountPicker;
+using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Features.Exams;
 using Vulcanova.Features.Grades;
 using Vulcanova.Features.Homework;
@@ -72,7 +73,7 @@ namespace Vulcanova.Features.Dashboard
                     .SubscribeOn(RxApp.TaskpoolScheduler)
                     .CombineLatest(GetExamEntries(accountContext.Account.Id, SelectedDay, forceRefresh),
                         GetHomeworkEntries(accountContext.Account.Id, selectedPeriodId, SelectedDay, forceRefresh),
-                        GetGrades(accountContext.Account.Id, SelectedDay, selectedPeriodId, forceRefresh),
+                        GetGrades(accountContext.Account, SelectedDay, selectedPeriodId, forceRefresh),
                         GetLuckyNumberAsync(accountContext.Account.Id, SelectedDay))
                     .Select(values => new DashboardModel
                     {
@@ -154,10 +155,10 @@ namespace Vulcanova.Features.Dashboard
                     .AsReadOnly());
         }
 
-        private IObservable<IReadOnlyCollection<Grade>> GetGrades(int accountId, DateTime date, int periodId,
+        private IObservable<IReadOnlyCollection<Grade>> GetGrades(Account account, DateTime date, int periodId,
             bool forceSync)
         {
-            return _gradesService.GetPeriodGrades(accountId, periodId, forceSync)
+            return _gradesService.GetPeriodGrades(account, periodId, forceSync)
                 .Select(list => list
                     .Where(e => (date.Date - e.DateModify.Date).TotalDays <= 7)
                     .OrderByDescending(e => e.DateModify.Date)

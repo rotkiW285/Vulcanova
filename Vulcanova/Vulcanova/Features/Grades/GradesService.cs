@@ -15,28 +15,23 @@ namespace Vulcanova.Features.Grades;
 public class GradesService : UonetResourceProvider, IGradesService
 {
     private readonly IApiClientFactory _apiClientFactory;
-    private readonly IAccountRepository _accountRepository;
     private readonly IGradesRepository _gradesRepository;
     private readonly IMapper _mapper;
 
     public GradesService(
         IApiClientFactory apiClientFactory,
-        IAccountRepository accountRepository,
         IMapper mapper,
         IGradesRepository gradesRepository)
     {
         _apiClientFactory = apiClientFactory;
-        _accountRepository = accountRepository;
         _mapper = mapper;
         _gradesRepository = gradesRepository;
     }
 
-    public IObservable<IEnumerable<Grade>> GetPeriodGrades(int accountId, int periodId, bool forceSync = false)
+    public IObservable<IEnumerable<Grade>> GetPeriodGrades(Account account, int periodId, bool forceSync = false)
     {
         return Observable.Create<IEnumerable<Grade>>(async observer =>
         {
-            var account = await _accountRepository.GetByIdAsync(accountId);
-
             var normalGradesResourceKey = GetGradesResourceKey(account, periodId);
             var behaviourGradesResourceKey = GetBehaviourGradesResourceKey(account, periodId);
 

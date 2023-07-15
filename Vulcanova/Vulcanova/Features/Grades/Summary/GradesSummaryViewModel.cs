@@ -46,7 +46,7 @@ public class GradesSummaryViewModel : ViewModelBase
         GetGrades = ReactiveCommand.CreateFromObservable((bool forceSync) =>
         {
             var grades = gradesService
-                .GetPeriodGrades(accountContext.Account.Id, PeriodId!.Value, forceSync);
+                .GetPeriodGrades(accountContext.Account, PeriodId!.Value, forceSync);
 
             var averageGrades =
                 accountContext.Account.Capabilities.Contains(AccountCapabilities.GradesAverageEnabled)

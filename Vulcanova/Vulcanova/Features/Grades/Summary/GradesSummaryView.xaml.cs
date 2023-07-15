@@ -25,9 +25,6 @@ public partial class GradesSummaryView
 
         this.WhenActivated(disposable =>
         {
-            this.OneWayBind(ViewModel, vm => vm.Grades, v => v.SubjectGrades.ItemsSource)
-                .DisposeWith(disposable);
-
             this.BindForceRefresh(RefreshView, v => v.ViewModel.GetGrades, true)
                 .DisposeWith(disposable);
 
