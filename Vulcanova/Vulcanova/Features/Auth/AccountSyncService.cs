@@ -69,6 +69,8 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
                     acc.Periods = newAccount.Periods.Select(_mapper.Map<Period>).ToList();
                 }
 
+                acc.Capabilities = newAccount.Capabilities;
+
                 await _accountRepository.UpdateAccountAsync(acc);
 
                 // is it the active account?
