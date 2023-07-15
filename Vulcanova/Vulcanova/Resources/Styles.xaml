@@ -115,8 +115,8 @@
     <Style ApplyToDerivedTypes="true" TargetType="NavigationPage">
         <Setter Property="BarBackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
-        <Setter Property="BarTextColor"
-                Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}" />
+        <Setter Property="IconColor"
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
     </Style>
 
     <Style ApplyToDerivedTypes="true" TargetType="TabbedPage">
