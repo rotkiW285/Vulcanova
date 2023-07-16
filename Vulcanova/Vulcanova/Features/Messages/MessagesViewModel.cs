@@ -49,7 +49,9 @@ public class MessagesViewModel : ViewModelBase
         LoadBoxes.ToPropertyEx(this, vm => vm.MessageBoxes);
 
         LoadMessages = ReactiveCommand.CreateFromObservable((bool forceSync) =>
-            messagesService.GetMessagesByBox(accountContext.Account, CurrentBox.GlobalKey, SelectedFolder,
+            CurrentBox == null
+                ? Observable.Return<IEnumerable<Message>>(Array.Empty<Message>())
+                : messagesService.GetMessagesByBox(accountContext.Account, CurrentBox.GlobalKey, SelectedFolder,
                 forceSync));
 
         LoadMessages.ToPropertyEx(this, vm => vm.Messages);
@@ -86,7 +88,6 @@ public class MessagesViewModel : ViewModelBase
         var whenAnyFolder = this.WhenAnyValue(vm => vm.SelectedFolder);
 
         this.WhenAnyValue(vm => vm.CurrentBox)
-            .WhereNotNull()
             .CombineLatest(whenAnyFolder)
             .Select(_ => false) // don't force refresh
             .InvokeCommand(LoadMessages);
