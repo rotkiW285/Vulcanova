@@ -15,6 +15,10 @@ public class AppSettings : ReactiveObject
     private const string ForceAverageCalculationByAppKey = "Options_ForceAverageCalculationByApp";
     [Reactive]
     public bool ForceAverageCalculationByApp { get; set; } = Preferences.Get(ForceAverageCalculationByAppKey, false);
+    
+    private const string LongPressToShareGradeKey = "Options_LongPressToShareGrade";
+    [Reactive]
+    public bool LongPressToShareGrade { get; set; } = Preferences.Get(LongPressToShareGradeKey, true);
 
     public ModifiersSettings Modifiers { get; } = new();
 
@@ -29,6 +33,11 @@ public class AppSettings : ReactiveObject
             .Skip(1)
             .Subscribe(v =>
                 Preferences.Set(ForceAverageCalculationByAppKey, v));
+        
+        this.WhenAnyValue(v => v.LongPressToShareGrade)
+            .Skip(1)
+            .Subscribe(v =>
+                Preferences.Set(LongPressToShareGradeKey, v));
     }
 }
 

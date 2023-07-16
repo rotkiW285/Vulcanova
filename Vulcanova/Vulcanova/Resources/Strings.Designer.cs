@@ -794,5 +794,11 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("MessageReplyButton", resourceCulture);
             }
         }
+        
+        internal static string GradeSettingsLongPressToShare {
+            get {
+                return ResourceManager.GetString("GradeSettingsLongPressToShare", resourceCulture);
+            }
+        }
     }
 }

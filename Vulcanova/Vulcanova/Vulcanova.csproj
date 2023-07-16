@@ -36,6 +36,7 @@
         <PackageReference Include="ReactiveUI.XamForms" Version="19.3.2" />
         <PackageReference Include="RxUI.Plugins.Popup" Version="0.4.0" />
         <PackageReference Include="Sharpnado.Tabs" Version="2.2.0" />
+        <PackageReference Include="Svg.Skia" Version="1.0.0" />
         <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
         <PackageReference Include="Xam.Plugin.HtmlLabel" Version="5.1.0" />
         <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.4" />
@@ -83,6 +84,8 @@
       <EmbeddedResource Include="Resources\Icons\arrow-undo.svg" />
       <EmbeddedResource Include="Resources\Icons\clipboard.svg" />
       <EmbeddedResource Include="Resources\Icons\vulcanova.svg" />
+      <EmbeddedResource Include="Resources\Share\arrow-ornament.svg" />
+      <EmbeddedResource Include="Resources\Share\star-ornaments.svg" />
     </ItemGroup>
 
     <ItemGroup>

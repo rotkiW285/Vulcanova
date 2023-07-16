@@ -387,4 +387,7 @@
     <data name="MessageReplyButton" xml:space="preserve">
         <value>Odpowiedz</value>
     </data>
+    <data name="GradeSettingsLongPressToShare" xml:space="preserve">
+        <value>Przytrzymaj ocenę, by udostępnić</value>
+    </data>
 </root>

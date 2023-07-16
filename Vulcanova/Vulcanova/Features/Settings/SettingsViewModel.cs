@@ -32,6 +32,12 @@ public class SettingsViewModel : ViewModelBase
         set => _appSettings.ForceAverageCalculationByApp = value;
     }
 
+    public bool LongPressToShareGrade
+    {
+        get => _appSettings.LongPressToShareGrade;
+        set => _appSettings.LongPressToShareGrade = value;
+    }
+
     public SettingsViewModel(INavigationService navigationService, AppSettings appSettings) : base(navigationService)
     {
         _appSettings = appSettings;
