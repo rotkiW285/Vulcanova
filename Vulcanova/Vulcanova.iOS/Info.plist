@@ -21,7 +21,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>14.5</string>
+	<string>15.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>Vulcanova</string>
 	<key>CFBundleIdentifier</key>
