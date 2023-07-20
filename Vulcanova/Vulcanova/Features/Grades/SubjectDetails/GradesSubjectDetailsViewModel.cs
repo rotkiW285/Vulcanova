@@ -1,5 +1,6 @@
 using System.IO;
 using System.Reactive;
+using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -23,6 +24,8 @@ public sealed class GradesSubjectDetailsViewModel : ReactiveObject, IInitialize
     {
         ShareGrade = ReactiveCommand.CreateFromTask(async (Grade grade) =>
         {
+            if (string.IsNullOrEmpty(grade.ContentRaw)) return;
+
             var bytes = GradeShareImageGenerator.DrawImageForGrade(grade);
             
             var file = Path.Combine(FileSystem.CacheDirectory, "grade.png");
