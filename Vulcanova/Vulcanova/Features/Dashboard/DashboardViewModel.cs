@@ -28,7 +28,7 @@ namespace Vulcanova.Features.Dashboard
         [ObservableAsProperty] public DashboardModel DashboardModel { get; private set; }
 
         [Reactive] public AccountAwarePageTitleViewModel AccountViewModel { get; set; }
-        [ObservableAsProperty] public DateTime SelectedDay { get; private set; }
+        [Reactive] public DateTime SelectedDay { get; private set; }
 
         private readonly ILuckyNumberService _luckyNumberService;
         private readonly ITimetableService _timetableService;
@@ -100,7 +100,7 @@ namespace Vulcanova.Features.Dashboard
                     date => date.Date.AddDays(1),
                     date => date,
                     dt => dt)
-                .ToPropertyEx(this, vm => vm.SelectedDay);
+                .BindTo(this, vm => vm.SelectedDay);
 
             OpenTab = ReactiveCommand.CreateFromTask((string name) =>
                 NavigationService.SelectTabAsync(name));

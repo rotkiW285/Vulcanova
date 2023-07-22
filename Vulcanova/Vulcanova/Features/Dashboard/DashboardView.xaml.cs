@@ -34,7 +34,7 @@ public partial class DashboardView
             this.OneWayBind(ViewModel, vm => vm.AccountViewModel, v => v.TitleView.ViewModel)
                 .DisposeWith(disposable);
 
-            this.BindForceRefresh(RefreshView, v => v.ViewModel.RefreshData)
+            this.BindForceRefresh(RefreshView, v => v.ViewModel.RefreshData, true)
                 .DisposeWith(disposable);
         });
     }
