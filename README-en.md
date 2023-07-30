@@ -1,7 +1,7 @@
 ### [Polska wersja README](README.md)
 
 # Vulcanova
-[![Discord](https://discord.com/api/guilds/951860775503421460/widget.png?style=shield)](https://discord.gg/GaCQknqRjT)
+[![Build for iOS](https://github.com/Vulcanova/Vulcanova/actions/workflows/ios.yml/badge.svg)](https://github.com/Vulcanova/Vulcanova/actions/workflows/ios.yml) [![Discord](https://discord.com/api/guilds/951860775503421460/widget.png?style=shield)](https://discord.gg/GaCQknqRjT)
 
 An unofficial Vulcan UONET+ mobile cross-platform register client made in Xamarin. Currently, in heavy development.
 

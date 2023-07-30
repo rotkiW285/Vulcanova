@@ -1,7 +1,7 @@
 ### [English version of README](README-en.md)
 
 # Vulcanova
-[![Discord](https://discord.com/api/guilds/951860775503421460/widget.png?style=shield)](https://discord.gg/GaCQknqRjT)
+[![Build for iOS](https://github.com/Vulcanova/Vulcanova/actions/workflows/ios.yml/badge.svg)](https://github.com/Vulcanova/Vulcanova/actions/workflows/ios.yml) [![Discord](https://discord.com/api/guilds/951860775503421460/widget.png?style=shield)](https://discord.gg/GaCQknqRjT)
 
 Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzony w Xamarinie. Aktualnie w fazie intensywnego rozwoju.
 
