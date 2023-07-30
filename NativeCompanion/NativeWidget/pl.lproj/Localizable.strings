@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  NativeCompanion
+
+  Created by Piotr Romanowski on 30/07/2023.
+  
+*/
+"Timetable" = "Lekcje dzisiaj";
+"Today's timetable overview" = "Plan lekcji na dzisiaj";
+"You are done for today 🥳" = "Koniec lekcji na dzisiaj 🥳";
+"No lessons today 🤙" = "Brak lekcji dzisiaj 🤙";
+"Attendance" = "Frekwencja";
+"Overall attendance" = "Sumaryczna frekwencja";

@@ -166,12 +166,12 @@ struct TimetableWidgetEntryView : View {
             VStack(alignment: .leading) {
                 HStack() {
                     VStack(alignment: .leading) {
-                        Text("Lekcje dzisiaj").foregroundColor(.blue).bold().padding(.bottom, 2)
+                        Text("Timetable").foregroundColor(.blue).bold().padding(.bottom, 2)
                         
                         if entry.timetableState == .lessonsOver {
-                            Text("Koniec lekcji 🥳").font(.subheadline)
+                            Text("You are done for today 🥳").font(.subheadline)
                         } else if entry.timetableState == .noLessonsThatDay {
-                            Text("Brak lekcji dzisiaj 🤙").font(.subheadline)
+                            Text("No lessons today 🤙").font(.subheadline)
                         } else {
                             let showTime = family == .systemMedium
                             let renderFutureLessonsCnt = TimetableWidgetEntryView.getRenderFutureLessonsCount(entry: entry)
@@ -233,8 +233,8 @@ struct TimetableWidget: Widget {
             TimetableWidgetEntryView(entry: entry)
         }
         .supportedFamilies([.systemSmall, .systemMedium])
-        .configurationDisplayName("Plan lekcji")
-        .description("Co dzisiaj?!")
+        .configurationDisplayName("Timetable")
+        .description("Today's timetable overview")
     }
 }
 

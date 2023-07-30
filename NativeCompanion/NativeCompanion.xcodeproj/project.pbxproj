@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CA8632722A724A9C0081386F /* WidgetJsonDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8632712A724A9C0081386F /* WidgetJsonDataReader.swift */; };
+		CADFEB9C2A76E9A900C5F6FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CADFEB9E2A76E9A900C5F6FF /* Localizable.strings */; };
 		CAE7E6E12A6C866200306433 /* NativeCompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE7E6E02A6C866200306433 /* NativeCompanionApp.swift */; };
 		CAE7E6E32A6C866200306433 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE7E6E22A6C866200306433 /* ContentView.swift */; };
 		CAE7E6E52A6C866300306433 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAE7E6E42A6C866300306433 /* Assets.xcassets */; };
@@ -47,6 +48,8 @@
 
 /* Begin PBXFileReference section */
 		CA8632712A724A9C0081386F /* WidgetJsonDataReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetJsonDataReader.swift; sourceTree = "<group>"; };
+		CADFEB9D2A76E9A900C5F6FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CADFEB9F2A76E9AC00C5F6FF /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CAE7E6DD2A6C866200306433 /* NativeCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAE7E6E02A6C866200306433 /* NativeCompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeCompanionApp.swift; sourceTree = "<group>"; };
 		CAE7E6E22A6C866200306433 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 				CAE7E6FF2A6C86E400306433 /* Info.plist */,
 				CAE7E7202A6DAC7D00306433 /* TimetableWidget.swift */,
 				CA8632712A724A9C0081386F /* WidgetJsonDataReader.swift */,
+				CADFEB9E2A76E9A900C5F6FF /* Localizable.strings */,
 			);
 			path = NativeWidget;
 			sourceTree = "<group>";
@@ -208,6 +212,7 @@
 			knownRegions = (
 				en,
 				Base,
+				pl,
 			);
 			mainGroup = CAE7E6D42A6C866200306433;
 			productRefGroup = CAE7E6DE2A6C866200306433 /* Products */;
@@ -235,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAE7E6FE2A6C86E400306433 /* Assets.xcassets in Resources */,
+				CADFEB9C2A76E9A900C5F6FF /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +276,18 @@
 			targetProxy = CAE7E7002A6C86E400306433 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CADFEB9E2A76E9A900C5F6FF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CADFEB9D2A76E9A900C5F6FF /* en */,
+				CADFEB9F2A76E9AC00C5F6FF /* pl */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		CAE7E6E92A6C866300306433 /* Debug */ = {

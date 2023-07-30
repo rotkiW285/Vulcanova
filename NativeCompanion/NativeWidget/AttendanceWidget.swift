@@ -48,12 +48,12 @@ struct AttendanceWidgetEntryView : View {
             HStack() {
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text("Frekwencja")
+                    Text("Attendance")
                     
                     if let totalPercentage = entry.totalPercentage {
                         Text(String(format: "%.2f%%", totalPercentage)).font(.headline)
                     } else {
-                        Text("Brak danych").font(.headline)
+                        Text("No data").font(.headline)
                     }
                 }.padding(10)
             }
@@ -69,8 +69,8 @@ struct AttendanceWidget: Widget {
             AttendanceWidgetEntryView(entry: entry)
         }
         .supportedFamilies([.systemSmall])
-        .configurationDisplayName("Frekwencja")
-        .description("Sumaryczna frekwencja.")
+        .configurationDisplayName("Attendance")
+        .description("Overall attendance")
     }
 }
 
