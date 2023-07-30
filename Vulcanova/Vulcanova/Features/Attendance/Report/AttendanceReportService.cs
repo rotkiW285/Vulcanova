@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ReactiveUI;
+using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Shared;
 
@@ -53,10 +54,12 @@ public class AttendanceReportService : IAttendanceReportService
             };
         });
 
-        await _attendanceReportRepository.UpdateAttendanceReportsAsync(accountId, reports.ToArray());
+        var reportsArray = reports.ToArray();
 
-        MessageBus.Current.SendMessage(new AttendanceReportUpdatedEvent());
+        await _attendanceReportRepository.UpdateAttendanceReportsAsync(accountId, reportsArray);
+
+        MessageBus.Current.SendMessage(new AttendanceReportUpdatedEvent(accountId, reportsArray.CalculateOverallAttendance()));
     }
 }
 
-public record AttendanceReportUpdatedEvent;
+public record AttendanceReportUpdatedEvent(int AccountId, float OverallAttendancePercentage) : UonetDataUpdatedEvent;

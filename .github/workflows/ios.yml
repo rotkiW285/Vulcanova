@@ -35,6 +35,9 @@ jobs:
         env:
           GOOGLE_SERVICE__INFO_PLIST: ${{ secrets.GOOGLE_SERVICE__INFO_PLIST }}
 
+      - name: Build NativeCompanion
+        run: xcodebuild -project NativeCompanion/NativeCompanion.xcodeproj -scheme NativeWidgetExtension -sdk iphoneos -arch arm64 -derivedDataPath NativeCompanion/DerivedData/NativeCompanion -configuration Release build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+
       - name: Build
         run: /Library/Frameworks/Mono.framework/Versions/Current/Commands/mono '/Applications/Visual Studio.app/Contents/MonoBundle/MSBuild/Current/bin/MSBuild.dll'  Vulcanova/Vulcanova.iOS/Vulcanova.iOS.csproj /p:Configuration='Release' /t:Build /p:Platform='iPhone' /p:BuildIpa=true /p:EnableCodeSigning=false
 

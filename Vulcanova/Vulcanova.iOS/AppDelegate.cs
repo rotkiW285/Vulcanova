@@ -7,6 +7,7 @@ using Prism;
 using Prism.Ioc;
 using UIKit;
 using Vulcanova.Core.Layout;
+using Vulcanova.Core.NativeWidgets;
 
 namespace Vulcanova.iOS
 {
@@ -53,6 +54,7 @@ namespace Vulcanova.iOS
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<ISheetPopper, SheetPopper>();
+            containerRegistry.RegisterSingleton<INativeWidgetProxy, NativeWidgetProxy>();
         }
     }
 }

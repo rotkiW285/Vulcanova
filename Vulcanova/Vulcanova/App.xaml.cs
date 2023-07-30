@@ -11,6 +11,7 @@ using ReactiveUI;
 using Vulcanova.Core.Data;
 using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mapping;
+using Vulcanova.Core.NativeWidgets;
 using Vulcanova.Core.Rx;
 using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Attendance;
@@ -77,6 +78,9 @@ public partial class App
         {
             await NavigationService.NavigateAsync("MainNavigationPage/IntroView");
         }
+
+        var widgetUpdateDispatcher = Container.Resolve<NativeWidgetUpdateDispatcher>();
+        widgetUpdateDispatcher.Setup();
     }
     
     #region Sheet navigation handlers
@@ -108,6 +112,8 @@ public partial class App
         containerRegistry.RegisterAutoMapper();
 
         containerRegistry.RegisterLayout();
+        
+        containerRegistry.RegisterNativeWidgetsCommunication();
 
         containerRegistry.RegisterAuth();
         containerRegistry.RegisterLuckyNumber();

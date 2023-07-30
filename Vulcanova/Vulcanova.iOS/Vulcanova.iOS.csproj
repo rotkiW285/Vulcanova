@@ -104,6 +104,7 @@
         <Compile Include="SheetPopper.cs"/>
         <Compile Include="SvgTabbedPageRenderer.cs"/>
         <Compile Include="UiHelper.cs"/>
+        <Compile Include="WidgetProxy.cs"/>
         <None Include="Entitlements.plist"/>
         <None Include="Info.plist"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
@@ -180,6 +181,9 @@
         </ProjectReference>
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\..\WidgetKitProxy\WidgetKitProxy\WidgetKitProxy.csproj" />
+    </ItemGroup>
+    <ItemGroup>
         <BundleResource Include="GoogleService-Info.plist"/>
         <BundleResource Include="Resources\home-outline@3x.png"/>
         <BundleResource Include="Resources\icon-splash@1x.png"/>
@@ -199,4 +203,13 @@
         <Content Include=".gitignore"/>
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets"/>
+    <ItemGroup>
+        <AdditionalAppExtensions Include="$(MSBuildProjectDirectory)/../../NativeCompanion">
+            <Name>NativeWidgetExtension</Name>
+            <BuildOutput Condition="'$(Configuration)|$(ComputedPlatform)' == 'Debug|iPhone'">DerivedData/NativeCompanion/Build/Products/Debug-iphoneos</BuildOutput>
+            <BuildOutput Condition="'$(Configuration)|$(ComputedPlatform)' == 'Debug|iPhoneSimulator'">DerivedData/NativeCompanion/Build/Products/Debug-iphonesimulator</BuildOutput>
+            <BuildOutput Condition="'$(Configuration)|$(ComputedPlatform)' == 'Release|iPhone'">DerivedData/NativeCompanion/Build/Products/Release-iphoneos</BuildOutput>
+            <BuildOutput Condition="'$(Configuration)|$(ComputedPlatform)' == 'Release|iPhoneSimulator'">DerivedData/NativeCompanion/Build/Products/Release-iphonesimulator</BuildOutput>
+        </AdditionalAppExtensions>
+    </ItemGroup>
 </Project>

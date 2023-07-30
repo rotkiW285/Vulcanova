@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ReactiveUI;
 using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Auth.Accounts;
@@ -53,6 +54,8 @@ public class TimetableService : UonetResourceProvider, ITimetableService
                     monthAndYear);
 
                 observer.OnNext(items);
+                
+                MessageBus.Current.SendMessage(new TimetableUpdatedEvent(accountId));
             }
 
             observer.OnCompleted();
@@ -86,3 +89,5 @@ public class TimetableService : UonetResourceProvider, ITimetableService
 
     protected override TimeSpan OfflineDataLifespan => TimeSpan.FromHours(1);
 }
+
+public sealed record TimetableUpdatedEvent(int AccountId) : UonetDataUpdatedEvent;

@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
 using Xamarin.Forms.Xaml;
@@ -18,15 +17,7 @@ public partial class AttendanceReportView
                 .DisposeWith(disposable);
 
             this.OneWayBind(ViewModel, vm => vm.Reports, v => v.SummaryPercentageLabel.Text,
-                    selector: v =>
-                    {
-                        var allPresences = v.Sum(x => x.Presence + x.Late);
-                        var allNonPresence = v.Sum(x => x.Absence);
-
-                        var percentage = (float) allPresences / (allPresences + allNonPresence) * 100;
-
-                        return $"{percentage:F2}%";
-                    })
+                    selector: v => $"{v.CalculateOverallAttendance():F2}%")
                 .DisposeWith(disposable);
         });
     }
