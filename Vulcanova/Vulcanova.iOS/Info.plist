@@ -22,6 +22,8 @@
 	</array>
 	<key>MinimumOSVersion</key>
 	<string>15.0</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>Vulcanova</string>
 	<key>CFBundleIdentifier</key>
