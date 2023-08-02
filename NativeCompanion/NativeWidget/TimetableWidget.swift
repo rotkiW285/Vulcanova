@@ -48,7 +48,7 @@ struct TimetableTimelineProvider: TimelineProvider {
         
         let jsonData: TimetableData = readWidgetData(fileName: "timetable.json", defaultValue: []);
         
-        jsonData.forEach { dayGroup in
+        if let dayGroup = jsonData.first(where: {Calendar.current.isDate(Date(), equalTo: $0.key, toGranularity: .day)}) {
             let date = dayGroup.key;
             
             let sortedLessons = dayGroup.value.sorted {
@@ -61,6 +61,10 @@ struct TimetableTimelineProvider: TimelineProvider {
 
                 return
             }
+
+            let startOfDay = Calendar.current.startOfDay(for: Date())
+            
+            entries.append(TimetableEntry(date: startOfDay, previousLesson: nil, currentLesson: nil, futureLessons: sortedLessons.map(TimetableEntry.TimetableEntryLesson.fromTimetableLesson)))
             
             for i in 0...(lessonsInDay - 1) {
                 let previousLesson = sortedLessons[safelyIndex: i - 1]
@@ -76,13 +80,13 @@ struct TimetableTimelineProvider: TimelineProvider {
             if let lastLessonInDay = sortedLessons.last {
                 entries.append(TimetableEntry(date: lastLessonInDay.end, previousLesson: nil, currentLesson: nil, futureLessons: [], timetableState: .lessonsOver))
             }
-            
-            let startOfDay = Calendar.current.startOfDay(for: Date())
-            
-            entries.append(TimetableEntry(date: startOfDay, previousLesson: nil, currentLesson: nil, futureLessons: sortedLessons.map(TimetableEntry.TimetableEntryLesson.fromTimetableLesson)))
         }
         
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let currentDate = Date()
+        let midnight = Calendar.current.startOfDay(for: currentDate)
+        let nextMidnight = Calendar.current.date(byAdding: .day, value: 1, to: midnight)!
+        
+        let timeline = Timeline(entries: entries, policy: .after(nextMidnight))
         completion(timeline)
     }
 }
