@@ -20,8 +20,8 @@ public sealed class TimetableWidgetUpdateDataModel
             SubjectName = listEntry.SubjectName.Value ?? listEntry.Event.Value,
             TeacherName = listEntry.TeacherName.Value,
             Date = listEntry.Date.Value,
-            Start = listEntry.Start.Value,
-            End = listEntry.End.Value,
+            Start = listEntry.Date.Value.Date + listEntry.Start.Value.TimeOfDay,
+            End = listEntry.Date.Value.Date + listEntry.End.Value.TimeOfDay,
             RoomName = listEntry.RoomName.Value
         };
 }
