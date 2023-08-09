@@ -1,6 +1,5 @@
 using System;
 using System.Reactive;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ReactiveUI;
@@ -31,7 +30,6 @@ public sealed class NativeWidgetUpdateDispatcher
     {
         MessageBus.Current.Listen<TEvent>()
             .ObserveOn(RxApp.TaskpoolScheduler)
-            .Throttle(TimeSpan.FromSeconds(5))
             .SelectMany(async @event => await ProcessEvent(@event))
             .Subscribe();
     }
