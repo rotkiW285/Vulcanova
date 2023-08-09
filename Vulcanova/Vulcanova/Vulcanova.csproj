@@ -86,6 +86,7 @@
       <EmbeddedResource Include="Resources\Icons\vulcanova.svg" />
       <EmbeddedResource Include="Resources\Share\arrow-ornament.svg" />
       <EmbeddedResource Include="Resources\Share\star-ornaments.svg" />
+      <EmbeddedResource Include="Resources\Icons\trash-outline.svg" />
     </ItemGroup>
 
     <ItemGroup>

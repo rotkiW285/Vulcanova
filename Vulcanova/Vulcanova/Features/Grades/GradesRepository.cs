@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LiteDB.Async;
+using Vulcanova.Features.Auth;
 
 namespace Vulcanova.Features.Grades;
 
-public class GradesRepository : IGradesRepository
+public class GradesRepository : IGradesRepository, IHasAccountRemovalCleanup
 {
     private readonly LiteDatabaseAsync _db;
 
@@ -25,5 +26,10 @@ public class GradesRepository : IGradesRepository
     public async Task UpdatePupilGradesAsync(IEnumerable<Grade> newGrades)
     {
         await _db.GetCollection<Grade>().UpsertAsync(newGrades);
+    }
+
+    async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
+    {
+        await _db.GetCollection<Grade>().DeleteManyAsync(g => g.AccountId == accountId);
     }
 }

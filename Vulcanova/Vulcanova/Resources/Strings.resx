@@ -390,4 +390,7 @@
     <data name="GradeSettingsLongPressToShare" xml:space="preserve">
         <value>Long press grade to share</value>
     </data>
+    <data name="CommonDelete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
 </root>

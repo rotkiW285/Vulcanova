@@ -35,4 +35,9 @@ public class MessageBoxesRepository : IMessageBoxesRepository
     {
         await _db.GetCollection<MessageBox>().UpdateAsync(box);
     }
+
+    public async Task DeleteMessageBoxesForAccountAsync(int accountId)
+    {
+        await _db.GetCollection<MessageBox>().DeleteManyAsync(m => m.AccountId == accountId);
+    }
 }

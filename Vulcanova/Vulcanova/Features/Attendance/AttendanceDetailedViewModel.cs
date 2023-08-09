@@ -88,6 +88,7 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 
         EnableJustificationMode = ReactiveCommand.Create((Unit _) => { JustificationMode = true; }, accountContext
             .WhenAnyValue(context => context.Account)
+            .WhereNotNull()
             .Select(a => a.Capabilities.Contains(AccountCapabilities.JustificationsEnabled))
             .CombineLatest(hasAnyJustifiable, (x, y) => x && y)
             .CombineLatest(this.WhenAnyValue(vm => vm.JustificationMode), (x, y) => x && !y));

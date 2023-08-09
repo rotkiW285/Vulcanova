@@ -800,5 +800,11 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("GradeSettingsLongPressToShare", resourceCulture);
             }
         }
+        
+        internal static string CommonDelete {
+            get {
+                return ResourceManager.GetString("CommonDelete", resourceCulture);
+            }
+        }
     }
 }

@@ -39,4 +39,9 @@ public class MessagesRepository : IMessagesRepository
     {
         await _db.GetCollection<Message>().UpdateAsync(message);
     }
+
+    public async Task DeleteMessagesInBoxAsync(Guid messageBoxId)
+    {
+        await _db.GetCollection<Message>().DeleteManyAsync(m => m.MessageBoxId == messageBoxId);
+    }
 }

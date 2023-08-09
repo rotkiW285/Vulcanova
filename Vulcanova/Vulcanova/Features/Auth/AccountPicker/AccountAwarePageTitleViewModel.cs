@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
@@ -24,9 +23,6 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
     
     public ReactiveCommand<int, Unit> OpenAccount { get; }
 
-    [Reactive]
-    public IReadOnlyCollection<Account> AvailableAccounts { get; private set; }
-
     public AccountAwarePageTitleViewModel(
         AccountContext accountContext,
         IAccountRepository accountRepository,
@@ -46,10 +42,7 @@ public class AccountAwarePageTitleViewModel : ReactiveObject
         ShowAccountsDialog = ReactiveCommand.CreateFromTask<Unit>(async _
             =>
         {
-            AvailableAccounts = await accountRepository.GetAccountsAsync();
-
-            await navigationService.NavigateAsync(nameof(AccountPickerView),
-                (nameof(AccountPickerViewModel.AvailableAccounts), AvailableAccounts));
+            await navigationService.NavigateAsync(nameof(AccountPickerView));
         });
 
         OpenAddAccountPage = ReactiveCommand.CreateFromTask<Unit>(

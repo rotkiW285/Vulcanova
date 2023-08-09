@@ -390,4 +390,7 @@
     <data name="GradeSettingsLongPressToShare" xml:space="preserve">
         <value>Przytrzymaj ocenę, by udostępnić</value>
     </data>
+    <data name="CommonDelete" xml:space="preserve">
+        <value>Skasuj</value>
+    </data>
 </root>

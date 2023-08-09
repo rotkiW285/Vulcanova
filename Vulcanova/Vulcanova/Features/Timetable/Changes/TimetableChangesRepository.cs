@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiteDB.Async;
+using Vulcanova.Features.Auth;
 
 namespace Vulcanova.Features.Timetable.Changes;
 
-public class TimetableChangesRepository : ITimetableChangesRepository
+public class TimetableChangesRepository : ITimetableChangesRepository, IHasAccountRemovalCleanup
 {
     private readonly LiteDatabaseAsync _db;
 
@@ -30,5 +31,10 @@ public class TimetableChangesRepository : ITimetableChangesRepository
                                   g.LessonDate.Month == monthAndYear.Month);
 
         await _db.GetCollection<TimetableChangeEntry>().UpsertAsync(entries);
+    }
+
+    async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
+    {
+        await _db.GetCollection<TimetableChangeEntry>().DeleteManyAsync(n => n.AccountId == accountId);
     }
 }

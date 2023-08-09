@@ -94,6 +94,7 @@ public class MessagesViewModel : ViewModelBase
 
         accountContext
             .WhenAnyValue(ctx => ctx.Account)
+            .WhereNotNull()
             .Select(_ => false) // don't force refresh
             .InvokeCommand(LoadBoxes);
     }

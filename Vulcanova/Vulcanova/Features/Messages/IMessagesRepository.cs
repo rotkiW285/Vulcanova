@@ -14,4 +14,6 @@ public interface IMessagesRepository
     Task<Message> GetMessageAsync(Guid messageBoxId, Guid messageId);
 
     Task UpdateMessageAsync(Message message);
+
+    Task DeleteMessagesInBoxAsync(Guid messageBoxId);
 }

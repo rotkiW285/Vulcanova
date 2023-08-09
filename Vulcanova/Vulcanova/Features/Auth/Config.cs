@@ -1,3 +1,6 @@
+using System.Linq;
+using System.Reflection;
+using DryIoc;
 using Prism.Ioc;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Auth.Intro;
@@ -23,5 +26,11 @@ public static class Config
         container.RegisterScoped<IAccountSyncService, AccountSyncService>();
 
         container.RegisterScoped<IAuthenticationService, AuthenticationService>();
+
+        foreach (var cleanUpHook in Assembly.GetExecutingAssembly().GetTypes()
+                     .Where(t => !t.IsAbstract && t.IsAssignableTo(typeof(IHasAccountRemovalCleanup))))
+        {
+            container.RegisterScoped(typeof(IHasAccountRemovalCleanup), cleanUpHook);
+        }
     }
 }

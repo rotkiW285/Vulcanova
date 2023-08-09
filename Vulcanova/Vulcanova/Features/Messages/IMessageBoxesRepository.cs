@@ -10,4 +10,6 @@ public interface IMessageBoxesRepository
     Task UpdateMessageBoxesForAccountAsync(int accountId, IEnumerable<MessageBox> boxes);
 
     Task UpdateMessageBoxAsync(MessageBox box);
+
+    Task DeleteMessageBoxesForAccountAsync(int accountId);
 }

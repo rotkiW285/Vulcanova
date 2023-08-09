@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using LiteDB.Async;
+using Vulcanova.Features.Auth;
 
 namespace Vulcanova.Features.LuckyNumber;
 
-public class LuckyNumberRepository : ILuckyNumberRepository
+public class LuckyNumberRepository : ILuckyNumberRepository, IHasAccountRemovalCleanup
 {
     private readonly LiteDatabaseAsync _db;
 
@@ -25,5 +26,10 @@ public class LuckyNumberRepository : ILuckyNumberRepository
     public async Task AddAsync(LuckyNumber luckyNumber)
     {
         await _db.GetCollection<LuckyNumber>().InsertAsync(luckyNumber);
+    }
+
+    async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
+    {
+        await _db.GetCollection<LuckyNumber>().DeleteManyAsync(l => l.AccountId == accountId);
     }
 }

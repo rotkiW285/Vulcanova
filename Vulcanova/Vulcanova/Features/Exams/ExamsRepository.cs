@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiteDB.Async;
+using Vulcanova.Features.Auth;
 
 namespace Vulcanova.Features.Exams;
 
-public class ExamsRepository : IExamsRepository
+public class ExamsRepository : IExamsRepository, IHasAccountRemovalCleanup
 {
     private readonly LiteDatabaseAsync _db;
 
@@ -27,5 +28,10 @@ public class ExamsRepository : IExamsRepository
         await _db.GetCollection<Exam>().DeleteManyAsync(e => e.AccountId == accountId);
 
         await _db.GetCollection<Exam>().UpsertAsync(entries);
+    }
+
+    async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
+    {
+        await _db.GetCollection<Exam>().DeleteManyAsync(e => e.AccountId == accountId);
     }
 }
