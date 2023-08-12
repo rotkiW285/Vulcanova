@@ -30,7 +30,7 @@ let timetableSampleEntry = TimetableEntry(date: Date(),
                                              TimetableEntry.TimetableEntryLesson(no: 4, name: "Przyroda", classRoom: "37", start: "11:45", end: "12:30"),
                                              TimetableEntry.TimetableEntryLesson(no: 5, name: "Wychowanie fizyczne", classRoom: "37", start: "12:40", end: "13:25"),
                                          ],
-                                            timetableState: .normal
+                                          timetableState: .normal
                                         )
 
 struct TimetableTimelineProvider: TimelineProvider {
@@ -44,50 +44,61 @@ struct TimetableTimelineProvider: TimelineProvider {
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<TimetableEntry>) -> ()) {
-        var entries: [TimetableEntry] = []
-        
-        let jsonData: TimetableData = readWidgetData(fileName: "timetable.json", defaultValue: []);
-        
-        if let dayGroup = jsonData.first(where: {Calendar.current.isDate(Date(), equalTo: $0.key, toGranularity: .day)}) {
-            let date = dayGroup.key;
-            
-            let sortedLessons = dayGroup.value.sorted {
-                $0.start < $1.start
-            }
-            let lessonsInDay = dayGroup.value.count
-            
-            if (lessonsInDay == 0) {
-                entries.append(TimetableEntry(date: date, previousLesson: nil, currentLesson: nil, futureLessons: [], timetableState: .noLessonsThatDay))
-
-                return
-            }
-
-            let startOfDay = Calendar.current.startOfDay(for: Date())
-            
-            entries.append(TimetableEntry(date: startOfDay, previousLesson: nil, currentLesson: nil, futureLessons: sortedLessons.map(TimetableEntry.TimetableEntryLesson.fromTimetableLesson)))
-            
-            for i in 0...(lessonsInDay - 1) {
-                let previousLesson = sortedLessons[safelyIndex: i - 1]
-                let currentLesson = sortedLessons[i]
-                let futureLessons = lessonsInDay - i > 2 ? sortedLessons[(i + 1)...] : []
-                
-                entries.append(TimetableEntry(date: currentLesson.start, previousLesson:
-                                                previousLesson == nil ? nil : TimetableEntry.TimetableEntryLesson.fromTimetableLesson(lesson: previousLesson!),
-                                              currentLesson: TimetableEntry.TimetableEntryLesson.fromTimetableLesson(lesson: currentLesson),
-                                              futureLessons: futureLessons.map(TimetableEntry.TimetableEntryLesson.fromTimetableLesson)))
-            }
-
-            if let lastLessonInDay = sortedLessons.last {
-                entries.append(TimetableEntry(date: lastLessonInDay.end, previousLesson: nil, currentLesson: nil, futureLessons: [], timetableState: .lessonsOver))
-            }
-        }
-        
+        let entries = getEntries()
         let currentDate = Date()
         let midnight = Calendar.current.startOfDay(for: currentDate)
         let nextMidnight = Calendar.current.date(byAdding: .day, value: 1, to: midnight)!
-        
+
         let timeline = Timeline(entries: entries, policy: .after(nextMidnight))
         completion(timeline)
+    }
+    
+    private func getEntries() -> [TimetableEntry] {
+        var entries: [TimetableEntry] = []
+        
+        let jsonData: TimetableData? = readWidgetData(fileName: "timetable.json", defaultValue: nil);
+        
+        guard let jsonData = jsonData else {
+            return [TimetableEntry.empty(date: Date(), state: .noData)]
+        }
+
+        guard let dayGroup = jsonData.first(where: {Calendar.current.isDate(Date(), equalTo: $0.key, toGranularity: .day)}) else {
+            return [TimetableEntry.empty(date: Date(), state: .missingData)]
+        }
+
+        let date = dayGroup.key;
+        
+        let sortedLessons = dayGroup.value.sorted {
+            $0.start < $1.start
+        }
+        let lessonsInDay = dayGroup.value.count
+        
+        if lessonsInDay == 0 {
+            entries.append(TimetableEntry.empty(date: date, state: .noLessonsThatDay))
+
+            return entries
+        }
+        
+        let startOfDay = Calendar.current.startOfDay(for: Date())
+
+        entries.append(TimetableEntry(date: startOfDay, previousLesson: nil, currentLesson: nil, futureLessons: sortedLessons.map(TimetableEntry.TimetableEntryLesson.fromTimetableLesson)))
+        
+        for i in 0...(lessonsInDay - 1) {
+            let previousLesson = sortedLessons[safelyIndex: i - 1]
+            let currentLesson = sortedLessons[i]
+            let futureLessons = lessonsInDay - i > 2 ? sortedLessons[(i + 1)...] : []
+            
+            entries.append(TimetableEntry(date: currentLesson.start, previousLesson:
+                                            previousLesson == nil ? nil : TimetableEntry.TimetableEntryLesson.fromTimetableLesson(lesson: previousLesson!),
+                                          currentLesson: TimetableEntry.TimetableEntryLesson.fromTimetableLesson(lesson: currentLesson),
+                                          futureLessons: futureLessons.map(TimetableEntry.TimetableEntryLesson.fromTimetableLesson)))
+        }
+
+        if let lastLessonInDay = sortedLessons.last {
+            entries.append(TimetableEntry.empty(date: lastLessonInDay.end, state: .lessonsOver))
+        }
+
+        return entries
     }
 }
 
@@ -118,10 +129,16 @@ struct TimetableEntry: TimelineEntry {
         }
     }
     
+    static func empty(date: Date, state: TimetableState) -> TimetableEntry {
+        TimetableEntry(date: date, previousLesson: nil, currentLesson: nil, futureLessons: [], timetableState: state)
+    }
+    
     enum TimetableState {
         case normal
         case noLessonsThatDay
         case lessonsOver
+        case missingData
+        case noData
     }
 }
 
@@ -176,6 +193,10 @@ struct TimetableWidgetEntryView : View {
                             Text("You are done for today 🥳").font(.subheadline)
                         } else if entry.timetableState == .noLessonsThatDay {
                             Text("No lessons today 🤙").font(.subheadline)
+                        } else if entry.timetableState == .missingData {
+                            Text("Missing data, please reload timetable in the app").font(.subheadline)
+                        } else if entry.timetableState == .noData {
+                            Text("Add your account in the app").font(.subheadline)
                         } else {
                             let showTime = family == .systemMedium
                             let renderFutureLessonsCnt = TimetableWidgetEntryView.getRenderFutureLessonsCount(entry: entry)
