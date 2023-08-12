@@ -7,6 +7,7 @@ using Prism;
 using Prism.Common;
 using Prism.Ioc;
 using Prism.Navigation;
+using Prism.Navigation.TabbedPages;
 using ReactiveUI;
 using Vulcanova.Core.Data;
 using Vulcanova.Core.Layout;
@@ -138,5 +139,24 @@ public partial class App
         }
 
         base.OnStart();
+    }
+
+    public async void OnWidgetInteraction(INativeWidgetProxy.NativeWidget widget)
+    {
+        var tabName = widget switch
+        {
+            INativeWidgetProxy.NativeWidget.Timetable => nameof(TimetableView),
+            INativeWidgetProxy.NativeWidget.AttendanceStats => nameof(AttendanceView),
+            _ => null
+        };
+
+        if (tabName is null)
+        {
+            return;
+        }
+        
+        var navigationService = Container.Resolve<INavigationService>();
+
+        await navigationService.SelectTabAsync(tabName);
     }
 }

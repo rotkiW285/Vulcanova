@@ -15,6 +15,7 @@ public static class Config
         container.RegisterScoped<IAttendanceReportRepository, AttendanceReportRepository>();
         container.RegisterScoped<IAttendanceReportService, AttendanceReportService>();
 
+        container.RegisterForNavigation<AttendanceView>();
         container.RegisterForNavigation<LessonDetailsView>();
         
         container.RegisterForNavigation<JustifyAbsenceView>();

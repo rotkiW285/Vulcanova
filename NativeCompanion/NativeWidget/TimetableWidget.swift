@@ -231,7 +231,7 @@ struct TimetableWidgetEntryView : View {
                 }
                 Spacer()
             }
-        }.padding(14)
+        }.padding(14).widgetURL(URL(string: "widget-deeplink://timetable"))
         
     }
     

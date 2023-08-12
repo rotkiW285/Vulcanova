@@ -56,5 +56,26 @@ namespace Vulcanova.iOS
             containerRegistry.RegisterSingleton<ISheetPopper, SheetPopper>();
             containerRegistry.RegisterSingleton<INativeWidgetProxy, NativeWidgetProxy>();
         }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            if (url.Scheme != "widget-deeplink") return false;
+
+            INativeWidgetProxy.NativeWidget? widget = url.Host switch
+            {
+                "timetable" => INativeWidgetProxy.NativeWidget.Timetable,
+                "attendance" => INativeWidgetProxy.NativeWidget.AttendanceStats,
+                _ => null
+            };
+
+            if (widget is null)
+            {
+                return false;
+            }
+                
+            ((App) App.Current).OnWidgetInteraction(widget.Value);
+
+            return true;
+        }
     }
 }

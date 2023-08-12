@@ -57,7 +57,7 @@ struct AttendanceWidgetEntryView : View {
                     }
                 }.padding(10)
             }
-        }.padding(.leading)
+        }.padding(.leading).widgetURL(URL(string: "widget-deeplink://attendance"))
     }
 }
 
