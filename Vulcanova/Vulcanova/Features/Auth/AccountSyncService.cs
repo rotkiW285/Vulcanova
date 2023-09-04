@@ -54,11 +54,14 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
 
                 var currentPeriodsIds = acc.Periods.Select(y => y.Id);
 
-                var periodsChanged = newAccount.Periods.Any(x => !currentPeriodsIds.Contains(x.Id));
+                // in some rare cases, the data will contain duplicated periods
+                var deduplicatedNewPeriods = newAccount.Periods.GroupBy(p => p.Id).Select(g => g.First()).ToArray();
+
+                var periodsChanged = deduplicatedNewPeriods.Any(x => !currentPeriodsIds.Contains(x.Id));
 
                 if (!periodsChanged)
                 {
-                    var newCurrentPeriod = newAccount.Periods.Single(x => x.Current);
+                    var newCurrentPeriod = deduplicatedNewPeriods.Single(x => x.Current);
                     var oldCurrentPeriod = acc.Periods.Single(x => x.Current);
 
                     periodsChanged = newCurrentPeriod.Id != oldCurrentPeriod.Id;
@@ -66,7 +69,7 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
 
                 if (periodsChanged)
                 {
-                    acc.Periods = newAccount.Periods.Select(_mapper.Map<Period>).ToList();
+                    acc.Periods = deduplicatedNewPeriods.Select(_mapper.Map<Period>).ToList();
                 }
 
                 acc.Capabilities = newAccount.Capabilities;

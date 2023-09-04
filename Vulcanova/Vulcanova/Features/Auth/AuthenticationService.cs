@@ -55,6 +55,8 @@ public class AuthenticationService : IAuthenticationService
 
         foreach (var account in accounts)
         {
+            // in some rare cases, the data will contain duplicated periods
+            account.Periods = account.Periods.GroupBy(p => p.Id).Select(g => g.First()).ToList();
             account.IdentityThumbprint = identity.Certificate.Thumbprint;
         }
 
