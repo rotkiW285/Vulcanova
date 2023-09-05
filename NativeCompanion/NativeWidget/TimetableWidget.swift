@@ -86,7 +86,7 @@ struct TimetableTimelineProvider: TimelineProvider {
         for i in 0...(lessonsInDay - 1) {
             let previousLesson = sortedLessons[safelyIndex: i - 1]
             let currentLesson = sortedLessons[i]
-            let futureLessons = lessonsInDay - i > 2 ? sortedLessons[(i + 1)...] : []
+            let futureLessons = lessonsInDay - i >= 2 ? sortedLessons[(i + 1)...] : []
             
             entries.append(TimetableEntry(date: currentLesson.start, previousLesson:
                                             previousLesson == nil ? nil : TimetableEntry.TimetableEntryLesson.fromTimetableLesson(lesson: previousLesson!),
