@@ -12,6 +12,7 @@ public class CorrespondentToInitialsConverter : IValueConverter
         {
             string s => string.Join(string.Empty, s.Split(' ')
                 .Take(2)
+                .Where(x => x.Length > 0)
                 .Select(x => x[0])),
             { } => throw new ArgumentException($"Unsupported argument of type {value.GetType()}",
                 nameof(value)),
