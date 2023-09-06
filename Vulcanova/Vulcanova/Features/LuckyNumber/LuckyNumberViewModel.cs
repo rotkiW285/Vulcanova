@@ -1,4 +1,5 @@
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Prism.Navigation;
@@ -12,7 +13,7 @@ namespace Vulcanova.Features.LuckyNumber;
 
 public class LuckyNumberViewModel : ViewModelBase
 {
-    public ReactiveCommand<int, LuckyNumber> GetLuckyNumber { get; }
+    public ReactiveCommand<Unit, LuckyNumber> GetLuckyNumber { get; }
 
     [ObservableAsProperty]
     public LuckyNumber LuckyNumber { get; }
@@ -31,12 +32,12 @@ public class LuckyNumberViewModel : ViewModelBase
 
         AccountViewModel = accountViewModel;
 
-        GetLuckyNumber = ReactiveCommand.CreateFromTask((int accountId) => GetLuckyNumberAsync(accountId));
+        GetLuckyNumber = ReactiveCommand.CreateFromTask((Unit _) => GetLuckyNumberAsync(accountContext.Account.Id));
         GetLuckyNumber.ToPropertyEx(this, vm => vm.LuckyNumber);
 
         accountContext.WhenAnyValue(ctx => ctx.Account)
             .WhereNotNull()
-            .Select(acc => acc.Id)
+            .Select(_ => Unit.Default)
             .InvokeCommand(GetLuckyNumber);
     }
 

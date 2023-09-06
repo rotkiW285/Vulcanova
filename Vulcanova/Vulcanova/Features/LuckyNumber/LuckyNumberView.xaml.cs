@@ -1,4 +1,6 @@
+using System.Reactive;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using ReactiveUI;
 using Xamarin.Forms.Xaml;
 
@@ -33,6 +35,11 @@ public partial class LuckyNumberView
                     v => v.NoLuckyNumberLabel.IsVisible,
                     l => l?.Number == 0)
                 .DisposeWith(disposable);
+
+            this.WhenAnyValue(view => view.ViewModel.GetLuckyNumber)
+                .Select(_ => Unit.Default)
+                .InvokeCommand(ViewModel.GetLuckyNumber)
+                .DisposeWith(disposable);   
         });
     }
 }
