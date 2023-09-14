@@ -90,6 +90,8 @@ public class MessagesViewModel : ViewModelBase
         this.WhenAnyValue(vm => vm.CurrentBox)
             .CombineLatest(whenAnyFolder)
             .Select(_ => false) // don't force refresh
+            // workaround empty CollectionView
+            .Delay(TimeSpan.FromMilliseconds(100))
             .InvokeCommand(LoadMessages);
 
         accountContext
