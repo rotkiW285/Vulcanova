@@ -18,20 +18,33 @@ struct TimetableDataLesson: Codable {
     let subjectName, teacherName: String
     let date, start, end: Date
     let roomName: String?
+    let displayColor: ChangeDisplayColor
+    let displayTextDecorations: ChangeDisplayTextDecorations
+    
+    enum ChangeDisplayColor: Int, Codable {
+        case normal
+        case yellow
+        case red
+    }
+    
+    enum ChangeDisplayTextDecorations: Int, Codable {
+        case none
+        case strikethrough
+    }
 }
 
 typealias TimetableData = [TimetableDataElement]
 
 let timetableSampleEntry = TimetableEntry(date: Date(),
-                                         previousLesson: TimetableEntry.TimetableEntryLesson(no: 1, name: "Przyroda", classRoom: "21", start: "8:00", end: "8:45"),
-                                         currentLesson: TimetableEntry.TimetableEntryLesson(no: 2, name: "Edb", classRoom: "37", start: "9:50", end: "10:35"),
-                                         futureLessons: [
-                                             TimetableEntry.TimetableEntryLesson(no: 3, name: "Religia", classRoom: "37", start: "10:45", end: "11:30"),
-                                             TimetableEntry.TimetableEntryLesson(no: 4, name: "Przyroda", classRoom: "37", start: "11:45", end: "12:30"),
-                                             TimetableEntry.TimetableEntryLesson(no: 5, name: "Wychowanie fizyczne", classRoom: "37", start: "12:40", end: "13:25"),
-                                         ],
+                                          previousLesson: TimetableEntry.TimetableEntryLesson(no: 1, name: "Przyroda", classRoom: "21", start: "8:00", end: "8:45"),
+                                          currentLesson: TimetableEntry.TimetableEntryLesson(no: 2, name: "Edb", classRoom: "37", start: "9:50", end: "10:35"),
+                                          futureLessons: [
+                                            TimetableEntry.TimetableEntryLesson(no: 3, name: "Religia", classRoom: "37", start: "10:45", end: "11:30", displayColor: .red, displayTextDecorations: .strikethrough),
+                                            TimetableEntry.TimetableEntryLesson(no: 4, name: "Przyroda", classRoom: "37", start: "11:45", end: "12:30"),
+                                            TimetableEntry.TimetableEntryLesson(no: 5, name: "Wychowanie fizyczne", classRoom: "37", start: "12:40", end: "13:25"),
+                                          ],
                                           timetableState: .normal
-                                        )
+)
 
 struct TimetableTimelineProvider: TimelineProvider {
     func placeholder(in context: Context) -> TimetableEntry {
@@ -117,6 +130,8 @@ struct TimetableEntry: TimelineEntry {
         let classRoom: String?
         let start: String
         let end: String
+        var displayColor: TimetableDataLesson.ChangeDisplayColor = TimetableDataLesson.ChangeDisplayColor.normal
+        var displayTextDecorations: TimetableDataLesson.ChangeDisplayTextDecorations = TimetableDataLesson.ChangeDisplayTextDecorations.none
         
         static let timeFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -125,7 +140,7 @@ struct TimetableEntry: TimelineEntry {
         }()
         
         static func fromTimetableLesson(lesson: TimetableDataLesson) -> TimetableEntryLesson {
-            return TimetableEntryLesson(no: lesson.no, name: lesson.subjectName, classRoom: lesson.roomName, start: timeFormatter.string(from: lesson.start), end: timeFormatter.string(from: lesson.end))
+            return TimetableEntryLesson(no: lesson.no, name: lesson.subjectName, classRoom: lesson.roomName, start: timeFormatter.string(from: lesson.start), end: timeFormatter.string(from: lesson.end), displayColor: lesson.displayColor, displayTextDecorations: lesson.displayTextDecorations)
         }
     }
     
@@ -149,12 +164,16 @@ struct TimetableEntryLessonView : View {
     
     var body: some View {
         HStack() {
-            Text("\(lesson.no). \(lesson.name)" + (lesson.classRoom != nil ? " (\(lesson.classRoom!))" : "")).font(.subheadline).foregroundColor(getColor(style: self.style)).lineLimit(1)
+            Text("\(lesson.no). \(lesson.name)" + (lesson.classRoom != nil ? " (\(lesson.classRoom!))" : "")) {
+                if lesson.displayTextDecorations == TimetableDataLesson.ChangeDisplayTextDecorations.strikethrough {
+                    $0.strikethroughStyle = Text.LineStyle(pattern: .solid, color: getColor())
+                }
+            }.font(.subheadline).foregroundColor(getColor()).fontWeight(style == .current ? .semibold : .regular).lineLimit(1)
             
             Spacer()
             
             if showTime {
-                Text("\(lesson.start) - \(lesson.end)").font(.subheadline).foregroundColor(getColor(style: self.style)).lineLimit(1)
+                Text("\(lesson.start) - \(lesson.end)").fontWeight(style == .current ? .semibold : .regular).font(.subheadline).foregroundColor(getColor()).lineLimit(1)
             }
         }
     }
@@ -165,11 +184,21 @@ struct TimetableEntryLessonView : View {
         case future
     }
     
-    private func getColor(style: TimetableEntryStyle) -> Color {
-        switch style {
+    private func getColor() -> Color {
+        switch self.style {
         case .past: return Color.gray
-        case .current: return Color.blue
-        case .future: return Color.primary
+        case .current:
+            switch self.lesson.displayColor {
+            case .normal: return Color.blue
+            case .red: return Color.red
+            case .yellow: return Color.orange
+            }
+        case .future:
+            switch self.lesson.displayColor {
+            case .normal: return Color.primary
+            case .red: return Color.red
+            case .yellow: return Color.orange
+            }
         }
     }
 }
@@ -276,5 +305,13 @@ extension Collection {
             guard self.indices.contains(i) else { return nil }
             return self[i]
         }
+    }
+}
+
+extension Text {
+    init(_ string: String, configure: ((inout AttributedString) -> Void)) {
+        var attributedString = AttributedString(string) /// create an `AttributedString`
+        configure(&attributedString) /// configure using the closure
+        self.init(attributedString) /// initialize a `Text`
     }
 }

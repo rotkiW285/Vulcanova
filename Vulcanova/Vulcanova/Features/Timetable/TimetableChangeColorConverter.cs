@@ -1,8 +1,6 @@
 using System;
 using System.Globalization;
-using System.Linq;
 using Vulcanova.Core.Layout;
-using Vulcanova.Uonet.Api.Schedule;
 using Xamarin.Forms;
 
 namespace Vulcanova.Features.Timetable;
@@ -13,25 +11,17 @@ public class TimetableChangeColorConverter : IMultiValueConverter
     {
         var value = values[0];
 
-        if (value is TimetableListEntry.ChangeDetails change)
+        var color = (value as TimetableListEntry.ChangeDetails).GetDisplayColor();
+
+        var baseColor = color switch
         {
-            var baseColor = change switch
-            {
-                {ChangeType: ChangeType.Exemption or ChangeType.ClassAbsence} => "ErrorColor",
-                {ChangeType: ChangeType.Substitution} => "WarningColor",
-                {
-                    ChangeType: ChangeType.Rescheduled, RescheduleKind: TimetableListEntry.RescheduleKind.Added
-                } => "WarningColor",
-                {
-                    ChangeType: ChangeType.Rescheduled, RescheduleKind: TimetableListEntry.RescheduleKind.Removed
-                } => "ErrorColor",
-                _ => "WarningColor"
-            };
+            ChangeDisplayColor.Red => "ErrorColor",
+            ChangeDisplayColor.Yellow => "WarningColor",
+            ChangeDisplayColor.Normal => "PrimaryTextColor",
+            _ => "PrimaryTextColor"
+        };
 
-            return ThemeUtility.GetThemedColorByResourceKey(baseColor);
-        }
-
-        return ThemeUtility.GetDefaultTextColor();
+        return ThemeUtility.GetThemedColorByResourceKey(baseColor);
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

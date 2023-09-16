@@ -7,11 +7,12 @@ public sealed class TimetableWidgetUpdateDataModel
     public int No { get; set; }
     public string SubjectName { get; set; }
     public string TeacherName { get; set; }
-    public string Event { get; set; }
     public DateTime Date { get; set; }
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public string RoomName { get; set; }
+    public ChangeDisplayColor DisplayColor { get; set; }
+    public ChangeDisplayTextDecorations DisplayTextDecorations { get; set; }
 
     public static TimetableWidgetUpdateDataModel FromTimetableListEntry(TimetableListEntry listEntry) =>
         new()
@@ -22,6 +23,8 @@ public sealed class TimetableWidgetUpdateDataModel
             Date = listEntry.Date.Value,
             Start = listEntry.Date.Value.Date + listEntry.Start.Value.TimeOfDay,
             End = listEntry.Date.Value.Date + listEntry.End.Value.TimeOfDay,
-            RoomName = listEntry.RoomName.Value
+            RoomName = listEntry.RoomName.Value,
+            DisplayColor = listEntry.Change.GetDisplayColor(),
+            DisplayTextDecorations = listEntry.Change.GetDisplayTextDecorations()
         };
 }
