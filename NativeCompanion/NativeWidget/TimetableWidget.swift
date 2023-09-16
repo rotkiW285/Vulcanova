@@ -164,11 +164,19 @@ struct TimetableEntryLessonView : View {
     
     var body: some View {
         HStack() {
-            Text("\(lesson.no). \(lesson.name)" + (lesson.classRoom != nil ? " (\(lesson.classRoom!))" : "")) {
+            Text("\(lesson.no). \(lesson.name)") {
                 if lesson.displayTextDecorations == TimetableDataLesson.ChangeDisplayTextDecorations.strikethrough {
                     $0.strikethroughStyle = Text.LineStyle(pattern: .solid, color: getColor())
                 }
             }.font(.subheadline).foregroundColor(getColor()).fontWeight(style == .current ? .semibold : .regular).lineLimit(1)
+            
+            if lesson.classRoom != nil {
+                Text("(\(lesson.classRoom!))") {
+                    if lesson.displayTextDecorations == TimetableDataLesson.ChangeDisplayTextDecorations.strikethrough {
+                        $0.strikethroughStyle = Text.LineStyle(pattern: .solid, color: getColor())
+                    }
+                }.font(.subheadline).foregroundColor(getColor()).fontWeight(style == .current ? .semibold : .regular).lineLimit(1)
+            }
             
             Spacer()
             
