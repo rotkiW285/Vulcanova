@@ -23,10 +23,8 @@ public class GradesSummaryViewModel : ViewModelBase
 
     public ReactiveCommand<int, Unit> ShowSubjectGradesDetails { get; }
 
-    [Reactive] public IEnumerable<SubjectGrades> Grades { get; private set; }
+    [Reactive] private IEnumerable<SubjectGrades> Grades { get; set; }
 
-    [ObservableAsProperty] public bool IsSyncing { get; }
-        
     [Reactive] public int? PeriodId { get; set; }
 
     [Reactive] public SubjectGrades CurrentSubject { get; private set; }
@@ -35,6 +33,8 @@ public class GradesSummaryViewModel : ViewModelBase
     [Reactive] public decimal? PartialGradesAverage { get; private set; }
 
     private IObservable<ModifiersSettings> ModifiersSettings { get; }
+    
+    [ObservableAsProperty] public IEnumerable<object> GradeItems { get; }
 
     public GradesSummaryViewModel(
         INavigationService navigationService,
@@ -58,8 +58,6 @@ public class GradesSummaryViewModel : ViewModelBase
         });
 
         GetGrades.ToPropertyEx(this, vm => vm.RawGrades);
-
-        GetGrades.IsExecuting.ToPropertyEx(this, vm => vm.IsSyncing);
 
         ShowSubjectGradesDetails = ReactiveCommand.Create((int subjectId) =>
         {
@@ -102,6 +100,11 @@ public class GradesSummaryViewModel : ViewModelBase
             {
                 PartialGradesAverage = values.First.Grades.Average(settings.Modifiers);
             });
+
+        this.WhenAnyValue(vm => vm.Grades, vm => vm.PartialGradesAverage)
+            .Where(x => x is not { Item1: null })
+            .Select(items => items.Item2 != null ? items.Item1.Cast<object>().Prepend(items.Item2) : items.Item1)
+            .ToPropertyEx(this, vm => vm.GradeItems);
     }
 
     private static IEnumerable<SubjectGrades> ToSubjectGrades(IEnumerable<Grade> grades, IEnumerable<AverageGrade> averageGrades, AppSettings settings)

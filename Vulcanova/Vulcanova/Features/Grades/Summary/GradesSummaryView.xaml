@@ -15,62 +15,64 @@
         <ResourceDictionary>
             <grades:GradeColorConverter x:Key="GradeColorConverter" />
         </ResourceDictionary>
+        <DataTemplate x:DataType="local:SubjectGrades" x:Key="SubjectGradesTemplate">
+            <StackLayout Padding="0, 1"
+                         xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
+                         xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type local:GradesSummaryViewModel}}, Path=ShowSubjectGradesDetails}"
+                         xe:Commands.TapParameter="{Binding SubjectId}">
+                <Grid Padding="16, 8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding SubjectName}" />
+                        <FlexLayout BindableLayout.ItemsSource="{Binding Grades}"
+                                    Direction="Row" Wrap="Wrap">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="grades:Grade">
+                                    <Label
+                                        Padding="0,0,6,0"
+                                        TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}"
+                                        Text="{Binding Content}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </StackLayout>
+                    <Label Grid.Column="1"
+                           Style="{StaticResource SmallLabelStyle}"
+                           Text="{Binding Average, StringFormat='{0:F2}'}"
+                           VerticalTextAlignment="Center" />
+                    <layout:TintedCachedImage
+                        Grid.Column="2"
+                        HeightRequest="32"
+                        WidthRequest="32"
+                        Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
+                        TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                    </layout:TintedCachedImage>
+                </Grid>
+                <!-- Separator -->
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+            </StackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:DataType="x:Decimal" x:Key="PartialAverageTemplate">
+            <StackLayout x:Name="PartialAverageContainer">
+                <Label HorizontalTextAlignment="Center" x:Name="PartialAverage" Text="{Binding ., StringFormat='{0:F2}'}" />
+                <Label HorizontalTextAlignment="Center"
+                       Text="{x:Static resx:Strings.PartialGradesAverage}"
+                       FontSize="Small" />
+            </StackLayout>
+        </DataTemplate>
+
+        <local:GradesSummaryTemplateSelector x:Key="TemplateSelector" Average="{StaticResource PartialAverageTemplate}"
+                                             Entry="{StaticResource SubjectGradesTemplate}" />
     </ContentView.Resources>
     <ContentView.Content>
         <Grid>
             <RefreshView x:Name="RefreshView">
-                <CollectionView ItemsSource="{Binding Grades}">
-                    <CollectionView.Header>
-                        <StackLayout x:Name="PartialAverageContainer">
-                            <Label HorizontalTextAlignment="Center" x:Name="PartialAverage" />
-                            <Label HorizontalTextAlignment="Center"
-                                   Text="{x:Static resx:Strings.PartialGradesAverage}"
-                                   FontSize="Small" />
-                        </StackLayout>
-                    </CollectionView.Header>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="local:SubjectGrades">
-                            <StackLayout Padding="0, 1" xe:TouchEffect.Color="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
-                                         xe:Commands.Tap="{Binding Source={RelativeSource AncestorType={x:Type local:GradesSummaryViewModel}}, Path=ShowSubjectGradesDetails}"
-                                         xe:Commands.TapParameter="{Binding SubjectId}">
-                                <Grid Padding="16, 8">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackLayout HorizontalOptions="FillAndExpand">
-                                        <Label Text="{Binding SubjectName}" />
-                                        <FlexLayout BindableLayout.ItemsSource="{Binding Grades}"
-                                                    Direction="Row" Wrap="Wrap">
-                                            <BindableLayout.ItemTemplate>
-                                                <DataTemplate x:DataType="grades:Grade">
-                                                    <Label
-                                                        Padding="0,0,6,0"
-                                                        TextColor="{Binding Column.Color, Converter={StaticResource GradeColorConverter}, ConverterParameter={AppThemeBinding Dark={StaticResource DarkPrimaryTextColor}, Light={StaticResource LightPrimaryTextColor}}}"
-                                                        Text="{Binding Content}" />
-                                                </DataTemplate>
-                                            </BindableLayout.ItemTemplate>
-                                        </FlexLayout>
-                                    </StackLayout>
-                                    <Label Grid.Column="1"
-                                           Style="{StaticResource SmallLabelStyle}"
-                                           Text="{Binding Average, StringFormat='{0:F2}'}"
-                                           VerticalTextAlignment="Center" />
-                                    <layout:TintedCachedImage
-                                        Grid.Column="2"
-                                        HeightRequest="32"
-                                        WidthRequest="32"
-                                        Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
-                                        TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
-                                    </layout:TintedCachedImage>
-                                </Grid>
-                                <!-- Separator -->
-                                <BoxView Style="{StaticResource SeparatorStyle}" />
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <CollectionView ItemsSource="{Binding GradeItems}" ItemTemplate="{StaticResource TemplateSelector}" />
             </RefreshView>
         </Grid>
     </ContentView.Content>
