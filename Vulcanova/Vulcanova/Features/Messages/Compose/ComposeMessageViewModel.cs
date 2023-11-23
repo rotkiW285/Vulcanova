@@ -55,6 +55,7 @@ public class ComposeMessageViewModel : ViewModelBase, IInitialize
         currentEntriesSource
             .Connect()
             .Filter(observableFilter)
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Bind(out _filteredAddressBookEntries)
             .Subscribe();
 

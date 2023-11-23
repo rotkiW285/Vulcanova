@@ -53,6 +53,7 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 
         currentEntriesSource
             .Connect()
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Bind(out _currentDayEntries)
             .Subscribe();
 
