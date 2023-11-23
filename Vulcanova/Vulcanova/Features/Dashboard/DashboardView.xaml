@@ -198,13 +198,13 @@
                                                     Text="{Binding .Column.Subject.Name, StringFormat='{0} –'}"
                                                     Style="{StaticResource SmallLabelStyle}"
                                                     VerticalTextAlignment="Center"/>
-                                                <Label LineBreakMode="TailTruncation" Grid.Column="1" 
+                                                <Label Grid.Column="1" 
                                                        Text="{Binding  .Content}"
                                                        TextColor="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}"
                                                        Style="{StaticResource SmallLabelStyle}"
                                                        VerticalTextAlignment="Center"/>
                                                 <StackLayout Grid.Column="3" Spacing="0" VerticalOptions="Center" Orientation="Horizontal">
-                                                        <Label LineBreakMode="TailTruncation" 
+                                                        <Label 
                                                             Text="{Binding .DateModify, StringFormat='{0:dd.MM}'}"
                                                             BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}"
                                                             Style="{StaticResource SmallLabelStyle}"
