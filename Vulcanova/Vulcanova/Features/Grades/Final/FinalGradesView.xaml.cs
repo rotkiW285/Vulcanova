@@ -29,39 +29,34 @@ public partial class FinalGradesView
 
         this.WhenActivated(disposable =>
         {
-            static IEnumerable GradesSelector(IEnumerable<FinalGradesEntry> grades)
+            static IEnumerable GradesSelector(IEnumerable<object> grades)
             {
                 if (grades == null)
                 {
                     return null;
                 }
 
-                var finalGradesEntries = grades as FinalGradesEntry[] ?? grades.ToArray();
-                return finalGradesEntries.All(g => g.PredictedGrade == null && g.FinalGrade == null)
+                var enumeratedGrades = grades as object[] ?? grades.ToArray();
+
+                return enumeratedGrades.OfType<FinalGradesEntry>()
+                    .All(g => g.PredictedGrade == null && g.FinalGrade == null)
                     ? null
-                    : finalGradesEntries;
+                    : enumeratedGrades;
             }
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                this.OneWayBind(ViewModel, vm => vm.FinalGrades, v => v.FinalGradesList.ItemsSource, GradesSelector, TimeSpan.FromMilliseconds(50))
+                this.OneWayBind(ViewModel, vm => vm.FinalGradeItems, v => v.FinalGradesList.ItemsSource, GradesSelector, TimeSpan.FromMilliseconds(50))
                     .DisposeWith(disposable);
             }
             else
             {
-                this.OneWayBind(ViewModel, vm => vm.FinalGrades, v => v.FinalGradesList.ItemsSource, GradesSelector)
+                this.OneWayBind(ViewModel, vm => vm.FinalGradeItems, v => v.FinalGradesList.ItemsSource, GradesSelector)
                     .DisposeWith(disposable);
             }
 
             this.BindForceRefresh(RefreshView, v => v.ViewModel.GetFinalGrades, true)
                 .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.FinalAverage, v => v.FinalAverage.Text,
-                    value => value?.ToString("F2"))
-                .DisposeWith(disposable);
-
-            this.OneWayBind(ViewModel, vm => vm.FinalAverage, v => v.FinalAverageContainer.IsVisible,
-                value => value != null);
 
             this.WhenAnyValue(v => v.PeriodId)
                 .WhereNotNull()

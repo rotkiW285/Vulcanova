@@ -6,17 +6,52 @@
                           xmlns:final="clr-namespace:Vulcanova.Features.Grades.Final;assembly=Vulcanova"
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
                           x:Class="Vulcanova.Features.Grades.Final.FinalGradesView">
+    <ContentView.Resources>
+        <DataTemplate x:DataType="final:FinalGradesEntry" x:Key="FinalGradesEntryTemplate">
+            <StackLayout Padding="0, 1">
+                <StackLayout Padding="16, 8">
+                    <Label
+                        Text="{Binding Subject.Name}" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static resx:Strings.PredictedGradeLabel}"
+                               FontSize="Small" />
+                        <Label
+                            Text="{Binding PredictedGrade}"
+                            HorizontalOptions="FillAndExpand"
+                            HorizontalTextAlignment="End"
+                            FontSize="Small" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static resx:Strings.FinalGradeLabel}"
+                               Style="{StaticResource PrimaryColorLabelStyle}"
+                               FontSize="Small" />
+                        <Label
+                            Text="{Binding FinalGrade}"
+                            Style="{StaticResource PrimaryColorLabelStyle}"
+                            HorizontalOptions="FillAndExpand"
+                            HorizontalTextAlignment="End"
+                            FontSize="Small" />
+                    </StackLayout>
+                </StackLayout>
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+            </StackLayout>
+        </DataTemplate>
+        
+        <DataTemplate x:DataType="x:Decimal" x:Key="FinalAverageTemplate">
+            <StackLayout x:Name="FinalAverageContainer">
+                <Label HorizontalTextAlignment="Center" Text="{Binding ., StringFormat='{0:F2}'}" />
+                <Label HorizontalTextAlignment="Center"
+                       Text="{x:Static resx:Strings.FinalGradesAverage}"
+                       FontSize="Small" />
+            </StackLayout>
+        </DataTemplate>
+        
+        <final:FinalGradesTemplateSelector x:Key="TemplateSelector" Average="{StaticResource FinalAverageTemplate}"
+                                           Entry="{StaticResource FinalGradesEntryTemplate}" />
+    </ContentView.Resources>
     <ContentView.Content>
         <RefreshView x:Name="RefreshView">
-            <CollectionView x:Name="FinalGradesList">
-                <CollectionView.Header>
-                    <StackLayout x:Name="FinalAverageContainer">
-                        <Label HorizontalTextAlignment="Center" x:Name="FinalAverage" />
-                        <Label HorizontalTextAlignment="Center"
-                               Text="{x:Static resx:Strings.FinalGradesAverage}"
-                               FontSize="Small" />
-                    </StackLayout>
-                </CollectionView.Header>
+            <CollectionView x:Name="FinalGradesList" ItemTemplate="{StaticResource TemplateSelector}">
                 <CollectionView.EmptyView>
                     <Grid VerticalOptions="FillAndExpand">
                         <StackLayout VerticalOptions="Center" Padding="16">
@@ -26,37 +61,6 @@
                         </StackLayout>
                     </Grid>
                 </CollectionView.EmptyView>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="final:FinalGradesEntry">
-                        <StackLayout Padding="0, 1">
-                            <StackLayout Padding="16, 8">
-                                <Label
-                                    Text="{Binding Subject.Name}" />
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{x:Static resx:Strings.PredictedGradeLabel}"
-                                           FontSize="Small" />
-                                    <Label
-                                        Text="{Binding PredictedGrade}"
-                                        HorizontalOptions="FillAndExpand"
-                                        HorizontalTextAlignment="End"
-                                        FontSize="Small" />
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{x:Static resx:Strings.FinalGradeLabel}"
-                                           Style="{StaticResource PrimaryColorLabelStyle}"
-                                           FontSize="Small" />
-                                    <Label
-                                        Text="{Binding FinalGrade}"
-                                        Style="{StaticResource PrimaryColorLabelStyle}"
-                                        HorizontalOptions="FillAndExpand"
-                                        HorizontalTextAlignment="End"
-                                        FontSize="Small" />
-                                </StackLayout>
-                            </StackLayout>
-                            <BoxView Style="{StaticResource SeparatorStyle}" />
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
     </ContentView.Content>

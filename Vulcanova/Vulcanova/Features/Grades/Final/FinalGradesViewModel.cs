@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Reactive;
+using System.Linq;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
@@ -16,10 +16,12 @@ public class FinalGradesViewModel : ViewModelBase
 {
     public ReactiveCommand<bool, IEnumerable<FinalGradesEntry>> GetFinalGrades { get; }
 
-    [ObservableAsProperty] public IEnumerable<FinalGradesEntry> FinalGrades { get; private set; }
+    [ObservableAsProperty] private IEnumerable<FinalGradesEntry> FinalGrades { get; set; }
 
     [Reactive] public int? PeriodId { get; set; }
-    [Reactive] public decimal? FinalAverage { get; private set; }
+    [Reactive] private decimal? FinalAverage { get; set; }
+    
+    [ObservableAsProperty] public IEnumerable<object> FinalGradeItems { get; }
 
     public FinalGradesViewModel(
         INavigationService navigationService,
@@ -49,5 +51,10 @@ public class FinalGradesViewModel : ViewModelBase
             {
                 FinalAverage = values.First.Average(settings.Modifiers);
             });
+        
+        this.WhenAnyValue(vm => vm.FinalGrades, vm => vm.FinalAverage)
+            .Where(x => x is not { Item1: null })
+            .Select(items => items.Item2 != null ? items.Item1.Cast<object>().Prepend(items.Item2.Value) : items.Item1)
+            .ToPropertyEx(this, vm => vm.FinalGradeItems);
     }
 }
