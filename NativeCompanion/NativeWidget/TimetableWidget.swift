@@ -297,6 +297,7 @@ struct TimetableWidget: Widget {
         .supportedFamilies([.systemSmall, .systemMedium])
         .configurationDisplayName("Timetable")
         .description("Today's timetable overview")
+        .contentMarginsDisabled()
     }
 }
 

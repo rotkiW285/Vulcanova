@@ -71,6 +71,7 @@ struct AttendanceWidget: Widget {
         .supportedFamilies([.systemSmall])
         .configurationDisplayName("Attendance")
         .description("Overall attendance")
+        .contentMarginsDisabled()
     }
 }
 
