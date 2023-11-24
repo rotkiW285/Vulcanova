@@ -36,7 +36,7 @@ jobs:
         run: dotnet restore
 
       - name: Restore dependencies with nuget restore
-        run: nuget restore Vulcanova/Vulcanova.iOS/Vulcanova.iOS.csproj
+        run: nuget restore Vulcanova/Vulcanova.iOS/Vulcanova.iOS.csproj && nuget restore Vulcanova/Vulcanova/Vulcanova.csproj
       
       - name: Create GoogleService-Info.plist file
         run: 'echo "$GOOGLE_SERVICE__INFO_PLIST" > Vulcanova/Vulcanova.iOS/GoogleService-Info.plist'
