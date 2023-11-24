@@ -15,8 +15,17 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Xamarin
+      - name: Install Xamarin.iOS
         run: brew install --cask xamarin-ios
+
+      - name: Download Visual Studio for Mac
+        run: curl https://download.visualstudio.microsoft.com/download/pr/ceb0ea3f-4db8-46b4-8dc3-8049d27c0107/91eb158e928097dcb6e42ece2db7ebac/visualstudioformac-17.6.7.417-arm64.dmg -o /tmp/vsformac.dmg
+      
+      - name: Mount Visual Studio for Mac dmg
+        run: hdiutil attach /tmp/vsformac.dmg
+      
+      - name: Extract MSBuild
+        run: cp -R /Volumes/Visual\ Studio/Visual\ Studio.app/Contents/MonoBundle/MSBuild/Current/bin /tmp/msbuild
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
@@ -41,7 +50,7 @@ jobs:
         run: xcodebuild -project NativeCompanion/NativeCompanion.xcodeproj -scheme NativeWidgetExtension -sdk iphoneos -arch arm64 -derivedDataPath NativeCompanion/DerivedData/NativeCompanion -configuration Release build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
 
       - name: Build
-        run: /Library/Frameworks/Mono.framework/Versions/Current/Commands/mono '/Applications/Visual Studio.app/Contents/MonoBundle/MSBuild/Current/bin/MSBuild.dll'  Vulcanova/Vulcanova.iOS/Vulcanova.iOS.csproj /p:Configuration='Release' /t:Build /p:Platform='iPhone' /p:BuildIpa=true /p:EnableCodeSigning=false
+        run: /Library/Frameworks/Mono.framework/Versions/Current/Commands/mono '/tmp/msbuild/MSBuild.dll' Vulcanova/Vulcanova.iOS/Vulcanova.iOS.csproj /p:Configuration='Release' /t:Build /p:Platform='iPhone' /p:BuildIpa=true /p:EnableCodeSigning=false
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
