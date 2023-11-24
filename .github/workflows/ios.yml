@@ -34,6 +34,9 @@ jobs:
         env:
           GOOGLE_SERVICE__INFO_PLIST: ${{ secrets.GOOGLE_SERVICE__INFO_PLIST }}
 
+      - name: Select Xcode 15
+        run: xcode-select -s /Applications/Xcode_15.0.1.app
+
       - name: Build NativeCompanion
         run: xcodebuild -project NativeCompanion/NativeCompanion.xcodeproj -scheme NativeWidgetExtension -sdk iphoneos -arch arm64 -derivedDataPath NativeCompanion/DerivedData/NativeCompanion -configuration Release build CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
 
