@@ -15,9 +15,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Set default Xamarin SDK versions
-        run: |
-          $VM_ASSETS/select-xamarin-sdk-v2.sh --mono=6.12 --ios=16.2
+      - name: Install Xamarin.iOS
+        run: brew install --cask xamarin-ios
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
