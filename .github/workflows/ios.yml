@@ -15,8 +15,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Xamarin.iOS
-        run: brew install --cask xamarin-ios
+      - name: Install Xamarin
+        run: brew install --cask xamarin-ios && brew install --cask xamarin-android
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore
 
       - name: Restore dependencies with nuget restore
-        run: nuget restore Vulcanova/Vulcanova.iOS/Vulcanova.iOS.csproj
+        run: nuget restore
       
       - name: Create GoogleService-Info.plist file
         run: 'echo "$GOOGLE_SERVICE__INFO_PLIST" > Vulcanova/Vulcanova.iOS/GoogleService-Info.plist'
