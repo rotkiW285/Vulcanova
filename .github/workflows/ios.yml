@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore
 
       - name: Restore dependencies with nuget restore
-        run: nuget restore
+        run: nuget restore -verbosity detailed
       
       - name: Create GoogleService-Info.plist file
         run: 'echo "$GOOGLE_SERVICE__INFO_PLIST" > Vulcanova/Vulcanova.iOS/GoogleService-Info.plist'
