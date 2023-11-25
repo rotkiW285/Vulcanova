@@ -12,12 +12,14 @@ namespace Vulcanova.Features.Attendance.Report;
 public class AttendanceReportViewModel : ReactiveObject
 {
     [ObservableAsProperty]
-    public IReadOnlyCollection<AttendanceReport> Reports { get; }
+    private IReadOnlyCollection<AttendanceReport> Reports { get; }
 
     public ReactiveCommand<int, Unit> SelectReport { get; }
     
     [Reactive]
     public AttendanceReport SelectedReport { get; private set; }
+
+    [ObservableAsProperty] public IEnumerable<object> ReportItems { get; }
 
     public AttendanceReportViewModel(
         IAttendanceReportRepository attendanceReportRepository,
@@ -31,6 +33,11 @@ public class AttendanceReportViewModel : ReactiveObject
         });
 
         fetchReports.ToPropertyEx(this, vm => vm.Reports);
+
+        this.WhenAnyValue(vm => vm.Reports)
+            .WhereNotNull()
+            .Select(reports => reports.Cast<object>().Prepend(reports.CalculateOverallAttendance()))
+            .ToPropertyEx(this, vm => vm.ReportItems);
 
         accountContext.WhenAnyValue(ctx => ctx.Account)
             .WhereNotNull()
