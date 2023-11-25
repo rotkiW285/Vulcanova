@@ -128,6 +128,7 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 
         this.WhenAnyValue(vm => vm.Entries)
             .CombineLatest(this.WhenAnyValue(vm => vm.SelectedDay))
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(tuple =>
             {
                 var (entries, selectedDay) = tuple;
