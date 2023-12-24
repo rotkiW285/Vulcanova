@@ -43,10 +43,13 @@ public partial class LessonView
         var showCol = new Animation(v => Col1.Width = v, 0, 40, Easing.Linear);
         var hideCol = new Animation(v => Col1.Width = v, 40, 0, Easing.Linear);
 
-        this.WhenAnyValue(v => v.JustificationMode)
-            .WithLatestFrom(this.WhenAnyValue(l => l.Lesson).WhereNotNull())
-            .Where(o => o.Second.CanBeJustified)
-            .Select(o => o.First)
-            .Subscribe(v => (v ? showCol : hideCol).Commit(this, "GridColWidthAnim", length: 150));
+        this.WhenAnyValue(v => v.JustificationMode, v => v.Lesson)
+            .Where(o => o.Item2 != null)
+            .Select(o => o.Item1 && o.Item2.CanBeJustified)
+            .Subscribe(v =>
+            {
+                this.AbortAnimation("GridColWidthAnim");
+                (v ? showCol : hideCol).Commit(this, "GridColWidthAnim", length: 150);
+            });
     }
 }
