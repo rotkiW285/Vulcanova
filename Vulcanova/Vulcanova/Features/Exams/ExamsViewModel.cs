@@ -19,10 +19,10 @@ namespace Vulcanova.Features.Exams;
 
 public class ExamsViewModel : ViewModelBase
 {
-    public ReactiveCommand<bool, ImmutableArray<Exam>> GetExams { get; }
+    public ReactiveCommand<bool, IReadOnlyCollection<Exam>> GetExams { get; }
     public ReactiveCommand<int, Unit> ShowExamDetails { get; }
 
-    [ObservableAsProperty] public ImmutableArray<Exam> Entries { get; }
+    [ObservableAsProperty] public IReadOnlyCollection<Exam> Entries { get; }
 
     [Reactive] public IReadOnlyCollection<Exam> CurrentWeekEntries { get; private set; }
     [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
@@ -70,7 +70,7 @@ public class ExamsViewModel : ViewModelBase
             });
 
         this.WhenAnyValue(vm => vm.Entries)
-            .Where(e => !e.IsDefaultOrEmpty)
+            .WhereNotNull()
             .CombineLatest(this.WhenAnyValue(vm => vm.SelectedDay))
             .Subscribe(tuple =>
             {
@@ -89,11 +89,11 @@ public class ExamsViewModel : ViewModelBase
             .InvokeCommand(GetExams);
     }
 
-    private IObservable<ImmutableArray<Exam>> GetEntries(int accountId, DateTime date, bool forceSync = false)
+    private IObservable<IReadOnlyCollection<Exam>> GetEntries(int accountId, DateTime date, bool forceSync = false)
     {
         var (firstDay, lastDay) = date.GetMondayOfFirstWeekAndSundayOfLastWeekOfMonth();
 
         return _examsService.GetExamsByDateRange(accountId, firstDay, lastDay, forceSync)
-            .Select(e => e.ToImmutableArray());
+            .Select(e => Array.AsReadOnly(e.ToArray()));
     }
 }
