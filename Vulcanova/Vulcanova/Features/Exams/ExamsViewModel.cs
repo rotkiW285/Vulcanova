@@ -36,8 +36,7 @@ public class ExamsViewModel : ViewModelBase
         IExamsService examsService,
         AccountContext accountContext,
         AccountAwarePageTitleViewModel accountViewModel,
-        INavigationService navigationService,
-        ISheetPopper popper = null) : base(navigationService)
+        INavigationService navigationService) : base(navigationService)
     {
         _examsService = examsService;
 
