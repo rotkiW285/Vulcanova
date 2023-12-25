@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Data;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Extensions;
@@ -18,7 +19,7 @@ namespace Vulcanova.Features.Homework
     public class HomeworkViewModel : ViewModelBase
     {
         public ReactiveCommand<bool, IReadOnlyCollection<Homework>> GetHomeworkEntries { get; }
-        public ReactiveCommand<int, Unit> ShowHomeworkDetails { get; }
+        public ReactiveCommand<AccountEntityId, Unit> ShowHomeworkDetails { get; }
         
         [ObservableAsProperty] public IReadOnlyCollection<Homework> Entries { get; }
 
@@ -47,7 +48,7 @@ namespace Vulcanova.Features.Homework
 
             GetHomeworkEntries.ToPropertyEx(this, vm => vm.Entries);
 
-            ShowHomeworkDetails = ReactiveCommand.Create((int lessonId) =>
+            ShowHomeworkDetails = ReactiveCommand.Create((AccountEntityId lessonId) =>
             {
                 var homework = CurrentWeekEntries?.First(g => g.Id == lessonId);
 

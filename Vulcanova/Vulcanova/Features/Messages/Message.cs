@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Vulcanova.Core.Data;
 using Vulcanova.Uonet.Api.MessageBox;
 
 namespace Vulcanova.Features.Messages;
 
 public class Message
 {
-    public Guid Id { get; set; }
+    public AccountEntityId<Guid> Id { get; set; }
     public Guid GlobalKey { get; set; }
     public Guid ThreadKey { get; set; }
     public Guid MessageBoxId { get; set; }

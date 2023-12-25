@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Data;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Notes.NoteDetails;
@@ -16,7 +17,7 @@ namespace Vulcanova.Features.Notes;
 public class NotesViewModel : ViewModelBase
 {
     public ReactiveCommand<bool, IReadOnlyCollection<Note>> GetNotesEntries { get; }
-    public ReactiveCommand<int, Unit> ShowNoteDetails { get; }
+    public ReactiveCommand<AccountEntityId, Unit> ShowNoteDetails { get; }
 
     [ObservableAsProperty] private IReadOnlyCollection<Note> Notes { get; }
 
@@ -70,7 +71,7 @@ public class NotesViewModel : ViewModelBase
             })
             .BindTo(this, vm => vm.CurrentPeriodEntries);
 
-        ShowNoteDetails = ReactiveCommand.Create((int noteId) =>
+        ShowNoteDetails = ReactiveCommand.Create((AccountEntityId noteId) =>
         {
             SelectedNote = CurrentPeriodEntries.SelectMany(e => e).First(n => n.Id == noteId);
             navigationService.NavigateAsync(nameof(NoteDetailsView), (nameof(NoteDetailsView.Note), SelectedNote));

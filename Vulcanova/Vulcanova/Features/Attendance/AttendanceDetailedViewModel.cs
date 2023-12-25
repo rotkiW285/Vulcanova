@@ -7,6 +7,7 @@ using DynamicData;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Data;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Features.Attendance.Justification;
@@ -21,7 +22,7 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 {
     public ReactiveCommand<bool, IReadOnlyDictionary<DateTime, List<LessonViewModel>>> GetAttendanceEntries { get; }
 
-    public ReactiveCommand<int, Unit> ShowLessonDetails { get; }
+    public ReactiveCommand<AccountEntityId, Unit> ShowLessonDetails { get; }
 
     public ReactiveCommand<Unit, Unit> EnableJustificationMode { get; }
     public ReactiveCommand<Unit, Unit> DisableJustificationMode { get; }
@@ -62,7 +63,7 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 
         GetAttendanceEntries.ToPropertyEx(this, vm => vm.Entries);
 
-        ShowLessonDetails = ReactiveCommand.Create((int lessonId) =>
+        ShowLessonDetails = ReactiveCommand.Create((AccountEntityId lessonId) =>
         {
             var entry = CurrentDayEntries.Single(g => g.Lesson.Id == lessonId);
 

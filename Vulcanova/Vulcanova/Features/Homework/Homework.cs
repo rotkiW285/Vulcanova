@@ -1,14 +1,14 @@
 ﻿using System;
+using Vulcanova.Core.Data;
 using Vulcanova.Uonet.Api.Common.Models;
 
 namespace Vulcanova.Features.Homework;
 
 public class Homework
 {
-    public int Id { get; set; }
+    public AccountEntityId Id { get; set; }
     public Guid Key { get; set; }
     public int PupilId { get; set; }
-    public int AccountId { get; set; }
     public int HomeworkId { get; set; }
     public string Content { get; set; }
     public bool IsAnswerRequired { get; set; }

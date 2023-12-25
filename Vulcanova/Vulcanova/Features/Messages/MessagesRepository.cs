@@ -32,7 +32,7 @@ public class MessagesRepository : IMessagesRepository
     public async Task<Message> GetMessageAsync(Guid messageBoxId, Guid messageId)
     {
         return await _db.GetCollection<Message>()
-            .FindOneAsync(m => m.MessageBoxId == messageBoxId && m.Id == messageId);
+            .FindOneAsync(m => m.MessageBoxId == messageBoxId && m.Id.VulcanId == messageId);
     }
 
     public async Task UpdateMessageAsync(Message message)

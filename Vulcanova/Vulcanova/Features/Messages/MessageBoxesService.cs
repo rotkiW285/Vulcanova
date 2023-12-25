@@ -56,7 +56,7 @@ public class MessageBoxesService : UonetResourceProvider, IMessageBoxesService
 
     public async Task MarkMessageBoxAsSelectedAsync(MessageBox box)
     {
-        var boxes = (await _messageBoxesRepository.GetMessageBoxesForAccountAsync(box.AccountId))
+        var boxes = (await _messageBoxesRepository.GetMessageBoxesForAccountAsync(box.Id.AccountId))
             .ToArray();
 
         foreach (var b in boxes)
@@ -64,7 +64,7 @@ public class MessageBoxesService : UonetResourceProvider, IMessageBoxesService
             b.IsSelected = b.Id == box.Id;
         }
 
-        await _messageBoxesRepository.UpdateMessageBoxesForAccountAsync(box.AccountId, boxes);
+        await _messageBoxesRepository.UpdateMessageBoxesForAccountAsync(box.Id.AccountId, boxes);
     }
 
     private async Task<MessageBox[]> FetchMessageBoxesAsync(Account account)
@@ -79,7 +79,7 @@ public class MessageBoxesService : UonetResourceProvider, IMessageBoxesService
 
         foreach (var entry in entries)
         {
-            entry.AccountId = account.Id;
+            entry.Id.AccountId = account.Id;
         }
 
         return entries;

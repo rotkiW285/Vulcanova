@@ -20,7 +20,7 @@ public class TimetableRepository : ITimetableRepository, IHasAccountRemovalClean
     {
         return await _db.GetCollection<TimetableEntry>()
             .FindAsync(g =>
-                g.PupilId == pupilId && g.AccountId == accountId && g.Date.Year == monthAndYear.Year &&
+                g.PupilId == pupilId && g.Id.AccountId == accountId && g.Date.Year == monthAndYear.Year &&
                 g.Date.Month == monthAndYear.Month);
     }
 
@@ -35,6 +35,6 @@ public class TimetableRepository : ITimetableRepository, IHasAccountRemovalClean
 
     async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
     {
-        await _db.GetCollection<TimetableEntry>().DeleteManyAsync(n => n.AccountId == accountId);
+        await _db.GetCollection<TimetableEntry>().DeleteManyAsync(n => n.Id.AccountId == accountId);
     }
 }

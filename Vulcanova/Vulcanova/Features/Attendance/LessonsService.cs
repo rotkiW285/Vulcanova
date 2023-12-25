@@ -103,7 +103,7 @@ public class LessonsService : UonetResourceProvider, ILessonsService
 
         foreach (var lesson in lessons)
         {
-            lesson.AccountId = account.Id;
+            lesson.Id.AccountId = account.Id;
         }
 
         return lessons;

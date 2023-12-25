@@ -17,7 +17,7 @@ public class AverageGradesRepository : IAverageGradesRepository, IHasAccountRemo
     public async Task<IEnumerable<AverageGrade>> GetAverageGradesForPupilAsync(int accountId, int pupilId, int periodId)
     {
         return await _db.GetCollection<AverageGrade>()
-            .FindAsync(g => g.PupilId == pupilId && g.AccountId == accountId && g.PeriodId == periodId);
+            .FindAsync(g => g.PupilId == pupilId && g.Id.AccountId == accountId && g.PeriodId == periodId);
     }
 
     public async Task UpdatePupilAverageGradesAsync(IEnumerable<AverageGrade> newGrades)
@@ -27,6 +27,6 @@ public class AverageGradesRepository : IAverageGradesRepository, IHasAccountRemo
 
     async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
     {
-        await _db.GetCollection<AverageGrade>().DeleteManyAsync(g => g.AccountId == accountId);
+        await _db.GetCollection<AverageGrade>().DeleteManyAsync(g => g.Id.AccountId == accountId);
     }
 }

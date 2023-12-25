@@ -73,7 +73,7 @@ public class NotesService : UonetResourceProvider, INotesService
 
         var entries = await response.Select(_mapper.Map<Note>).ToArrayAsync();
 
-        foreach (var entry in entries) entry.AccountId = accountId;
+        foreach (var entry in entries) entry.Id.AccountId = accountId;
 
         return entries;
     }

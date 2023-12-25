@@ -78,7 +78,7 @@ public class AverageGradesService : UonetResourceProvider, IAverageGradesService
 
         foreach (var grade in domainGrades)
         {
-            grade.AccountId = account.Id;
+            grade.Id.AccountId = account.Id;
         }
 
         return domainGrades;

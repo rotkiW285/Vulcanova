@@ -1,5 +1,6 @@
 using System;
 using LiteDB;
+using Vulcanova.Core.Data;
 using Vulcanova.Features.Shared;
 using Vulcanova.Uonet.Api.Lessons;
 
@@ -7,7 +8,7 @@ namespace Vulcanova.Features.Attendance;
 
 public class Lesson
 {
-    public int Id { get; set; }
+    public AccountEntityId Id { get; set; }
     public int No { get; set; }
     public bool CalculatePresence { get; set; }
     public DateTime Date { get; set; }
@@ -18,7 +19,6 @@ public class Lesson
     public string TeacherName { get; set; }
     public Subject Subject { get; set; }
     public PresenceType PresenceType { get; set; }
-    public int AccountId { get; set; }
     public JustificationStatus? JustificationStatus { get; set; }
     public int LessonClassId { get; set; }
     

@@ -20,7 +20,7 @@ public class TimetableChangesRepository : ITimetableChangesRepository, IHasAccou
     {
         return await _db.GetCollection<TimetableChangeEntry>()
             .FindAsync(g =>
-                g.PupilId == pupilId && g.AccountId == accountId && g.LessonDate.Year == monthAndYear.Year &&
+                g.PupilId == pupilId && g.Id.AccountId == accountId && g.LessonDate.Year == monthAndYear.Year &&
                 (g.LessonDate.Month == monthAndYear.Month || (g.ChangeDate != null && g.ChangeDate.Value.Month == monthAndYear.Month)));
     }
 
@@ -35,6 +35,6 @@ public class TimetableChangesRepository : ITimetableChangesRepository, IHasAccou
 
     async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
     {
-        await _db.GetCollection<TimetableChangeEntry>().DeleteManyAsync(n => n.AccountId == accountId);
+        await _db.GetCollection<TimetableChangeEntry>().DeleteManyAsync(n => n.Id.AccountId == accountId);
     }
 }

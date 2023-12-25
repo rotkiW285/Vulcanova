@@ -69,7 +69,7 @@ public class ExamsService : UonetResourceProvider, IExamsService
 
         foreach (var entry in entries)
         {
-            entry.AccountId = account.Id;
+            entry.Id.AccountId = account.Id;
         }
 
         return entries;

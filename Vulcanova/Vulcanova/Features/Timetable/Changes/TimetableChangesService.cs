@@ -79,7 +79,7 @@ public class TimetableChangesService : UonetResourceProvider, ITimetableChangesS
 
         foreach (var entry in entries)
         {
-            entry.AccountId = account.Id;
+            entry.Id.AccountId = account.Id;
             entry.PupilId = account.Pupil.Id;
         }
 

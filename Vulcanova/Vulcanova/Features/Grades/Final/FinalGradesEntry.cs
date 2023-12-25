@@ -1,12 +1,12 @@
 using System;
+using Vulcanova.Core.Data;
 using Vulcanova.Features.Shared;
 
 namespace Vulcanova.Features.Grades.Final;
 
 public class FinalGradesEntry
 {
-    public string Id { get; set; }
-    public int AccountId { get; set; }
+    public AccountEntityId<string> Id { get; set; }
     public int PupilId { get; set; }
     public int PeriodId { get; set; }
     public Subject Subject { get; set; }

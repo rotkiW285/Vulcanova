@@ -18,7 +18,7 @@ public class FinalGradesRepository : IFinalGradesRepository, IHasAccountRemovalC
     public async Task<IEnumerable<FinalGradesEntry>> GetFinalGradesForPupilAsync(int accountId, int pupilId, int periodId)
     {
         return (await _db.GetCollection<FinalGradesEntry>()
-                .FindAsync(g => g.PupilId == pupilId && g.AccountId == accountId && g.PeriodId == periodId))
+                .FindAsync(g => g.PupilId == pupilId && g.Id.AccountId == accountId && g.PeriodId == periodId))
             .OrderBy(g => g.Subject.Name);
     }
 
@@ -29,6 +29,6 @@ public class FinalGradesRepository : IFinalGradesRepository, IHasAccountRemovalC
 
     async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
     {
-        await _db.GetCollection<FinalGradesEntry>().DeleteManyAsync(g => g.AccountId == accountId);
+        await _db.GetCollection<FinalGradesEntry>().DeleteManyAsync(g => g.Id.AccountId == accountId);
     }
 }

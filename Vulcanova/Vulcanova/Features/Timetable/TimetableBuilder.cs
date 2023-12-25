@@ -15,7 +15,7 @@ public static class TimetableBuilder
         var timetable = lessons.Where(l => l.Visible)
             .Select(lesson => new TimetableListEntry
             {
-                OriginalId = lesson.Id,
+                OriginalId = lesson.Id.VulcanId,
                 Date = lesson.Date.Date,
                 No = lesson.TimeSlot.Position,
                 Start = lesson.TimeSlot.Start,

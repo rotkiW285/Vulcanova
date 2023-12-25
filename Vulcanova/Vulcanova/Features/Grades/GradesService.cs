@@ -87,7 +87,7 @@ public class GradesService : UonetResourceProvider, IGradesService
 
         foreach (var grade in domainGrades)
         {
-            grade.AccountId = account.Id;
+            grade.Id.AccountId = account.Id;
         }
 
         return domainGrades;

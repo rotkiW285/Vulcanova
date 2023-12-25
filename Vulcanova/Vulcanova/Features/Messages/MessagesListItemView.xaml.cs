@@ -25,7 +25,7 @@ public partial class MessagesListItemView
         MessageBus.Current.Listen<MessageReadEvent>()
             .Subscribe(@event =>
             {
-                if (@event.MessageBoxId != Message.MessageBoxId || @event.MessageId != Message.Id) return;
+                if (@event.MessageBoxId != Message.MessageBoxId || @event.MessageId != Message.Id.VulcanId) return;
 
                 Message.DateRead = @event.DateRead;
                 UpdateMessageReadIndicator();

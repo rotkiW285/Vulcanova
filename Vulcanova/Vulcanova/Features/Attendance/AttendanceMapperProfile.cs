@@ -1,4 +1,5 @@
 using AutoMapper;
+using Vulcanova.Core.Data;
 using Vulcanova.Core.Mapping;
 using Vulcanova.Uonet.Api.Lessons;
 
@@ -9,6 +10,7 @@ public class AttendanceMapperProfile : Profile
     public AttendanceMapperProfile()
     {
         CreateMap<LessonPayload, Lesson>()
+            .ForMember(e => e.Id, cfg => cfg.MapFrom(src => new AccountEntityId { VulcanId = src.Id }))
             .ForMember(dest => dest.TeacherName, cfg => cfg.MapFrom(src => src.TeacherPrimary.DisplayName))
             .ForMember(dest => dest.Date, cfg => cfg.MapFrom(src => src.Day))
             .ForMember(dest => dest.No, cfg => cfg.MapFrom(src => src.TimeSlot.Position))

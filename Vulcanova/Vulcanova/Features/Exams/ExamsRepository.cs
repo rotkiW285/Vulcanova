@@ -18,20 +18,20 @@ public class ExamsRepository : IExamsRepository, IHasAccountRemovalCleanup
     public async Task<IEnumerable<Exam>> GetExamsForPupilAsync(int accountId, DateTime from, DateTime to)
     {
         return await _db.GetCollection<Exam>()
-            .FindAsync(e => e.AccountId == accountId
+            .FindAsync(e => e.Id.AccountId == accountId
                             && e.Deadline >= from
                             && e.Deadline <= to);
     }
 
     public async Task UpdateExamsForPupilAsync(int accountId, IEnumerable<Exam> entries)
     {
-        await _db.GetCollection<Exam>().DeleteManyAsync(e => e.AccountId == accountId);
+        await _db.GetCollection<Exam>().DeleteManyAsync(e => e.Id.AccountId == accountId);
 
         await _db.GetCollection<Exam>().UpsertAsync(entries);
     }
 
     async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
     {
-        await _db.GetCollection<Exam>().DeleteManyAsync(e => e.AccountId == accountId);
+        await _db.GetCollection<Exam>().DeleteManyAsync(e => e.Id.AccountId == accountId);
     }
 }

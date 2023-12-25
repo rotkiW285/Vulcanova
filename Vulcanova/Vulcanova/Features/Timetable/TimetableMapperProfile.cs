@@ -1,4 +1,5 @@
 using AutoMapper;
+using Vulcanova.Core.Data;
 using Vulcanova.Core.Mapping;
 using Vulcanova.Features.Timetable.Changes;
 using Vulcanova.Uonet.Api.Common.Models;
@@ -17,10 +18,12 @@ public class TimetableMapperProfile : Profile
                 cfg => cfg.ConvertUsing(TimeZoneAwareTimeConverter.Instance, src => src.End));
 
         CreateMap<ScheduleEntryPayload, TimetableEntry>()
+            .ForMember(e => e.Id, cfg => cfg.MapFrom(src => new AccountEntityId { VulcanId = src.Id }))
             .ForMember(dest => dest.RoomName, cfg => cfg.MapFrom(src => src.Room.Code))
             .ForMember(dest => dest.TeacherName, cfg => cfg.MapFrom(src => src.TeacherPrimary.DisplayName));
 
         CreateMap<ScheduleChangeEntryPayload, TimetableChangeEntry>()
+            .ForMember(e => e.Id, cfg => cfg.MapFrom(src => new AccountEntityId { VulcanId = src.Id }))
             .ForMember(dest => dest.RoomName, cfg => cfg.MapFrom(src => src.Room.Code))
             .ForMember(dest => dest.TeacherName, cfg => cfg.MapFrom(src => src.TeacherPrimary.DisplayName))
             .ForMember(dest => dest.TimetableEntryId, cfg => cfg.MapFrom(src => src.ScheduleId));

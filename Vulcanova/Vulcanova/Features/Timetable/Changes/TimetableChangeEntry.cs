@@ -1,15 +1,15 @@
 using System;
+using Vulcanova.Core.Data;
 using Vulcanova.Uonet.Api.Schedule;
 
 namespace Vulcanova.Features.Timetable.Changes;
 
 public class TimetableChangeEntry
 {
-    public int Id { get; set; }
+    public AccountEntityId Id { get; set; }
     public int TimetableEntryId { get; set; }
     public int UnitId { get; set; }
     public int PupilId { get; set; }
-    public int AccountId { get; set; }
     public Shared.Subject Subject { get; set; }
     public DateTime LessonDate { get; set; }
     public DateTime? ChangeDate { get; set; }

@@ -18,7 +18,7 @@ public class GradesRepository : IGradesRepository, IHasAccountRemovalCleanup
     public async Task<IEnumerable<Grade>> GetGradesForPupilAsync(int accountId, int pupilId, int periodId)
     {
         return (await _db.GetCollection<Grade>()
-                .FindAsync(g => g.PupilId == pupilId && g.AccountId == accountId && g.Column.PeriodId == periodId))
+                .FindAsync(g => g.PupilId == pupilId && g.Id.AccountId == accountId && g.Column.PeriodId == periodId))
             .OrderBy(g => g.Column.Subject.Name)
             .ThenBy(g => g.DateCreated);
     }
@@ -30,6 +30,6 @@ public class GradesRepository : IGradesRepository, IHasAccountRemovalCleanup
 
     async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
     {
-        await _db.GetCollection<Grade>().DeleteManyAsync(g => g.AccountId == accountId);
+        await _db.GetCollection<Grade>().DeleteManyAsync(g => g.Id.AccountId == accountId);
     }
 }

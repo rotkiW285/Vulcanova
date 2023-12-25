@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Vulcanova.Core.Data;
 using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Uonet.Api.MessageBox;
 
@@ -11,5 +12,5 @@ public interface IMessagesService
     IObservable<IEnumerable<Message>> GetMessagesByBox(
         Account account, Guid messageBoxId, MessageBoxFolder folder, bool forceSync = false);
 
-    Task MarkMessageAsReadAsync(int accountId, Guid messageBoxId, Guid messageId);
+    Task MarkMessageAsReadAsync(Guid messageBoxId, AccountEntityId<Guid> messageId);
 }

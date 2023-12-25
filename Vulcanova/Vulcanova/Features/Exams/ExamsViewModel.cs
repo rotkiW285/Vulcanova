@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Vulcanova.Core.Layout;
+using Vulcanova.Core.Data;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
 using Vulcanova.Extensions;
@@ -20,7 +20,7 @@ namespace Vulcanova.Features.Exams;
 public class ExamsViewModel : ViewModelBase
 {
     public ReactiveCommand<bool, IReadOnlyCollection<Exam>> GetExams { get; }
-    public ReactiveCommand<int, Unit> ShowExamDetails { get; }
+    public ReactiveCommand<AccountEntityId, Unit> ShowExamDetails { get; }
 
     [ObservableAsProperty] public IReadOnlyCollection<Exam> Entries { get; }
 
@@ -47,7 +47,7 @@ public class ExamsViewModel : ViewModelBase
 
         GetExams.ToPropertyEx(this, vm => vm.Entries);
             
-        ShowExamDetails = ReactiveCommand.Create((int lessonId) =>
+        ShowExamDetails = ReactiveCommand.Create((AccountEntityId lessonId) =>
         {
             SelectedExam = CurrentWeekEntries?.First(g => g.Id == lessonId);
 

@@ -69,7 +69,7 @@ public class HomeworkService : UonetResourceProvider, IHomeworkService
 
         foreach (var entry in entries)
         {
-            entry.AccountId = accountId;
+            entry.Id.AccountId = accountId;
         }
 
         return entries;

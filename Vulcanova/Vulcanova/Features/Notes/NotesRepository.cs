@@ -18,7 +18,7 @@ public class NotesRepository : INotesRepository, IHasAccountRemovalCleanup
     {
         var notesCollection = _db.GetCollection<Note>();
         var pupilNotes = await notesCollection.Query()
-            .Where(n => n.AccountId == accountId && n.PupilId == pupilId)
+            .Where(n => n.Id.AccountId == accountId && n.PupilId == pupilId)
             .ToListAsync();
 
         return pupilNotes;
@@ -27,13 +27,13 @@ public class NotesRepository : INotesRepository, IHasAccountRemovalCleanup
     public async Task UpdateNoteEntriesAsync(IEnumerable<Note> entries, int accountId, int pupilId)
     {
         await _db.GetCollection<Note>()
-            .DeleteManyAsync(h => h.AccountId == accountId && h.PupilId == pupilId);
+            .DeleteManyAsync(h => h.Id.AccountId == accountId && h.PupilId == pupilId);
 
         await _db.GetCollection<Note>().UpsertAsync(entries);
     }
 
     async Task IHasAccountRemovalCleanup.DoPostRemovalCleanUpAsync(int accountId)
     {
-        await _db.GetCollection<Note>().DeleteManyAsync(n => n.AccountId == accountId);
+        await _db.GetCollection<Note>().DeleteManyAsync(n => n.Id.AccountId == accountId);
     }
 }

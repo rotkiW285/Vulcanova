@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ReactiveUI;
+using Vulcanova.Core.Data;
 using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Auth.Accounts;
@@ -59,21 +60,21 @@ public class MessagesService : UonetResourceProvider, IMessagesService
         });
     }
 
-    public async Task MarkMessageAsReadAsync(int accountId, Guid messageBoxId, Guid messageId)
+    public async Task MarkMessageAsReadAsync(Guid messageBoxId, AccountEntityId<Guid> messageId)
     {
-        var account = await _accountRepository.GetByIdAsync(accountId);
+        var account = await _accountRepository.GetByIdAsync(messageId.AccountId);
 
         var apiClient = await _apiClientFactory.GetAuthenticatedAsync(account);
 
         await apiClient.PostAsync(ChangeMessageStatusRequest.ApiEndpoint,
-            new ChangeMessageStatusRequest(messageBoxId, messageId, ChangeMessageStatusRequest.SetMessageStatus.Read));
+            new ChangeMessageStatusRequest(messageBoxId, messageId.VulcanId, ChangeMessageStatusRequest.SetMessageStatus.Read));
 
-        var message = await _messagesRepository.GetMessageAsync(messageBoxId, messageId);
+        var message = await _messagesRepository.GetMessageAsync(messageBoxId, messageId.VulcanId);
         message.DateRead = DateTime.UtcNow;
 
         await _messagesRepository.UpdateMessageAsync(message);
 
-        MessageBus.Current.SendMessage(new MessageReadEvent(messageBoxId, messageId, message.DateRead.Value));
+        MessageBus.Current.SendMessage(new MessageReadEvent(messageBoxId, messageId.VulcanId, message.DateRead.Value));
     }
 
     private async Task<Message[]> FetchMessagesByBoxAsync(Account account, Guid messageBoxId, MessageBoxFolder folder)
@@ -93,6 +94,7 @@ public class MessagesService : UonetResourceProvider, IMessagesService
 
         foreach (var message in messages)
         {
+            message.Id.AccountId = account.Id;
             message.MessageBoxId = messageBoxId;
             message.Folder = folder;
         }

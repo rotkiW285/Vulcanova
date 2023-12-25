@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Vulcanova.Core.Data;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Messages.Compose;
 using Vulcanova.Features.Settings;
@@ -22,7 +23,7 @@ public class MessagesViewModel : ViewModelBase
     
     public ReactiveCommand<Unit, INavigationResult> ShowMessageComposer { get; }
 
-    public ReactiveCommand<Guid, Unit> ShowMessage { get; }
+    public ReactiveCommand<AccountEntityId<Guid>, Unit> ShowMessage { get; }
 
     [ObservableAsProperty]
     public IEnumerable<MessageBox> MessageBoxes { get; }
@@ -56,7 +57,7 @@ public class MessagesViewModel : ViewModelBase
 
         LoadMessages.ToPropertyEx(this, vm => vm.Messages);
 
-        ShowMessage = ReactiveCommand.CreateFromTask(async (Guid messageId) =>
+        ShowMessage = ReactiveCommand.CreateFromTask(async (AccountEntityId<Guid> messageId) =>
         {
             var message = Messages.Single(x => x.Id == messageId);
 
@@ -64,8 +65,7 @@ public class MessagesViewModel : ViewModelBase
 
             if (!appSettings.DisableReadReceipts)
             {
-                await messagesService.MarkMessageAsReadAsync(accountContext.Account.Id, message.MessageBoxId,
-                    messageId);
+                await messagesService.MarkMessageAsReadAsync(message.MessageBoxId, messageId);
             }
         });
 
