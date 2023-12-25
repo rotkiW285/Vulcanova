@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LiteDB;
 using Vulcanova.Uonet.Api.Auth;
 using Period = Vulcanova.Features.Shared.Period;
 
@@ -6,6 +7,7 @@ namespace Vulcanova.Features.Auth.Accounts;
 
 public class Account
 {
+    [BsonId]
     public int Id { get; set; }
     public Pupil Pupil { get; set; }
     public Unit Unit { get; set; }
