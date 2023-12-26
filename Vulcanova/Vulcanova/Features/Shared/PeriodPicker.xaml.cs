@@ -39,9 +39,13 @@ public partial class PeriodPicker
             .WhereNotNull()
             .Select(x => x.OrderBy(p => p.Start).ToList());
 
-        this.WhenAnyValue(v => v.SelectedPeriod)
+        var selectedPeriodWithPeriodsList = this.WhenAnyValue(v => v.SelectedPeriod)
             .CombineLatest(orderedPeriods)
-            .Where(v => v is {Item1: { }, Item2.Count: > 0})
+            .Where(v => v is { Item1: { }, Item2.Count: > 0 })
+            .Where(v => v.Second.Contains(v.First))
+            .Publish();
+
+        selectedPeriodWithPeriodsList
             .Select(p =>
             {
                 var currentPeriod = p.Item1;
@@ -57,9 +61,7 @@ public partial class PeriodPicker
             })
             .BindTo(this, v => v.PeriodNameLabel.Text);
         
-        var hasNextPeriodObservable = this.WhenAnyValue(v => v.SelectedPeriod)
-            .CombineLatest(orderedPeriods)
-            .Where(v => v is {Item1: { }, Item2.Count: > 0})
+        var hasNextPeriodObservable = selectedPeriodWithPeriodsList
             .Select(p =>
             {
                 var currentPeriod = p.Item1;
@@ -72,9 +74,7 @@ public partial class PeriodPicker
         
         hasNextPeriodObservable.BindTo(this, v => v.NextImg.IsVisible);
         
-        var hasPreviousPeriodObservable = this.WhenAnyValue(v => v.SelectedPeriod)
-            .CombineLatest(orderedPeriods)
-            .Where(v => v is {Item1: { }, Item2.Count: > 0})
+        var hasPreviousPeriodObservable = selectedPeriodWithPeriodsList
             .Select(p =>
             {
                 var currentPeriod = p.Item1;
@@ -114,5 +114,7 @@ public partial class PeriodPicker
                 return v.First.ElementAtOrDefault(--currentIndex);
             })
             .BindTo(this, v => v.PreviousTap.CommandParameter);
+
+        selectedPeriodWithPeriodsList.Connect();
     }
 }
