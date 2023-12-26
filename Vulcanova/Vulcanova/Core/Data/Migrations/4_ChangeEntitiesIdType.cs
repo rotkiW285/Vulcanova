@@ -40,7 +40,11 @@ public class ChangeEntitiesIdType : LiteDbMigration
 
         foreach (var message in allMessages)
         {
-            var accountId = messageBoxAccountIdMap[message["MessageBoxId"].AsGuid];
+            if (!messageBoxAccountIdMap.TryGetValue(message["MessageBoxId"].AsGuid, out var accountId))
+            {
+                // orphaned message?
+                accountId = 0;
+            }
             
             message["_id"] = new BsonDocument(new Dictionary<string, BsonValue>()
             {
