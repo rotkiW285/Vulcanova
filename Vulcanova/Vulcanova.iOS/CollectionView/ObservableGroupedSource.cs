@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Threading;
 using Foundation;
 using UIKit;
 using Xamarin.Forms;
@@ -132,7 +133,10 @@ namespace Vulcanova.iOS.CollectionView
 		{
 			if (Device.IsInvokeRequired)
 			{
-				Device.BeginInvokeOnMainThread(() => CollectionChanged(args));
+				// https://github.com/xamarin/Xamarin.Forms/issues/12080#issuecomment-743743322
+				using var e = new ManualResetEvent(false);
+				Device.BeginInvokeOnMainThread(() => { CollectionChanged(args); e.Set(); });
+				e.WaitOne();
 			}
 			else
 			{
