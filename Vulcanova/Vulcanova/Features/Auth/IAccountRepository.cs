@@ -13,5 +13,6 @@ namespace Vulcanova.Features.Auth
         Task UpdateAccountAsync(Account account);
         Task UpdateAccountsAsync(IEnumerable<Account> accounts);
         Task DeleteByIdAsync(int id);
+        Task<int> GetNextAccountIdAsync();
     }
 }

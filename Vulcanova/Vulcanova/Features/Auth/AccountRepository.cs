@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LiteDB.Async;
 using Vulcanova.Features.Auth.Accounts;
+using Xamarin.Essentials;
 
 namespace Vulcanova.Features.Auth;
 
@@ -52,5 +54,37 @@ public class AccountRepository : IAccountRepository
     public async Task DeleteByIdAsync(int id)
     {
         await _db.GetCollection<Account>().DeleteAsync(id);
+    }
+
+    private static readonly SemaphoreSlim IdGenSemaphore = new (1, 1);
+
+    public async Task<int> GetNextAccountIdAsync()
+    {
+        await IdGenSemaphore.WaitAsync();
+
+        const string lastAccountIdPreferencesKey = "LastAccountId";
+
+        var lastId = Preferences.Get(lastAccountIdPreferencesKey, -1);
+        if (lastId == -1)
+        {
+            try
+            {
+                lastId = await _db.GetCollection<Account>().MaxAsync(x => x.Id);
+            }
+            catch (LiteAsyncException e) when (e.InnerException is InvalidOperationException
+                                               {
+                                                   Message: "Sequence contains no elements"
+                                               })
+            {
+                lastId = 0;
+            }
+        }
+
+        var nextId = lastId + 1;
+        Preferences.Set(lastAccountIdPreferencesKey, nextId);
+
+        IdGenSemaphore.Release();
+
+        return nextId;
     }
 }

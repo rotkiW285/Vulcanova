@@ -14,13 +14,16 @@ public class AuthenticationService : IAuthenticationService
 {
     private readonly IApiClientFactory _apiClientFactory;
     private readonly IMapper _mapper;
+    private readonly IAccountRepository _accountRepository;
 
     public AuthenticationService(
         IApiClientFactory apiClientFactory,
-        IMapper mapper)
+        IMapper mapper,
+        IAccountRepository accountRepository)
     {
         _apiClientFactory = apiClientFactory;
         _mapper = mapper;
+        _accountRepository = accountRepository;
     }
 
     public async Task<Account[]> AuthenticateAsync(string token, string pin, string instanceUrl)
@@ -58,6 +61,7 @@ public class AuthenticationService : IAuthenticationService
             // in some rare cases, the data will contain duplicated periods
             account.Periods = account.Periods.GroupBy(p => p.Id).Select(g => g.First()).ToList();
             account.IdentityThumbprint = identity.Certificate.Thumbprint;
+            account.Id = await _accountRepository.GetNextAccountIdAsync();
         }
 
         return accounts;
