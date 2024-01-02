@@ -5,8 +5,6 @@ using Android.Runtime;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
 using LabelHtml.Forms.Plugin.Droid;
-using OliveTree.Transitions;
-using OliveTree.Transitions.Droid;
 using Prism;
 using Prism.Ioc;
 using Vulcanova.Core.Layout;
@@ -31,8 +29,6 @@ namespace Vulcanova.Android
             CachedImageRenderer.Init(true);
 
             XamEffects.Droid.Effects.Init();
-
-            TransitionsLibrary.Register<Provider>();
 
             SheetPopper.Context = this;
 

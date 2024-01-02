@@ -23,7 +23,6 @@
         <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" />
         <PackageReference Include="Mobile.BuildTools" Version="2.0.245" />
         <PackageReference Include="Mobile.BuildTools.Configuration" Version="2.0.245" />
-        <PackageReference Include="OliveTree.Transitions" Version="1.1.0" />
         <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
         <PackageReference Include="Prism.Forms" Version="8.1.97" />
         <PackageReference Include="Prism.Plugin.Popups" Version="8.0.76" />

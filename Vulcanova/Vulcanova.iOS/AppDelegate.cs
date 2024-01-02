@@ -1,8 +1,6 @@
 ﻿using FFImageLoading.Forms.Platform;
 using Foundation;
 using LabelHtml.Forms.Plugin.iOS;
-using OliveTree.Transitions;
-using OliveTree.Transitions.iOS;
 using Prism;
 using Prism.Ioc;
 using UIKit;
@@ -40,8 +38,6 @@ namespace Vulcanova.iOS
             Sharpnado.Tabs.iOS.Preserver.Preserve();
 
             XamEffects.iOS.Effects.Init();
-
-            TransitionsLibrary.Register<Provider>();
 
             GoogleVisionBarCodeScanner.iOS.Initializer.Init();
             Firebase.Core.App.Configure();
