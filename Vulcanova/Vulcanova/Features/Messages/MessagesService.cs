@@ -37,7 +37,7 @@ public class MessagesService : UonetResourceProvider, IMessagesService
     {
         return Observable.Create<IEnumerable<Message>>(async observer =>
         {
-            var resourceKey = GetResourceKey(messageBoxId, folder);
+            var resourceKey = GetResourceKey(account.Id, messageBoxId, folder);
 
             var items = await _messagesRepository.GetMessagesByBoxAsync(messageBoxId, folder);
 
@@ -79,7 +79,7 @@ public class MessagesService : UonetResourceProvider, IMessagesService
 
     private async Task<Message[]> FetchMessagesByBoxAsync(Account account, Guid messageBoxId, MessageBoxFolder folder)
     {
-        var lastSync = GetLastSync(GetResourceKey(messageBoxId, folder));
+        var lastSync = GetLastSync(GetResourceKey(account.Id, messageBoxId, folder));
 
         var query = new GetMessagesByMessageBoxQuery(messageBoxId, folder, lastSync,
             PageSize: int.MaxValue);
@@ -102,8 +102,8 @@ public class MessagesService : UonetResourceProvider, IMessagesService
         return messages;
     }
     
-    private static string GetResourceKey(Guid messageBoxId, MessageBoxFolder folder)
-        => $"Messages_{messageBoxId}_{folder}";
+    private static string GetResourceKey(int accountId, Guid messageBoxId, MessageBoxFolder folder)
+        => $"Messages_{accountId}_{messageBoxId}_{folder}";
 
     protected override TimeSpan OfflineDataLifespan => TimeSpan.FromHours(1);
 }
