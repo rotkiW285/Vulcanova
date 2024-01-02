@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using DynamicData;
@@ -31,11 +30,9 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 
     [ObservableAsProperty] private IReadOnlyDictionary<DateTime, List<LessonViewModel>> Entries { get; }
 
-    public ReadOnlyObservableCollection<LessonViewModel> CurrentDayEntries => _currentDayEntries;
-    private readonly ReadOnlyObservableCollection<LessonViewModel> _currentDayEntries;
+    [Reactive] public IReadOnlyCollection<LessonViewModel> CurrentDayEntries { get; private set; }
 
-
-    [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
+    [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today.AddDays(-1);
 
     [Reactive] public bool JustificationMode { get; set; }
 
@@ -52,11 +49,15 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 
         var currentEntriesSource = new SourceList<LessonViewModel>();
 
-        currentEntriesSource
-            .Connect()
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Bind(out _currentDayEntries)
-            .Subscribe();
+        // we can't rely solely on an ObservableCollection: https://github.com/xamarin/Xamarin.Forms/issues/14171
+        // so we keep the SourceList reactive collection to keep track of 'justifiable' lessons
+        // and the CurrentDayEntries IReadOnlyCollection for binding to the view
+        // this way we don't hit the aforementioned XF bug
+        // currentEntriesSource
+        //     .Connect()
+        //     .ObserveOn(RxApp.MainThreadScheduler)
+        //     .Bind(out _currentDayEntries)
+        //     .Subscribe();
 
         GetAttendanceEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>
             GetEntries(accountContext.Account.Id, SelectedDay, forceSync));
@@ -141,10 +142,12 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
                         items.Clear();
                         items.AddRange(values);
                     });
+                    CurrentDayEntries = values.AsReadOnly();
                     return;
                 }   
 
                 currentEntriesSource.Edit(i => i.Clear());
+                CurrentDayEntries = new List<LessonViewModel>().AsReadOnly();
             });
 
         var selectedAnyJustifiable = currentEntriesSource
