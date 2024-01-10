@@ -543,15 +543,12 @@ namespace Vulcanova.iOS.CollectionView
 
 		public override bool ShouldInvalidateLayoutForBoundsChange(CGRect newBounds)
 		{
-			if (newBounds.Size == _currentSize)
+			if (!RequiresConstraintUpdate(newBounds.Size, _currentSize))
 			{
 				return base.ShouldInvalidateLayoutForBoundsChange(newBounds);
 			}
 
-			if (true)
-			{
-				UpdateConstraints(CollectionView.AdjustedContentInset.InsetRect(newBounds).Size);
-			}
+			UpdateConstraints(CollectionView.AdjustedContentInset.InsetRect(newBounds).Size);
 
 			return true;
 		}
