@@ -9,11 +9,12 @@ public static class AccountExtensions
     public static (DateTime Start, DateTime End) GetSchoolYearDuration(this Account account)
     {
         var currentPeriod = account.Periods.Single(x => x.Current);
-        var allPeriodsInYear = account.Periods.Where(x => x.Level == currentPeriod.Level)
+        var allPeriodsInYear = account.Periods
+            .Where(x => x.Level == currentPeriod.Level)
             .ToArray();
 
-        var yearStart = allPeriodsInYear.First().Start;
-        var yearEnd = allPeriodsInYear.Last().End;
+        var yearStart = allPeriodsInYear.Select(x => x.Start).Min();
+        var yearEnd = allPeriodsInYear.Select(x => x.End).Max();
 
         return (yearStart, yearEnd);
     }
