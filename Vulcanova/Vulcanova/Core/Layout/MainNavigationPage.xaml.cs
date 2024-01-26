@@ -53,6 +53,8 @@ public partial class MainNavigationPage
             await Task.Delay(5000);
 
             await navigationService.RemovePageAsync(popup);
+            
+            ctx.SetOutput(Unit.Default);
         });
     }
 }
