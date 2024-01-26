@@ -5,7 +5,7 @@ namespace Vulcanova.Features.Notes;
 
 public class NotesGroup : List<Note>
 {
-    public NotesGroup(DateTime date, IEnumerable<Note> homework) : base(homework)
+    public NotesGroup(DateTime date, IEnumerable<Note> notes) : base(notes)
     {
         Date = date;
     }
