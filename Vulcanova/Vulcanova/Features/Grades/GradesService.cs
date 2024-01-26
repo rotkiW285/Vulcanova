@@ -5,7 +5,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Vulcanova.Core.Uonet;
-using Vulcanova.Features.Auth;
 using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Uonet.Api;
 using Vulcanova.Uonet.Api.Grades;
@@ -63,18 +62,24 @@ public class GradesService : UonetResourceProvider, IGradesService
     {
         var client = await _apiClientFactory.GetAuthenticatedAsync(account);
 
-        var normalGradesLastSync = GetLastSync(GetGradesResourceKey(account, periodId));
+        /*
+         * When calling the API with last sync date specified UONET+ *cannot* notify about deleted grades.
+         * There is no way for the API to tell us that an entry disappeared since X. Therefore, DateTime.MinValue
+         * has to be used as the last sync date to always fetch the whole list of grades for given period.
+         */
+        // var normalGradesLastSync = GetLastSync(GetGradesResourceKey(account, periodId));
 
         var normalGradesQuery =
-            new GetGradesByPupilQuery(account.Unit.Id, account.Pupil.Id, periodId, normalGradesLastSync, 500);
+            new GetGradesByPupilQuery(account.Unit.Id, account.Pupil.Id, periodId, DateTime.MinValue, 500);
 
         var normalGrades = client.GetAllAsync(GetGradesByPupilQuery.ApiEndpoint,
             normalGradesQuery);
 
-        var behaviourGradesLastSync = GetLastSync(GetGradesResourceKey(account, periodId));
+        // See the comment above.
+        // var behaviourGradesLastSync = GetLastSync(GetGradesResourceKey(account, periodId));
 
         var behaviourGradesQuery =
-            new GetBehaviourGradesByPupilQuery(account.Unit.Id, account.Pupil.Id, periodId, behaviourGradesLastSync,
+            new GetBehaviourGradesByPupilQuery(account.Unit.Id, account.Pupil.Id, periodId, DateTime.MinValue,
                 500);
 
         var behaviourGrades = client.GetAllAsync(GetBehaviourGradesByPupilQuery.ApiEndpoint,
