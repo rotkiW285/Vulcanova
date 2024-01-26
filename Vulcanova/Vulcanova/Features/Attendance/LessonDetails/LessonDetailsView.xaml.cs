@@ -77,9 +77,8 @@ public partial class LessonDetailsView : INavigationAware
 
         if (l == null) return;
 
-        JustifyAbsenceButton.IsVisible = _accountContext.Account.Capabilities.Contains(AccountCapabilities.JustificationsEnabled)
-                                         && (l.PresenceType.Late || l.PresenceType.Absence)
-                                         && !l.PresenceType.AbsenceJustified
-                                         && l.JustificationStatus == null;
+        JustifyAbsenceButton.IsVisible =
+            _accountContext.Account.Capabilities.Contains(AccountCapabilities.JustificationsEnabled)
+            && l.CanBeJustified;
     }
 }
