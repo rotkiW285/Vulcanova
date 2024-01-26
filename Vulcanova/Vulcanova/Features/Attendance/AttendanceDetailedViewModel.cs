@@ -32,7 +32,7 @@ public class AttendanceDetailedViewModel : ViewModelBase, INavigatedAware
 
     [Reactive] public IReadOnlyCollection<LessonViewModel> CurrentDayEntries { get; private set; }
 
-    [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today.AddDays(-1);
+    [Reactive] public DateTime SelectedDay { get; set; } = DateTime.Today;
 
     [Reactive] public bool JustificationMode { get; set; }
 
