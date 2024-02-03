@@ -147,6 +147,7 @@
         <Compile Include="CollectionView\VerticalDefaultSupplementalView.cs" />
         <Compile Include="CollectionView\VerticalSupplementaryView.cs" />
         <Compile Include="CollectionView\WidthConstrainedTemplatedCell.cs" />
+        <Compile Include="CustomScrollViewRenderer.cs" />
         <Compile Include="DismissNotifyingUIController.cs"/>
         <Compile Include="Main.cs"/>
         <Compile Include="AppDelegate.cs"/>

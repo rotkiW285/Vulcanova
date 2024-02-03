@@ -77,7 +77,7 @@ public partial class App
         }
         else
         {
-            await NavigationService.NavigateAsync("MainNavigationPage/IntroView");
+            await NavigationService.NavigateAsync("OnboardingNavigationPage/IntroView");
         }
 
         var widgetUpdateDispatcher = Container.Resolve<NativeWidgetUpdateDispatcher>();

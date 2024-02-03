@@ -34,7 +34,7 @@
         <value>Dodaj konto</value>
     </data>
     <data name="AddAccountSubheadingLabel" xml:space="preserve">
-        <value>Wpisz poniżej dane z zakładki 'Dodaj konto' w przeglądarkowej wersji dziennika</value>
+        <value>Zaloguj się do dziennika przez przeglądarkę, przejdź do zakładki "Dostęp mobilny", a następnie naciśnij przycisk "Wygeneruj kod dostępu"</value>
     </data>
     <data name="NoLessonsLabel" xml:space="preserve">
         <value>Brak lekcji w wybranym dniu</value>
@@ -392,5 +392,8 @@
     </data>
     <data name="CommonDelete" xml:space="preserve">
         <value>Skasuj</value>
+    </data>
+    <data name="ManualSignInSubheadingLabel" xml:space="preserve">
+        <value>Wprowadź dane poniżej</value>
     </data>
 </root>

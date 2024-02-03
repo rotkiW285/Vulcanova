@@ -40,7 +40,7 @@ public class MainNavigationPageViewModel : ReactiveObject
         {
             await accountRepository.DeleteByIdAsync(accountContext.Account.Id);
 
-            await navigationService.NavigateAsync("/MainNavigationPage/IntroView");
+            await navigationService.NavigateAsync("/OnboardingNavigationPage/IntroView");
 
             return Unit.Default;
         });

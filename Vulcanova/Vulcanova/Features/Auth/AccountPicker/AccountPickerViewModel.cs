@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Vulcanova.Core.Layout;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Auth.Accounts;
 using Vulcanova.Features.Auth.Intro;
@@ -33,7 +32,7 @@ public class AccountPickerViewModel : ViewModelBase, IInitializeAsync
         OpenAddAccountPage = ReactiveCommand.CreateFromTask<Unit>(
             async _ =>
             {
-                await navigationService.NavigateAsync($"{nameof(MainNavigationPage)}/{nameof(IntroView)}",
+                await navigationService.NavigateAsync($"{nameof(OnboardingNavigationPage)}/{nameof(IntroView)}",
                     useModalNavigation: true);
             });
         

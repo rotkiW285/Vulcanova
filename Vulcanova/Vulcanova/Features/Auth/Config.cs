@@ -16,7 +16,9 @@ public static class Config
         container.RegisterScoped<AccountsManager>();
         container.RegisterScoped<IAccountRepository, AccountRepository>();
 
+        container.RegisterForNavigation<OnboardingNavigationPage>();
         container.RegisterForNavigation<IntroView>();
+        container.RegisterForNavigation<AddAccountView>();
         container.RegisterForNavigation<ManualSignInView>();
         container.RegisterForNavigation<QrScannerView>();
         container.RegisterForNavigation<EnterPinCodeView>();

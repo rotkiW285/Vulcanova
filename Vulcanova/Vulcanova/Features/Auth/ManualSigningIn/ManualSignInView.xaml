@@ -12,7 +12,7 @@
             <StackLayout VerticalOptions="Center" Padding="32" Spacing="48">
                 <StackLayout>
                     <Label Style="{StaticResource HeadingLabelStyle}" Text="{x:Static resx:Strings.AddAccountLabel}" />
-                    <Label Text="{x:Static resx:Strings.AddAccountSubheadingLabel}" />
+                    <Label Text="{x:Static resx:Strings.ManualSignInSubheadingLabel}" />
                 </StackLayout>
                 <StackLayout>
                     <Entry
@@ -44,7 +44,7 @@
                         Style="{StaticResource DefaultButtonStyle}"
                         Text="{x:Static resx:Strings.AddButton}"
                         x:Name="AddButton" />
-                <ActivityIndicator x:Name="LoadingIndicator" />
+                <ActivityIndicator x:Name="LoadingIndicator" Margin="0,-48,0,0" TranslationY="48" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

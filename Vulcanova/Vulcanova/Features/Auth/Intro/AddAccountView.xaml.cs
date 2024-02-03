@@ -1,22 +1,23 @@
 using System.Reactive.Disposables;
 using ReactiveUI;
+using ReactiveUI.XamForms;
 using Xamarin.Forms.Xaml;
 
 namespace Vulcanova.Features.Auth.Intro;
 
 [XamlCompilation(XamlCompilationOptions.Compile)]
-public partial class IntroView
+public partial class AddAccountView : ReactiveContentPage<AddAccountViewModel>
 {
-    public IntroView()
+    public AddAccountView()
     {
         InitializeComponent();
 
         this.WhenActivated(disposable =>
         {
-            this.BindCommand(ViewModel, x => x.AddAccount, x => x.AddAccountButton)
+            this.BindCommand(ViewModel, x => x.ScanQrCode, x => x.ScanQrButton)
                 .DisposeWith(disposable);
 
-            this.OneWayBind(ViewModel, x => x.OpenGitHubLink, x => x.GithubLinkTapRecognizer.Command)
+            this.BindCommand(ViewModel, x => x.SignInManually, x => x.ManualSignInButton)
                 .DisposeWith(disposable);
         });
     }

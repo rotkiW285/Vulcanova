@@ -28,7 +28,7 @@
         <value>Add account</value>
     </data>
     <data name="AddAccountSubheadingLabel" xml:space="preserve">
-        <value>Enter below values from 'Dodaj konto' section from the web diary client</value>
+        <value>Sign in to Vulcan UONET+ in a web browser, navigate to "Dostęp mobilny" tab and press "Wygeneruj kod dostępu"</value>
     </data>
     <data name="AddButton" xml:space="preserve">
         <value>Add</value>
@@ -392,5 +392,8 @@
     </data>
     <data name="CommonDelete" xml:space="preserve">
         <value>Delete</value>
+    </data>
+    <data name="ManualSignInSubheadingLabel" xml:space="preserve">
+        <value>Enter the values below</value>
     </data>
 </root>

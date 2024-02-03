@@ -806,5 +806,11 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("CommonDelete", resourceCulture);
             }
         }
+        
+        internal static string ManualSignInSubheadingLabel {
+            get {
+                return ResourceManager.GetString("ManualSignInSubheadingLabel", resourceCulture);
+            }
+        }
     }
 }
