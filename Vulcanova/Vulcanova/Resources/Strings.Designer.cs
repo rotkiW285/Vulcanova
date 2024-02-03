@@ -812,5 +812,11 @@ namespace Vulcanova.Resources {
                 return ResourceManager.GetString("ManualSignInSubheadingLabel", resourceCulture);
             }
         }
+        
+        internal static string SettingsAboutContact {
+            get {
+                return ResourceManager.GetString("SettingsAboutContact", resourceCulture);
+            }
+        }
     }
 }

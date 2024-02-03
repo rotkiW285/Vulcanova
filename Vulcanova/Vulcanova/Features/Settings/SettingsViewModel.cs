@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reactive;
 using Prism.Navigation;
 using ReactiveUI;
@@ -5,6 +6,7 @@ using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Settings.About;
 using Vulcanova.Features.Settings.Grades.iOS;
 using Vulcanova.Features.Settings.HttpTrafficLogger;
+using Xamarin.Essentials;
 
 namespace Vulcanova.Features.Settings;
 
@@ -19,6 +21,7 @@ public class SettingsViewModel : ViewModelBase
     public ReactiveCommand<Unit, INavigationResult> OpenValueOfMinusPicker { get; }
     public ReactiveCommand<Unit, INavigationResult> OpenHttpTrafficLogger { get; }
     public ReactiveCommand<Unit, INavigationResult> OpenAboutPage { get; }
+    public ReactiveCommand<Unit, Unit> StartComposingContactMail { get; }
 
     public bool DisableReadReceipts
     {
@@ -54,5 +57,23 @@ public class SettingsViewModel : ViewModelBase
 
         OpenAboutPage =
             ReactiveCommand.CreateFromTask(async () => await NavigationService.NavigateAsync(nameof(AboutPage)));
+
+        StartComposingContactMail = ReactiveCommand.CreateFromTask(async (Unit _) =>
+        {
+            try
+            {
+                var message = new EmailMessage
+                {
+                    Subject = "Vulcanova - Kontakt",
+                    Body = "Wersja aplikacji: " + AppInfo.VersionString,
+                    To = new List<string> { "vulcanova@romanowski.me" }
+                };
+                await Email.ComposeAsync(message);
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Email is not supported on this device
+            }
+        });
     }
 }

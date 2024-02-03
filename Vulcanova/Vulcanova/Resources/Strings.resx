@@ -396,4 +396,7 @@
     <data name="ManualSignInSubheadingLabel" xml:space="preserve">
         <value>Enter the values below</value>
     </data>
+    <data name="SettingsAboutContact" xml:space="preserve">
+        <value>Contact app developer</value>
+    </data>
 </root>

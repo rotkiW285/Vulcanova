@@ -55,6 +55,7 @@
                     <TextCell x:Name="NetworkDebuggingCell" Text="{x:Static resx:Strings.SettingsNetworkDebugging}" />
                 </TableSection>
                 <TableSection Title="{x:Static resx:Strings.SettingsAboutSection}">
+                    <TextCell x:Name="ContactCell" Text="{x:Static resx:Strings.SettingsAboutContact}" />
                     <TextCell x:Name="AboutCell" Text="{x:Static resx:Strings.SettingsAboutApp}" />
                 </TableSection>
             </TableRoot>

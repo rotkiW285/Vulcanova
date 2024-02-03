@@ -37,6 +37,9 @@ public partial class SettingsView
 
             this.BindCommand(ViewModel, vm => vm.OpenAboutPage, v => v.AboutCell)
                 .DisposeWith(disposable);
+
+            this.BindCommand(ViewModel, vm => vm.StartComposingContactMail, v => v.ContactCell)
+                .DisposeWith(disposable);
         });
     }
 }
