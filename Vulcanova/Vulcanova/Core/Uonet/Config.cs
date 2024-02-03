@@ -1,5 +1,4 @@
 using Prism.Ioc;
-using Vulcanova.Features.Auth;
 using Vulcanova.Features.Shared;
 using Vulcanova.Uonet.Api.Common;
 
@@ -12,10 +11,6 @@ public static class Config
         container.RegisterSingleton<IApiClientFactory, ApiClientFactory>();
         container.RegisterSingleton<InstanceUrlProvider>();
         container.RegisterSingleton<IInstanceUrlProvider, FebeInstanceUrlProviderDecorator>();
-        container.RegisterSingleton<AccountContext>(ctx =>
-        {
-            var activeAccount = ctx.Resolve<IAccountRepository>().GetActiveAccountAsync().Result;
-            return new AccountContext { Account = activeAccount };
-        });
+        container.RegisterSingleton<AccountContext>();
     }
 }
