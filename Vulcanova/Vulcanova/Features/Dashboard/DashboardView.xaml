@@ -110,6 +110,7 @@
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
 
                                             <Label LineBreakMode="NoWrap"
@@ -127,14 +128,8 @@
                                                 Grid.Column="1"
                                                 LineBreakMode="TailTruncation"
                                                 TextDecorations="{Binding .Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}"
-                                                Style="{StaticResource SmallLabelStyle}">
-                                                <Label.Text>
-                                                    <MultiBinding StringFormat="{}{0}{1}">
-                                                        <Binding Path="SubjectName" />
-                                                        <Binding Path="RoomName.Value" StringFormat=" ({0})"
-                                                                 TargetNullValue="" />
-                                                    </MultiBinding>
-                                                </Label.Text>
+                                                Style="{StaticResource SmallLabelStyle}"
+                                                Text="{Binding SubjectName}">
                                                 <Label.TextColor>
                                                     <MultiBinding Converter="{StaticResource ColorConverter}">
                                                         <Binding Path="Change" />
@@ -144,6 +139,18 @@
                                             </Label>
                                             <Label
                                                 Grid.Column="2"
+                                                TextDecorations="{Binding .Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}"
+                                                Style="{StaticResource SmallLabelStyle}"
+                                                Text="{Binding Path=RoomName.Value, StringFormat='({0})'}">
+                                                <Label.TextColor>
+                                                    <MultiBinding Converter="{StaticResource ColorConverter}">
+                                                        <Binding Path="Change" />
+                                                        <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                                                    </MultiBinding>
+                                                </Label.TextColor>
+                                            </Label>
+                                            <Label
+                                                Grid.Column="3"
                                                 Style="{StaticResource SmallLabelStyle}">
                                                 <Label.Text>
                                                     <MultiBinding StringFormat="{}{0:HH:mm} – {1:HH:mm}">
