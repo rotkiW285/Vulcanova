@@ -67,10 +67,10 @@
                 Padding="0">
                 <layout:TintedCachedImage
                     VerticalOptions="Center"
-                    HeightRequest="32"
-                    WidthRequest="32"
+                    HeightRequest="22"
+                    WidthRequest="22"
                     Source="resource://Vulcanova.Resources.Icons.chevron-right.svg"
-                    TintColor="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}">
+                    TintColor="{AppThemeBinding Light={StaticResource LightTertiaryTextColor}, Dark={StaticResource DarkTertiaryTextColor}}">
                 </layout:TintedCachedImage>
             </Frame>
         </Grid>

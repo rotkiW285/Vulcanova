@@ -11,6 +11,9 @@
     
     <Color x:Key="LightSecondaryTextColor">#AAAAAA</Color>
     <Color x:Key="DarkSecondaryTextColor">#AAAAAA</Color>
+    
+    <Color x:Key="LightTertiaryTextColor">#4C3C3C43</Color>
+    <Color x:Key="DarkTertiaryTextColor">#4CEBEBF5</Color>
 
     <Color x:Key="LightBackgroundColor">White</Color>
     <Color x:Key="DarkBackgroundColor">Black</Color>
