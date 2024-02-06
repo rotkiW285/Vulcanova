@@ -1,28 +1,15 @@
-### [English version of README](README-en.md)
-
 # Vulcanova
-[![Build for iOS](https://github.com/Vulcanova/Vulcanova/actions/workflows/ios.yml/badge.svg)](https://github.com/Vulcanova/Vulcanova/actions/workflows/ios.yml) [![Discord](https://discord.com/api/guilds/951860775503421460/widget.png?style=shield)](https://discord.gg/GaCQknqRjT)
 
-Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzony w Xamarinie. Aktualnie w fazie intensywnego rozwoju.
+## Masz iOSa poniżej wersji 15.0 i nie możesz pobrać Vulcanovej?
+To dobrze trafiłeś :)
 
-## Screenshoty
+## Co nie działa?
+- Praktycznie wszystkie rozwijane listy (szczegóły ocen, lekcji, obecności, sprawdzanów)
+- widgety 
+- przełączanie kont i wylogowanie się
 
-<img src="https://user-images.githubusercontent.com/12448522/184552619-ce6ca5b6-e892-4567-a4f7-fcd9465e9048.png" alt="iOS simulator showing Grades page of the app" width="250">
+## Instalacja
+Żeby zainstlować wymagany jest jailbreak lub sideloading
+(nie udzielam poradników dot. powyższych rzeczy, poszukaj sobie w internecie)
 
-## Co działa?
-- szczęśliwy numerek
-- oceny
-- plan lekcji
-- frekwencja
-- sprawdziany
-- zadania domowe
-- usprawiedliwianie nieobecności
-- uwagi
-- wiadomości
-- dashboard
-
-## Wykorzystane projekty
-* [kapi2289/vulcan-api](https://github.com/kapi2289/vulcan-api/)
-* [wulkanowy/qr](https://github.com/wulkanowy/qr)
-* [wulkanowy/uonet-request-signer](https://github.com/wulkanowy/uonet-request-signer)
-* [Ionicons](https://ionic.io/ionicons)
+## Po więcej informacji o oficialnym projekcie odwiedź repozytorium [Vulcanovej](https://github.com/Vulcanova/Vulcanova)
