@@ -104,16 +104,10 @@
                                 </BindableLayout.EmptyView>
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="timetable:TimetableListEntry">
-                                        <Grid
+                                        <FlexLayout
                                             BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-
                                             <Label LineBreakMode="NoWrap"
+                                                   FlexLayout.Shrink="0"
                                                    Text="{Binding  No, StringFormat='{0}.'}"
                                                    Style="{StaticResource SmallLabelStyle}"
                                                    VerticalTextAlignment="Center">
@@ -125,11 +119,11 @@
                                                 </Label.TextColor>
                                             </Label>
                                             <Label
-                                                Grid.Column="1"
                                                 LineBreakMode="TailTruncation"
                                                 TextDecorations="{Binding .Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}"
                                                 Style="{StaticResource SmallLabelStyle}"
-                                                Text="{Binding SubjectName}">
+                                                Text="{Binding SubjectName}"
+                                                Margin="4,0,0,0">
                                                 <Label.TextColor>
                                                     <MultiBinding Converter="{StaticResource ColorConverter}">
                                                         <Binding Path="Change" />
@@ -138,10 +132,12 @@
                                                 </Label.TextColor>
                                             </Label>
                                             <Label
-                                                Grid.Column="2"
+                                                FlexLayout.Shrink="0"
+                                                LineBreakMode="NoWrap"
                                                 TextDecorations="{Binding .Change, Converter={StaticResource TextDecorationsConverter}, TargetNullValue={x:Static TextDecorations.None}}"
                                                 Style="{StaticResource SmallLabelStyle}"
-                                                Text="{Binding Path=RoomName.Value, StringFormat='({0})'}">
+                                                Text="{Binding Path=RoomName.Value, StringFormat='({0})', TargetNullValue=''}"
+                                                Margin="4, 0">
                                                 <Label.TextColor>
                                                     <MultiBinding Converter="{StaticResource ColorConverter}">
                                                         <Binding Path="Change" />
@@ -150,7 +146,9 @@
                                                 </Label.TextColor>
                                             </Label>
                                             <Label
-                                                Grid.Column="3"
+                                                FlexLayout.Shrink="0"
+                                                FlexLayout.Grow="1"
+                                                HorizontalTextAlignment="End"
                                                 Style="{StaticResource SmallLabelStyle}">
                                                 <Label.Text>
                                                     <MultiBinding StringFormat="{}{0:HH:mm} – {1:HH:mm}">
@@ -165,7 +163,7 @@
                                                     </MultiBinding>
                                                 </Label.TextColor>
                                             </Label>
-                                        </Grid>
+                                        </FlexLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
