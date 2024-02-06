@@ -8,33 +8,6 @@
 import WidgetKit
 import SwiftUI
 
-struct TimetableDataElement: Codable {
-    let key: Date
-    let value: [TimetableDataLesson]
-}
-
-struct TimetableDataLesson: Codable {
-    let no: Int
-    let subjectName, teacherName: String
-    let date, start, end: Date
-    let roomName: String?
-    let displayColor: ChangeDisplayColor
-    let displayTextDecorations: ChangeDisplayTextDecorations
-    
-    enum ChangeDisplayColor: Int, Codable {
-        case normal
-        case yellow
-        case red
-    }
-    
-    enum ChangeDisplayTextDecorations: Int, Codable {
-        case none
-        case strikethrough
-    }
-}
-
-typealias TimetableData = [TimetableDataElement]
-
 let timetableSampleEntry = TimetableEntry(date: Date(),
                                           previousLesson: TimetableEntry.TimetableEntryLesson(no: 1, name: "Przyroda", classRoom: "21", start: "8:00", end: "8:45"),
                                           currentLesson: TimetableEntry.TimetableEntryLesson(no: 2, name: "Edb", classRoom: "37", start: "9:50", end: "10:35"),
@@ -69,7 +42,7 @@ struct TimetableTimelineProvider: TimelineProvider {
     private func getEntries() -> [TimetableEntry] {
         var entries: [TimetableEntry] = []
         
-        let jsonData: TimetableData? = readWidgetData(fileName: "timetable.json", defaultValue: nil);
+        let jsonData = readTimetableData()
         
         guard let jsonData = jsonData else {
             return [TimetableEntry.empty(date: Date(), state: .noData)]
