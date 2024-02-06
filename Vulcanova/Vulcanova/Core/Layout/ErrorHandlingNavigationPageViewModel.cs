@@ -3,6 +3,7 @@ using System.Reactive;
 using Prism.Navigation;
 using Prism.Services;
 using ReactiveUI;
+using Vulcanova.Core.Mvvm;
 using Vulcanova.Features.Auth;
 using Vulcanova.Features.Shared;
 using Vulcanova.Resources;
@@ -10,17 +11,12 @@ using Xamarin.Essentials;
 
 namespace Vulcanova.Core.Layout;
 
-public class MainNavigationPageViewModel : ReactiveObject
+public class ErrorHandlingNavigationPageViewModel : ViewModelBase
 {
-    public ReactiveCommand<Exception, Unit> ShowErrorDetails { get; }
-    public ReactiveCommand<Unit, Unit> ShowSignInAlert { get; }
-
-
-    public MainNavigationPageViewModel(
-        INavigationService navigationService,
+    protected ErrorHandlingNavigationPageViewModel(INavigationService navigationService,
         IPageDialogService dialogService,
         IAccountRepository accountRepository,
-        AccountContext accountContext)
+        AccountContext accountContext) : base(navigationService)
     {
         ShowErrorDetails = ReactiveCommand.CreateFromTask(async (Exception ex) =>
         {
@@ -45,4 +41,7 @@ public class MainNavigationPageViewModel : ReactiveObject
             return Unit.Default;
         });
     }
+    
+    public ReactiveCommand<Exception, Unit> ShowErrorDetails { get; }
+    public ReactiveCommand<Unit, Unit> ShowSignInAlert { get; }
 }

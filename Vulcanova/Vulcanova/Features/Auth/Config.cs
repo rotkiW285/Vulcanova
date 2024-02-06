@@ -2,6 +2,7 @@ using System.Linq;
 using System.Reflection;
 using DryIoc;
 using Prism.Ioc;
+using Vulcanova.Core.Layout;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Auth.Intro;
 using Vulcanova.Features.Auth.ManualSigningIn;
@@ -16,7 +17,7 @@ public static class Config
         container.RegisterScoped<AccountsManager>();
         container.RegisterScoped<IAccountRepository, AccountRepository>();
 
-        container.RegisterForNavigation<OnboardingNavigationPage>();
+        container.RegisterForNavigation<OnboardingNavigationPage, ErrorHandlingNavigationPageViewModel>();
         container.RegisterForNavigation<IntroView>();
         container.RegisterForNavigation<AddAccountView>();
         container.RegisterForNavigation<ManualSignInView>();

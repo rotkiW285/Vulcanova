@@ -9,7 +9,7 @@ public static class Config
     {
         container.RegisterPopupNavigationService<SheetPageNavigationService>();
 
-        container.RegisterForNavigation<MainNavigationPage>();
+        container.RegisterForNavigation<MainNavigationPage, ErrorHandlingNavigationPageViewModel>();
         container.RegisterForNavigation<HomeTabbedPage>();
     }
 }
