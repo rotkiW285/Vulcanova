@@ -21,6 +21,11 @@ Nieoficjalny, międzyplatformowy, mobilny klient dziennika Vulcan UONET+ tworzon
 - wiadomości
 - dashboard
 
+## Pobierz
+[![Pobierz w App Store](app-store-pl.svg)](https://apps.apple.com/pl/app/vulcanova/id6451334441)
+
+Lubisz życie na krawędzi? [Zapisz się do beta testów!](https://testflight.apple.com/join/fGMjqr58)
+
 ## Wykorzystane projekty
 * [kapi2289/vulcan-api](https://github.com/kapi2289/vulcan-api/)
 * [wulkanowy/qr](https://github.com/wulkanowy/qr)

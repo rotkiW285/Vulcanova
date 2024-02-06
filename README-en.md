@@ -17,6 +17,11 @@ An unofficial Vulcan UONET+ mobile cross-platform register client made in Xamari
 - messages
 - dashboard
 
+## Download
+[![Download on the App Store](app-store-en.svg)](https://apps.apple.com/pl/app/vulcanova/id6451334441)
+
+Do you enjoy living on the edge? [Sign up for beta testing!](https://testflight.apple.com/join/fGMjqr58)
+
 ## Credits
 * [kapi2289/vulcan-api](https://github.com/kapi2289/vulcan-api/)
 * [wulkanowy/qr](https://github.com/wulkanowy/qr)
