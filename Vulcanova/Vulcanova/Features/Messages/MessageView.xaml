@@ -7,8 +7,8 @@
                           xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
                           xmlns:abstractions="clr-namespace:LabelHtml.Forms.Plugin.Abstractions;assembly=HtmlLabel.Forms.Plugin"
                           xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
-                          xmlns:messageBox="clr-namespace:Vulcanova.Uonet.Api.MessageBox;assembly=Vulcanova.Uonet"
                           xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
+                          xmlns:models="clr-namespace:Vulcanova.Uonet.Api.Common.Models;assembly=Vulcanova.Uonet"
                           x:Class="Vulcanova.Features.Messages.MessageView"
                           Title="{Binding Message.Subject}"
                           x:Name="View">
@@ -81,7 +81,7 @@
                 <StackLayout Grid.Row="3"
                              BindableLayout.ItemsSource="{Binding Message.Attachments}">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="messageBox:Attachment">
+                        <DataTemplate x:DataType="models:Attachment">
                             <StackLayout Orientation="Horizontal">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer CommandParameter="{Binding Link}"

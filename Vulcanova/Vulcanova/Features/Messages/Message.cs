@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Vulcanova.Core.Data;
+using Vulcanova.Uonet.Api.Common.Models;
 using Vulcanova.Uonet.Api.MessageBox;
 
 namespace Vulcanova.Features.Messages;
