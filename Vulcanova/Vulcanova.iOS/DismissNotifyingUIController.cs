@@ -25,9 +25,8 @@ namespace Vulcanova.iOS
 
         public override void ViewWillDisappear(bool animated)
         {
-            // so the views are *usually* wrapped in a navigation controller
-            // this will break if they aren't.. but that's a problem for another day
-            if (NavigationController!.IsBeingDismissed)
+            // this should probably be moved to the topmost sheet UIViewController
+            if (NavigationController?.IsBeingDismissed == true || IsBeingDismissed)
                 WillDisappear?.Invoke(this, EventArgs.Empty);
 
             base.ViewWillDisappear(animated);
@@ -35,8 +34,7 @@ namespace Vulcanova.iOS
 
         public override void ViewDidDisappear(bool animated)
         {
-            // see the comment above
-            if (NavigationController!.IsBeingDismissed)
+            if (NavigationController?.IsBeingDismissed == true || IsBeingDismissed)
                 DidDisappear?.Invoke(this, EventArgs.Empty);
             
             base.ViewDidDisappear(animated);
