@@ -12,6 +12,7 @@
                           xmlns:views="http://xamarin.com/schemas/2020/toolkit"
                           xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
                           xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
+                          BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}"
                           ios:Page.ModalPresentationStyle="PageSheet">
     <ContentPage.Resources>
         <ColumnDefinitionCollection x:Key="FieldColumns">
@@ -19,6 +20,14 @@
             <ColumnDefinition Width="*" />
         </ColumnDefinitionCollection>
         <messages:CorrespondentToInitialsConverter x:Key="CorrespondentToInitialsConverter" />
+        <Style ApplyToDerivedTypes="true" TargetType="Entry">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
+        </Style>
+        <Style ApplyToDerivedTypes="true" TargetType="StackLayout">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
+        </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid Padding="0, 8" BackgroundColor="Transparent">
