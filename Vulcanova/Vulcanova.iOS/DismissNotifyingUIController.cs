@@ -25,14 +25,19 @@ namespace Vulcanova.iOS
 
         public override void ViewWillDisappear(bool animated)
         {
-            WillDisappear?.Invoke(this, EventArgs.Empty);
+            // so the views are *usually* wrapped in a navigation controller
+            // this will break if they aren't.. but that's a problem for another day
+            if (NavigationController!.IsBeingDismissed)
+                WillDisappear?.Invoke(this, EventArgs.Empty);
 
             base.ViewWillDisappear(animated);
         }
 
         public override void ViewDidDisappear(bool animated)
         {
-            DidDisappear?.Invoke(this, EventArgs.Empty);
+            // see the comment above
+            if (NavigationController!.IsBeingDismissed)
+                DidDisappear?.Invoke(this, EventArgs.Empty);
             
             base.ViewDidDisappear(animated);
         }
