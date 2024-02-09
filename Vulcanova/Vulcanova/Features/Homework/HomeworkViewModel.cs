@@ -82,7 +82,7 @@ namespace Vulcanova.Features.Homework
                     var sunday = selectedDay.NextSunday();
 
                     CurrentWeekEntries = Array.AsReadOnly(entries
-                        .Where(e => e.Deadline >= monday && e.Deadline < sunday)
+                        .Where(e => e.Deadline.Date >= monday && e.Deadline.Date <= sunday)
                         .ToArray());
                 });
 
