@@ -12,6 +12,10 @@
     <layout:SheetPage.Resources>
         <timetable:ChangeTypeToStringConverter x:Key="ChangeTypeToStringConverter" />
         <timetable:TimetableChangeColorConverter x:Key="ColorConverter" />
+        <Style ApplyToDerivedTypes="true" TargetType="StackLayout">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}" />
+        </Style>
     </layout:SheetPage.Resources>
     <layout:SheetPage.Content>
         <StackLayout BindingContext="{x:Reference View}" Padding="0, 16">
