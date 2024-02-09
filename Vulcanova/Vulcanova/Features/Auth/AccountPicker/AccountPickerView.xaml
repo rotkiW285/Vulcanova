@@ -13,10 +13,15 @@
     vulcanovaIos:Sheet.HasCloseButton="False"
     ios:Page.UseSafeArea="True"
     x:Class="Vulcanova.Features.Auth.AccountPicker.AccountPickerView"
-    x:Name="View">
+    x:Name="View"
+    BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
     <layout:ReactiveSheetPage.Resources>
         <accounts:PupilToInitialsConverter x:Key="PupilToInitialsConverter" />
         <auth:LoginRoleDisplayConverter x:Key="LoginRoleDisplayConverter" />
+        <Style TargetType="StackLayout">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Dark={StaticResource DarkPanelColor}, Light={StaticResource LightPanelColor}}" />
+        </Style>
     </layout:ReactiveSheetPage.Resources>
     <ContentView.Content>
         <StackLayout>
@@ -54,7 +59,7 @@
                             </SwipeView.LeftItems>
                             <Grid ColumnSpacing="12"
                                   Padding="16, 8"
-                                  xct:TouchEffect.NormalBackgroundColor="{AppThemeBinding Light={StaticResource LightBackgroundColor}, Dark={StaticResource DarkBackgroundColor}}"
+                                  xct:TouchEffect.NormalBackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}"
                                   xct:TouchEffect.PressedBackgroundColor="{AppThemeBinding Light={StaticResource LightBorderColor}, Dark={StaticResource DarkBorderColor}}"
                                   xct:TouchEffect.Command="{Binding Source={x:Reference View}, Path=ViewModel.OpenAccount}"
                                   xct:TouchEffect.CommandParameter="{Binding Id}">
