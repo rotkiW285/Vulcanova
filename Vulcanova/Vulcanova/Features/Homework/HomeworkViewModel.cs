@@ -53,7 +53,7 @@ namespace Vulcanova.Features.Homework
                 var homework = CurrentWeekEntries?.First(g => g.Id == lessonId);
 
                 navigationService.NavigateAsync(nameof(HomeworkDetailsView),
-                    (nameof(HomeworkDetailsView.Homework), homework));
+                    (nameof(HomeworkDetailsViewModel.Homework), homework));
 
                 return Unit.Default;
             });

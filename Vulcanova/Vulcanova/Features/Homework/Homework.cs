@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Vulcanova.Core.Data;
 using Vulcanova.Uonet.Api.Common.Models;
 
@@ -18,4 +19,5 @@ public class Homework
     public DateTime? AnswerDeadline { get; set; }
     public string CreatorName { get; set; }
     public Subject Subject { get; set; }
+    public List<Attachment> Attachments { get; set; }
 }
