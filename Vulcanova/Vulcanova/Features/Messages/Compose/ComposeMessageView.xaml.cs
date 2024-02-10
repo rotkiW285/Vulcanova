@@ -55,4 +55,22 @@ public partial class ComposeMessageView
                 .DisposeWith(disposable);
         });
     }
+
+    // https://github.com/xamarin/Xamarin.Forms/issues/13040
+    private double _scrollY;
+    private DateTime _dateFocused;
+
+    private void EditorFocused(object sender, FocusEventArgs e)
+    {
+        _scrollY = EditorWrapperScrollView.ScrollY;
+        _dateFocused = DateTime.UtcNow;
+    }
+
+    private async void ScrollView_OnScrolled(object sender, ScrolledEventArgs e)
+    {
+        if ((DateTime.UtcNow - _dateFocused).TotalMilliseconds <= 200)
+        {
+            await EditorWrapperScrollView.ScrollToAsync(0, _scrollY, false);
+        }
+    }
 }

@@ -57,9 +57,9 @@
                     <Label
                         TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}"
                         Text="{x:Static resx:Strings.ComposeMessageToLabel}" />
-                    <Entry Grid.Column="1" 
+                    <Entry Grid.Column="1"
                            x:Name="ToEntry"
-                           Text="{Binding RecipientFilter}" 
+                           Text="{Binding RecipientFilter}"
                            IsTextPredictionEnabled="False">
                         <Entry.Effects>
                             <layout:BorderlessEntryEffect />
@@ -106,7 +106,10 @@
                 </Grid>
                 <BoxView Style="{StaticResource SeparatorStyle}" />
             </StackLayout>
-            <Editor Grid.Row="2" BackgroundColor="Transparent" Margin="16, 0" Text="{Binding Content}" />
+            <ScrollView x:Name="EditorWrapperScrollView" Grid.Row="2" Scrolled="ScrollView_OnScrolled">
+                <Editor Focused="EditorFocused" BackgroundColor="Transparent"
+                        Margin="16, 0" Text="{Binding Content}" />
+            </ScrollView>
         </Grid>
     </ContentPage.Content>
 </rxui:ReactiveContentPage>
