@@ -6,7 +6,6 @@
     xmlns:views="http://xamarin.com/schemas/2020/toolkit"
     xmlns:resx="clr-namespace:Vulcanova.Resources;assembly=Vulcanova"
     xmlns:layout="clr-namespace:Vulcanova.Core.Layout;assembly=Vulcanova"
-    xmlns:auth="clr-namespace:Vulcanova.Features.Auth;assembly=Vulcanova"
     xmlns:accountPicker="clr-namespace:Vulcanova.Features.Auth.AccountPicker;assembly=Vulcanova"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:vulcanovaIos="clr-namespace:Vulcanova.Core.Layout.PlatformSpecific.iOS;assembly=Vulcanova"
@@ -17,7 +16,7 @@
     BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}">
     <layout:ReactiveSheetPage.Resources>
         <accounts:PupilToInitialsConverter x:Key="PupilToInitialsConverter" />
-        <auth:LoginRoleDisplayConverter x:Key="LoginRoleDisplayConverter" />
+        <accountPicker:AccountDisplayNameConverter x:Key="AccountDisplayNameConverter" />
         <Style TargetType="StackLayout">
             <Setter Property="BackgroundColor"
                     Value="{AppThemeBinding Dark={StaticResource DarkPanelColor}, Light={StaticResource LightPanelColor}}" />
@@ -74,16 +73,7 @@
                                     Color="{AppThemeBinding Dark={StaticResource DarkTranslucentPrimaryColor}, Light={StaticResource LightTranslucentPrimaryColor}}"
                                     TextColor="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, Light={StaticResource LightPrimaryColor}}" />
                                 <StackLayout Grid.Column="1" Spacing="0" Background="Transparent">
-                                    <Label>
-                                        <Label.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}{2}">
-                                                <Binding Path="Pupil.FirstName" />
-                                                <Binding Path="Pupil.Surname" />
-                                                <Binding Path="Login.LoginRole"
-                                                         Converter="{StaticResource LoginRoleDisplayConverter}" />
-                                            </MultiBinding>
-                                        </Label.Text>
-                                    </Label>
+                                    <Label Text="{Binding ., Converter={StaticResource AccountDisplayNameConverter}}" />
                                     <Label
                                         FontSize="Small"
                                         TextColor="{AppThemeBinding Dark={StaticResource DarkSecondaryTextColor}, Light={StaticResource LightSecondaryTextColor}}">

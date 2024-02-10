@@ -13,7 +13,9 @@ public class AccountMapperProfile : Profile
 {
     public AccountMapperProfile()
     {
-        CreateMap<AccountPayload, Account>();
+        CreateMap<AccountPayload, Account>()
+            .ForMember(dest => dest.PupilNumber, o => o.MapFrom(src => src.Journal.PupilNumber));
+
         CreateMap<Uonet.Api.Auth.Pupil, Pupil>();
         CreateMap<Uonet.Api.Auth.Unit, Unit>();
         CreateMap<Uonet.Api.Auth.ConstituentUnit, ConstituentUnit>();

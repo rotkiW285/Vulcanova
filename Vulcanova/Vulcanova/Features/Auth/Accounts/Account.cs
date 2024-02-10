@@ -9,6 +9,7 @@ public class Account
 {
     [BsonId]
     public int Id { get; set; }
+    public int? PupilNumber { get; set; }
     public Pupil Pupil { get; set; }
     public Unit Unit { get; set; }
     public ConstituentUnit ConstituentUnit { get; set; }

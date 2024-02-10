@@ -72,6 +72,7 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
                     acc.Periods = deduplicatedNewPeriods.Select(_mapper.Map<Period>).ToList();
                 }
 
+                acc.PupilNumber = newAccount.Journal.PupilNumber;
                 acc.Capabilities = newAccount.Capabilities;
 
                 await _accountRepository.UpdateAccountAsync(acc);
