@@ -16,7 +16,10 @@ struct ViewSizeWidgetView : View {
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                Text("Lessons").font(.caption.smallCaps())
+                HStack(spacing: 4) {
+                    Image(systemName: "graduationcap.fill").imageScale(.small)
+                    Text("Lessons").font(.caption.smallCaps())
+                }
                 if entry.timetableState == .lessonsOver {
                     Text("That's it for today").font(.subheadline)
                 } else if entry.timetableState == .noLessonsThatDay {
@@ -190,7 +193,7 @@ struct CurrentLessonWidget: Widget {
 @available(iOSApplicationExtension 17.0, *)
 struct CurrentLessonWidget_Previews: PreviewProvider {
     static var previews: some View {
-        ViewSizeWidgetView(entry: CurrentLessonState(date: Date(), currentLesson: CurrentLessonState.Lesson(no: 1, name: "Język polski", classRoom: "22", start: "7:30"), futureLesson: CurrentLessonState.Lesson(no: 1, name: "Matematyka", classRoom: "22", start: "8:20"), timetableState: .lessonsOver))
+        ViewSizeWidgetView(entry: lessonStateSample)
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
