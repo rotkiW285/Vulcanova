@@ -58,19 +58,28 @@ public partial class ComposeMessageView
 
     // https://github.com/xamarin/Xamarin.Forms/issues/13040
     private double _scrollY;
-    private DateTime _dateFocused;
+    private bool _scrollEnabled;
 
     private void EditorFocused(object sender, FocusEventArgs e)
     {
         _scrollY = EditorWrapperScrollView.ScrollY;
-        _dateFocused = DateTime.UtcNow;
     }
 
-    private async void ScrollView_OnScrolled(object sender, ScrolledEventArgs e)
+    private async void EditorWrapperScrollViewScrolled(object sender, ScrolledEventArgs e)
     {
-        if ((DateTime.UtcNow - _dateFocused).TotalMilliseconds <= 200)
+        if (!_scrollEnabled)
         {
             await EditorWrapperScrollView.ScrollToAsync(0, _scrollY, false);
         }
+    }
+
+    private void EditorKeyboardWillShow(object sender, EventArgs e)
+    {
+        _scrollEnabled = false;
+    }
+
+    private void EditorKeyboardDidShow(object sender, EventArgs e)
+    {
+        _scrollEnabled = true;
     }
 }

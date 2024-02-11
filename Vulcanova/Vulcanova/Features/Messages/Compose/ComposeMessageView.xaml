@@ -12,6 +12,7 @@
                           xmlns:views="http://xamarin.com/schemas/2020/toolkit"
                           xmlns:messages="clr-namespace:Vulcanova.Features.Messages;assembly=Vulcanova"
                           xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects"
+                          xmlns:controls="clr-namespace:Vulcanova.Core.Layout.Controls;assembly=Vulcanova"
                           BackgroundColor="{AppThemeBinding Light={StaticResource LightPanelColor}, Dark={StaticResource DarkPanelColor}}"
                           ios:Page.ModalPresentationStyle="PageSheet">
     <ContentPage.Resources>
@@ -106,9 +107,12 @@
                 </Grid>
                 <BoxView Style="{StaticResource SeparatorStyle}" />
             </StackLayout>
-            <ScrollView x:Name="EditorWrapperScrollView" Grid.Row="2" Scrolled="ScrollView_OnScrolled">
-                <Editor Focused="EditorFocused" BackgroundColor="Transparent"
-                        Margin="16, 0" Text="{Binding Content}" />
+            <ScrollView x:Name="EditorWrapperScrollView" Grid.Row="2" Scrolled="EditorWrapperScrollViewScrolled">
+                <controls:KeyboardNotifyingEditor
+                    KeyboardWillShow="EditorKeyboardWillShow"
+                    KeyboardDidShow="EditorKeyboardDidShow"
+                    Focused="EditorFocused" BackgroundColor="Transparent"
+                    Margin="16, 0" Text="{Binding Content}" />
             </ScrollView>
         </Grid>
     </ContentPage.Content>

@@ -149,6 +149,7 @@
         <Compile Include="CollectionView\WidthConstrainedTemplatedCell.cs" />
         <Compile Include="CustomScrollViewRenderer.cs" />
         <Compile Include="DismissNotifyingUIController.cs"/>
+        <Compile Include="KeyboardNotifyingEditorRenderer.cs" />
         <Compile Include="Main.cs"/>
         <Compile Include="AppDelegate.cs"/>
         <Compile Include="NativeOptionCell.cs"/>
