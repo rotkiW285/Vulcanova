@@ -1,5 +1,5 @@
 //
-//  CurrentLessonWidget.swift
+//  LessonsNowWidget.swift
 //  NativeWidgetExtension
 //
 //  Created by Piotr Romanowski on 05/02/2024.
@@ -9,9 +9,9 @@ import WidgetKit
 import SwiftUI
 
 @available(iOSApplicationExtension 17.0, *)
-struct ViewSizeWidgetView : View {
+struct LessonsNowWidgetView : View {
     
-    let entry: CurrentLessonState
+    let entry: LessonsNowState
     
     var body: some View {
         ZStack {
@@ -45,7 +45,7 @@ struct ViewSizeWidgetView : View {
     }
     
     struct LessonView : View {
-        let lesson: CurrentLessonState.Lesson
+        let lesson: LessonsNowState.Lesson
         var font: Font = .subheadline
         
         var body: some View {
@@ -59,22 +59,22 @@ struct ViewSizeWidgetView : View {
     }
 }
 
-let lessonStateSample = CurrentLessonState(date: Date(), currentLesson: CurrentLessonState.Lesson(no: 1, name: "Język polski", classRoom: "22", start: "7:30"), futureLesson: CurrentLessonState.Lesson(no: 1, name: "Matematyka", classRoom: "22", start: "8:20"))
+let lessonStateSample = LessonsNowState(date: Date(), currentLesson: LessonsNowState.Lesson(no: 1, name: "Język polski", classRoom: "22", start: "7:30"), futureLesson: LessonsNowState.Lesson(no: 1, name: "Matematyka", classRoom: "22", start: "8:20"))
 
-struct CurrentLessonTimelineProvider: TimelineProvider {
+struct LessonsNowTimelineProvider: TimelineProvider {
     
-    typealias Entry = CurrentLessonState
+    typealias Entry = LessonsNowState
     
-    func placeholder(in context: Context) -> CurrentLessonState {
+    func placeholder(in context: Context) -> LessonsNowState {
         lessonStateSample
     }
     
-    func getSnapshot(in context: Context, completion: @escaping (CurrentLessonState) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (LessonsNowState) -> ()) {
         let entry = lessonStateSample
         completion(entry)
     }
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<CurrentLessonState>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<LessonsNowState>) -> ()) {
         let entries = getEntries()
         let currentDate = Date()
         let midnight = Calendar.current.startOfDay(for: currentDate)
@@ -84,17 +84,17 @@ struct CurrentLessonTimelineProvider: TimelineProvider {
         completion(timeline)
     }
     
-    private func getEntries() -> [CurrentLessonState] {
-        var entries: [CurrentLessonState] = []
+    private func getEntries() -> [LessonsNowState] {
+        var entries: [LessonsNowState] = []
         
         let jsonData = readTimetableData()
         
         guard let jsonData = jsonData else {
-            return [CurrentLessonState.empty(date: Date(), state: .noData)]
+            return [LessonsNowState.empty(date: Date(), state: .noData)]
         }
         
         guard let dayGroup = jsonData.first(where: {Calendar.current.isDate(Date(), equalTo: $0.key, toGranularity: .day)}) else {
-            return [CurrentLessonState.empty(date: Date(), state: .missingData)]
+            return [LessonsNowState.empty(date: Date(), state: .missingData)]
         }
         
         let date = dayGroup.key;
@@ -108,33 +108,33 @@ struct CurrentLessonTimelineProvider: TimelineProvider {
         let lessonsInDay = lessonsHappening.count
         
         if lessonsInDay == 0 {
-            entries.append(CurrentLessonState.empty(date: date, state: .noLessonsThatDay))
+            entries.append(LessonsNowState.empty(date: date, state: .noLessonsThatDay))
             
             return entries
         }
         
         let startOfDay = Calendar.current.startOfDay(for: Date())
         
-        entries.append(CurrentLessonState(date: startOfDay, currentLesson: nil, futureLesson: CurrentLessonState.Lesson.fromTimetableLesson(lesson: sortedLessons[0])))
+        entries.append(LessonsNowState(date: startOfDay, currentLesson: nil, futureLesson: LessonsNowState.Lesson.fromTimetableLesson(lesson: sortedLessons[0])))
         
         for i in 0...(lessonsInDay - 1) {
             let currentLesson = sortedLessons[i]
-            let futureLesson = lessonsInDay - i >= 2 ? CurrentLessonState.Lesson.fromTimetableLesson(lesson: sortedLessons[i + 1]) : nil
+            let futureLesson = lessonsInDay - i >= 2 ? LessonsNowState.Lesson.fromTimetableLesson(lesson: sortedLessons[i + 1]) : nil
             
-            entries.append(CurrentLessonState(date: currentLesson.start,
-                                              currentLesson: CurrentLessonState.Lesson.fromTimetableLesson(lesson: currentLesson),
+            entries.append(LessonsNowState(date: currentLesson.start,
+                                           currentLesson: LessonsNowState.Lesson.fromTimetableLesson(lesson: currentLesson),
                                               futureLesson: futureLesson))
         }
         
         if let lastLessonInDay = sortedLessons.last {
-            entries.append(CurrentLessonState.empty(date: lastLessonInDay.end, state: .lessonsOver))
+            entries.append(LessonsNowState.empty(date: lastLessonInDay.end, state: .lessonsOver))
         }
         
         return entries
     }
 }
 
-struct CurrentLessonState: TimelineEntry {
+struct LessonsNowState: TimelineEntry {
     let date: Date
     
     let currentLesson: Lesson?
@@ -158,8 +158,8 @@ struct CurrentLessonState: TimelineEntry {
         }
     }
     
-    static func empty(date: Date, state: TimetableState) -> CurrentLessonState {
-        CurrentLessonState(date: date, currentLesson: nil, futureLesson: nil, timetableState: state)
+    static func empty(date: Date, state: TimetableState) -> LessonsNowState {
+        LessonsNowState(date: date, currentLesson: nil, futureLesson: nil, timetableState: state)
     }
     
     enum TimetableState {
@@ -172,15 +172,15 @@ struct CurrentLessonState: TimelineEntry {
 }
 
 @available(iOSApplicationExtension 17.0, *)
-struct CurrentLessonWidget: Widget {
-    let kind: String = "CurrentLessonWidget"
+struct LessonsNowWidget: Widget {
+    let kind: String = "LessonsNowWidget"
     
     var body: some WidgetConfiguration {
         StaticConfiguration(
             kind: kind,
-            provider: CurrentLessonTimelineProvider()
+            provider: LessonsNowTimelineProvider()
         ) { entry in
-            ViewSizeWidgetView(entry: entry)
+            LessonsNowWidgetView(entry: entry)
         }
         .configurationDisplayName("Lessons now")
         .description("Current and upcoming lesson at a glance")
@@ -191,9 +191,9 @@ struct CurrentLessonWidget: Widget {
 }
 
 @available(iOSApplicationExtension 17.0, *)
-struct CurrentLessonWidget_Previews: PreviewProvider {
+struct LessonsNowWidget_Previews: PreviewProvider {
     static var previews: some View {
-        ViewSizeWidgetView(entry: lessonStateSample)
+        LessonsNowWidgetView(entry: lessonStateSample)
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }

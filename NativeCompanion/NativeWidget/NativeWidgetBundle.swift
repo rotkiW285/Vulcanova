@@ -31,6 +31,6 @@ struct WidgetsBundle17 : WidgetBundle {
     var body: some Widget {
         AttendanceWidget()
         TimetableWidget()
-        CurrentLessonWidget()
+        LessonsNowWidget()
     }
 }
