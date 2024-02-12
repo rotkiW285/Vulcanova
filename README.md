@@ -1,4 +1,4 @@
-# Vulcanova
+# NIEOFICIALNE buildy Vulcanovej
 
 ## Masz iOSa poniżej wersji 15.0 i nie możesz pobrać Vulcanovej?
 To dobrze trafiłeś :)
