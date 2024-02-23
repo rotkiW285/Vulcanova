@@ -9,6 +9,7 @@ using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Data;
 using Vulcanova.Core.Mvvm;
 using Vulcanova.Core.Rx;
+using Vulcanova.Core.Uonet;
 using Vulcanova.Extensions;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Homework.HomeworkDetails;
@@ -42,7 +43,8 @@ namespace Vulcanova.Features.Homework
 
             GetHomeworkEntries = ReactiveCommand.CreateFromTask(async (bool forceSync) =>
             {
-                var currentPeriod = accountContext.Account.Periods.Single(x => x.Current);
+                var currentPeriod = accountContext.Account.Periods.CurrentOrLast();
+
                 return await GetEntries(accountContext.Account.Id, currentPeriod.Id, forceSync);
             });
 

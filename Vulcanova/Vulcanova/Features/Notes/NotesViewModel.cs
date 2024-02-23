@@ -8,6 +8,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Data;
 using Vulcanova.Core.Mvvm;
+using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Notes.NoteDetails;
 using Vulcanova.Features.Shared;
@@ -46,7 +47,7 @@ public class NotesViewModel : ViewModelBase
         accountSetObservable.Select(a => a.Periods)
             .BindTo(this, vm => vm.Periods);
 
-        accountSetObservable.Select(a => a.Periods.Single(p => p.Current))
+        accountSetObservable.Select(a => a.Periods.CurrentOrLast())
             .BindTo(this, vm => vm.SelectedPeriod);
 
         GetNotesEntries = ReactiveCommand.CreateFromObservable((bool forceSync) =>

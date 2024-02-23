@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Vulcanova.Core.Mvvm;
+using Vulcanova.Core.Uonet;
 using Vulcanova.Features.Auth.AccountPicker;
 using Vulcanova.Features.Grades.Final;
 using Vulcanova.Features.Grades.Summary;
@@ -41,7 +41,7 @@ public class GradesViewModel : ViewModelBase
         accountSetObservable.Select(a => a.Periods)
             .BindTo(this, vm => vm.Periods);
         
-        accountSetObservable.Select(a => a.Periods.Single(p => p.Current))
+        accountSetObservable.Select(a => a.Periods.CurrentOrLast())
             .BindTo(this, vm => vm.SelectedPeriod);
     }
 }
