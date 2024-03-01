@@ -48,7 +48,7 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
             
             foreach (var acc in accountsGroup)
             {
-                var newAccount = newAccounts.Envelope.FirstOrDefault(x => x.Login.Id == acc.Login.Id);
+                var newAccount = newAccounts.Envelope.FirstOrDefault(x => x.Login.Id == acc.Login.Id && (acc.CaretakerId == null || acc.CaretakerId == x.CaretakerId));
 
                 if (newAccount == null) continue;
 
