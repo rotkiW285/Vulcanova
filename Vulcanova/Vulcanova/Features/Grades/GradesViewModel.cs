@@ -43,5 +43,12 @@ public class GradesViewModel : ViewModelBase
         
         accountSetObservable.Select(a => a.Periods.CurrentOrLast())
             .BindTo(this, vm => vm.SelectedPeriod);
+
+        var periodSetObservable = this.WhenAnyValue(vm => vm.SelectedPeriod)
+            .WhereNotNull()
+            .Select(p => p.Id);
+
+        periodSetObservable.BindTo(GradesSummaryViewModel, vm => vm.PeriodId);
+        periodSetObservable.BindTo(FinalGradesViewModel, vm => vm.PeriodId);
     }
 }

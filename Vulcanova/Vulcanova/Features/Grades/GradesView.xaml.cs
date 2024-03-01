@@ -28,14 +28,6 @@ public partial class GradesView
             this.OneWayBind(ViewModel, vm => vm.AccountViewModel, v => v.TitleView.ViewModel)
                 .DisposeWith(disposable);
             
-            this.OneWayBind(ViewModel, vm => vm.SelectedPeriod, v => v.GradesSummaryView.PeriodId,
-                    r => r?.Id)
-                .DisposeWith(disposable);
-                
-            this.OneWayBind(ViewModel, vm => vm.SelectedPeriod, v => v.FinalGradesView.PeriodId,
-                    r => r?.Id)
-                .DisposeWith(disposable);
-            
             this.Bind(ViewModel, vm => vm.SelectedPeriod, v => v.PeriodPicker.SelectedPeriod)
                 .DisposeWith(disposable);
             
