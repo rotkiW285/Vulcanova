@@ -40,7 +40,7 @@ public static class RxUiExtensions
         // BindCommand doesn't really support passing a parameter in such way and we need to pass "true"
         refreshView.Events().Refreshing.Subscribe(_ =>
             {
-                selectorFunc(view).Execute(true).Subscribe();
+                selectorFunc(view).Execute(true).SubscribeAndIgnoreErrors();
             })
             .DisposeWith(disposable);
 
