@@ -2,6 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using Xamarin.Forms;
@@ -25,28 +26,23 @@ public static class RxUiExtensions
     /// to <c>true</c>
     /// </param>
     /// <typeparam name="TView">The containing view type</typeparam>
-    /// <typeparam name="TDontCare">The type of force refresh command result</typeparam>
     /// <returns><see cref="IDisposable"/> object used to unsubscribe from the observable sequences.</returns>
-    public static IDisposable BindForceRefresh<TView, TDontCare>(this TView view,
+    public static IDisposable BindForceRefresh<TView>(this TView view,
         RefreshView refreshView,
-        Expression<Func<TView, ReactiveCommand<bool, TDontCare>>> commandSelector,
+        Expression<Func<TView, ICommand>> commandSelector,
         bool dontSetIsRefreshingToTrue = false)
         where TView : class, IViewFor
     {
         var disposable = new CompositeDisposable();
 
-        var selectorFunc = commandSelector.Compile();
-
-        // BindCommand doesn't really support passing a parameter in such way and we need to pass "true"
-        refreshView.Events().Refreshing.Subscribe(_ =>
-            {
-                selectorFunc(view).Execute(true).SubscribeAndIgnoreErrors();
-            })
+        refreshView.Events().Refreshing
+            .Select(_ => true) // forceRefresh = true
+            .InvokeCommand(view, commandSelector)
             .DisposeWith(disposable);
 
         view.WhenAnyValue(commandSelector)
             .WhereNotNull()
-            .Subscribe(vm => vm.IsExecuting
+            .Subscribe(cmd => ((IReactiveCommand)cmd).IsExecuting
                 .Subscribe(value =>
                 {
                     if (!dontSetIsRefreshingToTrue || !value)

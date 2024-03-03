@@ -55,7 +55,8 @@ public class GradesSummaryViewModel : ViewModelBase
                     : Observable.Return(Array.Empty<AverageGrade>());
 
             return grades.CombineLatest(averageGrades).Select(x => new GradesResult(x.First, x.Second));
-        });
+        }, this.WhenAnyValue(vm => vm.PeriodId)
+            .Select(v => v != null));
 
         GetGrades.ToPropertyEx(this, vm => vm.RawGrades);
 
