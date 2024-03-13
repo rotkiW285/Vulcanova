@@ -12,4 +12,6 @@ To dobrze trafiłeś :)
 Żeby zainstlować wymagany jest jailbreak lub sideloading
 (nie udzielam poradników dot. powyższych rzeczy, poszukaj sobie w internecie)
 
+## [Pobierz](https://github.com/rotkiW285/Vulcanova-ios14/releases/latest)
+
 ## Po więcej informacji o oficialnym projekcie odwiedź repozytorium [Vulcanovej](https://github.com/Vulcanova/Vulcanova)
