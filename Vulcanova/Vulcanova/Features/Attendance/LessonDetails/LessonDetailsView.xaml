@@ -27,8 +27,14 @@
                        Margin="{OnPlatform iOS='0,0,32,0'}"
                        LineBreakMode="TailTruncation"
                        Text="{Binding Lesson.Subject.Name}" />
-                <Label Text="{Binding Lesson.PresenceType.Name}"
-                       TextColor="{Binding Lesson.PresenceType, Converter={StaticResource ColorConverter}}" />
+                <Label Text="{Binding Lesson.PresenceType.Name}">
+                    <Label.TextColor>
+                        <MultiBinding Converter="{StaticResource ColorConverter}">
+                            <Binding Path="Lesson.PresenceType" />
+                            <layout:AppThemeBindingInMultiBinding Light="0" Dark="1" />
+                        </MultiBinding>
+                    </Label.TextColor>
+                </Label>
                 <Button x:Name="JustifyAbsenceButton"
                         Text="{x:Static resx:Strings.LessonJustifyAbsenceButton}"
                         Clicked="JustifyButton_OnClicked"
