@@ -286,7 +286,7 @@
         <value>Created by</value>
     </data>
     <data name="NoteCreatedOnLabel" xml:space="preserve">
-        <value>Created by</value>
+        <value>Created on</value>
     </data>
     <data name="NoteCommentLabel" xml:space="preserve">
         <value>Comment</value>
