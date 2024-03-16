@@ -34,6 +34,7 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
         if (!ShouldSync(ResourceKey)) return;
 
         var accountsGroupedByLoginId = (await _accountRepository.GetAccountsAsync())
+            .Where(x => x.Login != null) // filter out accounts without a login, see AuthenticationService.AuthenticateAsync
             .GroupBy(x => x.Login.Id);
 
         foreach (var accountsGroup in accountsGroupedByLoginId)
