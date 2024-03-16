@@ -56,7 +56,10 @@ public class AuthenticationService : IAuthenticationService
 
         var accounts = registerHebeResponse.Envelope.Select(_mapper.Map<Account>).ToArray();
 
-        foreach (var account in accounts)
+        // So apparently when an account can no longer be used (for example, it's no longer active, or the student
+        // has graduated), the API will return it with a null login. We need to filter those out. In the future this
+        // should result _at least_ in a message to the user, but for now we'll just ignore them.
+        foreach (var account in accounts.Where(a => a.Login != null))
         {
             // in some rare cases, the data will contain duplicated periods
             account.Periods = account.Periods.GroupBy(p => p.Id).Select(g => g.First()).ToList();
