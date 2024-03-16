@@ -8,6 +8,11 @@ To dobrze trafiłeś :)
 - widgety 
 - przełączanie kont i wylogowanie się
 
+## Co modyfikuję w aplikacji?
+- Minimalną wersję iOSa na której można zainstalować aplikację
+- Usuwam plugin (widgety)<br><br>
+Modyfikacje wykonywane są jedynie na oficialnych wydanaich z repozytorium
+
 ## Instalacja
 Żeby zainstlować wymagany jest jailbreak lub sideloading
 (nie udzielam poradników dot. powyższych rzeczy, poszukaj sobie w internecie)
