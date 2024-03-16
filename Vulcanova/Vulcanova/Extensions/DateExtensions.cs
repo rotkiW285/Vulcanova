@@ -39,4 +39,12 @@ public static class DateExtensions
 
         return (firstDay, lastDay);
     }
+
+    public static DateTime AlignToStartOfMonth(this DateTime dt) => new(dt.Year, dt.Month, 1);
+
+    public static DateTime AlignToEndOfMonth(this DateTime dt)
+    {
+        var daysInMonth = DateTime.DaysInMonth(dt.Year, dt.Month);
+        return new DateTime(dt.Year, dt.Month, daysInMonth);
+    }
 }

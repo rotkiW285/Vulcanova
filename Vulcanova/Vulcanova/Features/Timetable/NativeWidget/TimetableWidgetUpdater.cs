@@ -5,20 +5,21 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Vulcanova.Core.NativeWidgets;
 using Vulcanova.Core.Uonet;
+using Vulcanova.Extensions;
 using Vulcanova.Features.Timetable.Changes;
 
 namespace Vulcanova.Features.Timetable.NativeWidget;
 
 public sealed class TimetableWidgetUpdater : IWidgetUpdater<TimetableUpdatedEvent>, IWidgetUpdater<TimetableChangesUpdatedEvent>
 {
-    private readonly ITimetableService _timetableService;
+    private readonly ITimetableEntryService _timetableEntryService;
     private readonly ITimetableChangesService _timetableChangesService;
     private readonly INativeWidgetProxy _widgetProxy;
 
-    public TimetableWidgetUpdater(ITimetableChangesService timetableChangesService, ITimetableService timetableService, INativeWidgetProxy widgetProxy)
+    public TimetableWidgetUpdater(ITimetableChangesService timetableChangesService, ITimetableEntryService timetableEntryService, INativeWidgetProxy widgetProxy)
     {
         _timetableChangesService = timetableChangesService;
-        _timetableService = timetableService;
+        _timetableEntryService = timetableEntryService;
         _widgetProxy = widgetProxy;
     }
 
@@ -38,7 +39,7 @@ public sealed class TimetableWidgetUpdater : IWidgetUpdater<TimetableUpdatedEven
 
         var (changes, timetableEntries) = await _timetableChangesService
             .GetChangesEntriesByMonth(accountId, now)
-            .CombineLatest(_timetableService.GetPeriodEntriesByMonth(accountId, now))
+            .CombineLatest(_timetableEntryService.GetEntries(accountId, now.AlignToStartOfMonth(), now.AlignToEndOfMonth()))
             .Select(tuple => (tuple.First.ToArray(), tuple.Second.ToArray()));
 
         var timetable = TimetableBuilder.BuildTimetable(timetableEntries, changes);

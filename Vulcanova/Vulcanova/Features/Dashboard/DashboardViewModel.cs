@@ -16,7 +16,6 @@ using Vulcanova.Features.Homework;
 using Vulcanova.Features.LuckyNumber;
 using Vulcanova.Features.Shared;
 using Vulcanova.Features.Timetable;
-using Vulcanova.Features.Timetable.Changes;
 
 namespace Vulcanova.Features.Dashboard
 {
@@ -31,8 +30,7 @@ namespace Vulcanova.Features.Dashboard
         [Reactive] public DateTime SelectedDay { get; private set; }
 
         private readonly ILuckyNumberService _luckyNumberService;
-        private readonly ITimetableService _timetableService;
-        private readonly ITimetableChangesService _timetableChangesService;
+        private readonly ITimetableProvider _timetableProvider;
         private readonly IExamsService _examsService;
         private readonly IGradesService _gradesService;
         private readonly IHomeworkService _homeworksService;
@@ -42,18 +40,16 @@ namespace Vulcanova.Features.Dashboard
             AccountContext accountContext,
             AccountAwarePageTitleViewModel accountViewModel,
             ILuckyNumberService luckyNumberService,
-            ITimetableService timetableService,
-            ITimetableChangesService timetableChangesService,
             IExamsService examsService,
             IGradesService gradesService,
-            IHomeworkService homeworksService) : base(navigationService)
+            IHomeworkService homeworksService,
+            ITimetableProvider timetableProvider) : base(navigationService)
         {
             _luckyNumberService = luckyNumberService;
-            _timetableService = timetableService;
-            _timetableChangesService = timetableChangesService;
             _examsService = examsService;
             _gradesService = gradesService;
             _homeworksService = homeworksService;
+            _timetableProvider = timetableProvider;
 
             AccountViewModel = accountViewModel;
 
@@ -110,26 +106,11 @@ namespace Vulcanova.Features.Dashboard
         {
             return Observable.FromAsync(() => _luckyNumberService.GetLuckyNumberAsync(accountId, date));
         }
-        
+
         private IObservable<IReadOnlyCollection<TimetableListEntry>> GetTimetableEntries(int accountId,
-            DateTime date, bool forceSync = false)
-        {
-            var changes = _timetableChangesService.GetChangesEntriesByMonth(accountId, date.Date, forceSync);
-
-            return _timetableService.GetPeriodEntriesByMonth(accountId, date.Date, forceSync)
-                .CombineLatest(changes)
-                .Select(items =>
-                {
-                    var timetable = TimetableBuilder.BuildTimetable(items.First.ToArray(), items.Second.ToArray());
-
-                    if (timetable.TryGetValue(date.Date, out var entries))
-                    {
-                        return entries;
-                    }
-
-                    return null;
-                });
-        }
+            DateTime date, bool forceSync = false) =>
+            _timetableProvider.GetEntries(accountId, date.Date, forceSync)
+                .Select(timetable => timetable.GetValueOrDefault(date.Date));
 
         private IObservable<IReadOnlyCollection<Homework.Homework>> GetHomeworkEntries(int accountId, int periodId,
             DateTime date, bool forceSync = false)

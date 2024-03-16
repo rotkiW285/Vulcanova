@@ -6,29 +6,30 @@ using Vulcanova.Features.Auth;
 
 namespace Vulcanova.Features.Timetable;
 
-public class TimetableRepository : ITimetableRepository, IHasAccountRemovalCleanup
+public class TimetableEntryRepository : ITimetableEntryRepository, IHasAccountRemovalCleanup
 {
     private readonly LiteDatabaseAsync _db;
 
-    public TimetableRepository(LiteDatabaseAsync db)
+    public TimetableEntryRepository(LiteDatabaseAsync db)
     {
         _db = db;
     }
 
     public async Task<IEnumerable<TimetableEntry>> GetEntriesForPupilAsync(int accountId, int pupilId,
-        DateTime monthAndYear)
+        DateTime from, DateTime to)
     {
         return await _db.GetCollection<TimetableEntry>()
             .FindAsync(g =>
-                g.PupilId == pupilId && g.Id.AccountId == accountId && g.Date.Year == monthAndYear.Year &&
-                g.Date.Month == monthAndYear.Month);
+                g.PupilId == pupilId && g.Id.AccountId == accountId && g.Date.Date >= from.Date &&
+                g.Date.Date <= to.Date);
     }
 
-    public async Task UpdatePupilEntriesAsync(IEnumerable<TimetableEntry> entries, DateTime monthAndYear)
+    public async Task UpdatePupilEntriesAsync(int accountId, int pupilId, IEnumerable<TimetableEntry> entries, DateTime from,
+        DateTime to)
     {
         await _db.GetCollection<TimetableEntry>()
-            .DeleteManyAsync(g => g.Date.Year == monthAndYear.Year &&
-                                  g.Date.Month == monthAndYear.Month);
+            .DeleteManyAsync(g => g.PupilId == pupilId && g.Id.AccountId == accountId &&
+                                  g.Date.Date >= from.Date && g.Date.Date <= to.Date);
 
         await _db.GetCollection<TimetableEntry>().UpsertAsync(entries);
     }

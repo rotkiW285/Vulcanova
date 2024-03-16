@@ -12,49 +12,50 @@ using Vulcanova.Uonet.Api.Schedule;
 
 namespace Vulcanova.Features.Timetable;
 
-public class TimetableService : UonetResourceProvider, ITimetableService
+public class TimetableEntryService : UonetResourceProvider, ITimetableEntryService
 {
     private readonly IApiClientFactory _apiClientFactory;
     private readonly IMapper _mapper;
     private readonly IAccountRepository _accountRepository;
-    private readonly ITimetableRepository _timetableRepository;
+    private readonly ITimetableEntryRepository _timetableEntryRepository;
 
-    public TimetableService(IApiClientFactory apiClientFactory, IMapper mapper,
-        IAccountRepository accountRepository, ITimetableRepository timetableRepository)
+    public TimetableEntryService(IApiClientFactory apiClientFactory, IMapper mapper,
+        IAccountRepository accountRepository, ITimetableEntryRepository timetableEntryRepository)
     {
         _apiClientFactory = apiClientFactory;
         _mapper = mapper;
         _accountRepository = accountRepository;
-        _timetableRepository = timetableRepository;
+        _timetableEntryRepository = timetableEntryRepository;
     }
 
-    public IObservable<IEnumerable<TimetableEntry>> GetPeriodEntriesByMonth(int accountId, DateTime monthAndYear,
+    public IObservable<IEnumerable<TimetableEntry>> GetEntries(int accountId, DateTime from, DateTime to,
         bool forceSync = false)
     {
         return Observable.Create<IEnumerable<TimetableEntry>>(async observer =>
         {
             var account = await _accountRepository.GetByIdAsync(accountId);
 
-            var resourceKey = GetTimetableResourceKey(account, monthAndYear);
+            var resourceKey = GetTimetableResourceKey(account, from, to);
 
-            var items = await _timetableRepository.GetEntriesForPupilAsync(account.Id, account.Pupil.Id,
-                monthAndYear);
+            var items = await _timetableEntryRepository.GetEntriesForPupilAsync(account.Id, account.Pupil.Id,
+                from, to);
 
             observer.OnNext(items);
 
             if (ShouldSync(resourceKey) || forceSync)
             {
-                var onlineEntries = await FetchEntriesForMonthAndYear(account, monthAndYear);
+                var onlineEntries = await FetchEntriesForMonthAndYear(account, from.Date, to.Date);
 
-                await _timetableRepository.UpdatePupilEntriesAsync(onlineEntries, monthAndYear);
+                await _timetableEntryRepository.UpdatePupilEntriesAsync(account.Id, account.Pupil.Id, onlineEntries,
+                    from.Date, to.Date);
 
                 SetJustSynced(resourceKey);
 
-                items = await _timetableRepository.GetEntriesForPupilAsync(account.Id, account.Pupil.Id,
-                    monthAndYear);
+                items = await _timetableEntryRepository.GetEntriesForPupilAsync(account.Id, account.Pupil.Id,
+                    from.Date, to.Date);
 
                 observer.OnNext(items);
-                
+
                 MessageBus.Current.SendMessage(new TimetableUpdatedEvent(accountId));
             }
 
@@ -62,14 +63,11 @@ public class TimetableService : UonetResourceProvider, ITimetableService
         });
     }
 
-    private async Task<TimetableEntry[]> FetchEntriesForMonthAndYear(Account account, DateTime monthAndYear)
+    private async Task<TimetableEntry[]> FetchEntriesForMonthAndYear(Account account, DateTime from, DateTime to)
     {
-        var from = new DateTime(monthAndYear.Year, monthAndYear.Month, 1);
-        var to = new DateTime(monthAndYear.Year, monthAndYear.Month, DateTime.DaysInMonth(from.Year, from.Month));
-
         var query = new GetScheduleEntriesByPupilQuery(account.Pupil.Id, from, to, DateTime.MinValue);
 
-        var client =  await _apiClientFactory.GetAuthenticatedAsync(account);
+        var client = await _apiClientFactory.GetAuthenticatedAsync(account);
 
         var response = await client.GetAsync(GetScheduleEntriesByPupilQuery.ApiEndpoint, query);
 
@@ -84,8 +82,9 @@ public class TimetableService : UonetResourceProvider, ITimetableService
         return entries;
     }
 
-    private static string GetTimetableResourceKey(Account account, DateTime monthAndYear)
-        => $"Timetable_{account.Id}_{account.Pupil.Id}_{monthAndYear.Month}_{monthAndYear.Year}";
+    private static string GetTimetableResourceKey(Account account, DateTime from, DateTime to)
+        =>
+            $"Timetable_{account.Id}_{account.Pupil.Id}_{from.Day}_{from.Month}_{from.Year}_{to.Day}_{to.Month}_{to.Year}";
 
     protected override TimeSpan OfflineDataLifespan => TimeSpan.FromHours(1);
 }

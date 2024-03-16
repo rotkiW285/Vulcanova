@@ -10,10 +10,12 @@ public static class Config
         container.RegisterForNavigation<TimetableView>();
         container.RegisterForNavigation<TimetableEntryDetailsView>();
 
-        container.RegisterScoped<ITimetableRepository, TimetableRepository>();
-        container.RegisterScoped<ITimetableService, TimetableService>();
+        container.RegisterScoped<ITimetableEntryRepository, TimetableEntryRepository>();
+        container.RegisterScoped<ITimetableEntryService, TimetableEntryService>();
 
         container.RegisterScoped<ITimetableChangesRepository, TimetableChangesRepository>();
         container.RegisterScoped<ITimetableChangesService, TimetableChangesService>();
+
+        container.RegisterScoped<ITimetableProvider, TimetableProvider>();
     }
 }
