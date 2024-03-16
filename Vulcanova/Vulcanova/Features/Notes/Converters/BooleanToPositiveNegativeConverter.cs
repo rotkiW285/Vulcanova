@@ -7,10 +7,13 @@ namespace Vulcanova.Features.Notes.Converters;
 
 public class BooleanToPositiveNegativeConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return (bool)value ? Strings.NotePositiveLabel : Strings.NoteNegativeLabel;
-    }
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
+        value switch
+        {
+            true => Strings.NotePositiveLabel,
+            false => Strings.NoteNegativeLabel,
+            _ => string.Empty
+        };
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {

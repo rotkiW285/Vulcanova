@@ -18,5 +18,13 @@ public class Note
     public DateTime DateModified { get; set; }
 
     [BsonIgnore]
-    public bool NoteOrCategoryPositive => Positive || CategoryType == "pozytywna";
+    public bool? NoteOrCategoryPositive
+    {
+        get
+        {
+            if (Positive || CategoryType == "pozytywna") return true;
+            if (CategoryType == "negatywna") return false;
+            return null;
+        }
+    }
 }

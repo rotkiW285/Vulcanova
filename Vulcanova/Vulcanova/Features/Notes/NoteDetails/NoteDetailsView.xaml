@@ -30,6 +30,7 @@
                        LineBreakMode="TailTruncation"
                        Text="{Binding Note.CategoryName}" />
                 <Label
+                    IsVisible="{Binding Note.NoteOrCategoryPositive, Converter={StaticResource NullToBooleanConverter}}"
                     FontSize="Small"
                     Text="{Binding Note.NoteOrCategoryPositive, Converter={StaticResource BooleanToPositiveNegativeConverter}}">
                     <Label.TextColor>

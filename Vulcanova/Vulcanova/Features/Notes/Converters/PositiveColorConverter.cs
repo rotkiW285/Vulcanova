@@ -7,21 +7,13 @@ namespace Vulcanova.Features.Notes.Converters;
 
 public class PositiveColorConverter : IMultiValueConverter
 {
-    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-    {
-        var value = values[0];
-        
-        if (value is bool isPositive)
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) =>
+        values[0] switch
         {
-            var baseColor = isPositive
-                ? "PrimaryColor"
-                : "ErrorColor";
-
-            return ThemeUtility.GetThemedColorByResourceKey(baseColor);
-        }
-        
-        return ThemeUtility.GetDefaultTextColor();
-    }
+            true => ThemeUtility.GetThemedColorByResourceKey("PrimaryColor"),
+            false => ThemeUtility.GetThemedColorByResourceKey("ErrorColor"),
+            _ => ThemeUtility.GetDefaultTextColor()
+        };
 
     public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
     {
