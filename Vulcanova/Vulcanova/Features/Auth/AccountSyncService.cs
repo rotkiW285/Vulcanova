@@ -34,7 +34,7 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
         if (!ShouldSync(ResourceKey)) return;
 
         var accountsGroupedByLoginId = (await _accountRepository.GetAccountsAsync())
-            .Where(x => x.Login != null) // filter out accounts without a login, see AuthenticationService.AuthenticateAsync
+            .Where(x => x.Login != null && x.Periods != null)
             .GroupBy(x => x.Login.Id);
 
         foreach (var accountsGroup in accountsGroupedByLoginId)
@@ -51,7 +51,7 @@ public class AccountSyncService : UonetResourceProvider, IAccountSyncService
             {
                 var newAccount = newAccounts.Envelope.FirstOrDefault(x => x.Login.Id == acc.Login.Id && (acc.CaretakerId == null || acc.CaretakerId == x.CaretakerId));
 
-                if (newAccount == null) continue;
+                if (newAccount?.Periods == null) continue;
 
                 var currentPeriodsIds = acc.Periods.Select(y => y.Id);
 
