@@ -14,9 +14,9 @@ struct TimetableDataElement: Codable {
 
 struct TimetableDataLesson: Codable {
     let no: Int
-    let subjectName, teacherName: String
+    let subjectName: String
     let date, start, end: Date
-    let roomName: String?
+    let teacherName, roomName: String?
     let displayColor: ChangeDisplayColor
     let displayTextDecorations: ChangeDisplayTextDecorations
     
