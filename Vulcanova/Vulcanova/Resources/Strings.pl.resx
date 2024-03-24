@@ -37,7 +37,7 @@
         <value>Zaloguj się do dziennika przez przeglądarkę, przejdź do zakładki "Dostęp mobilny", a następnie naciśnij przycisk "Wygeneruj kod dostępu"</value>
     </data>
     <data name="NoLessonsLabel" xml:space="preserve">
-        <value>Brak lekcji w wybranym dniu</value>
+        <value>Brak lekcji dzisiaj</value>
     </data>
     <data name="AddButton" xml:space="preserve">
         <value>Dodaj</value>
