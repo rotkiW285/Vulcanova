@@ -61,7 +61,7 @@
         <value>(modified: {0:d})</value>
     </data>
     <data name="GradeEmptyNameLabel" xml:space="preserve">
-        <value>untitled</value>
+        <value>Untitled</value>
     </data>
     <data name="PartialGradesTabTitle" xml:space="preserve">
         <value>Partial grades</value>
@@ -88,7 +88,7 @@
         <value>No lessons today</value>
     </data>
     <data name="NoExamsLabel" xml:space="preserve">
-        <value>No exams for the selected week</value>
+        <value>No exams for this week</value>
     </data>
     <data name="TimetableTabTitle" xml:space="preserve">
         <value>Timetable</value>
@@ -148,7 +148,7 @@
         <value>Value of minus</value>
     </data>
     <data name="HomeworkTabTitle" xml:space="preserve">
-      <value>Homework</value>
+        <value>Homework</value>
     </data>
     <data name="SettingsCustomValueLabel" xml:space="preserve">
         <value>Custom value</value>
@@ -157,7 +157,7 @@
         <value>Custom</value>
     </data>
     <data name="NoHomeworkLabel" xml:space="preserve">
-      <value>No homework for the selected week</value>
+        <value>No homework for this week</value>
     </data>
     <data name="FinalGradesAverage" xml:space="preserve">
         <value>Final grades average</value>

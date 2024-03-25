@@ -22,7 +22,7 @@
         <value>Brak numerka na dzisiaj</value>
     </data>
     <data name="NoExamsLabel" xml:space="preserve">
-        <value>Brak sprawdzianów w wybranym tygodniu</value>
+        <value>Brak sprawdzianów w tym tygodniu</value>
     </data>
     <data name="SignInManuallyButton" xml:space="preserve">
         <value>Wpisz dane ręcznie</value>
@@ -67,7 +67,7 @@
         <value>(zmodyfikowano: {0:d})</value>
     </data>
     <data name="GradeEmptyNameLabel" xml:space="preserve">
-        <value>bez nazwy</value>
+        <value>Bez nazwy</value>
     </data>
     <data name="PartialGradesTabTitle" xml:space="preserve">
         <value>Oceny częściowe</value>
@@ -91,7 +91,7 @@
         <value>Żadne oceny końcowe nie zostały wpisane lub dziennik nie umożliwia przeglądania tych danych</value>
     </data>
     <data name="NoHomeworkLabel" xml:space="preserve">
-      <value>Brak prac domowych w wybranym tygodniu</value>
+        <value>Brak prac domowych w tym tygodniu</value>
     </data>
     <data name="TimetableTabTitle" xml:space="preserve">
         <value>Plan lekcji</value>
@@ -151,7 +151,7 @@
         <value>Wartość minusa</value>
     </data>
     <data name="HomeworkTabTitle" xml:space="preserve">
-      <value>Prace domowe</value>
+        <value>Prace domowe</value>
     </data>
     <data name="SettingsCustomValueLabel" xml:space="preserve">
         <value>Własna wartość</value>
