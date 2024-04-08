@@ -6,12 +6,12 @@ To dobrze trafiłeś :)
 ## Co nie działa?
 - Praktycznie wszystkie rozwijane listy (szczegóły ocen, lekcji, obecności, sprawdzanów)
 - widgety 
-- przełączanie kont i wylogowanie się
+- przełączanie kont i wylogowanie się (Jedyny sposób to usunięcie certyfikatu na stronie internetowej)
 
 ## Co modyfikuję w aplikacji?
 - Minimalną wersję iOSa na której można zainstalować aplikację
 - Usuwam plugin (widgety)<br><br>
-Modyfikacje wykonywane są jedynie na oficialnych wydanaich z repozytorium
+Modyfikacje wykonywane są jedynie na oficialnych wydaniach z repozytorium
 
 ## Instalacja
 Żeby zainstlować wymagany jest jailbreak lub sideloading
