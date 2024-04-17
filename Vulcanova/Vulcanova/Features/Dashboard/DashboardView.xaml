@@ -98,7 +98,7 @@
                                 BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
                                 <BindableLayout.EmptyView>
                                     <Label LineBreakMode="TailTruncation"
-                                           Text="{x:Static resx:Strings.NoLessonsLabel}"
+                                           Text="{x:Static resx:Strings.DashboardNoLessonsLabel}"
                                            FontSize="Header"
                                            BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}" />
                                 </BindableLayout.EmptyView>
@@ -246,7 +246,7 @@
                                 Spacing="2.5"
                                 BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
                                 <BindableLayout.EmptyView>
-                                    <Label LineBreakMode="TailTruncation" Text="{x:Static resx:Strings.NoExamsLabel}"
+                                    <Label LineBreakMode="TailTruncation" Text="{x:Static resx:Strings.DashboardNoExamsLabel}"
                                            BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}" />
                                 </BindableLayout.EmptyView>
                                 <BindableLayout.ItemTemplate>
@@ -306,7 +306,7 @@
                                 BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}">
                                 <BindableLayout.EmptyView>
                                     <Label LineBreakMode="TailTruncation"
-                                           Text="{x:Static resx:Strings.NoHomeworkLabel}"
+                                           Text="{x:Static resx:Strings.DashboardNoHomeworkLabel}"
                                            BackgroundColor="{AppThemeBinding Dark={StaticResource DarkDashboardControlColor}, Light={StaticResource LightDashboardControlColor}}" />
                                 </BindableLayout.EmptyView>
                                 <BindableLayout.ItemTemplate>

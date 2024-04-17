@@ -22,6 +22,9 @@
         <value>Brak numerka na dzisiaj</value>
     </data>
     <data name="NoExamsLabel" xml:space="preserve">
+        <value>Brak sprawdzianów w wybranym tygodniu</value>
+    </data>
+    <data name="DashboardNoExamsLabel" xml:space="preserve">
         <value>Brak sprawdzianów w tym tygodniu</value>
     </data>
     <data name="SignInManuallyButton" xml:space="preserve">
@@ -36,8 +39,11 @@
     <data name="AddAccountSubheadingLabel" xml:space="preserve">
         <value>Zaloguj się do dziennika przez przeglądarkę, przejdź do zakładki "Dostęp mobilny", a następnie naciśnij przycisk "Wygeneruj kod dostępu"</value>
     </data>
-    <data name="NoLessonsLabel" xml:space="preserve">
+    <data name="DashboardNoLessonsLabel" xml:space="preserve">
         <value>Brak lekcji dzisiaj</value>
+    </data>
+    <data name="NoLessonsLabel" xml:space="preserve">
+        <value>Brak lekcji w wybranym dniu</value>
     </data>
     <data name="AddButton" xml:space="preserve">
         <value>Dodaj</value>
@@ -91,6 +97,9 @@
         <value>Żadne oceny końcowe nie zostały wpisane lub dziennik nie umożliwia przeglądania tych danych</value>
     </data>
     <data name="NoHomeworkLabel" xml:space="preserve">
+        <value>Brak prac domowych w wybranym tygodniu</value>
+    </data>
+    <data name="DashboardNoHomeworkLabel" xml:space="preserve">
         <value>Brak prac domowych w tym tygodniu</value>
     </data>
     <data name="TimetableTabTitle" xml:space="preserve">
