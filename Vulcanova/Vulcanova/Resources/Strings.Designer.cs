@@ -195,9 +195,21 @@ namespace Vulcanova.Resources {
             }
         }
         
+        internal static string DashboardNoLessonsLabel {
+            get {
+                return ResourceManager.GetString("DashboardNoLessonsLabel", resourceCulture);
+            }
+        }
+        
         internal static string NoExamsLabel {
             get {
                 return ResourceManager.GetString("NoExamsLabel", resourceCulture);
+            }
+        }
+        
+        internal static string DashboardNoExamsLabel {
+            get {
+                return ResourceManager.GetString("DashboardNoExamsLabel", resourceCulture);
             }
         }
         
@@ -336,6 +348,12 @@ namespace Vulcanova.Resources {
         internal static string NoHomeworkLabel {
             get {
                 return ResourceManager.GetString("NoHomeworkLabel", resourceCulture);
+            }
+        }
+        
+        internal static string DashboardNoHomeworkLabel {
+            get {
+                return ResourceManager.GetString("DashboardNoHomeworkLabel", resourceCulture);
             }
         }
         
